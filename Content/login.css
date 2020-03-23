@@ -1,0 +1,64 @@
+﻿#titleimage {
+    background-image: url('images/DD01192016.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 100%;
+    /*    line-height: 120px;
+    position: relative;*/
+}
+
+
+div.titleimage {
+    content: url('images/DD01192016.jpg');
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    width: 100%;
+}
+
+.stikyHeader {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+
+.img-countySeal {
+    content: url('button-images/CountySeal.png');
+     height: 90px;
+    width: 90px;
+    margin: auto;
+    margin-top: -15px;
+    margin-left: 190px;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    float: left;
+}
+
+.loginpage_link {
+    color: white;
+    
+}
+
+#link_bar a {
+    padding-left: 15px;
+}
+
+#link_bar a:link {
+        color: #f0f0f0;
+    }
+
+#link_bar a:visited {
+    color: #c0c0c0;
+    background-color: #0000a0;
+}
+
+#link_bar a:hover {
+    color: #ffffff;
+    background-color: #000060;
+}
+
+#link_bar a:active {
+    color: #f0f0f0;
+    background-color: #00ff00;
+}
+
+

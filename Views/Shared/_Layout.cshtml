@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="container" style="background-color: antiquewhite">
+        <div class="titleimage stikyHeader"> </div>
+
+        <div class="navbar navbar-inverse stikyHeader">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle header" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Internal Admin", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Internal Login-Srini", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="background-color: Grey; color: orange">
+            @RenderSection("SriniStatus", false)
+        </div>
+
+        <div class="bodycls content" style="background-color: lightblue; color: palevioletred">
+            @*id="main"*@
+            @RenderBody()
+            <hr />
+        </div>
+
+        <footer class="footer navbar-fixed-bottom">
+            @*<p class="navbar-brand">&copy; @DateTime.Now.Year - Internal Admin Application</p>*@
+
+            <div class="row">
+                @*<div class="col-md-4">*@
+                <div class="img-countySeal" style="background:grey;"></div>
+                @*<p class="loginpage_link"><i class="fa fa-envelope  mx-2"></i><a class="loginpage_link" href="#">Contact Us </a>  | <a href="#">General Information</a></p>
+                    <div class="loginpage_link"><p><i class="fa fa-envelope  mx-2"></i><a href="#">General Information</a></p></div>
+                    <div style="height:15px">Privacy Policy | Terms of Use | Accessibility | Disclaimer</div>*@
+                <div class="col-md-8">
+                    <div id="link_bar">
+                        <a href="#">Contact Us</a>  |
+                        <a href="#">General Information</a>
+                    </div>
+
+                    <div id="link_bar">
+                        <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/privacy/">Privacy Policy</a>  |
+                        <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/user/">Terms of Use</a>  |
+                        <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/accessibility/">Accessibility</a>  |
+                        <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/disclaimer/">Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="container">
+                <div class="row ">
+                    <div class="col-md-4 text-center text-md-left ">
+
+                    <div class="py-0">
+                        <h3 class="my-4 text-white">About<span class="mx-2 font-italic text-warning ">Eduonix</span></h3>
+
+                        <p class="footer-links font-weight-bold">
+                            <a class="text-white" href="#">Home</a>
+                            |
+                            <a class="text-white" href="#">Blog</a>
+                            |
+                            <a class="text-white" href="#">About</a>
+                            |
+                            <a class="text-white" href="#">Contact</a>
+                        </p>
+                        <p class="text-light py-4 mb-4">&copy;2019 Eduonix Learning Solutions Pvt. Ltd.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 text-white text-center text-md-left ">
+                    <div class="py-2 my-4">
+                        <div>
+                            <p class="text-white">
+                                <i class="fa fa-map-marker mx-2 "></i>
+                                309 - Rupa Solitaire,
+                                Bldg. No. A - 1, Sector - 1
+                                Mahape, Navi Mumbai - 400710
+                            </p>
+                        </div>
+
+                        <div>
+                            <p><i class="fa fa-phone  mx-2 "></i> +91 22-27782183</p>
+                        </div>
+                        <div>
+                            <p><i class="fa fa-envelope  mx-2"></i><a href="mailto:support@eduonix.com">support@eduonix.com</a></p>
+                        </div>
+                    </div>
+                </div>
+
+
+                        </div>
+                    </div>  *@
+
+
+
+        </footer>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    @*to do move bundle*@
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.material.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+
+</body>
+</html>

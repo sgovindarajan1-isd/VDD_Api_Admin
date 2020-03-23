@@ -1,0 +1,91 @@
+﻿.content {
+    min-height: calc(100vh - 120px);
+}
+
+/*#main {
+    overflow: auto;
+    padding-bottom: 150px; /* this needs to be bigger than footer height 
+}
+*/
+
+.navbar-inverse::after {
+    background-color: red;
+}
+
+html, body {
+    height: 100%;
+}
+
+#summaryContainer {
+    overflow: auto;
+    /*padding-bottom: 150px;  this needs to be bigger than footer height*/
+}
+
+#wrap {
+    min-height: 100%;
+}
+
+.header{
+    background-color: royalblue;
+    color: white !important;
+    font-weight: bold;
+}
+
+.footer {
+    position: Fixed;
+    /*margin-top: -150px;*/ /* negative value of footer height */
+    /*height: 150px;*/
+    clear: both;
+    padding-top: 20px;
+    background-color: royalblue;
+}
+
+
+
+.bodycls {
+    background-color: seashell !important;
+}
+
+
+.summaryContainer {
+    background-color: yellowgreen !important;
+}
+
+/* srini above changes*/
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .srinitestbtn {
+        color: red;
+        width: 2000px;
+    }
+}
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .srinitestbtn {
+            color: green;
+            width: 200px;
+        }
+    }
+@media (min-width: 576px) {
+    .srinitestbtn {
+        color: yellow;
+        width: 20px;
+    }
+}
+
+body {
+    /*padding-top: 50px;*/
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    /*padding-left: 15px;
+    padding-right: 15px;*/
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
