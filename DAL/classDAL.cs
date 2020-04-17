@@ -42,8 +42,6 @@ namespace DAL
 
     public class ClassDAL
     {
-        //using (SqlConnection con = new SqlConnection("Data Source = 30000038429DT; Initial Catalog = SriniTest DB; Integrated Security=true; Trusted_Connection=True"))
-        //con.Open();
         public string getDataLocalDB()
         {
             string retstring = "No Data";
@@ -74,12 +72,6 @@ namespace DAL
             {
                 using (SqlConnection con = DBconnection.Open())
                 {
-                    // test data only
-                    if (vendorNumber == "")
-                    {
-                        vendorNumber = "160431";
-                    }
-
                     string qrystring = "select * from [dbo].[VENDOR] where VendorNumber = '" + vendorNumber + "'";
                     SqlCommand cmd = new SqlCommand(qrystring, con);
 
@@ -113,11 +105,6 @@ namespace DAL
         }
 
 
-        //string constr = "Server=ecapsdev.hosted.lac.com; Database=eCAPDD; User ID=eCAPSDD;password=sqlteam#1";
-        //using (SqlConnection con = new SqlConnection("Data Source = ecapsdev.hosted.lac.com; User ID=eCAPSDD;password=sqlteam#1; Initial Catalog = eCAPDD; Integrated Security=true; Trusted_Connection=True"))
-        //using (SqlConnection con = new SqlConnection(constr))
-
-        //  Test method,  connection string will go to config file later  - To do 
         public Tuple<string, bool> ValidateUserbyuid_pwd(string user_id, string tin)
         {
             //bool retbool= false;
@@ -126,13 +113,6 @@ namespace DAL
             {
                 using (SqlConnection con = DBconnection.Open())
                 {
-                    // test data only
-                    if (user_id == "")
-                    {
-                        user_id = "160431";
-                        tin = "205770300";
-                    }
-
                     string qrystring = "select LGL_NM from [dbo].[R_VEND_USER] where user_id = '" + user_id + "' and tin = '" + tin + "'";
                     SqlCommand cmd = new SqlCommand(qrystring, con);
 
@@ -146,7 +126,6 @@ namespace DAL
                             {
 
                                 ret = new Tuple<string, bool>(reader["LGL_NM"].ToString(), true);
-                                // retbool = true; //  valid user
                             }
                             break;
                         }

@@ -15,40 +15,43 @@ namespace eCAPDDApi.Controllers
         {
             return View();
         }
-        public ActionResult Index111()
-        {
-            ViewBag.Title = "Home Page";
+    }
+}
 
-            IEnumerable<VM_login> vmLogindata = null;
+        //public ActionResult Index111()
+        //{
+        //    ViewBag.Title = "Home Page";
 
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44373/api/");
+        //    IEnumerable<VM_login> vmLogindata = null;
 
-                //HTTP GET
-                var responseTask = client.GetAsync("values");
-                responseTask.Wait();
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri("https://localhost:44373/api/");
 
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<VM_login>>();
-                    readTask.Wait();
+        //        //HTTP GET
+        //        var responseTask = client.GetAsync("values");
+        //        responseTask.Wait();
 
-                    vmLogindata = readTask.Result;
-                }
-                else //web api sent error response 
-                {
-                    //log response status here..
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsAsync<IList<VM_login>>();
+        //            readTask.Wait();
 
-                    vmLogindata = Enumerable.Empty<VM_login>();
+        //            vmLogindata = readTask.Result;
+        //        }
+        //        else //web api sent error response 
+        //        {
+        //            //log response status here..
 
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
-            }
+        //            vmLogindata = Enumerable.Empty<VM_login>();
+
+        //            ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //        }
+        //    }
 
 
-            return View(vmLogindata);
+        //    return View(vmLogindata);
 
             //--------------------------------------------------------------------------------------------------------------------------------
 
@@ -79,9 +82,6 @@ namespace eCAPDDApi.Controllers
             //    //returning the employee list to view  
             //    return View(sriniVwModeldata);
 
-        }
-
-
-
-        }
-}
+//        }
+//       }
+//}
