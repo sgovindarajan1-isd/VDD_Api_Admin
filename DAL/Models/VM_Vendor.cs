@@ -7,7 +7,7 @@ namespace DAL.Models
 {
     public class VM_Vendor
     {
-       // public int VendorId { get; set; }
+        // public int VendorId { get; set; }
         public string VendorNumber { get; set; }
         public string VendorName { get; set; }
         public string VendorAddress { get; set; }
