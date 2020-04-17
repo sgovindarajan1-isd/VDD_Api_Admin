@@ -81,8 +81,8 @@ namespace DAL
                         while (dr.Read())
                         {
                             VM_Vendor v = new VM_Vendor();
-                            //v.VendorNumber = dr["VendorNumber"].ToString();
-                            //v.VendorName = dr["VendorName"].ToString();
+                            v.VendorNumber = dr["VendorNumber"].ToString();
+                            v.VendorName = dr["VendorName"].ToString();
                             v.VendorAddress = dr["VendorAddress1"].ToString();
                             v.RoutingNumber = "112-RoutingNo";
                             v.AcccountNo = "666-AccountNo";
