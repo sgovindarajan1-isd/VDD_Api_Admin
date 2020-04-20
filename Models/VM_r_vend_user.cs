@@ -12,11 +12,13 @@ namespace eCAPDDApi.Models
         public bool   IsValidUser { get; set; }
         public string UserName { get; set; }
         public string ValidateToken  { get; set; }
+        public int PayeeId { get; set; }
     }
 
     public class VM_Vendor
     {
         public int VendorId { get; set; }
+        public int PayeeId { get; set; }
         public string VendorNumber { get; set; }
         public string VendorName { get; set; }
         public string VendorAddress { get; set; }
