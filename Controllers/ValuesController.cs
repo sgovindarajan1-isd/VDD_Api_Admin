@@ -87,12 +87,12 @@ namespace eCAPDDApi.Controllers
 
             VM_r_vend_user vm_LoginData = new VM_r_vend_user();
 
-            Tuple<string, int,  bool> result = clsdal.ValidateUserbyuid_pwd(vmuser.UserId, vmuser.Tin);
+            Tuple<string,  bool> result = clsdal.ValidateUserbyuid_pwd(vmuser.UserId, vmuser.Tin);
             if (result != null)
             {
                 vm_LoginData.UserName = result.Item1;
-                vm_LoginData.PayeeId = result.Item2;
-                vm_LoginData.IsValidUser = result.Item3;
+                //vm_LoginData.PayeeId = result.Item2;
+                vm_LoginData.IsValidUser = result.Item2;
                 vm_LoginData.ValidateToken = Thread.CurrentPrincipal.Identity.Name;
 
                 data.Add(vm_LoginData);
@@ -110,7 +110,7 @@ namespace eCAPDDApi.Controllers
             ClassDAL clsdal = new ClassDAL();
             VM_Vendor vm_Vendor = new VM_Vendor();
 
-            var  dt = clsdal.GetVendorDetailsByName(vmVendor.VendorNumber, vmVendor.PayeeId);
+            var  dt = clsdal.GetVendorDetailsByName(vmVendor.VendorNumber);  // vmVendor.PayeeId
             var data = new
             {
                 vendorlst = dt,
