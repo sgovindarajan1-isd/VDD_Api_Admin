@@ -67,7 +67,7 @@ namespace DAL
         }
 
         
-        public List<VM_Vendor> GetVendorDetailsByName(string vendorNumber, int payeeId)
+        public List<VM_Vendor> GetVendorDetailsByName(string vendorNumber)
         {
             List<VM_Vendor> lst_VM_Vendor = new List<VM_Vendor>();
             try
@@ -75,9 +75,10 @@ namespace DAL
                 DataSet ds = new DataSet("Vendor");
                 using (SqlConnection con = DBconnection.Open())
                 {
-                    SqlCommand sqlComm = new SqlCommand("PayeeToVendor_DirectDepositList_PendingConfirm", con);
+                    //SqlCommand sqlComm = new SqlCommand("PayeeToVendor_DirectDepositList_PendingConfirm", con);
+                    SqlCommand sqlComm = new SqlCommand("GetLocationsby_vend_cust_id", con);
                     sqlComm.Parameters.AddWithValue("@VendorNumber", vendorNumber);
-                    sqlComm.Parameters.AddWithValue("@PayeeID", payeeId);
+                    //sqlComm.Parameters.AddWithValue("@PayeeID", payeeId);
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = sqlComm;
@@ -87,7 +88,7 @@ namespace DAL
                     {
                     VM_Vendor v = new VM_Vendor();
                         v.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString(); //dr["VendorNumber"].ToString();
-                        v.VendorAddress = ds.Tables[0].Rows[i]["VendorAddress1"].ToString();
+                        v.VendorAddress = ds.Tables[0].Rows[i]["Address"].ToString();  //VendorAddress1
                         v.RoutingNumber = ds.Tables[0].Rows[i]["BankRountingNumber"].ToString();      
                         v.AcccountNo = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
                         v.AccountType = ds.Tables[0].Rows[i]["DDAccountType"].ToString();
@@ -107,9 +108,9 @@ namespace DAL
         }
 
 
-        public Tuple<string, int, bool> ValidateUserbyuid_pwd(string user_id, string tin)
+        public Tuple<string, bool> ValidateUserbyuid_pwd(string user_id, string tin)
         {
-            Tuple<string, int, bool> ret = null; 
+            Tuple<string, bool> ret = null; 
             try
             {
                 DataSet ds = new DataSet("Vendor");
@@ -127,7 +128,7 @@ namespace DAL
                     {
                         if (ds.Tables[0].Rows[0]["VendorName"].ToString() != string.Empty)
                         {
-                            ret = new Tuple<string, int, bool>(ds.Tables[0].Rows[0]["VendorName"].ToString(), Int32.Parse(ds.Tables[0].Rows[0]["PayeeId"].ToString()), true);
+                            ret = new Tuple<string, bool>(ds.Tables[0].Rows[0]["VendorName"].ToString(), true);
                         }
                     }
                     con.Close();
