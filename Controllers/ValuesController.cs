@@ -77,6 +77,58 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
+        private static Random random = new Random();
+        public  string GENErateConfirmationNumber(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
+        [HttpPost]
+        public HttpResponseMessage SubmitVendorDD(DAL.Models.VM_vendorDD vmvendorDD)
+        {
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
+            ClassDAL clsdal = new ClassDAL();
+            //List<VM_r_vend_user> data = new List<VM_r_vend_user>();
+
+            VM_vendorDD vmvendorreturn = new VM_vendorDD();
+
+            string confirmNumber = GENErateConfirmationNumber(6);
+            DateTime updateDate = DateTime.Now;
+            vmvendorDD.Confirmation = confirmNumber;
+            vmvendorDD.SubmitDateTime = updateDate;
+
+            Tuple<string, string> result = clsdal.SubmitVendor(vmvendorDD);
+            if (result != null)
+            {
+                vmvendorreturn.Confirmation = confirmNumber;
+                vmvendorreturn.SubmitDateTime = updateDate;
+
+                clsdal.SubmitAttachmentFile(vmvendorDD);
+
+
+                response = Request.CreateResponse(HttpStatusCode.OK, new { data = vmvendorreturn });
+
+            }
+
+            return response;
+        }
+
+
+        //[HttpPost]
+        //public HttpResponseMessage SubmitVendorDD([FromBody] VM_vendorDD vmvendorDD)
+        //{
+        //    var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
+        //    ClassDAL clsdal = new ClassDAL();
+        //    List<VM_contactus> data = new List<VM_contactus>();
+
+        //    response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+
+        //    return response;
+        //}
+
         [HttpPost]
         //[BasicAuthentication]
         public HttpResponseMessage LoginExternalVendor_authen([FromBody] VM_r_vend_user vmuser)

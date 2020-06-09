@@ -79,6 +79,7 @@
     <Compile Include="Models\VM_Login.cs" />
     <Compile Include="Models\VM_r_vend_user.cs" />
     <Compile Include="Models\VM_Vendor.cs" />
+    <Compile Include="Models\VM_vendorDD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

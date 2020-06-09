@@ -24,7 +24,6 @@ namespace DAL
                 return null;
             }
         } 
-        
 }
 
     public class VendorSecurity
@@ -88,6 +87,7 @@ namespace DAL
                     {
                     VM_Vendor v = new VM_Vendor();
                         v.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString(); //dr["VendorNumber"].ToString();
+                        v.LocationID = ds.Tables[0].Rows[i]["LocationID"].ToString(); //dr["VendorNumber"].ToString();
                         v.VendorAddress = ds.Tables[0].Rows[i]["Address"].ToString();  //VendorAddress1
                         v.RoutingNumber = ds.Tables[0].Rows[i]["BankRountingNumber"].ToString();      
                         v.AcccountNo = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
@@ -107,6 +107,15 @@ namespace DAL
             return lst_VM_Vendor;
         }
 
+        //public Tuple<string, string> SubmitVendor(global::eCAPDDApi.Models.VM_vendorDD vmvendorDD)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Tuple<string, string> SubmitVendor(global::eCAPDDApi.Models.VM_vendorDD vmvendorDD)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public Tuple<string, bool> ValidateUserbyuid_pwd(string user_id, string tin)
         {
@@ -139,6 +148,79 @@ namespace DAL
             }
             return ret;
         }
+
+        public Tuple<string, string> SubmitVendor(VM_vendorDD vmvendorDD) {
+            Tuple<string, string> ret = null;
+            try
+            {
+                DataSet ds = new DataSet("Vendor");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    foreach (string locid in vmvendorDD.locationIDs)
+                    {
+                        SqlCommand sqlComm = new SqlCommand("SubmitVendorDetails", con);
+                        sqlComm.Parameters.AddWithValue("@VEND_CUST_CD", vmvendorDD.vendorname);
+                        sqlComm.Parameters.AddWithValue("@AD_ID", locid);
+                        sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);//vmvendorDD.Confirmation)
+                        sqlComm.Parameters.AddWithValue("@REQUESTDATE", vmvendorDD.SubmitDateTime);
+
+                        sqlComm.Parameters.AddWithValue("@STATUS", 7);
+                        sqlComm.Parameters.AddWithValue("@DDNotifyEmail", vmvendorDD.DDNotifiEmail);
+                        sqlComm.Parameters.AddWithValue("@AccountType", vmvendorDD.AccountType);
+                        sqlComm.Parameters.AddWithValue("@AccountNumber", vmvendorDD.BankAccountNumber);
+
+                        sqlComm.Parameters.AddWithValue("@RoutingNumber", vmvendorDD.BankRoutingNo);
+                        sqlComm.Parameters.AddWithValue("@FinInstName", vmvendorDD.FinancialIns);
+                        sqlComm.Parameters.AddWithValue("@AuthorizedName", vmvendorDD.signername);
+                        sqlComm.Parameters.AddWithValue("@AuthorizedTitle", vmvendorDD.signertitle);
+
+                        sqlComm.Parameters.AddWithValue("@AuthorizedPhone", vmvendorDD.signerphone);
+                        sqlComm.Parameters.AddWithValue("@AuthorizedPhoneExt", "");
+                        sqlComm.Parameters.AddWithValue("@AuthorizedEmail", vmvendorDD.signeremail);
+                        sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", vmvendorDD.SubmitDateTime);
+
+                        sqlComm.CommandType = CommandType.StoredProcedure;
+                        sqlComm.ExecuteNonQuery();
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in SubmitVendor.  Message: " + ex.Message);
+            }
+            return new Tuple<string, string>("SUCCESS", "true");
+        }
+
+        public Tuple<string, string> SubmitAttachmentFile(VM_vendorDD vmvendorDD)
+        {
+            Tuple<string, string> ret = null;
+            try
+            {
+                DataSet ds = new DataSet("Vendor");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("SubmitVendorAttachment", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
+                    sqlComm.Parameters.AddWithValue("@AttachmentFileName", vmvendorDD.VendorAttachmentFileName);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUser", "");
+                    sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", vmvendorDD.SubmitDateTime);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in SubmitAttachmentFile.  Message: " + ex.Message);
+            }
+            return new Tuple<string, string>("SUCCESS", "true");
+        }
+
+        
     }
 }
 
