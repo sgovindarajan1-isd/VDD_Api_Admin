@@ -10,7 +10,8 @@ namespace DAL
 {
     public static class DBconnection
     {
-        public static SqlConnection Open() {
+        public static SqlConnection Open()
+        {
             try
             {
                 string ConnectionStrVDD = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionStrVDD"].ConnectionString;
@@ -20,11 +21,11 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                LogManager.log.Error("Error in Openning DB Connection.  Message: "+ ex.Message);
+                LogManager.log.Error("Error in Openning DB Connection.  Message: " + ex.Message);
                 return null;
             }
-        } 
-}
+        }
+    }
 
     public class VendorSecurity
     {
@@ -45,7 +46,7 @@ namespace DAL
         public string getDataLocalDB()
         {
             string retstring = "No Data";
-            
+
             using (SqlConnection con = DBconnection.Open())
             {
                 SqlCommand cmd = new SqlCommand("Select * from TestTable", con);
@@ -55,7 +56,7 @@ namespace DAL
                 {
                     while (reader.Read())
                     {
-                        retstring =  reader.GetInt32(0).ToString() + reader.GetString(1);
+                        retstring = reader.GetInt32(0).ToString() + reader.GetString(1);
                         break;
                     }
                 }
@@ -65,7 +66,7 @@ namespace DAL
             return retstring;
         }
 
-        
+
         public List<VM_Vendor> GetVendorDetailsByName(string vendorNumber)
         {
             List<VM_Vendor> lst_VM_Vendor = new List<VM_Vendor>();
@@ -82,20 +83,20 @@ namespace DAL
                     SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = sqlComm;
                     da.Fill(ds);
-                        
+
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                    VM_Vendor v = new VM_Vendor();
+                        VM_Vendor v = new VM_Vendor();
                         v.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString(); //dr["VendorNumber"].ToString();
                         v.LocationID = ds.Tables[0].Rows[i]["LocationID"].ToString(); //dr["VendorNumber"].ToString();
                         v.VendorAddress = ds.Tables[0].Rows[i]["Address"].ToString();  //VendorAddress1
-                        v.RoutingNumber = ds.Tables[0].Rows[i]["BankRountingNumber"].ToString();      
+                        v.RoutingNumber = ds.Tables[0].Rows[i]["BankRountingNumber"].ToString();
                         v.AcccountNo = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
                         v.AccountType = ds.Tables[0].Rows[i]["DDAccountType"].ToString();
                         v.RemittanceEmail = ds.Tables[0].Rows[i]["DDNotifyEmail"].ToString();
                         v.Status = ds.Tables[0].Rows[i]["DDStatus"].ToString();
-                    lst_VM_Vendor.Add(v);
-                        
+                        lst_VM_Vendor.Add(v);
+
                     }
                     con.Close();
                 }
@@ -119,7 +120,7 @@ namespace DAL
 
         public Tuple<string, bool> ValidateUserbyuid_pwd(string user_id, string tin)
         {
-            Tuple<string, bool> ret = null; 
+            Tuple<string, bool> ret = null;
             try
             {
                 DataSet ds = new DataSet("Vendor");
@@ -142,41 +143,79 @@ namespace DAL
                     }
                     con.Close();
                 }
-                }
-            catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 LogManager.log.Error(ex.Message);
             }
             return ret;
         }
 
-        public Tuple<string, string> SubmitVendor(VM_vendorDD vmvendorDD) {
+
+        public string  GetApplicationStatus(int id)
+        {
+            string confirmationNum = string.Empty;
+            string ret = string.Empty;
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    DataSet ds = new DataSet("status");
+                    SqlCommand sqlComm = new SqlCommand("GetApplicationStatus", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", confirmationNum);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        if (ds.Tables[0].Rows[0]["StatusDesc"].ToString() != string.Empty)
+                        {
+                            ret = ds.Tables[0].Rows[0]["StatusDesc"].ToString();
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error(ex.Message);
+            }
+            return ret;
+        }
+
+
+
+        public Tuple<string, string> SubmitVendor(VM_vendorDD vmvendorDD)
+        {
             Tuple<string, string> ret = null;
             try
             {
                 DataSet ds = new DataSet("Vendor");
                 using (SqlConnection con = DBconnection.Open())
                 {
-                    foreach (string locid in vmvendorDD.locationIDs)
+                    foreach (string locid in vmvendorDD.LocationIDs)
                     {
                         SqlCommand sqlComm = new SqlCommand("SubmitVendorDetails", con);
-                        sqlComm.Parameters.AddWithValue("@VEND_CUST_CD", vmvendorDD.vendorname);
+                        sqlComm.Parameters.AddWithValue("@VEND_CUST_CD", vmvendorDD.Vendorname);
                         sqlComm.Parameters.AddWithValue("@AD_ID", locid);
                         sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);//vmvendorDD.Confirmation)
                         sqlComm.Parameters.AddWithValue("@REQUESTDATE", vmvendorDD.SubmitDateTime);
 
-                        sqlComm.Parameters.AddWithValue("@STATUS", 7);
+                        sqlComm.Parameters.AddWithValue("@STATUS", 5);  //  5 pending 
                         sqlComm.Parameters.AddWithValue("@DDNotifyEmail", vmvendorDD.DDNotifiEmail);
                         sqlComm.Parameters.AddWithValue("@AccountType", vmvendorDD.AccountType);
                         sqlComm.Parameters.AddWithValue("@AccountNumber", vmvendorDD.BankAccountNumber);
 
                         sqlComm.Parameters.AddWithValue("@RoutingNumber", vmvendorDD.BankRoutingNo);
                         sqlComm.Parameters.AddWithValue("@FinInstName", vmvendorDD.FinancialIns);
-                        sqlComm.Parameters.AddWithValue("@AuthorizedName", vmvendorDD.signername);
-                        sqlComm.Parameters.AddWithValue("@AuthorizedTitle", vmvendorDD.signertitle);
+                        sqlComm.Parameters.AddWithValue("@AuthorizedName", vmvendorDD.Signername);
+                        sqlComm.Parameters.AddWithValue("@AuthorizedTitle", vmvendorDD.Signertitle);
 
-                        sqlComm.Parameters.AddWithValue("@AuthorizedPhone", vmvendorDD.signerphone);
+                        sqlComm.Parameters.AddWithValue("@AuthorizedPhone", vmvendorDD.Signerphone);
                         sqlComm.Parameters.AddWithValue("@AuthorizedPhoneExt", "");
-                        sqlComm.Parameters.AddWithValue("@AuthorizedEmail", vmvendorDD.signeremail);
+                        sqlComm.Parameters.AddWithValue("@AuthorizedEmail", vmvendorDD.Signeremail);
                         sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", vmvendorDD.SubmitDateTime);
 
                         sqlComm.CommandType = CommandType.StoredProcedure;
@@ -189,6 +228,7 @@ namespace DAL
             catch (Exception ex)
             {
                 LogManager.log.Error("Error in SubmitVendor.  Message: " + ex.Message);
+                return null;
             }
             return new Tuple<string, string>("SUCCESS", "true");
         }
@@ -216,11 +256,38 @@ namespace DAL
             catch (Exception ex)
             {
                 LogManager.log.Error("Error in SubmitAttachmentFile.  Message: " + ex.Message);
+                return null;
             }
             return new Tuple<string, string>("SUCCESS", "true");
         }
 
-        
+        public string InsertRequestLog(VM_vendorDD vmvendorDD)
+        {
+            string ret = string.Empty;
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("InsertRequestLog", con);
+                    sqlComm.Parameters.AddWithValue("@VEND_CUST_CD", vmvendorDD.Vendorname);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
+                    sqlComm.Parameters.AddWithValue("@Source_ip", vmvendorDD.Source_ip);
+                    sqlComm.Parameters.AddWithValue("@Source_device", vmvendorDD.Source_device);
+                    sqlComm.Parameters.AddWithValue("@User_agent", vmvendorDD.User_agent);
+                    sqlComm.Parameters.AddWithValue("@Host_headers", vmvendorDD.Host_headers);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in InsertRequestLog.  Message: " + ex.Message);
+                return string.Empty;
+            }
+            return "SUCCESS";
+        }
     }
 }
 

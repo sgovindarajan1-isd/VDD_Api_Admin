@@ -23,7 +23,8 @@ namespace eCAPDDApi.Controllers
 
     [RoutePrefix("api/values")]
     
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors("*", "*", "*")]
     [BasicAuthentication]
     public class ValuesController : ApiController
     {
@@ -87,7 +88,7 @@ namespace eCAPDDApi.Controllers
 
 
         [HttpPost]
-        public HttpResponseMessage SubmitVendorDD(DAL.Models.VM_vendorDD vmvendorDD)
+        public HttpResponseMessage SubmitVendorDD([FromBody]DAL.Models.VM_vendorDD vmvendorDD)
         {
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
             ClassDAL clsdal = new ClassDAL();
@@ -97,24 +98,73 @@ namespace eCAPDDApi.Controllers
 
             string confirmNumber = GENErateConfirmationNumber(6);
             DateTime updateDate = DateTime.Now;
+
             vmvendorDD.Confirmation = confirmNumber;
             vmvendorDD.SubmitDateTime = updateDate;
 
             Tuple<string, string> result = clsdal.SubmitVendor(vmvendorDD);
             if (result != null)
             {
-                vmvendorreturn.Confirmation = confirmNumber;
-                vmvendorreturn.SubmitDateTime = updateDate;
 
-                clsdal.SubmitAttachmentFile(vmvendorDD);
-
-
+                Tuple<string, string> resultAttach = clsdal.SubmitAttachmentFile(vmvendorDD);
+                string resultRequestLog = clsdal.InsertRequestLog(vmvendorDD);
+                if ((resultAttach != null) && (resultRequestLog != string.Empty))
+                {
+                    vmvendorreturn.Confirmation = confirmNumber;
+                    vmvendorreturn.SubmitDateTime = updateDate;
+                }
+                else
+                {
+                    vmvendorreturn.Confirmation = "ERROR";
+                }
                 response = Request.CreateResponse(HttpStatusCode.OK, new { data = vmvendorreturn });
-
+            }
+            else {
+                vmvendorreturn.Confirmation = "ERROR";
             }
 
             return response;
         }
+
+
+        [HttpPost]
+        public HttpResponseMessage GetApplicationStatus1([FromUri] string Name)
+        //public HttpResponseMessage GetApplicationStatus([FromBody] IdTextClass confirmationNumObj)
+        //public HttpResponseMessage GetApplicationStatus([FromBody] VM_vendorDD confirmationNumObj)
+        {
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
+            ClassDAL clsdal = new ClassDAL();
+
+            //string result = clsdal.GetApplicationStatus(confirmationNumObj.Confirmation);
+            string result = clsdal.GetApplicationStatus(10);//Name);
+            //string result = clsdal.GetApplicationStatus(confirmationNumObj.Text);
+            if (result != null)
+            {
+                response = Request.CreateResponse(HttpStatusCode.OK, new { data = result });
+            }
+
+            return response;
+        }
+
+
+
+        [HttpPost]
+        public HttpResponseMessage checkStatus([FromBody] VM_r_vend_user vmuser)
+        //public HttpResponseMessage GetApplicationStatus(int id)
+        {
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
+            ClassDAL clsdal = new ClassDAL();
+
+            //string result = clsdal.GetApplicationStatus(confirmationNumObj.Confirmation);
+            string result = clsdal.GetApplicationStatus(10);//vmvendorDD.Confirmation);
+            if (result != null)
+            {
+                response = Request.CreateResponse(HttpStatusCode.OK, new { data = result });
+            }
+
+            return response;
+        }
+
 
 
         //[HttpPost]
