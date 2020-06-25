@@ -27,7 +27,7 @@ namespace eCAPDDApi
             GlobalConfiguration.Configuration.Filters.Add(new BasicAuthenticationAttribute());
 
 
-            config.EnableCors();
+           // config.EnableCors();
 
             // Web API routes
             config.MapHttpAttributeRoutes();

@@ -75,10 +75,8 @@ namespace DAL
                 DataSet ds = new DataSet("Vendor");
                 using (SqlConnection con = DBconnection.Open())
                 {
-                    //SqlCommand sqlComm = new SqlCommand("PayeeToVendor_DirectDepositList_PendingConfirm", con);
                     SqlCommand sqlComm = new SqlCommand("GetLocationsby_vend_cust_id", con);
                     sqlComm.Parameters.AddWithValue("@VendorNumber", vendorNumber);
-                    //sqlComm.Parameters.AddWithValue("@PayeeID", payeeId);
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = sqlComm;
@@ -87,9 +85,9 @@ namespace DAL
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
                         VM_Vendor v = new VM_Vendor();
-                        v.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString(); //dr["VendorNumber"].ToString();
-                        v.LocationID = ds.Tables[0].Rows[i]["LocationID"].ToString(); //dr["VendorNumber"].ToString();
-                        v.VendorAddress = ds.Tables[0].Rows[i]["Address"].ToString();  //VendorAddress1
+                        v.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString(); 
+                        v.LocationID = ds.Tables[0].Rows[i]["LocationID"].ToString(); 
+                        v.VendorAddress = ds.Tables[0].Rows[i]["Address"].ToString(); 
                         v.RoutingNumber = ds.Tables[0].Rows[i]["BankRountingNumber"].ToString();
                         v.AcccountNo = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
                         v.AccountType = ds.Tables[0].Rows[i]["DDAccountType"].ToString();
@@ -152,17 +150,16 @@ namespace DAL
         }
 
 
-        public string  GetApplicationStatus(int id)
+        public string  GetApplicationStatus(string  confirmationNumber)
         {
-            string confirmationNum = string.Empty;
-            string ret = string.Empty;
+            string ret = "Status not Found!";
             try
             {
                 using (SqlConnection con = DBconnection.Open())
                 {
                     DataSet ds = new DataSet("status");
                     SqlCommand sqlComm = new SqlCommand("GetApplicationStatus", con);
-                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", confirmationNum);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", confirmationNumber);
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = sqlComm;
@@ -181,8 +178,49 @@ namespace DAL
             catch (Exception ex)
             {
                 LogManager.log.Error(ex.Message);
+                ret = "Error in Status Check!";
             }
+
             return ret;
+        }
+
+        public string PostContactus(VM_contactus vmcontactus) {
+
+            string userid = string.Empty;
+            if (vmcontactus.UserId != null)
+                userid = vmcontactus.UserId;
+
+            try
+            {
+                DataSet ds = new DataSet("ContactUs");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                        SqlCommand sqlComm = new SqlCommand("SubmitContactUsDetails", con);
+                        sqlComm.Parameters.AddWithValue("@Company", vmcontactus.Company);
+                        sqlComm.Parameters.AddWithValue("@FirstName", vmcontactus.FirstName);
+                        sqlComm.Parameters.AddWithValue("@LastName", vmcontactus.LastName);
+                        sqlComm.Parameters.AddWithValue("@Email", vmcontactus.Email);
+
+                        sqlComm.Parameters.AddWithValue("@Phone", vmcontactus.Phone);   
+                        sqlComm.Parameters.AddWithValue("@Category", vmcontactus.Subject);
+                        sqlComm.Parameters.AddWithValue("@Comments", vmcontactus.Message);
+
+                        sqlComm.Parameters.AddWithValue("@LastUpdatePersonID", userid);
+                        sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", DateTime.Now);
+
+                        sqlComm.CommandType = CommandType.StoredProcedure;
+                        sqlComm.ExecuteNonQuery();
+                    
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in SubmitContactUsDetails.  Message: " + ex.Message);
+                return null;
+            }
+            return "SUCCESS";
         }
 
 

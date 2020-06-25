@@ -76,6 +76,7 @@
     <Compile Include="classDAL.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Models\IdTextClass.cs" />
+    <Compile Include="Models\VM_contactus.cs" />
     <Compile Include="Models\VM_Login.cs" />
     <Compile Include="Models\VM_r_vend_user.cs" />
     <Compile Include="Models\VM_Vendor.cs" />
