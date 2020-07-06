@@ -10,6 +10,7 @@ namespace DAL.Models
         // public int VendorId { get; set; }
         public string VendorNumber { get; set; }
         public string VendorName { get; set; }
+        public string LocationID { get; set; }
         public string VendorAddress { get; set; }
         public string RoutingNumber { get; set; }
         public string AcccountNo { get; set; }

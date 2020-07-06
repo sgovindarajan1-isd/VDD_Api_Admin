@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Owin;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
@@ -26,7 +27,7 @@ namespace eCAPDDApi
             GlobalConfiguration.Configuration.Filters.Add(new BasicAuthenticationAttribute());
 
 
-            config.EnableCors();
+           // config.EnableCors();
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -61,6 +62,9 @@ namespace eCAPDDApi
                 routeTemplate: WebApiConfig.UrlPrefix + "/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
                 );
+
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*" );
+            config.EnableCors(cors);
 
             //config.Routes.MapHttpRoute(
             //   name: "ApiByName",
