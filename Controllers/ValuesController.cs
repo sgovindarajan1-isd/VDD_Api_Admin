@@ -22,8 +22,11 @@ namespace eCAPDDApi.Controllers
     }
 
     [RoutePrefix("api/values")]
-    
+
     [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors("*", "*", "*")]
+    //[EnableCorsAttribute("*", "*", "*")]
+
     [BasicAuthentication]
     public class ValuesController : ApiController
     {
@@ -48,7 +51,6 @@ namespace eCAPDDApi.Controllers
         [HttpPost]
         public HttpResponseMessage GetVendorNamebyNameFromURI([FromUri] string Name)
         {
-            //var jData = Json.Decode(JSONData);
             string name = Name;
             var data = @"{ 'name': 'testname'}";
 
@@ -65,11 +67,13 @@ namespace eCAPDDApi.Controllers
         }
 
         [HttpPost]
-        //[BasicAuthentication]
-        public HttpResponseMessage postcontactus([FromBody] VM_contactus vmcontactus)
+        public HttpResponseMessage PostContactus([FromBody] DAL.Models.VM_contactus vmcontactus)
         {
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
             ClassDAL clsdal = new ClassDAL();
+            
+            string  result = clsdal.PostContactus(vmcontactus);
+
             List<VM_contactus> data = new List<VM_contactus>();
 
             response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
@@ -77,8 +81,69 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
+        private static Random random = new Random();
+        public  string GENErateConfirmationNumber(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
         [HttpPost]
-        //[BasicAuthentication]
+        public HttpResponseMessage SubmitVendorDD([FromBody]DAL.Models.VM_vendorDD vmvendorDD)
+        {
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
+            ClassDAL clsdal = new ClassDAL();
+
+            VM_vendorDD vmvendorreturn = new VM_vendorDD();
+
+            string confirmNumber = GENErateConfirmationNumber(6);
+            DateTime updateDate = DateTime.Now;
+
+            vmvendorDD.Confirmation = confirmNumber;
+            vmvendorDD.SubmitDateTime = updateDate;
+
+            Tuple<string, string> result = clsdal.SubmitVendor(vmvendorDD);
+            if (result != null)
+            {
+
+                Tuple<string, string> resultAttach = clsdal.SubmitAttachmentFile(vmvendorDD);
+                string resultRequestLog = clsdal.InsertRequestLog(vmvendorDD);
+                if ((resultAttach != null) && (resultRequestLog != string.Empty))
+                {
+                    vmvendorreturn.Confirmation = confirmNumber;
+                    vmvendorreturn.SubmitDateTime = updateDate;
+                }
+                else
+                {
+                    vmvendorreturn.Confirmation = "ERROR";
+                }
+                response = Request.CreateResponse(HttpStatusCode.OK, new { data = vmvendorreturn });
+            }
+            else {
+                vmvendorreturn.Confirmation = "ERROR";
+            }
+
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage CheckStatus([FromBody] IdTextClass confirmationNumObj)
+        {
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
+            ClassDAL clsdal = new ClassDAL();
+
+            string result = clsdal.GetApplicationStatus(confirmationNumObj.Text);
+            if (result != null)
+            {
+                response = Request.CreateResponse(HttpStatusCode.OK, new { data = result });
+            }
+
+            return response;
+        }
+
+        [HttpPost]
         public HttpResponseMessage LoginExternalVendor_authen([FromBody] VM_r_vend_user vmuser)
         {
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
@@ -91,7 +156,6 @@ namespace eCAPDDApi.Controllers
             if (result != null)
             {
                 vm_LoginData.UserName = result.Item1;
-                //vm_LoginData.PayeeId = result.Item2;
                 vm_LoginData.IsValidUser = result.Item2;
                 vm_LoginData.ValidateToken = Thread.CurrentPrincipal.Identity.Name;
 
@@ -104,13 +168,12 @@ namespace eCAPDDApi.Controllers
         }
 
         [HttpPost]
-        //[BasicAuthentication]
         public HttpResponseMessage GetVendorDetailsByName([FromBody] VM_Vendor vmVendor)
         {
             ClassDAL clsdal = new ClassDAL();
             VM_Vendor vm_Vendor = new VM_Vendor();
 
-            var  dt = clsdal.GetVendorDetailsByName(vmVendor.VendorNumber);  // vmVendor.PayeeId
+            var  dt = clsdal.GetVendorDetailsByName(vmVendor.VendorNumber); 
             var data = new
             {
                 vendorlst = dt,

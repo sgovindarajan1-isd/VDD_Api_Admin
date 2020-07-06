@@ -51,10 +51,15 @@ namespace eCAPDDApi
 
                 if (arr.Count() == 1)
                 {
-                    if ((SecuredToken != null ) && (Decrypt(SecuredToken) == "VDDsecuredcode!laisd2016") )
+                    if ((SecuredToken == "contactus") || (SecuredToken == "status"))
                     {
                         Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Encrypt("VDDsecuredcode!laisd2016"), "securitytoken"), null);
                     }
+                    else if ((SecuredToken != null ) && (Decrypt(SecuredToken) == "VDDsecuredcode!laisd2016") )
+                    {
+                        Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Encrypt("VDDsecuredcode!laisd2016"), "securitytoken"), null);
+                    }
+                    
                     else
                     {
                         actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "unauthorized");
