@@ -71,18 +71,18 @@ namespace eCAPDDApi.Controllers
         {
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
             ClassDAL clsdal = new ClassDAL();
-            
-            string  result = clsdal.PostContactus(vmcontactus);
+
+            string result = clsdal.PostContactus(vmcontactus);
 
             List<VM_contactus> data = new List<VM_contactus>();
 
             response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-            
+
             return response;
         }
 
         private static Random random = new Random();
-        public  string GENErateConfirmationNumber(int length)
+        public string GENErateConfirmationNumber(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
@@ -121,11 +121,25 @@ namespace eCAPDDApi.Controllers
                 }
                 response = Request.CreateResponse(HttpStatusCode.OK, new { data = vmvendorreturn });
             }
-            else {
+            else
+            {
                 vmvendorreturn.Confirmation = "ERROR";
             }
 
             return response;
+        }
+
+
+        [HttpPost]
+        public HttpResponseMessage InsertVendorReportFileName([FromBody]DAL.Models.VM_vendorDD vmvendorDD)
+        {
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
+            ClassDAL clsdal = new ClassDAL();
+
+            VM_vendorDD vmvendorreturn = new VM_vendorDD();
+
+            Tuple<string, string> resultAttach = clsdal.InsertVendorReportFileName(vmvendorDD);
+            return  Request.CreateResponse(HttpStatusCode.OK, new { data = resultAttach });
         }
 
         [HttpPost]
@@ -152,7 +166,7 @@ namespace eCAPDDApi.Controllers
 
             VM_r_vend_user vm_LoginData = new VM_r_vend_user();
 
-            Tuple<string,  bool> result = clsdal.ValidateUserbyuid_pwd(vmuser.UserId, vmuser.Tin);
+            Tuple<string, bool> result = clsdal.ValidateUserbyuid_pwd(vmuser.UserId, vmuser.Tin);
             if (result != null)
             {
                 vm_LoginData.UserName = result.Item1;
@@ -163,7 +177,7 @@ namespace eCAPDDApi.Controllers
 
                 response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             }
-       
+
             return response;
         }
 
@@ -173,7 +187,7 @@ namespace eCAPDDApi.Controllers
             ClassDAL clsdal = new ClassDAL();
             VM_Vendor vm_Vendor = new VM_Vendor();
 
-            var  dt = clsdal.GetVendorDetailsByName(vmVendor.VendorNumber); 
+            var dt = clsdal.GetVendorDetailsByName(vmVendor.VendorNumber);
             var data = new
             {
                 vendorlst = dt,

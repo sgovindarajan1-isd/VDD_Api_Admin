@@ -283,13 +283,39 @@ namespace DAL
                     sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
                     sqlComm.Parameters.AddWithValue("@AttachmentFileName", vmvendorDD.VendorAttachmentFileName);
                     sqlComm.Parameters.AddWithValue("@LastUpdatedUser", "");
-                    sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", vmvendorDD.SubmitDateTime);
+                    sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", DateTime.Now);
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.ExecuteNonQuery();
                     con.Close();
                 }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in SubmitAttachmentFile.  Message: " + ex.Message);
+                return null;
+            }
+            return new Tuple<string, string>("SUCCESS", "true");
+        }
 
+        public Tuple<string, string> InsertVendorReportFileName(VM_vendorDD vmvendorDD)
+        {
+            Tuple<string, string> ret = null;
+            try
+            {
+                DataSet ds = new DataSet("Vendor");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("SubmitVendorAttachment", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
+                    sqlComm.Parameters.AddWithValue("@AttachmentFileName", vmvendorDD.VendorReportFileName);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUser", "");
+                    sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", DateTime.Now);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
             }
             catch (Exception ex)
             {
