@@ -24,10 +24,7 @@ namespace eCAPDDApi
         static readonly string VIKey = "VDD@1B2c3D4e5F6g7H8";
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            
-            //var header1 = request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
             var header2 = HttpContext.Current.Request.Headers["Authorization"];
-
 
             if (actionContext.Request.Headers.Authorization == null)
             {
@@ -51,7 +48,7 @@ namespace eCAPDDApi
 
                 if (arr.Count() == 1)
                 {
-                    if ((SecuredToken == "contactus") || (SecuredToken == "status"))
+                    if ((SecuredToken == "contactus") || (SecuredToken == "status") || (SecuredToken == "admin") )
                     {
                         Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Encrypt("VDDsecuredcode!laisd2016"), "securitytoken"), null);
                     }

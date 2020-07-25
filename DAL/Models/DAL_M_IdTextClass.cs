@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DAL.Models
 {
-    public class IdTextClass
+    public class DAL_M_IdTextClass
     {
         public int Id { get; set; }
         public string IdText { get; set; }

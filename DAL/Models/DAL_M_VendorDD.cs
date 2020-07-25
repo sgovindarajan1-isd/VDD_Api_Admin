@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DAL.Models
 {
-    public class VM_vendorDD
+    public class DAL_M_VendorDD
     {
         public string Vendorname { get; set; }
         public string Payeename { get; set; }
@@ -15,7 +15,7 @@ namespace DAL.Models
         public string BankAccountNumber { get; set; }
         public string BankRoutingNo { get; set; }
         public string FinancialIns { get; set; }
-        public string DDNotifiEmail { get; set; }
+        public string DDNotifyEmail { get; set; }
 
         public string Signername { get; set; }
         public string Signertitle { get; set; }

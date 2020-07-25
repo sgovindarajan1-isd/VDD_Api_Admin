@@ -5,7 +5,7 @@ using System.Web;
 
 namespace eCAPDDApi.Models
 {
-    public class VM_r_vend_user
+    public class VM_R_Vend_User
     {
         public string UserId { get; set; }
         public string Tin { get; set; }
@@ -28,7 +28,22 @@ namespace eCAPDDApi.Models
         public string AccountType { get; set; }
         public string RemittanceEmail { get; set; }
         public string Status { get; set; }
-        
+    }
+
+    public class VM_AdminUser
+    {
+        public string UserId { get; set; }
+        public string Password { get; set; }
+        public string Status { get; set; }
+        public bool IsValidUser{ get; set; }
+        public string ErrorMessage { get; set; }
+
+        // used to get application list by status
+        public string Age1 { get; set; }
+        public string Age2 { get; set; }
+        public string Age3 { get; set; }
+
+
     }
 
     public class VM_contactus {
@@ -44,21 +59,24 @@ namespace eCAPDDApi.Models
 
     public class VM_vendorDD
     {
-        public string vendorname { get; set; }
-        public string payeename { get; set; }
-        public string ssn { get; set; }
+        public string Vendorname { get; set; }
+        public string Payeename { get; set; }
+        public string SSN { get; set; }
         public int AccountType { get; set; }
         public string BankAccountNumber { get; set; }
         public string BankRoutingNo { get; set; }
         public string FinancialIns { get; set; }
         public string DDNotifiEmail { get; set; }
-        public string signername { get; set; }
-        public string signertitle { get; set; }
-        public string signerphone { get; set; }
-        public string signeremail { get; set; }
+        public string SignerName { get; set; }
+        public string SignerTitle { get; set; }
+        public string SignerPhone { get; set; }
+        public string SignerEmail { get; set; }
         public string Confirmation { get; set; }
         public DateTime SubmitDateTime { get; set; }
-        public List<string> locationIDs { get; set; }
+        public List<string> LocationIDs { get; set; }
+
+        public string ReturnErrorSuccessMsg { get; set; }
+
 
     }
 }

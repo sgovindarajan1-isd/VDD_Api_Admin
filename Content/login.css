@@ -1,4 +1,95 @@
-﻿#titleimage {
+﻿/*Menu*/
+/*.navLink, a.navLink {
+    display: block;
+    float: left;
+    height: 34px;
+    line-height: 34px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    padding-left: 1em;
+    padding-right: 1em;
+    position: relative;
+    z-index: 13;
+    font-family: 'Roboto',sans-serif !important
+}
+
+    a.navLink:hover, .navHover {
+        background-color: #8537c1
+    }
+
+#pnlHistory {
+    position: relative;
+    background-color: #fff;
+    margin: 0
+}
+
+#lblHistory {
+    height: 32px
+}
+
+#history {
+    left: -185px;
+    position: absolute;
+    z-index: 10
+}*/
+
+/*********************  Menu end*/
+
+
+/* login start*/
+centerColumn {
+    margin: 0 auto;
+    padding: 0;
+    width: 71em;
+    text-align: left;
+    background-color: #fff;
+}
+
+.leftContent {
+    width: 16em;
+    float: left;
+}
+
+.leftBox {
+    padding: 1em;
+    margin-top: .5em;
+    border: 1px solid #ccc;
+}
+
+.centerColumn {
+    margin: 0 auto;
+    padding: 0;
+    width: 71em;
+    text-align: left;
+    background-color: #fff;
+}
+.divSeparator {
+    margin-bottom: 10px;
+}
+
+.loginWrapper {
+    margin-top: 1em;
+}
+
+.mainContent {
+    float: right;
+    border: 1px solid #ccc;
+    width: 54em;
+    margin-top: .5em;
+    position: relative;
+}
+
+.mainBox {
+    padding: 1em;
+}
+
+/* login end*/
+
+
+
+
+    #titleimage {
     background-image: url('images/DD01192016.jpg');
     background-size: 100% 100%;
     background-repeat: no-repeat;

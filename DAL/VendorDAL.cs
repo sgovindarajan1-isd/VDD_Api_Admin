@@ -31,45 +31,16 @@ namespace DAL
     {
         public static bool Login(string UserId, string TIN)
         {
-            //using (eCAPDDEntities entities = new eCAPDDEntities())
-            //{
-            //    bool ret = entities.R_VEND_USER.Any(vendor => vendor.USER_ID.Equals(UserId, StringComparison.OrdinalIgnoreCase) && vendor.TIN.Equals(TIN, StringComparison.OrdinalIgnoreCase));
-            //    return ret;
-            //}
-            ClassDAL cls = new ClassDAL();
+            VendorDAL cls = new VendorDAL();
             return true;
         }
     }
 
-    public class ClassDAL
+    public class VendorDAL
     {
-        public string getDataLocalDB()
+        public List<DAL_M_Vendor> GetVendorDetailsByName(string vendorNumber)
         {
-            string retstring = "No Data";
-
-            using (SqlConnection con = DBconnection.Open())
-            {
-                SqlCommand cmd = new SqlCommand("Select * from TestTable", con);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        retstring = reader.GetInt32(0).ToString() + reader.GetString(1);
-                        break;
-                    }
-                }
-                reader.Close();
-                con.Close();
-            }
-            return retstring;
-        }
-
-
-        public List<VM_Vendor> GetVendorDetailsByName(string vendorNumber)
-        {
-            List<VM_Vendor> lst_VM_Vendor = new List<VM_Vendor>();
+            List<DAL_M_Vendor> lst_VM_Vendor = new List<DAL_M_Vendor>();
             try
             {
                 DataSet ds = new DataSet("Vendor");
@@ -84,7 +55,7 @@ namespace DAL
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
-                        VM_Vendor v = new VM_Vendor();
+                        DAL_M_Vendor v = new DAL_M_Vendor();
                         v.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString(); 
                         v.LocationID = ds.Tables[0].Rows[i]["LocationID"].ToString(); 
                         v.VendorAddress = ds.Tables[0].Rows[i]["Address"].ToString(); 
@@ -105,16 +76,6 @@ namespace DAL
             }
             return lst_VM_Vendor;
         }
-
-        //public Tuple<string, string> SubmitVendor(global::eCAPDDApi.Models.VM_vendorDD vmvendorDD)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Tuple<string, string> SubmitVendor(global::eCAPDDApi.Models.VM_vendorDD vmvendorDD)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public Tuple<string, bool> ValidateUserbyuid_pwd(string user_id, string tin)
         {
@@ -137,6 +98,54 @@ namespace DAL
                         if (ds.Tables[0].Rows[0]["VendorName"].ToString() != string.Empty)
                         {
                             ret = new Tuple<string, bool>(ds.Tables[0].Rows[0]["VendorName"].ToString(), true);
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error(ex.Message);
+            }
+            return ret;
+        }
+
+        public Tuple<List<DAL_M_UserProfile>, bool> ValidateAdminUser(string user_id)
+        {
+            List<DAL_M_UserProfile> lst_DAL_M_UserProfile = new List<DAL_M_UserProfile>();
+
+            Tuple<List<DAL_M_UserProfile>, bool> ret = null;
+            try
+            {
+                DataSet ds = new DataSet("Admin");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetRolesAndPermissionsByUserID", con);
+                    sqlComm.Parameters.AddWithValue("@UserId", user_id);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+
+                        for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                        {
+                            DAL_M_UserProfile u = new DAL_M_UserProfile();
+                            u.UserID = ds.Tables[0].Rows[i]["UserID"].ToString();
+                            u.RoleId = ds.Tables[0].Rows[i]["RoleId"].ToString();
+                            u.RoleName = ds.Tables[0].Rows[i]["RoleName"].ToString();
+                            u.RoleDescription = ds.Tables[0].Rows[i]["RoleDescription"].ToString();
+                            u.PermissionId = ds.Tables[0].Rows[i]["PermissionId"].ToString();
+                            u.PermissionName = ds.Tables[0].Rows[i]["PermissionName"].ToString();
+                            u.UserStatus = ds.Tables[0].Rows[i]["UserStatus"].ToString();
+                            lst_DAL_M_UserProfile.Add(u);
+                        }
+
+                        if (lst_DAL_M_UserProfile.Count() > 0)
+                        {
+                            ret = new Tuple<List<DAL_M_UserProfile>, bool>(lst_DAL_M_UserProfile, true);
                         }
                     }
                     con.Close();
@@ -184,7 +193,7 @@ namespace DAL
             return ret;
         }
 
-        public string PostContactus(VM_contactus vmcontactus) {
+        public string PostContactus(DAL_M_ContactUs vmcontactus) {
 
             string userid = string.Empty;
             if (vmcontactus.UserId != null)
@@ -225,7 +234,7 @@ namespace DAL
 
 
 
-        public Tuple<string, string> SubmitVendor(VM_vendorDD vmvendorDD)
+        public Tuple<string, string> SubmitVendor(DAL_M_VendorDD vmvendorDD)
         {
             Tuple<string, string> ret = null;
             try
@@ -242,7 +251,7 @@ namespace DAL
                         sqlComm.Parameters.AddWithValue("@REQUESTDATE", vmvendorDD.SubmitDateTime);
 
                         sqlComm.Parameters.AddWithValue("@STATUS", 5);  //  5 pending 
-                        sqlComm.Parameters.AddWithValue("@DDNotifyEmail", vmvendorDD.DDNotifiEmail);
+                        sqlComm.Parameters.AddWithValue("@DDNotifyEmail", vmvendorDD.DDNotifyEmail);
                         sqlComm.Parameters.AddWithValue("@AccountType", vmvendorDD.AccountType);
                         sqlComm.Parameters.AddWithValue("@AccountNumber", vmvendorDD.BankAccountNumber);
 
@@ -271,7 +280,7 @@ namespace DAL
             return new Tuple<string, string>("SUCCESS", "true");
         }
 
-        public Tuple<string, string> SubmitAttachmentFile(VM_vendorDD vmvendorDD)
+        public Tuple<string, string> SubmitAttachmentFile(DAL_M_VendorDD vmvendorDD)
         {
             Tuple<string, string> ret = null;
             try
@@ -298,7 +307,7 @@ namespace DAL
             return new Tuple<string, string>("SUCCESS", "true");
         }
 
-        public Tuple<string, string> InsertVendorReportFileName(VM_vendorDD vmvendorDD)
+        public Tuple<string, string> InsertVendorReportFileName(DAL_M_VendorDD vmvendorDD)
         {
             Tuple<string, string> ret = null;
             try
@@ -325,7 +334,7 @@ namespace DAL
             return new Tuple<string, string>("SUCCESS", "true");
         }
 
-        public string InsertRequestLog(VM_vendorDD vmvendorDD)
+        public string InsertRequestLog(DAL_M_VendorDD vmvendorDD)
         {
             string ret = string.Empty;
             try
