@@ -42,8 +42,8 @@
 
     function loginUser(userId, password) {
         ////  To do :  test values for easy access,  remove later
-        var userId = 'c197831';
-        var password = ''; 
+        //var userId = 'c197831';
+        //var password = ''; 
 
         var SecuredToken = '';
 
@@ -64,8 +64,8 @@
 
             success: function (data) {
                 debugger;
-                alert('success from login screen');
-                alert('user name ' + data.data.userProfile[0]);
+                //alert('success from login screen');
+                //alert('user name ' + data.data.userProfile[0]);
 
                 sessionStorage.setItem('UserId', data.data.userId);
                 sessionStorage.setItem('UserName', data.data.userProfile[0]);
