@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DAL.Models
 {
-    public class VM_Vendor
+    public class DAL_M_Vendor
     {
         // public int VendorId { get; set; }
         public string VendorNumber { get; set; }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DAL.Models
 {
-    public class VM_r_vend_user
+    public class DAL_M_R_Vend_User
     {
         public string UserId { get; set; }
         public string Tin { get; set; }

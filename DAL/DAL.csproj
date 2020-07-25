@@ -73,14 +73,17 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="classDAL.cs" />
+    <Compile Include="AdminDAL.cs" />
+    <Compile Include="Models\DAL_M_ApplicationList.cs" />
+    <Compile Include="VendorDAL.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="Models\IdTextClass.cs" />
-    <Compile Include="Models\VM_contactus.cs" />
-    <Compile Include="Models\VM_Login.cs" />
-    <Compile Include="Models\VM_r_vend_user.cs" />
-    <Compile Include="Models\VM_Vendor.cs" />
-    <Compile Include="Models\VM_vendorDD.cs" />
+    <Compile Include="Models\DAL_M_IdTextClass.cs" />
+    <Compile Include="Models\DAL_M_ContactUs.cs" />
+    <Compile Include="Models\DAL_M_Login.cs" />
+    <Compile Include="Models\DAL_M_R_Vend_User.cs" />
+    <Compile Include="Models\DAL_M_UserProfile.cs" />
+    <Compile Include="Models\DAL_M_Vendor.cs" />
+    <Compile Include="Models\DAL_M_VendorDD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
