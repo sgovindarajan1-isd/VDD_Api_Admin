@@ -11,54 +11,25 @@ using System.Threading;
 
 namespace eCAPDDApi.Controllers
 {
-    public class RecipeInformation
+    public class VendorConfirmationEmail
     {
-        public string name { get; set; }
+        public string MessageBody { get; set; }
+        public string Subject { get; set; }
+        public string EmailFrom { get; set; }
+        public string EmailTo { get; set; }
+        public string EmailCC { get; set; }
+        //public string EmailBCC { get; set; }
     }
 
-    public class BlogAndStoryComment
-    {
-        public string name { get; set; }
-    }
-
+ 
     [RoutePrefix("api/values")]
 
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    //[EnableCors("*", "*", "*")]
-    //[EnableCorsAttribute("*", "*", "*")]
 
     [BasicAuthentication]
     public class ValuesController : ApiController
     {
-        [HttpGet]
-        public HttpResponseMessage GetVendorNumber(int id)
-        {
-            var data = @"{ 'id': '10'}";
-
-            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-            return response;
-        }
-
-        [HttpGet]
-        public HttpResponseMessage Different_get_2(int id)
-        {
-            var data = @"{ 'id': '10'}";
-
-            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-            return response;
-        }
-
-        [HttpPost]
-        public HttpResponseMessage GetVendorNamebyNameFromURI([FromUri] string Name)
-        {
-            string name = Name;
-            var data = @"{ 'name': 'testname'}";
-
-            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-            return response;
-        }
-
-        [HttpPost]
+         [HttpPost]
         public HttpResponseMessage LoginUser([FromBody] IdTextClass idtext)
         {
             List<VM_login> data = new List<VM_login>();
@@ -67,10 +38,10 @@ namespace eCAPDDApi.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage PostContactus([FromBody] DAL.Models.VM_contactus vmcontactus)
+        public HttpResponseMessage PostContactus([FromBody] DAL.Models.DAL_M_ContactUs vmcontactus)
         {
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
-            ClassDAL clsdal = new ClassDAL();
+            VendorDAL clsdal = new VendorDAL();
 
             string result = clsdal.PostContactus(vmcontactus);
 
@@ -82,23 +53,84 @@ namespace eCAPDDApi.Controllers
         }
 
         private static Random random = new Random();
-        public string GENErateConfirmationNumber(int length)
+        public string GenerateConfirmationNumber(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+        private string getMessageBody(string vendorName, string confirmNumber)
+        {
+            string emailBody = string.Empty;
 
+            emailBody = "Thank you for submitting your Direct Deposit Authorization Form to the County of Los Angeles. Your request details are as follows: </br></br> Payee Name: " + vendorName + "</br>Confirmation #: " + confirmNumber + "</br>Allow up to 15 business days for your Direct Deposit Authorization Form to be processed. An email notification will be sent to you if your Direct Deposit request is Approved or Rejected.</br></br>Please reply to this email directly if further assistance is required.</br></br> ***CONFIDENTIALITY NOTICE: This email message, including any attachments, is intended for the official and confidential use of the recipient or an agent responsible for delivering this message to the intended recipient. Please be advised that any use, reproduction, or dissemination of this message or its contents is strictly prohibited and is protected by law. If this message is received in error, please immediately reply to this email and delete the message and all of its attachments.*** ";
+            return emailBody;
+        }
+
+        private VendorConfirmationEmail VendorConfirmationEmail(string vendorName, string confirmNumber, string DDNotifiEmail)
+        {
+            VendorConfirmationEmail obj = new VendorConfirmationEmail();
+            obj.MessageBody = getMessageBody(vendorName, confirmNumber);
+            obj.Subject = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_Subject"] + " " + confirmNumber;
+            obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailFrom"];//"sgovindarajan@isd.lacounty.gov";
+            obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailTo"]; // DDNotifiEmail  //  to do   get it from notify eamil
+            obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailCC"];
+           // obj.EmailBCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailBCC"];
+            return obj;
+        }
+
+        private string SendEmail(string vendorName, string confirmNumber, string DDNotifiEmail)
+        {
+            VendorConfirmationEmail emailObj = VendorConfirmationEmail(vendorName, confirmNumber, DDNotifiEmail);
+
+            if ((String.IsNullOrEmpty(emailObj.EmailFrom) | String.IsNullOrWhiteSpace(emailObj.EmailFrom)) |
+                 (String.IsNullOrEmpty(emailObj.Subject) | String.IsNullOrWhiteSpace(emailObj.Subject)) |
+                 (String.IsNullOrEmpty(emailObj.MessageBody) | String.IsNullOrWhiteSpace(emailObj.MessageBody))
+               )
+            {
+                return "Error - Missing required parameter. Message was not sent.";
+            }
+
+            System.Net.Mail.SmtpClient smtCliend = new System.Net.Mail.SmtpClient();
+            System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(emailObj.EmailFrom, emailObj.EmailTo);  //, emailObj.EmailCC.ToString()
+
+
+            foreach (var address in emailObj.EmailTo.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                mailMsg.To.Add(address);
+            }
+
+            foreach (var address in emailObj.EmailCC.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                mailMsg.CC.Add(address);
+            }
+
+            //mailMsg.Bcc.Add(emailObj.EmailBCC);
+            mailMsg.Subject = emailObj.Subject;
+            mailMsg.Body = emailObj.MessageBody;
+            mailMsg.IsBodyHtml = true;
+            mailMsg.Priority = System.Net.Mail.MailPriority.Normal;
+            try
+            {
+                smtCliend.Send(mailMsg);
+            }
+            catch (System.Exception ex)
+            {
+                return "Error - " + ex.Message;
+            }
+
+            return "Success";
+        }
 
         [HttpPost]
-        public HttpResponseMessage SubmitVendorDD([FromBody]DAL.Models.VM_vendorDD vmvendorDD)
+        public HttpResponseMessage SubmitVendorDD([FromBody]DAL.Models.DAL_M_VendorDD vmvendorDD)
         {
-            var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
-            ClassDAL clsdal = new ClassDAL();
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
+            VendorDAL clsdal = new VendorDAL();
 
             VM_vendorDD vmvendorreturn = new VM_vendorDD();
 
-            string confirmNumber = GENErateConfirmationNumber(6);
+            string confirmNumber = GenerateConfirmationNumber(6);
             DateTime updateDate = DateTime.Now;
 
             vmvendorDD.Confirmation = confirmNumber;
@@ -114,16 +146,19 @@ namespace eCAPDDApi.Controllers
                 {
                     vmvendorreturn.Confirmation = confirmNumber;
                     vmvendorreturn.SubmitDateTime = updateDate;
+
+                    vmvendorreturn.ReturnErrorSuccessMsg = SendEmail(vmvendorDD.Payeename, confirmNumber, vmvendorDD.DDNotifyEmail);
                 }
                 else
                 {
-                    vmvendorreturn.Confirmation = "ERROR";
+                    vmvendorreturn.Confirmation = "ERROR-in attach";
+                    vmvendorreturn.ReturnErrorSuccessMsg = "Error in submitting Attachment file/Request Log";
                 }
                 response = Request.CreateResponse(HttpStatusCode.OK, new { data = vmvendorreturn });
             }
             else
             {
-                vmvendorreturn.Confirmation = "ERROR";
+                vmvendorreturn.Confirmation = "ERROR-submit vendor confirmation";
             }
 
             return response;
@@ -131,22 +166,22 @@ namespace eCAPDDApi.Controllers
 
 
         [HttpPost]
-        public HttpResponseMessage InsertVendorReportFileName([FromBody]DAL.Models.VM_vendorDD vmvendorDD)
+        public HttpResponseMessage InsertVendorReportFileName([FromBody]DAL.Models.DAL_M_VendorDD vmvendorDD)
         {
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
-            ClassDAL clsdal = new ClassDAL();
+            VendorDAL clsdal = new VendorDAL();
 
             VM_vendorDD vmvendorreturn = new VM_vendorDD();
 
             Tuple<string, string> resultAttach = clsdal.InsertVendorReportFileName(vmvendorDD);
-            return  Request.CreateResponse(HttpStatusCode.OK, new { data = resultAttach });
+            return Request.CreateResponse(HttpStatusCode.OK, new { data = resultAttach });
         }
 
         [HttpPost]
         public HttpResponseMessage CheckStatus([FromBody] IdTextClass confirmationNumObj)
         {
-            var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
-            ClassDAL clsdal = new ClassDAL();
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
+            VendorDAL clsdal = new VendorDAL();
 
             string result = clsdal.GetApplicationStatus(confirmationNumObj.Text);
             if (result != null)
@@ -158,13 +193,13 @@ namespace eCAPDDApi.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage LoginExternalVendor_authen([FromBody] VM_r_vend_user vmuser)
+        public HttpResponseMessage LoginExternalVendor_authen([FromBody] VM_R_Vend_User vmuser)
         {
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
-            ClassDAL clsdal = new ClassDAL();
-            List<VM_r_vend_user> data = new List<VM_r_vend_user>();
+            VendorDAL clsdal = new VendorDAL();
+            List<VM_R_Vend_User> data = new List<VM_R_Vend_User>();
 
-            VM_r_vend_user vm_LoginData = new VM_r_vend_user();
+            VM_R_Vend_User vm_LoginData = new VM_R_Vend_User();
 
             Tuple<string, bool> result = clsdal.ValidateUserbyuid_pwd(vmuser.UserId, vmuser.Tin);
             if (result != null)
@@ -184,8 +219,8 @@ namespace eCAPDDApi.Controllers
         [HttpPost]
         public HttpResponseMessage GetVendorDetailsByName([FromBody] VM_Vendor vmVendor)
         {
-            ClassDAL clsdal = new ClassDAL();
-            VM_Vendor vm_Vendor = new VM_Vendor();
+            VendorDAL clsdal = new VendorDAL();
+           // VM_Vendor vm_Vendor = new VM_Vendor();
 
             var dt = clsdal.GetVendorDetailsByName(vmVendor.VendorNumber);
             var data = new
@@ -198,22 +233,45 @@ namespace eCAPDDApi.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage LoginAdminUser([FromBody] IdTextClass idtext)
+        public HttpResponseMessage LoginAdminUser([FromBody] VM_AdminUser vm_AdminUser) //(   [FromBody] VM_r_vend_user vmuser
         {
-            //gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
-            //return loginServs.AccountExists("C197831_s");
+            gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
+            bool bool_isAuthenicated = false;
+            if (vm_AdminUser.UserId != string.Empty)
+            {
+                //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
+                bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
+               
+            }
 
-            List<VM_login> data = new List<VM_login>();
-            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-            return response;
-        }
+            if (!bool_isAuthenicated)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: User Id and Password not found!" });
+            }
 
-        // POST api/values
-        [HttpPost]
-        public void Post(RecipeInformation information)
-        {
-            var data = @"{ 'id': '10'}";
+            VendorDAL clsdal = new VendorDAL();
+            Tuple<List<DAL.Models.DAL_M_UserProfile>, bool> result = clsdal.ValidateAdminUser(vm_AdminUser.UserId);
+
+            if (result != null)
+            {
+                var v1 = loginServs.UserSearch(vm_AdminUser.UserId);
+                var v3 = loginServs.GetUserProfile(vm_AdminUser.UserId);
+
+
+                var data = new
+                { 
+                    userProfile= v1,
+                    userProfile_2 = v3,
+                    List_userRoles = result.Item1,
+                    IsValidUser = result.Item2
+                };
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: Invalid Login." });
         }
+     
     }
 }
+
 

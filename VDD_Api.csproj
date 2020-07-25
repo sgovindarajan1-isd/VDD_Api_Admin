@@ -307,8 +307,10 @@
     <Compile Include="Areas\RouteDebugger\RouteDebuggerConfig.cs" />
     <Compile Include="BasicAunthendicationAtribute.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="Controllers\ApplicationListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -318,7 +320,7 @@
     <Compile Include="Infrastrucure1\UserAuthenticationFilter.cs" />
     <Compile Include="Models\IdTextClass.cs" />
     <Compile Include="Models\VM_login.cs" />
-    <Compile Include="Models\VM_r_vend_user.cs" />
+    <Compile Include="Models\VM_R_Vend_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -344,13 +346,17 @@
     <Content Include="Content\button-images\CountySeal.png" />
     <Content Include="Content\button-images\fa fa-envelope.png" />
     <Content Include="Content\button-images\fa fa-information.png" />
+    <Content Include="Content\dashboard.css" />
     <Content Include="Content\images\DD01192016.jpg" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\main2.css" />
+    <Content Include="Content\mainmenu.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\App\dashboard.js" />
     <Content Include="Scripts\App\VendorJs.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -393,6 +399,7 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Home\_partialDashboard.cshtml" />
     <None Include="Web References\gov.lacounty.webadminisd\service.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -421,6 +428,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\UserProfile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

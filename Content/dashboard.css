@@ -1,0 +1,17 @@
+﻿body {
+}
+
+.chartcontainer {
+    display: flex;
+    width: 100%;
+    height: 150%;
+}
+
+.chart1,
+.chart2,
+.chart3 {
+    /*width: 200;
+    height: 200;*/
+    /*background-color: lightblue;
+    border: thin solid darkgray;*/
+}

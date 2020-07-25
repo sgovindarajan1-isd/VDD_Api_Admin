@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DAL.Models
 {
-    public class VM_contactus
+    public class DAL_M_ContactUs
     {
         public string Company { get; set; }
         public string FirstName { get; set; }
