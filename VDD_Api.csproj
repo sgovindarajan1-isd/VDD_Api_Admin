@@ -347,6 +347,8 @@
     <Content Include="Content\button-images\fa fa-envelope.png" />
     <Content Include="Content\button-images\fa fa-information.png" />
     <Content Include="Content\dashboard.css" />
+    <Content Include="Content\DataTable\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTable\select.dataTables.min.css" />
     <Content Include="Content\images\DD01192016.jpg" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
@@ -356,7 +358,12 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\App\AdminMain.js" />
+    <Content Include="Scripts\App\applicationList.js" />
     <Content Include="Scripts\App\dashboard.js" />
+    <Content Include="Scripts\App\DataTable\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\App\DataTable\dataTables.select.min.js" />
+    <Content Include="Scripts\App\DataTable\jquery.dataTables.min.js" />
     <Content Include="Scripts\App\VendorJs.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -400,6 +407,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\_partialDashboard.cshtml" />
+    <Content Include="Views\ApplicationList\_partialApplication.cshtml" />
     <None Include="Web References\gov.lacounty.webadminisd\service.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

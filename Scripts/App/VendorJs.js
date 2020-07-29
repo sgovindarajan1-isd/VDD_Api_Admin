@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $("#top-menu11").hide();
+    //$("#top-menu11").hide();
     //GetVendorNumber()  //   have two  different method  works no issues,  for now  post is not working
     //loginUser1();
     //loginUser();
@@ -20,8 +20,7 @@
         window.location.href = "https://localhost:44373/Transaction/SummaryView";
     });
 
-
-//function loginUser() {
+ //function loginUser() {
 //    debugger;
 //    $.ajax({
 //        contentType: 'application/json; charset=utf-8',
@@ -42,15 +41,16 @@
 
     function loginUser(userId, password) {
         ////  To do :  test values for easy access,  remove later
+       // var userId = 'e622505';
         //var userId = 'c197831';
-        //var password = ''; 
+        //var password = '3New90703'; 
 
         var SecuredToken = '';
 
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "post",
-            url:  "api/values/LoginAdminUser/",
+            //url:  "api/values/LoginAdminUser/",
             dataType: 'json',
             data: JSON.stringify({ 'UserId': userId, 'Password': password }),
             url: "/api/values/LoginAdminUser/",  
@@ -67,17 +67,23 @@
                 //alert('success from login screen');
                 //alert('user name ' + data.data.userProfile[0]);
 
-                sessionStorage.setItem('UserId', data.data.userId);
-                sessionStorage.setItem('UserName', data.data.userProfile[0]);
+                if (data.data.List_userRoles.length > 0) {
+                    sessionStorage.setItem('RoleId', data.data.List_userRoles[0].RoleId);
+                   -- alert(" your role is  - " + sessionStorage.getItem('RoleId') + "  Role Name " + data.data.List_userRoles[0].RoleName);
+                }
+
+                sessionStorage.setItem('UserId', userId);
+                sessionStorage.setItem('UserName', data.data.userProfile_2.displayNameField);
                 sessionStorage.setItem('UserRoles', data.data.List_userRoles);  // example  data.data.List_userRoles[0].UserID UserName UserStatus RoleId RoleName PermissionName
+                $("#id_userName").text(data.data.userProfile_2.displayNameField);
 
                 debugger;
 
                 if (data.data.IsValidUser == true) {
-                    var UserName = data.data.userId;
+                    //var UserName = data.data.userId;
                     // Setting global variable to authendicate the user
                     window.location.href = '/home/_partialDashboard';
-                    vdd.GlobalVariables.UserName = data.data.UserId;
+                    //vdd.GlobalVariables.UserName = data.data.UserId;
                     $("#loaderDiv").hide();
                 }
                 else {
@@ -101,8 +107,6 @@
             }
         });
     };
-
-        
     //function loginUser() {
     //        debugger;
     //        $.ajax({
@@ -120,6 +124,10 @@
     //    };
 
 });
+
+
+
+
 function GetVendorNumber() {
     $.ajax({
         contentType: "application/json; charset=utf-8",

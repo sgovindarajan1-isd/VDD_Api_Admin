@@ -39,6 +39,8 @@ namespace eCAPDDApi.Models
         public string ErrorMessage { get; set; }
 
         // used to get application list by status
+        public string PendingAssignmentStatus { get; set; }
+        public string MyapprovalStatus { get; set; }
         public string Age1 { get; set; }
         public string Age2 { get; set; }
         public string Age3 { get; set; }

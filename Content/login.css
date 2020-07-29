@@ -75,7 +75,7 @@ centerColumn {
 .mainContent {
     float: right;
     border: 1px solid #ccc;
-    width: 54em;
+    width: 50em;
     margin-top: .5em;
     position: relative;
 }

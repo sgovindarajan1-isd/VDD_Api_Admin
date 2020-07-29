@@ -27,7 +27,9 @@
     @*vdd move this down*@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/vddAdmin");
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    @*<script src="~/Scripts/App/VendorJs.js"></script>*@
 
 </head>
 <body>
@@ -70,10 +72,11 @@
                         <div class="menu-button1"></div>
                         <div id="pnlTabs" class="navHeader">
                             <div class="centerColumn">
-                                <a id="lnkHome" class="navLink homeIcon" alt="Home" href="./Dashboard.html" aria-label="Home">
+                                <a id="lnkHome" class="navLink homeIcon" alt="Home"  aria-label="Home">
                                     <span class="fa fa-home homeImage" aria-hidden="true"></span>
                                 </a>
-                                <a id="lnkCaseList" text="Case List" class="navLink" href="./ApplicationList_PendingAssignment.html">APPLICATION LIST</a>
+
+                                <a id="menu_applicatoinList" text="Application List" class="navLink">APPLICATION LIST</a>
                                 <a class="navLink" href="./Admin_Users.html">ADMIN</a>
                                 <a id="lnkReports" text="Case List" class="navLink" href="./Reports.html">REPORTS</a>
 
@@ -108,6 +111,8 @@
                     <h3 id="lbl_header">
                         Direct Deposit Management System
                         <span id="btn_loginLock" class="fa fa-expeditedssl fa-right" style="font-size: 22px;"></span>
+
+                        <span id="id_userName" class="fa fa-expeditedssl fa-right" style="float: right; font-size: 22px;"></span>
                     </h3>
 
                     <div class="header-line header-line-purple"><span></span></div>

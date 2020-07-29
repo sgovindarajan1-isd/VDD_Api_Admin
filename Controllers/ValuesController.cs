@@ -236,18 +236,21 @@ namespace eCAPDDApi.Controllers
         public HttpResponseMessage LoginAdminUser([FromBody] VM_AdminUser vm_AdminUser) //(   [FromBody] VM_r_vend_user vmuser
         {
             gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
-            bool bool_isAuthenicated = false;
-            if (vm_AdminUser.UserId != string.Empty)
-            {
-                //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
-                bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
-               
-            }
+            // just to go for demo
+            //////bool bool_isAuthenicated = false;
+            //////if (vm_AdminUser.UserId != string.Empty)
+            //////{
+            //////    //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
+            //////    bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
 
-            if (!bool_isAuthenicated)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: User Id and Password not found!" });
-            }
+            //////}
+
+            //////if (!bool_isAuthenicated)
+            //////{
+            //////    return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: User Id and Password not found!" });
+            //////}
+            ///
+            // just to go for demo  -  end
 
             VendorDAL clsdal = new VendorDAL();
             Tuple<List<DAL.Models.DAL_M_UserProfile>, bool> result = clsdal.ValidateAdminUser(vm_AdminUser.UserId);
@@ -270,7 +273,40 @@ namespace eCAPDDApi.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: Invalid Login." });
         }
-     
+
+        [HttpPost]
+        public HttpResponseMessage GetApplicationDetailsAssigned([FromBody] VM_AdminUser VM_adminUser)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetApplicationDetailsAssigned(VM_adminUser.UserId, VM_adminUser.PendingAssignmentStatus, VM_adminUser.MyapprovalStatus);
+            var data = new
+            {
+                pendingMyApprovalList = dt.Item1,
+                pendingAssignmentList = dt.Item2,
+                appPendingOver60Days = dt.Item3,
+                total = 1
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetAppliationAgeAssigned([FromBody] VM_AdminUser VM_adminUser)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetAppliationAgeAssigned(VM_adminUser.UserId, VM_adminUser.Status, VM_adminUser.Age1, VM_adminUser.Age2, VM_adminUser.Age3 );
+            var data = new
+            {
+                appliationAgeAssignedList = dt.Item1,
+                totalApplicationCount = dt.Item2,
+                totalApplicationCountOver60 = dt.Item3,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
     }
 }
 
