@@ -14,11 +14,15 @@ namespace eCAPDDApi.Controllers
     public class ApplicationListController :Controller
     {
 
-        public ActionResult _partialApplication()
+        public ActionResult ApplicationList()
         {
             return View();
         }
 
+        public ActionResult ApplicationSummary()
+        {
+            return View();
+        }
 
 
 

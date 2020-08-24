@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
-    $("#top-menu11").show();
+    $("#menu_TopPanel").show();
+    $("#menu_div_TopPanel").show();
     $("#id_userName").text(sessionStorage.getItem('UserName'));
 
     debugger;
@@ -14,7 +15,7 @@
 
     if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
         //getApplicationAge_AppPending_chartContainer(userId, '5');  //  Processor will not have visibility to  Application Pending assignment
-
+        $("#div_application_PendingAssignment").remove();
         getApplicationAge_AppPendingMyApproval_chartContainer(userId, '2');  // supervisor will see Rec_app 21,  rec_rej 22, ven confirm 23
     }
     
@@ -61,10 +62,11 @@
                             {
                                 data: days_pendingAssignmentList,//daysOld, //[Days015, 39, 10,  1],
                                 backgroundColor: [
-                                    "#FF6384",
-                                    "#4BC0C0",
-                                    "#FFCE56",
-                                    "#E7E9ED"
+                                    //"#FF6384",
+                                    //"#4BC0C0",
+                                    //"#FFCE56",
+                                    //"#E7E9ED"
+                                    "#00D974", "#36A2EB", "#FFCE56", "#D90000"
                                 ]
                             }]
                     },
@@ -132,10 +134,11 @@
                             {
                                 data: days_pendingMyApprovalList, // daysOld, //[Days015, 39, 10,  1],
                                 backgroundColor: [
-                                    "#FF6384",
-                                    "#4BC0C0",
-                                    "#FFCE56",
-                                    "#E7E9ED"
+                                    //"#FF6384",
+                                    //"#4BC0C0",
+                                    //"#FFCE56",
+                                    //"#E7E9ED"
+                                    "#00D974", "#36A2EB", "#FFCE56", "#D90000"
                                 ]
                             }]
                     },

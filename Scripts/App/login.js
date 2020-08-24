@@ -1,9 +1,49 @@
 ﻿$(document).ready(function () {
     //$("#top-menu11").hide();
+    $("#menu_TopPanel").hide();
+    $("#menu_div_TopPanel").hide();
     //GetVendorNumber()  //   have two  different method  works no issues,  for now  post is not working
     //loginUser1();
     //loginUser();
     // Post_GetVendorNamebyNameFromURI();
+
+    //$.getJSON("https://api.ipify.org/?format=json", function (e) {
+    //    debugger;
+    //    alert(e.ip);
+    //});
+
+    //$.get("https://ipinfo.io", function (response) {
+    //    alert(response.ip);
+    //}, "json");
+
+
+    //$.getJSON("http://smart-ip.net/geoip-json?callback=?", function (data) {
+    //    debugger;
+    //    alert(data.host);
+    //});
+
+    //function myIP() {
+    //    debugger;
+    //    if (window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
+    //    else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+
+    //    xmlhttp.open("GET", "http://api.hostip.info/get_html.php ", false);
+    //    xmlhttp.send();
+
+    //    hostipInfo = xmlhttp.responseText.split("n");
+
+    //    for (i = 0; hostipInfo.length >= i; i++) {
+    //        ipAddress = hostipInfo[i].split(":");
+    //        if (ipAddress[0] == "IP") {
+    //            ipAddress[1];
+    //        }
+    //    }
+
+    //    return false;
+    //}
+
+    //myIP();
+
 
     $("#btn_login").click(function () {
         var txt_userName = $('#txt_userName').val();
@@ -41,9 +81,9 @@
 
     function loginUser(userId, password) {
         ////  To do :  test values for easy access,  remove later
-       // var userId = 'e622505';
-        //var userId = 'c197831';
-        //var password = '3New90703'; 
+        //var userId = 'e622505';   // supervisor
+        //var userId = 'c197831';   //  processor
+        var password = '3New90703'; 
 
         var SecuredToken = '';
 
@@ -64,12 +104,10 @@
 
             success: function (data) {
                 debugger;
-                //alert('success from login screen');
-                //alert('user name ' + data.data.userProfile[0]);
 
                 if (data.data.List_userRoles.length > 0) {
                     sessionStorage.setItem('RoleId', data.data.List_userRoles[0].RoleId);
-                   -- alert(" your role is  - " + sessionStorage.getItem('RoleId') + "  Role Name " + data.data.List_userRoles[0].RoleName);
+                    //alert(" your role is  - " + sessionStorage.getItem('RoleId') + "  Role Name " + data.data.List_userRoles[0].RoleName);
                 }
 
                 sessionStorage.setItem('UserId', userId);
@@ -82,7 +120,7 @@
                 if (data.data.IsValidUser == true) {
                     //var UserName = data.data.userId;
                     // Setting global variable to authendicate the user
-                    window.location.href = '/home/_partialDashboard';
+                    window.location.href = '/home/dashboard';
                     //vdd.GlobalVariables.UserName = data.data.UserId;
                     $("#loaderDiv").hide();
                 }

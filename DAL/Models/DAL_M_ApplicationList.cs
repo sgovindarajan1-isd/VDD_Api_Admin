@@ -15,7 +15,7 @@ namespace DAL.Models
         public string ApplicationAge { get; set; }
         public string StatusCode { get; set; }
         public string StatusDesc { get; set; }
-
+        public string RequestType { get; set; }
         public string Age { get; set; }
         public string AgeCount { get; set; }
     }

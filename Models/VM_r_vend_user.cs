@@ -44,8 +44,11 @@ namespace eCAPDDApi.Models
         public string Age1 { get; set; }
         public string Age2 { get; set; }
         public string Age3 { get; set; }
-
-
+        //Filter params for Application list
+        public int FilterAge { get; set; } 
+        public string FilterApptype { get; set; }
+        public string FilterUser { get; set; }
+        public string FilterStatus { get; set; }
     }
 
     public class VM_contactus {

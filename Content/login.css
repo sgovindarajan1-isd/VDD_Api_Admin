@@ -38,13 +38,13 @@
 
 
 /* login start*/
-centerColumn {
+/*centerColumn {
     margin: 0 auto;
     padding: 0;
-    width: 71em;
+    width: 80em;
     text-align: left;
     background-color: #fff;
-}
+}*/
 
 .leftContent {
     width: 16em;
@@ -57,13 +57,13 @@ centerColumn {
     border: 1px solid #ccc;
 }
 
-.centerColumn {
+/*.centerColumn {
     margin: 0 auto;
     padding: 0;
     width: 71em;
     text-align: left;
     background-color: #fff;
-}
+}*/
 .divSeparator {
     margin-bottom: 10px;
 }

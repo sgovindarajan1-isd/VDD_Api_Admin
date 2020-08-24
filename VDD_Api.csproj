@@ -337,6 +337,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\RouteDebugger\Content\rdstyle.css" />
     <Content Include="Areas\RouteDebugger\Scripts\detect.js" />
+    <Content Include="Content\applicationsummary.css" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -346,6 +347,7 @@
     <Content Include="Content\button-images\CountySeal.png" />
     <Content Include="Content\button-images\fa fa-envelope.png" />
     <Content Include="Content\button-images\fa fa-information.png" />
+    <Content Include="Content\css.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\DataTable\jquery.dataTables.min.css" />
     <Content Include="Content\DataTable\select.dataTables.min.css" />
@@ -360,11 +362,12 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\App\AdminMain.js" />
     <Content Include="Scripts\App\applicationList.js" />
+    <Content Include="Scripts\App\applicationSummary.js" />
     <Content Include="Scripts\App\dashboard.js" />
     <Content Include="Scripts\App\DataTable\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\App\DataTable\dataTables.select.min.js" />
     <Content Include="Scripts\App\DataTable\jquery.dataTables.min.js" />
-    <Content Include="Scripts\App\VendorJs.js" />
+    <Content Include="Scripts\App\login.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -406,8 +409,9 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Home\_partialDashboard.cshtml" />
-    <Content Include="Views\ApplicationList\_partialApplication.cshtml" />
+    <Content Include="Views\Home\dashboard.cshtml" />
+    <Content Include="Views\ApplicationList\applicationList.cshtml" />
+    <Content Include="Views\ApplicationList\applicationSummary.cshtml" />
     <None Include="Web References\gov.lacounty.webadminisd\service.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
