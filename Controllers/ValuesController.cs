@@ -236,18 +236,21 @@ namespace eCAPDDApi.Controllers
         public HttpResponseMessage LoginAdminUser([FromBody] VM_AdminUser vm_AdminUser) //(   [FromBody] VM_r_vend_user vmuser
         {
             gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
-            bool bool_isAuthenicated = false;
-            if (vm_AdminUser.UserId != string.Empty)
-            {
-                //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
-                bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
-               
-            }
+            // just to go for demo
+            //////bool bool_isAuthenicated = false;
+            //////if (vm_AdminUser.UserId != string.Empty)
+            //////{
+            //////    //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
+            //////    bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
 
-            if (!bool_isAuthenicated)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: User Id and Password not found!" });
-            }
+            //////}
+
+            //////if (!bool_isAuthenicated)
+            //////{
+            //////    return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: User Id and Password not found!" });
+            //////}
+            ///
+            // just to go for demo  -  end
 
             VendorDAL clsdal = new VendorDAL();
             Tuple<List<DAL.Models.DAL_M_UserProfile>, bool> result = clsdal.ValidateAdminUser(vm_AdminUser.UserId);
@@ -270,7 +273,228 @@ namespace eCAPDDApi.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: Invalid Login." });
         }
-     
+
+        [HttpPost]
+        public HttpResponseMessage GetApplicationListAssigned([FromBody] VM_AdminUser VM_adminUser)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetApplicationListAssigned(VM_adminUser.UserId, VM_adminUser.PendingAssignmentStatus, VM_adminUser.MyapprovalStatus, VM_adminUser.FilterAge, VM_adminUser.FilterApptype, VM_adminUser.FilterUser, VM_adminUser.FilterStatus);
+            var data = new
+            {
+                pendingMyApprovalList = dt.Item1,
+                pendingAssignmentList = dt.Item2,
+                appPendingOver60Days = dt.Item3,
+                total = 1
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetAppliationAgeAssigned([FromBody] VM_AdminUser VM_adminUser)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetAppliationAgeAssigned(VM_adminUser.UserId, VM_adminUser.Status, VM_adminUser.Age1, VM_adminUser.Age2, VM_adminUser.Age3 );
+            var data = new
+            {
+                appliationAgeAssignedList = dt.Item1,
+                totalApplicationCount = dt.Item2,
+                totalApplicationCountOver60 = dt.Item3,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetApplicationSummary([FromBody] VM_AdminUser vm_AdminUser) //VM_vendorDD  IdText)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+             var dt = adminDAL.GetApplicationSummary(vm_AdminUser.UserId);//IdText.Confirmation);
+            var data = new
+            {
+                applicationSummary = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage UpdateApplicationStatus([FromBody] DAL.Models.DAL_M_VendorDD adminModel)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateApplicationStatus(adminModel.Confirmation, adminModel.Status, adminModel.Comment, adminModel.ReasonType, adminModel.ProcessorID , adminModel.AssignedBy);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage UpdateAssignApplication([FromBody] DAL.Models.DAL_M_VendorDD adminModel)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateAssignApplication(adminModel.Confirmation, adminModel.Status, adminModel.ProcessorID, adminModel.AssignedBy);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage UpdateVendorDetails([FromBody] DAL.Models.DAL_M_VendorDD adminModel)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateVendorDetails(adminModel);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage UpdateVendorBankDetails([FromBody] DAL.Models.DAL_M_VendorDD adminModel)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateVendorBankDetails(adminModel);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage UpdateVendorAuthorizationDetails([FromBody] DAL.Models.DAL_M_VendorDD adminModel)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateVendorAuthorizationDetails(adminModel);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage UpdateDepartmentDetails([FromBody] DAL.Models.DAL_M_VendorDD adminModel)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateDepartmentDetails(adminModel);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+
+        [HttpPost]
+        public HttpResponseMessage GetProcessorsList()
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetProcessorsList();
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+
+        [HttpPost]
+        public HttpResponseMessage GetApplicationCustomFilterList([FromBody] VM_AdminUser VM_adminUser)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetApplicationCustomFilterList();
+            var data = new
+            {
+                applicationTypeList= dt.Item1,
+                userList = dt.Item2,
+                statusList = dt.Item3,
+                //totalApplicationCountOver60 = dt.Item3,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+
+        //[HttpPost]
+        //public HttpResponseMessage GetApplicationTypeList()
+        //{
+        //    AdminDAL adminDAL = new AdminDAL();
+
+        //    var dt = adminDAL.GetApplicationTypeList();
+        //    var data = new
+        //    {
+        //        returnValue = dt,
+        //    };
+        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+        //    return response;
+        //}
+
+        //[HttpPost]
+        //public HttpResponseMessage GetApplicationUserList()
+        //{
+        //    AdminDAL adminDAL = new AdminDAL();
+
+        //    var dt = adminDAL.GetApplicationUserList();
+        //    var data = new
+        //    {
+        //        returnValue = dt,
+        //    };
+        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+        //    return response;
+        //}
+
+        //[HttpPost]
+        //public HttpResponseMessage GetApplicationStatusList()
+        //{
+        //    AdminDAL adminDAL = new AdminDAL();
+
+        //    var dt = adminDAL.GetApplicationStatusList();
+        //    var data = new
+        //    {
+        //        returnValue = dt,
+        //    };
+        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+        //    return response;
+        //}
+
+        //[HttpPost]
+        //public HttpResponseMessage GetTimeLineByConfirmationNumber()
+        //{
+        //    AdminDAL adminDAL = new AdminDAL();
+
+        //    var dt = adminDAL.GetTimeLineByConfirmationNumber();
+        //    var data = new
+        //    {
+        //        returnValue = dt,
+        //    };
+        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+        //    return response;
+        //}
+
     }
 }
 

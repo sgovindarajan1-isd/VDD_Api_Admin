@@ -39,11 +39,16 @@ namespace eCAPDDApi.Models
         public string ErrorMessage { get; set; }
 
         // used to get application list by status
+        public string PendingAssignmentStatus { get; set; }
+        public string MyapprovalStatus { get; set; }
         public string Age1 { get; set; }
         public string Age2 { get; set; }
         public string Age3 { get; set; }
-
-
+        //Filter params for Application list
+        public int FilterAge { get; set; } 
+        public string FilterApptype { get; set; }
+        public string FilterUser { get; set; }
+        public string FilterStatus { get; set; }
     }
 
     public class VM_contactus {
