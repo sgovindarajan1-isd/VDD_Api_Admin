@@ -1,5 +1,25 @@
-﻿body {
-    background-color: #fff;
+﻿hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid lightgrey !important;
+}
+
+h2, .sizeLarge {
+    font-size: 1.2em !important;
+}
+
+/*application list*/
+.isDisabledApplicationListLink {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+}
+/**/
+
+body {
+    background-color: #f2f2f2 !important; /*#fff;*/
     color: #000;
     font-family: 'Source Sans Pro',sans-serif;
 }
@@ -96,7 +116,8 @@ body {
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select,
-textarea {
+select
+/*textarea*/
+{
     max-width: 280px;
 }

@@ -16,7 +16,7 @@ namespace eCAPDDApi.Controllers
             return View();
         }
 
-        public ActionResult _partialDashBoard()
+        public ActionResult DashBoard()
         {
             return View();
         }

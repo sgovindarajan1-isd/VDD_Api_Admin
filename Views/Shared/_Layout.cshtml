@@ -27,8 +27,8 @@
     @*vdd move this down*@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 </head>
 <body>
     <div id="wp_header_removedtheBackheader" class="menu-align-left">
@@ -36,15 +36,15 @@
             <div>
                 @*this is to bring loginout logo and lacounty text to bring together*@
                 <a target="_blank" href="https://lacounty.gov" style=" color:rgba(41,213,236,1); font-family: Arial, Helvetica, sans-serif; font-size:medium;font-weight:bold">lacounty.gov</a>
-                <div style="float:right">
-                    <div>
-                        <div data-toggle="modal" class="dropdown" style="z-index: 2000; cursor: pointer">
-                            <span id="img_username" class="fa fa-user-circle" style="color:rgba(41,213,236,1)">
-                                <label id="lbl_userName" aria-label="Close" data-toggle="modal" data-target="#logoutModal" style="color:rgba(41,213,236,1); font-family: Arial, Helvetica, sans-serif;  cursor: pointer; font-size:medium;font-weight:initial" />
-                            </span>
+                @*<div style="float:right">
+                        <div>
+                            <div data-toggle="modal" class="dropdown" style="z-index: 2000; cursor: pointer">
+                                <span id="img_username" class="fa fa-user-circle" style="color:rgba(41,213,236,1)">
+                                    <label id="lbl_userName" aria-label="Close" data-toggle="modal" data-target="#logoutModal" style="color:rgba(41,213,236,1); font-family: Arial, Helvetica, sans-serif;  cursor: pointer; font-size:medium;font-weight:initial" />
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div>*@
             </div>
 
 
@@ -65,15 +65,16 @@
                         </div>
                     </div>*@
 
-                <div class="primary-menu-bar-wrapper1 row-wrapper1"  id="top-menu11">
+                <div class="primary-menu-bar-wrapper1 row-wrapper1" id="menu_TopPanel">
                     <div>
                         <div class="menu-button1"></div>
-                        <div id="pnlTabs" class="navHeader">
+                        <div id="menu_div_TopPanel" class="navHeader">
                             <div class="centerColumn">
-                                <a id="lnkHome" class="navLink homeIcon" alt="Home" href="./Dashboard.html" aria-label="Home">
+                                <a id="lnkHome" class="navLink homeIcon" alt="Home" aria-label="Home">
                                     <span class="fa fa-home homeImage" aria-hidden="true"></span>
                                 </a>
-                                <a id="lnkCaseList" text="Case List" class="navLink" href="./ApplicationList_PendingAssignment.html">APPLICATION LIST</a>
+
+                                <a id="menu_applicatoinList" text="Application List" class="navLink">APPLICATION LIST</a>
                                 <a class="navLink" href="./Admin_Users.html">ADMIN</a>
                                 <a id="lnkReports" text="Case List" class="navLink" href="./Reports.html">REPORTS</a>
 
@@ -108,6 +109,8 @@
                     <h3 id="lbl_header">
                         Direct Deposit Management System
                         <span id="btn_loginLock" class="fa fa-expeditedssl fa-right" style="font-size: 22px;"></span>
+
+                        <span id="id_userName" class="fa fa-expeditedssl fa-right" style="float: right; font-size: 22px;"></span>
                     </h3>
 
                     <div class="header-line header-line-purple"><span></span></div>
@@ -149,60 +152,76 @@
             @RenderBody()
         </div>
 
+
+
         <!--new footer -->
+        <hr class="row-wrapper">
+        <footer>
+            <div id="pnlfooter" style="text-align:center; display:inline-block; width:100%">
+                <div>
+                    <a href="./User Account_UserProfile.html">Profile</a>&nbsp;|&nbsp;
+                    <a href="./Login.html">Logout</a>&nbsp;|&nbsp;
+                    <a href="./Help.html">Help</a>
+                </div>
+                <div>County of Los Angeles Department of Auditor Controller</div>
+            </div>
+        </footer>
 
-        <div id="wp_footer-wrapper" class="row-wrapper">
-
-            <div id="wp_footer-widget-bar" class="widget" style="display:flow-root">
-                <div class="wp_container">
-                    <section class="widget-area">
-                        <div class="widget">
-                            <div class="textwidget"><img style="PADDING-LEFT: 10px; PADDING-TOP: 0px" src="/Content/Images/LACountySeal.png" alt="County Seal"><br><p style="PADDING-LEFT: 10px; padding-top:10px;"><b>Enriching Lives . . .</b></p></div>
-                        </div>
-                    </section>
-                    <section class="widget-area">
-                        <div class="widget">
-                            @*<h4 class="heading-font">DO YOU NEED HELP?</h4>*@
-                            <div class="menu-do-you-need-help-container">
-                                <ul id="menu-do-you-need-help" class="menu">
-                                    <li id="menu-item-2431" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2431"><a target="_blank" href="">Profile<span class="s"></span></a></li>
-                                </ul>
+        @*<div id="wp_footer-wrapper" class="row-wrapper">
+                <div id="wp_footer-widget-bar" class="widget" style="display:flow-root">
+                    <div class="wp_container">
+                        <section class="widget-area">
+                            <div class="widget">
+                                <div class="textwidget"><img style="PADDING-LEFT: 10px; PADDING-TOP: 0px" src="/Content/Images/LACountySeal.png" alt="County Seal"><br><p style="PADDING-LEFT: 10px; padding-top:10px;"><b>Enriching Lives . . .</b></p></div>
                             </div>
-                        </div>
-                    </section>
-                    <section class="widget-area">
-                        <div class="widget">
-                            @* <h4 class="heading-font">ABOUT US</h4>*@
-                            <div class="menu-about-us-container">
-                                <ul id="menu-about-us" class="menu">
-                                    <li id="menu-item-3043" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3043"><a href="">Logout</a></li>
-                                </ul>
+                        </section>
+                        <section class="widget-area">
+                            <div class="widget">
+                                <div class="menu-do-you-need-help-container">
+                                    <ul id="menu-do-you-need-help" class="menu">
+                                        <li id="menu-item-2431" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2431"><a target="_blank" href="">Profile<span class="s"></span></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </section>
-                    <section class="widget-area">
-                        <div class="widget">
-                            @*<h4 class="heading-font">SITE INFO</h4>*@
-                            <div class="menu-site-info-container">
-                                <ul id="menu-site-info" class="menu">
-                                    <li id="menu-item-2659" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2659"><a href="">Help</a></li>
-                                </ul>
+                        </section>
+                        <section class="widget-area">
+                            <div class="widget">
+                                <div class="menu-about-us-container">
+                                    <ul id="menu-about-us" class="menu">
+                                        <li id="menu-item-3043" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3043"><a href="">Logout</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </section>
-
-                </div><!--.container-->
-            </div><!--#footer-widget-bar-->
-        </div> @*"wp_footer-wrapper"*@
+                        </section>
+                        <section class="widget-area">
+                            <div class="widget">
+                                <div class="menu-site-info-container">
+                                    <ul id="menu-site-info" class="menu">
+                                        <li id="menu-item-2659" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2659"><a href="">Help</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>*@
         <!--new footer  -->
 
 
     </div>  @*wp_content*@
 
     @Scripts.Render("~/jsbundles/jquery")
+    @Scripts.Render("~/bundles/vddAdmin");
 
     <script>
         var hostdomainUrl = '@System.Configuration.ConfigurationManager.AppSettings["HostDomainUrl"]';
+            var sessoinTimeout = '@System.Configuration.ConfigurationManager.AppSettings["sessionTimeoutInterval"]'   //1 * 60 * 1000;
+            setTimeout('sessionEnd()', sessoinTimeout )
+            function sessionEnd() {
+                sessionStorage.clear();
+                window.location.href = '/home/index';
+            }
+
     </script>
 
     @RenderSection("scripts", required: false)

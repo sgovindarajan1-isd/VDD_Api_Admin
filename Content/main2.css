@@ -15,7 +15,7 @@ input[type=checkbox] {
 .layoutBody {
     /*overflow: auto;*/
     height: 100%;
-    min-height: 600px;
+    min-height: 850px;
     padding-bottom: 100px;
     background-color: #f2f2f2 !important;
 }
@@ -12037,7 +12037,7 @@ body {
 
 #wp_content, #wp_footer-widget-bar, #wp_footer, #woocommerce-lightbox-cart {
     /*font-family: "Open Sans";*/
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.7em;
     color: #4a4a4a
 }
