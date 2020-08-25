@@ -279,11 +279,11 @@ namespace eCAPDDApi.Controllers
         {
             AdminDAL adminDAL = new AdminDAL();
 
-            var dt = adminDAL.GetApplicationListAssigned(VM_adminUser.UserId, VM_adminUser.PendingAssignmentStatus, VM_adminUser.MyapprovalStatus, VM_adminUser.FilterAge, VM_adminUser.FilterApptype, VM_adminUser.FilterUser, VM_adminUser.FilterStatus);
+            var dt = adminDAL.GetApplicationListAssigned(VM_adminUser.RoleId, VM_adminUser.UserId, VM_adminUser.PendingAssignmentStatus, VM_adminUser.MyapprovalStatus, VM_adminUser.FilterAge, VM_adminUser.FilterApptype, VM_adminUser.FilterUser, VM_adminUser.FilterStatus);
             var data = new
             {
-                pendingMyApprovalList = dt.Item1,
-                pendingAssignmentList = dt.Item2,
+                pendingAssignmentList = dt.Item1,  //  supervisor view only
+                pendingMyApprovalList = dt.Item2,  // supervisor and processor view
                 appPendingOver60Days = dt.Item3,
                 total = 1
             };
@@ -296,7 +296,7 @@ namespace eCAPDDApi.Controllers
         {
             AdminDAL adminDAL = new AdminDAL();
 
-            var dt = adminDAL.GetAppliationAgeAssigned(VM_adminUser.UserId, VM_adminUser.Status, VM_adminUser.Age1, VM_adminUser.Age2, VM_adminUser.Age3 );
+            var dt = adminDAL.GetAppliationAgeAssigned(VM_adminUser.RoleId, VM_adminUser.UserId, VM_adminUser.Status, VM_adminUser.Age1, VM_adminUser.Age2, VM_adminUser.Age3 );
             var data = new
             {
                 appliationAgeAssignedList = dt.Item1,

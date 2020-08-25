@@ -36,35 +36,10 @@
             <div>
                 @*this is to bring loginout logo and lacounty text to bring together*@
                 <a target="_blank" href="https://lacounty.gov" style=" color:rgba(41,213,236,1); font-family: Arial, Helvetica, sans-serif; font-size:medium;font-weight:bold">lacounty.gov</a>
-                @*<div style="float:right">
-                        <div>
-                            <div data-toggle="modal" class="dropdown" style="z-index: 2000; cursor: pointer">
-                                <span id="img_username" class="fa fa-user-circle" style="color:rgba(41,213,236,1)">
-                                    <label id="lbl_userName" aria-label="Close" data-toggle="modal" data-target="#logoutModal" style="color:rgba(41,213,236,1); font-family: Arial, Helvetica, sans-serif;  cursor: pointer; font-size:medium;font-weight:initial" />
-                                </span>
-                            </div>
-                        </div>
-                    </div>*@
             </div>
-
-
-            @*<div id="info-bar1" class="content-font row-wrapper" style="background-color: red; height: 100px">
-                    <a id="lnkHome" class="navLink homeIcon" alt="Home" href="./Dashboard.html" aria-label="Home">
-                        <span class="fa fa-home homeImage" aria-hidden="true"></span>
-                    </a>
-                </div>*@
         </div>
         <header>
             <nav id="top-menu1">
-                @*<div class="logo-bar-wrapper">
-                        <div class="logo">
-                            <div id="logo"><img id="logo-default" src="/Content/Images/ac.logo3_.png" alt=""></div>
-                            <a id="lnkCaseList" text="Case List" class="navLink" href="./ApplicationList_PendingAssignment.html">APPLICATION LIST</a>
-                            <a class="navLink" href="./Admin_Users.html">ADMIN</a>
-                            <a id="lnkReports" text="Case List" class="navLink" href="./Reports.html">REPORTS</a>
-                        </div>
-                    </div>*@
-
                 <div class="primary-menu-bar-wrapper1 row-wrapper1" id="menu_TopPanel">
                     <div>
                         <div class="menu-button1"></div>
@@ -166,48 +141,7 @@
                 <div>County of Los Angeles Department of Auditor Controller</div>
             </div>
         </footer>
-
-        @*<div id="wp_footer-wrapper" class="row-wrapper">
-                <div id="wp_footer-widget-bar" class="widget" style="display:flow-root">
-                    <div class="wp_container">
-                        <section class="widget-area">
-                            <div class="widget">
-                                <div class="textwidget"><img style="PADDING-LEFT: 10px; PADDING-TOP: 0px" src="/Content/Images/LACountySeal.png" alt="County Seal"><br><p style="PADDING-LEFT: 10px; padding-top:10px;"><b>Enriching Lives . . .</b></p></div>
-                            </div>
-                        </section>
-                        <section class="widget-area">
-                            <div class="widget">
-                                <div class="menu-do-you-need-help-container">
-                                    <ul id="menu-do-you-need-help" class="menu">
-                                        <li id="menu-item-2431" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2431"><a target="_blank" href="">Profile<span class="s"></span></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="widget-area">
-                            <div class="widget">
-                                <div class="menu-about-us-container">
-                                    <ul id="menu-about-us" class="menu">
-                                        <li id="menu-item-3043" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3043"><a href="">Logout</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="widget-area">
-                            <div class="widget">
-                                <div class="menu-site-info-container">
-                                    <ul id="menu-site-info" class="menu">
-                                        <li id="menu-item-2659" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2659"><a href="">Help</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>*@
         <!--new footer  -->
-
-
     </div>  @*wp_content*@
 
     @Scripts.Render("~/jsbundles/jquery")
@@ -228,76 +162,3 @@
 
 </body>
 </html>
-
-
-@*<!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>@ViewBag.Title</title>
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-    </head>
-    <body>
-        <div id="container" style="background-color: antiquewhite">
-            <div class="titleimage stikyHeader"> </div>
-
-            <div class="navbar navbar-inverse stikyHeader">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle header" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-
-            <div style="background-color: Grey; color: orange">
-                @RenderSection("SriniStatus", false)
-            </div>
-
-            <div class="bodycls content">
-                @RenderBody()
-            </div>
-
-            <footer class="footer navbar-fixed-bottom">
-
-                <div class="row">
-                    <div class="img-countySeal" style="background:grey;"></div>
-                    <div class="col-md-8">
-                        <div id="link_bar">
-                            <a href="#">Contact Us</a>  |
-                            <a href="#">General Information</a>
-                        </div>
-
-                        <div id="link_bar">
-                            <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/privacy/">Privacy Policy</a>  |
-                            <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/user/">Terms of Use</a>  |
-                            <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/accessibility/">Accessibility</a>  |
-                            <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/disclaimer/">Disclaimer</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
-
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
-    </body>
-    </html>*@

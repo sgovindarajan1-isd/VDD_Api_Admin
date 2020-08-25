@@ -12,7 +12,7 @@
 
     // Default view for Supervisor
     if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-        getApplicationDetails(userId, '5', '21,22,23');  //  supervisor will see all the pending  status
+        getApplicationDetails(12, userId, '5', '21,22,23');  //  supervisor will see all the pending  status
     }
 
     // Default view For Processor
@@ -24,7 +24,7 @@
         $("#sidemenu_PendingMyApproval").addClass('leftNavItemActive');
         $("#sidemenu_PendingAssignment").removeClass('leftNavItemActive');
 
-        getApplicationDetails(userId, '2', '21,22,23');  //  Processor will see only  My pending approval  ( not the application pending assignment)
+        getApplicationDetails(11, userId, '2', '');  //  Processor will see only  My pending approval  ( not the application pending assignment)
     }
 
 
@@ -45,19 +45,21 @@
     $("#btn_customizeFilter").click(function () {
         debugger
         var filterApptype = $("#filterApplicationType  option:selected").text();
-        var filterUser = $("#filterUser  option:selected").text();
+        var filterUser = $("#filterUser  option:selected").text();3
         var filterStatus = $("#filterStatus  option:selected").text();
         var age = $("#filerAge  option:selected").text();
-
+        
        // Default view for Supervisor
        if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-            getApplicationDetails(userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
+            getApplicationDetails(12, userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
        }
 
        // Default view For Processor
        if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
-            getApplicationDetails(userId, '2', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)
-       }
+            getApplicationDetails(11, userId, '2', '', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)
+        }
+
+        $("#customizeFilterModal").modal('hide');
 
     });
    
@@ -80,16 +82,17 @@
     $("#btn_60_plus_days").click(function () {
         getApplicationListFilteredByAge(61);
     });
-
-function getApplicationListFilteredByAge(age) {
+    
+    function getApplicationListFilteredByAge(age) {
+        debugger;
         // Default view for Supervisor
         if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-            getApplicationDetails(userId, '5', '21,22,23', age,'','','');  //  supervisor will see all the pending  status
+            getApplicationDetails(12, userId, '5', '21,22,23', age,'','','');  //  supervisor will see all the pending  status
         }
 
         // Default view For Processor
         if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
-            getApplicationDetails(userId, '2', '21,22,23', age,'','','');  //  Processor will see only  My pending approval  ( not the application pending assignment)
+            getApplicationDetails(11, userId, '2', '', age,'','','');  //  Processor will see only  My pending approval  ( not the application pending assignment)
         }
     };
 
@@ -156,13 +159,14 @@ function getApplicationListFilteredByAge(age) {
         });
     };
 
-    function getApplicationDetails(userID, pendingAssignmentStatus, myapprovalStatus, filterAge, filterApptype, filterUser, filterStatus ) {
+    function getApplicationDetails(roleId, userID, pendingAssignmentStatus, myapprovalStatus, filterAge, filterApptype, filterUser, filterStatus) {
+        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
             dataType: 'json',
             data: JSON.stringify({
-                'UserId': userID, 'PendingAssignmentStatus': pendingAssignmentStatus, 'MyapprovalStatus': myapprovalStatus, 'FilterAge': filterAge, 'FilterApptype': filterApptype, 'FilterUser': filterUser, 'FilterStatus': filterStatus
+                'RoleId': roleId, 'UserId': userID, 'PendingAssignmentStatus': pendingAssignmentStatus, 'MyapprovalStatus': myapprovalStatus, 'FilterAge': filterAge, 'FilterApptype': filterApptype, 'FilterUser': filterUser, 'FilterStatus': filterStatus
             }),
             headers: {
                 'Authorization': 'Basic ' + btoa('admin')
@@ -170,17 +174,18 @@ function getApplicationListFilteredByAge(age) {
             url: "/api/values/GetApplicationListAssigned/",
             success: function (data) {
                 debugger;
-                $("#span_countPendingAssignment").text(sessionStorage.getItem("totalApplicationPendingCount"));
+                $("#span_countPendingAssignment").text(data.data.pendingAssignmentList.length); //sessionStorage.getItem("totalApplicationPendingCount"));
                 $("#span_appPendingOver60Days").text(sessionStorage.getItem("totalPendingMyApprovalCountOver60"));
-                $("#span_countPendingMyApproval").text(sessionStorage.getItem("totalPendingMyApprovalCount"));
+                $("#span_countPendingMyApproval").text(data.data.pendingMyApprovalList.length);//sessionStorage.getItem("totalPendingMyApprovalCount"));
 
                 pendingAssignList = data.data.pendingAssignmentList;
                 pendingMyApprovalList = data.data.pendingMyApprovalList;
-                setData(pendingAssignList);  // default
-
-                //testing only
-                //setData(pendingMyApprovalList);
-                debugger;
+                if (roleId == 12) {  //  supervisor view
+                    setData(pendingAssignList);  // default
+                }
+                else { // processor list
+                    setData(pendingMyApprovalList);
+                }
             },
             error: function (_XMLHttpRequest, textStatus, errorThrown) {
                 if (_XMLHttpRequest.status == '401') {

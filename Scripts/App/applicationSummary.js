@@ -47,7 +47,7 @@
             if (status == 2) {  //'pending'   2	Assigned to Processor
                 statusDesc = "(Pending Approval)";
             }
-            $("#span_processoreview_status").text(status);
+            $("#span_processoreview_status").text(statusDesc);
         }
         else {          //12	Supervisor
             $("#div_supervisor_review").show();

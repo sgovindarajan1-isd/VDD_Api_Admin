@@ -10,17 +10,19 @@ namespace DAL
 {
     public class AdminDAL
     {
-        public Tuple<List<DAL_M_ApplicationList>, List<DAL_M_ApplicationList>, int> GetApplicationListAssigned(string userId, string pendingAssignmentStatus, string myapprovalStatus, int filterAge, string filterApptype, string filterUser, string filterStatus)
+        public Tuple<List<DAL_M_ApplicationList>, List<DAL_M_ApplicationList>, int> GetApplicationListAssigned(int roleId, string userId, string pendingAssignmentStatus, string myapprovalStatus, int filterAge, string filterApptype, string filterUser, string filterStatus)
         {
-            List<DAL_M_ApplicationList> lst_DAL_M_ApplicationList = new List<DAL_M_ApplicationList>();
-            List<DAL_M_ApplicationList> List_PendingAssignment = new List<DAL_M_ApplicationList>();
+            List<DAL_M_ApplicationList> lst_PendingAssignment = new List<DAL_M_ApplicationList>();  //  Supervisor view only
+            List<DAL_M_ApplicationList> lst_MyApproval = new List<DAL_M_ApplicationList>();  //  Processor and supervisor view
+
             int AppPendingOver60Days = 0;
             try
             {
-                DataSet ds = new DataSet("ApplicateList");
+                DataSet ds = new DataSet("PendingAssignmentList");
                 using (SqlConnection con = DBconnection.Open())
                 {
                     SqlCommand sqlComm = new SqlCommand("GetApplicationListAssigned", con);
+                    sqlComm.Parameters.AddWithValue("@RoleId", roleId);
                     sqlComm.Parameters.AddWithValue("@UserId", userId);
                     sqlComm.Parameters.AddWithValue("@PendingAssignmentStatus", pendingAssignmentStatus);
                     sqlComm.Parameters.AddWithValue("@MyapprovalStatus", myapprovalStatus);
@@ -33,47 +35,54 @@ namespace DAL
                     SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = sqlComm;
                     da.Fill(ds);
-
-                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    if (roleId == 12)  // only for Superuser Role,  Pending Assignment list populated
                     {
-                        DAL_M_ApplicationList v = new DAL_M_ApplicationList();
-                        v.UserId = userId;
-                        v.VendorName = ds.Tables[0].Rows[i]["PayeeName"].ToString();
-                        v.ConfirmationNum = ds.Tables[0].Rows[i]["ConfirmationNum"].ToString();
-                        if (ds.Tables[0].Rows[i]["ReceivedDate"] != null)
+                        for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                         {
-                            v.ReceivedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["ReceivedDate"]);
+                            DAL_M_ApplicationList v = new DAL_M_ApplicationList();
+                            v.UserId = userId;
+                            v.VendorName = ds.Tables[0].Rows[i]["PayeeName"].ToString();
+                            v.ConfirmationNum = ds.Tables[0].Rows[i]["ConfirmationNum"].ToString();
+                            if (ds.Tables[0].Rows[i]["ReceivedDate"] != null)
+                            {
+                                v.ReceivedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["ReceivedDate"]);
+                            }
+                            if (ds.Tables[0].Rows[i]["AssignmentDate"] != null)
+                            {
+                                v.AssignedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["AssignmentDate"]);
+                            }
+                            v.ApplicationAge = ds.Tables[0].Rows[i]["ApplicationAge"].ToString();
+                            v.StatusCode = ds.Tables[0].Rows[i]["StatusCode"].ToString();
+                            v.StatusDesc = ds.Tables[0].Rows[i]["StatusDesc"].ToString();
+                            v.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
+                            lst_PendingAssignment.Add(v);
                         }
-                        if (ds.Tables[0].Rows[i]["AssignmentDate"] != null)
-                        {
-                            v.AssignedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["AssignmentDate"]);
-                        }
-                        v.ApplicationAge = ds.Tables[0].Rows[i]["ApplicationAge"].ToString();
-                        v.StatusCode = ds.Tables[0].Rows[i]["StatusCode"].ToString();
-                        v.StatusDesc = ds.Tables[0].Rows[i]["StatusDesc"].ToString();
-                        v.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
-                        lst_DAL_M_ApplicationList.Add(v);
+                    }
+                    int tableNum = 0;  // for processor  only  one table  ( my pending approval table)
+                    if (roleId == 12)
+                    {  // only for Superuser Role,  Pending Assignment list populated
+                        tableNum = 1;
                     }
 
-                    for (int i = 0; i <= ds.Tables[1].Rows.Count - 1; i++)
+                    for (int i = 0; i <= ds.Tables[tableNum].Rows.Count - 1; i++)
                     {
                         DAL_M_ApplicationList v = new DAL_M_ApplicationList();
                         v.UserId = userId;
-                        v.VendorName = ds.Tables[1].Rows[i]["PayeeName"].ToString();
-                        v.ConfirmationNum = ds.Tables[1].Rows[i]["ConfirmationNum"].ToString();
-                        if (ds.Tables[1].Rows[i]["ReceivedDate"] != null)
+                        v.VendorName = ds.Tables[tableNum].Rows[i]["PayeeName"].ToString();
+                        v.ConfirmationNum = ds.Tables[tableNum].Rows[i]["ConfirmationNum"].ToString();
+                        if (ds.Tables[tableNum].Rows[i]["ReceivedDate"] != null)
                         {
-                            v.ReceivedDate = String.Format("{0:M/d/yyyy}", ds.Tables[1].Rows[i]["ReceivedDate"]);
+                            v.ReceivedDate = String.Format("{0:M/d/yyyy}", ds.Tables[tableNum].Rows[i]["ReceivedDate"]);
                         }
-                        if (ds.Tables[1].Rows[i]["AssignmentDate"] != null)
+                        if (ds.Tables[tableNum].Rows[i]["AssignmentDate"] != null)
                         {
-                            v.AssignedDate = String.Format("{0:M/d/yyyy}", ds.Tables[1].Rows[i]["AssignmentDate"]);
+                            v.AssignedDate = String.Format("{0:M/d/yyyy}", ds.Tables[tableNum].Rows[i]["AssignmentDate"]);
                         }
-                        v.ApplicationAge = ds.Tables[1].Rows[i]["ApplicationAge"].ToString();
-                        v.StatusCode = ds.Tables[1].Rows[i]["StatusCode"].ToString();
-                        v.StatusDesc = ds.Tables[1].Rows[i]["StatusDesc"].ToString();
-                        v.RequestType = ds.Tables[1].Rows[i]["RequestType"].ToString();
-                        List_PendingAssignment.Add(v);
+                        v.ApplicationAge = ds.Tables[tableNum].Rows[i]["ApplicationAge"].ToString();
+                        v.StatusCode = ds.Tables[tableNum].Rows[i]["StatusCode"].ToString();
+                        v.StatusDesc = ds.Tables[tableNum].Rows[i]["StatusDesc"].ToString();
+                        v.RequestType = ds.Tables[tableNum].Rows[i]["RequestType"].ToString();
+                        lst_MyApproval.Add(v);
                     }
 
                     //if (ds.Tables[2].Rows.Count > 0)  //  no table now  error out;  to do
@@ -90,7 +99,7 @@ namespace DAL
             {
                 LogManager.log.Error("Error in GetApplicationDetailsAssigned.  Message: " + ex.Message);
             }
-            return new Tuple<List<DAL_M_ApplicationList>, List<DAL_M_ApplicationList>, int>(lst_DAL_M_ApplicationList, List_PendingAssignment, AppPendingOver60Days);
+            return new Tuple<List<DAL_M_ApplicationList>, List<DAL_M_ApplicationList>, int>(lst_PendingAssignment, lst_MyApproval, AppPendingOver60Days);
         }
 
 
@@ -151,7 +160,7 @@ namespace DAL
 
 
 
-        public Tuple<List<DAL_M_ApplicationList>, int, int> GetAppliationAgeAssigned(string userId, string status, string age1, string age2, string age3)
+        public Tuple<List<DAL_M_ApplicationList>, int, int> GetAppliationAgeAssigned(int roleId, string userId, string status, string age1, string age2, string age3)
         {
             List<DAL_M_ApplicationList> lst_DAL_M_ApplicationList = new List<DAL_M_ApplicationList>();
             int totalApplicationCount = 0;
@@ -162,6 +171,7 @@ namespace DAL
                 using (SqlConnection con = DBconnection.Open())
                 {
                     SqlCommand sqlComm = new SqlCommand("GetAppliationAgeAssigned", con);
+                    sqlComm.Parameters.AddWithValue("@RoleId", roleId);
                     sqlComm.Parameters.AddWithValue("@UserId", userId);
                     sqlComm.Parameters.AddWithValue("@StatusCode", status);
                     sqlComm.Parameters.AddWithValue("@ageOption1", age1);
