@@ -350,6 +350,7 @@
     <Content Include="Content\button-images\fa fa-information.png" />
     <Content Include="Content\css.css" />
     <Content Include="Content\dashboard.css" />
+    <Content Include="Content\DataTable\dataTables.responsive.css" />
     <Content Include="Content\DataTable\jquery.dataTables.min.css" />
     <Content Include="Content\DataTable\select.dataTables.min.css" />
     <Content Include="Content\images\DD01192016.jpg" />
@@ -366,9 +367,9 @@
     <Content Include="Scripts\App\applicationSummary.js" />
     <Content Include="Scripts\App\dashboard.js" />
     <Content Include="Scripts\App\DataTable\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\App\DataTable\dataTables.responsive.js" />
     <Content Include="Scripts\App\DataTable\dataTables.select.min.js" />
     <Content Include="Scripts\App\DataTable\jquery.dataTables.min.js" />
-    <Content Include="Scripts\App\JavaScript.js" />
     <Content Include="Scripts\App\login.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
