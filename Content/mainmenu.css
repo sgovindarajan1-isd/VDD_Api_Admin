@@ -4703,11 +4703,14 @@ html{
 	font-family: 'Source Sans Pro',sans-serif}.centerColumn{
 	margin: 0 auto;
 	padding: 0;
-	width: 72em;
+	width: 78em;  /*vdd it was 72em  to make the summary content size wider*/
 	text-align: left;
 	background-color: #fff}.footer{
 	text-align: center}.banner{
-	margin: .5em 0 0 0}.content{
+	margin: .5em 0 0 0}
+.content {
+	/*vdd*/
+	padding-bottom:10px;
 	clear: both}.block{
 	display: block}.inline{
 	float: none}.right{
@@ -4932,9 +4935,10 @@ html{
 	margin-bottom: 0}.mainContent{
 	float: right;
 	border: 1px solid #ccc;
-	width: 50em;
+	width: 55em;  /**vdd-  it was 50**/
 	margin-top: .5em;
-	position: relative}.wideContent{
+	position: relative;
+}.wideContent{
 	float: left;
 	width: 100%;
 	border: 1px solid #ccc;

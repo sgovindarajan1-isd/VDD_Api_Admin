@@ -8,9 +8,10 @@ using System.Web.Http.Cors;
 using eCAPDDApi.Models;
 using DAL;
 using System.Threading;
-
 namespace eCAPDDApi.Controllers
 {
+
+
     public class VendorConfirmationEmail
     {
         public string MessageBody { get; set; }
@@ -21,7 +22,7 @@ namespace eCAPDDApi.Controllers
         //public string EmailBCC { get; set; }
     }
 
- 
+
     [RoutePrefix("api/values")]
 
     [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -29,7 +30,7 @@ namespace eCAPDDApi.Controllers
     [BasicAuthentication]
     public class ValuesController : ApiController
     {
-         [HttpPost]
+        [HttpPost]
         public HttpResponseMessage LoginUser([FromBody] IdTextClass idtext)
         {
             List<VM_login> data = new List<VM_login>();
@@ -75,7 +76,7 @@ namespace eCAPDDApi.Controllers
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailFrom"];//"sgovindarajan@isd.lacounty.gov";
             obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailTo"]; // DDNotifiEmail  //  to do   get it from notify eamil
             obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailCC"];
-           // obj.EmailBCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailBCC"];
+            // obj.EmailBCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailBCC"];
             return obj;
         }
 
@@ -220,7 +221,7 @@ namespace eCAPDDApi.Controllers
         public HttpResponseMessage GetVendorDetailsByName([FromBody] VM_Vendor vmVendor)
         {
             VendorDAL clsdal = new VendorDAL();
-           // VM_Vendor vm_Vendor = new VM_Vendor();
+            // VM_Vendor vm_Vendor = new VM_Vendor();
 
             var dt = clsdal.GetVendorDetailsByName(vmVendor.VendorNumber);
             var data = new
@@ -262,8 +263,8 @@ namespace eCAPDDApi.Controllers
 
 
                 var data = new
-                { 
-                    userProfile= v1,
+                {
+                    userProfile = v1,
                     userProfile_2 = v3,
                     List_userRoles = result.Item1,
                     IsValidUser = result.Item2
@@ -296,7 +297,7 @@ namespace eCAPDDApi.Controllers
         {
             AdminDAL adminDAL = new AdminDAL();
 
-            var dt = adminDAL.GetAppliationAgeAssigned(VM_adminUser.RoleId, VM_adminUser.UserId, VM_adminUser.Status, VM_adminUser.Age1, VM_adminUser.Age2, VM_adminUser.Age3 );
+            var dt = adminDAL.GetAppliationAgeAssigned(VM_adminUser.RoleId, VM_adminUser.UserId, VM_adminUser.Status, VM_adminUser.Age1, VM_adminUser.Age2, VM_adminUser.Age3);
             var data = new
             {
                 appliationAgeAssignedList = dt.Item1,
@@ -307,12 +308,13 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
+
         [HttpPost]
-        public HttpResponseMessage GetApplicationSummary([FromBody] VM_AdminUser vm_AdminUser) //VM_vendorDD  IdText)
+        public HttpResponseMessage GetApplicationSummary([FromBody] IdTextClass idTextClass)
         {
             AdminDAL adminDAL = new AdminDAL();
 
-             var dt = adminDAL.GetApplicationSummary(vm_AdminUser.UserId);//IdText.Confirmation);
+            var dt = adminDAL.GetApplicationSummary(idTextClass.Text);//text = Confirmation);
             var data = new
             {
                 applicationSummary = dt,
@@ -326,7 +328,7 @@ namespace eCAPDDApi.Controllers
         {
             AdminDAL adminDAL = new AdminDAL();
 
-            var dt = adminDAL.UpdateApplicationStatus(adminModel.Confirmation, adminModel.Status, adminModel.Comment, adminModel.ReasonType, adminModel.ProcessorID , adminModel.AssignedBy);
+            var dt = adminDAL.UpdateApplicationStatus(adminModel.Confirmation, adminModel.Status, adminModel.Comment, adminModel.ReasonType, adminModel.ProcessorID, adminModel.AssignedBy);
             var data = new
             {
                 returnValue = dt,
@@ -405,7 +407,6 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
-
         [HttpPost]
         public HttpResponseMessage GetProcessorsList()
         {
@@ -420,7 +421,6 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
-
         [HttpPost]
         public HttpResponseMessage GetApplicationCustomFilterList([FromBody] VM_AdminUser VM_adminUser)
         {
@@ -429,7 +429,7 @@ namespace eCAPDDApi.Controllers
             var dt = adminDAL.GetApplicationCustomFilterList();
             var data = new
             {
-                applicationTypeList= dt.Item1,
+                applicationTypeList = dt.Item1,
                 userList = dt.Item2,
                 statusList = dt.Item3,
                 //totalApplicationCountOver60 = dt.Item3,
@@ -438,20 +438,99 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
+        [HttpPost]
+        public HttpResponseMessage GetTimeLineByConfirmationNumber(IdTextClass idTextClass)
+        {
+            AdminDAL adminDAL = new AdminDAL();
 
-        //[HttpPost]
-        //public HttpResponseMessage GetApplicationTypeList()
-        //{
-        //    AdminDAL adminDAL = new AdminDAL();
+            var dt = adminDAL.GetTimeLineByConfirmationNumber(idTextClass.Text);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
 
-        //    var dt = adminDAL.GetApplicationTypeList();
-        //    var data = new
-        //    {
-        //        returnValue = dt,
-        //    };
-        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-        //    return response;
-        //}
+
+        [HttpPost]
+        public HttpResponseMessage InsertUpdateNotes([FromBody] DAL.Models.DAL_M_Notes vm_Notes)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.InsertUpdateNotes(vm_Notes);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetNotesByConfirmationNumber(IdTextClass idTextClass)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetNotesByConfirmationNumber(idTextClass.Text);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetAttachmentsData([FromBody] DAL.Models.DAL_M_AttachmentData dal_M_AttachmentData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetAttachmentsData(dal_M_AttachmentData.ConfirmationNum);
+            var data = new
+            {
+                attachments = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage UpdateRetireAttachment([FromBody] DAL.Models.DAL_M_VendorDD attachmentModel)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            adminDAL.UpdateRetireAttachment(attachmentModel);
+            var dt = adminDAL.GetAttachmentsData(attachmentModel.Confirmation);
+            var data = new
+            {
+                attachments = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+
+        [HttpPost]
+        public HttpResponseMessage InsertDocumentAttachment([FromBody] DAL.Models.DAL_M_VendorDD attachmentModel)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+            //var response = new HttpResponseMessage();
+            string ret = adminDAL.InsertDocumentAttachment(attachmentModel);
+            if (ret == "ERROR")
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "error" });
+            }
+
+            var dt = adminDAL.GetAttachmentsData(attachmentModel.Confirmation);
+            var data = new
+            {
+                attachments = dt
+            };
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            //return response;
+        }
 
         //[HttpPost]
         //public HttpResponseMessage GetApplicationUserList()
@@ -481,19 +560,7 @@ namespace eCAPDDApi.Controllers
         //    return response;
         //}
 
-        //[HttpPost]
-        //public HttpResponseMessage GetTimeLineByConfirmationNumber()
-        //{
-        //    AdminDAL adminDAL = new AdminDAL();
 
-        //    var dt = adminDAL.GetTimeLineByConfirmationNumber();
-        //    var data = new
-        //    {
-        //        returnValue = dt,
-        //    };
-        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-        //    return response;
-        //}
 
     }
 }

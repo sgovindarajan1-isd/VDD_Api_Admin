@@ -308,6 +308,7 @@
     <Compile Include="BasicAunthendicationAtribute.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Controllers\ApplicationListController.cs" />
+    <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -367,6 +368,7 @@
     <Content Include="Scripts\App\DataTable\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\App\DataTable\dataTables.select.min.js" />
     <Content Include="Scripts\App\DataTable\jquery.dataTables.min.js" />
+    <Content Include="Scripts\App\JavaScript.js" />
     <Content Include="Scripts\App\login.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -392,6 +394,7 @@
     <Content Include="Areas\RouteDebugger\Views\Web.config" />
     <Content Include="Areas\RouteDebugger\Views\RouteDebugger\Index.cshtml" />
     <Content Include="Log4Net.config" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -440,6 +443,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Helper\" />
     <Folder Include="Views\UserProfile\" />
   </ItemGroup>
   <ItemGroup>

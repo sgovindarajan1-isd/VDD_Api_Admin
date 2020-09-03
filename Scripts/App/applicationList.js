@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    debugger;
     $("#id_userName").text(sessionStorage.getItem('UserName'));
 
     var pendingAssignList = [];
@@ -31,19 +30,16 @@
     $("#sidemenu_PendingAssignment").click(function () {
         $("#sidemenu_PendingMyApproval").removeClass('leftNavItemActive');
         $("#sidemenu_PendingAssignment").addClass('leftNavItemActive');
-        debugger;
         setData(pendingAssignList);
     });
 
     $("#sidemenu_PendingMyApproval").click(function () {
         $("#sidemenu_PendingMyApproval").addClass('leftNavItemActive');
         $("#sidemenu_PendingAssignment").removeClass('leftNavItemActive');
-        debugger;
         setData(pendingMyApprovalList);
     });    
 
     $("#btn_customizeFilter").click(function () {
-        debugger
         var filterApptype = $("#filterApplicationType  option:selected").text();
         var filterUser = $("#filterUser  option:selected").text();3
         var filterStatus = $("#filterStatus  option:selected").text();
@@ -64,7 +60,6 @@
     });
    
     $("#btn_0_15_days").click(function () {
-        debugger;
         //table.columns([column_no]).search( $( '#txtSearch' ).val() ).draw();
         //https://jsfiddle.net/07rnpgs1/
        // table.columns([4]).search(15).draw();
@@ -80,11 +75,11 @@
     });
     
     $("#btn_60_plus_days").click(function () {
+        debugger;
         getApplicationListFilteredByAge(61);
     });
     
     function getApplicationListFilteredByAge(age) {
-        debugger;
         // Default view for Supervisor
         if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
             getApplicationDetails(12, userId, '5', '21,22,23', age,'','','');  //  supervisor will see all the pending  status
@@ -102,7 +97,6 @@
     });
 
     function setData(data) {
-        //debugger;
         $('#ddGrid').DataTable().destroy();
         ////table.DataTable().destroy();
         $('#ddGrid').empty();
@@ -120,7 +114,6 @@
                 {
                     "data": "ConfirmationNum",
                     "render": function (data, type, row, meta) {
-                        debugger;
                         if (type === 'display') {
                             //sessionStorage.setItem('selectedConfirmationNumber', data);
                             //sessionStorage.setItem('selectedRequestType', row.RequestType);
@@ -173,7 +166,6 @@
             },
             url: "/api/values/GetApplicationListAssigned/",
             success: function (data) {
-                debugger;
                 $("#span_countPendingAssignment").text(data.data.pendingAssignmentList.length); //sessionStorage.getItem("totalApplicationPendingCount"));
                 $("#span_appPendingOver60Days").text(sessionStorage.getItem("totalPendingMyApprovalCountOver60"));
                 $("#span_countPendingMyApproval").text(data.data.pendingMyApprovalList.length);//sessionStorage.getItem("totalPendingMyApprovalCount"));
@@ -181,7 +173,12 @@
                 pendingAssignList = data.data.pendingAssignmentList;
                 pendingMyApprovalList = data.data.pendingMyApprovalList;
                 if (roleId == 12) {  //  supervisor view
-                    setData(pendingAssignList);  // default
+                    if ($("#sidemenu_PendingMyApproval").hasClass("leftNavItemActive")) {
+                        setData(pendingMyApprovalList);
+                    }
+                    else {
+                        setData(pendingAssignList);  // default
+                    }
                 }
                 else { // processor list
                     setData(pendingMyApprovalList);
@@ -206,14 +203,12 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                debugger;
                 applicationTypeList = data.data.applicationTypeList;
                 userList = data.data.userList;  
                 statusList = data.data.statusList;
 
                 var filterUserList = $('#filterUser');
                 $.each(userList, function (key, value) {
-                    debugger;
                     filterUserList.append(
                         $('<option></option>').val(value.Text).html(value.IdText)
                     );
@@ -221,7 +216,6 @@
 
                 var filterApplicationTypeList = $('#filterApplicationType');
                 $.each(applicationTypeList, function (key, value) {
-                    debugger;
                     filterApplicationTypeList.append(
                         $('<option></option>').val(value.Text).html(value.IdText)
                     );
@@ -229,7 +223,6 @@
 
                 var filterStatusList = $('#filterStatus');
                 $.each(statusList, function (key, value) {
-                    debugger;
                     filterStatusList.append(
                         $('<option></option>').val(value.Id).html(value.Text)
                     );
@@ -238,7 +231,6 @@
             , complete: function (jqXHR) {
             }
             , error: function (jqXHR, textStatus, errorThrown) {
-                debugger;
                 if (textStatus == 'error') {
                     toastr.options.positionClass = "toast-bottom-right";
                     toastr.warning("Error in Getting Application Type List , Please check!");

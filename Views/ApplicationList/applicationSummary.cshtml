@@ -7,7 +7,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
 
-
 @*<script src="~/Scripts/App/dashboard.js"></script>*@
 <script src="~/Scripts/App/AdminMain.js"></script>
 <script src="~/Scripts/App/applicationSummary.js"></script>
@@ -29,7 +28,7 @@
                 <div class="form-group subSection">
                     <label class="firstLabelLong" for="rejectReason">Reason:</label>
                     <div class="chosen-wrapper">
-                        <select class="form-control cancel chosen-select" id="select_rejectReason" name="rejectReason" style="display: true;">
+                        <select class="form-control cancel chosen-select" id="select_rejectReason" name="rejectReason" style="display: true">
                             <option value=""></option>
                             <option value="1">Requested by Vendor</option>
                             <option value="2">No EWS and Lexis/Nexis Vendor Verification</option>
@@ -48,6 +47,28 @@
 
             <div class="modal-footer">
                 <input id="btn_SubmitReject" class="btn btn-sm btn-primary" type="submit" value="Submit">
+                <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="addNotesModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">AddNotes</h5>
+            </div>
+            <div class="modal-body" style="text-align:left">
+                <div class="form-group subSection">
+                    <label for="comment">Note:</label>
+                    <textarea class="form-control" rows="5" id="txt_Notes_comment"></textarea>
+                </div>
+                <span id="accountType">0 / 256 characters</span>
+            </div>
+
+            <div class="modal-footer">
+                <input id="btn_SubmitNotes" class="btn btn-sm btn-primary" type="submit" value="Add">
                 <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -131,7 +152,7 @@
                                 First Name:
                             </label>
                             <div class="">
-                                <input type="text" class="form-control" id="txt_pop_FirstName"  placeholder="First Name" value="" required>
+                                <input type="text" class="form-control" id="txt_pop_FirstName" placeholder="First Name" value="" required>
                                 <span id="firstName" class="errmessage" />
                             </div>
                         </div>
@@ -448,6 +469,32 @@
 </div>
 
 
+<div id="div_action " class="pull-right btn-group">
+    <span class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+    <ul class="dropdown-menu context-menu-left-showOnLeft">
+        <li>
+            <a title="Download Document" href="#">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                <span>Download top top </span>
+            </a>
+        </li>
+
+        <li>
+            <a title="Rename File" href="#" onclick="return ShowModal(this);" action-target="#">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Rename
+            </a>
+        </li>
+        <li>
+            <a title="Retire File" href="javascript:void(0);" class="confirmModal" data-action-target="#" data-rowclass="documentRow">
+                <span class="fa fa-trash-o"></span>
+                Retire
+            </a>
+        </li>
+    </ul>
+</div>
+
+
 <div class="container row-wrapper">
     <h1 id="heading_appsummaryHeader"></h1>
     <div class="centerColumn">
@@ -455,28 +502,27 @@
             <input id="skipUnSavedChanges" type="hidden" value="0">
 
             <div class="leftContent">
-                <div class="leftBox leftBoxMenu">
+                <div class="leftBox leftBoxMenu bhoechie-tab-container">
                     <h2 id="head_confirmationNum" style="color:purple;"></h2>
                     <span><h4 style="color:#000000;">&nbsp;Status: <font style="font-size:14px; font-weight:bold;"> <span id="header_status"> </span> </font></h4></span>
 
-                    <div class="menu claimMenu" role="tablist">
-                        <a class="leftNavItem  leftNavItemActive" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
-                           aria-selected="true"><span class="fa fa-fw fa-sitemap"></span>Summary</a>
-                        <a class="leftNavItem " id="tab_Notes" href="#div_notes_tab" role="tab" aria-controls="div_notes_tab"
-                           aria-selected="false"><span class="fa fa-fw fa-pencil"></span>Notes</a>
-                        <a class="leftNavItem " href="./Documents_0261.html">
-                            <span class="fa fa-fw fa-file-text"></span>
-                            Documents
-                            <span id="menuDocCount" class="badge pull-right UpdateMenuDocumentCount" data-updatemode="replaceContents" data-updatetargetid="menuDocCount" data-method="get" data-url="./Documents_0261.html">6</span>
-                        </a>
-                        <a class="leftNavItem " href="./CheckList_0261.html"><span class="fa fa-fw fa-folder-open"></span>Check List</a>
-                        <!--<a class="leftNavItem " href="./Checks_0261.html"><span class="fa fa-fw fa-dollar"></span>Checks</a>-->
-                        <a class="leftNavItem " href="./LinkedApplications_0261.html"><span class="fa fa-fw fa-link"></span>Linked Applications<span class="badge pull-right">0</span></a>
-                        <a class="leftNavItem " href="./ApplicationArchive_0261.html"><span class="fa fa-fw fa-archive"></span>Application Archive</a>
-                        <!--<a class="leftNavItem " href="./SplitClaim_0261.html"><span class="fa fa-fw fa-share-alt-square"></span>Split Claim</a>-->
-                        @*<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                            aria-selected="false">Profile</a>*@
+                    <div class="menu claimMenu bhoechie-tab-menu" role="tablist">
+                        <div class="list-group">
+                            <a class="leftNavItem active" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab" @*list-group-item active leftNavItemActive *@
+                               aria-selected="true"><span class="fa fa-fw fa-sitemap"></span>Summary</a>
+                            <a class="leftNavItem " id="tab_Notes" href="#div_notes_tab" role="tab" aria-controls="div_notes_tab" @*list-group-item*@
+                               aria-selected="false"><span class="fa fa-fw fa-pencil"></span>Notes</a>
 
+                            <a class="leftNavItem " href="#div_attachment_tab" aria-controls="div_attachment_tab" role="tab">
+                                <span class="fa fa-fw fa-file-text"></span>Documents
+                                <span id="menuDocCount" class="badge pull-right UpdateMenuDocumentCount">7</span>
+                            </a>
+                            <a class="leftNavItem " href=""><span class="fa fa-fw fa-folder-open"></span>Check List</a>
+                            <a class="leftNavItem " href=""><span class="fa fa-fw fa-link"></span>Linked Applications<span class="badge pull-right">0</span></a>
+                            <a class="leftNavItem " href=""><span class="fa fa-fw fa-archive"></span>Application Archive</a>
+                            @*<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                                aria-selected="false">Profile</a>*@
+                        </div>
                     </div>
                 </div>
 
@@ -507,346 +553,354 @@
                 </div>
             </div>
 
-            <div id="div_summaryContent" class="mainContent">
-                <div id="div_summary_tab" class="mainBox tab-pane show " role="tabpanel" aria-labelledby="summary-tab">
-                    <div class="pull-right">
-                        <a id="btn_Reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger btn-xs">
-                            Reject Application
-                        </a>
-                    </div>
-                    <h2 class="bottomMargin">Application Summary</h2>
-
-                    <div class="well well-sm">
-                        <div id="div_assignApplication" class="btn-group btn-group-xs pull-right">
-                            <a id="btn_Assign" data-toggle="modal" data-target="#assignApplicationModal" class="btn btn-info">
-                                Assign
+            <div class="bhoechie-tab">
+                <div id="div_summaryContent" class="mainBox tab-pane mainContent bhoechie-tab-content active">
+                    @*<center1>*@
+                    <div id="div_summary_tab" class="mainBox tab-pane show " role="tabpanel" aria-labelledby="summary-tab">
+                        <div class="pull-right">
+                            <a id="btn_Reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger btn-xs">
+                                Reject Application
                             </a>
                         </div>
+                        <h2 class="bottomMargin">Application Summary</h2>
 
-                        <div class="flex">
-                            <div class="flex-column-1">
-                                <div class="readOnlySection"><span class="displayLabel">Received Date: </span><span id="ReceivedDate" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">Assign Date: </span><span id="AssignDate" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">Assigned Processor: </span><span id="AssignedProcessor" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">Assigned By: </span><span id="AssignedBy" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">Closed Date: </span><span id="ClosedDate" class="displayValue "></span></div>
+                        <div class="well well-sm">
+                            <div id="div_assignApplication" class="btn-group btn-group-xs pull-right">
+                                <a id="btn_Assign" data-toggle="modal" data-target="#assignApplicationModal" class="btn btn-info">
+                                    Assign
+                                </a>
                             </div>
-                            <div class="flex-column-1">
-                                <div class="readOnlySection"><span class="displayLabel">Entered By: </span><span id="EnteredBy" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">IP Address: </span><span id="IPAddress" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">IP Device: </span><span id="IPDevice" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">IP Location: </span><span id="IPLocation" class="displayValue "></span></div>
+
+                            <div class="flex">
+                                <div class="flex-column-1">
+                                    <div class="readOnlySection"><span class="displayLabel">Received Date: </span><span id="ReceivedDate" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">Assign Date: </span><span id="AssignDate" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">Assigned Processor: </span><span id="AssignedProcessor" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">Assigned By: </span><span id="AssignedBy" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">Closed Date: </span><span id="ClosedDate" class="displayValue "></span></div>
+                                </div>
+                                <div class="flex-column-1">
+                                    <div class="readOnlySection"><span class="displayLabel">Entered By: </span><span id="EnteredBy" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">IP Address: </span><span id="IPAddress" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">IP Device: </span><span id="IPDevice" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">IP Location: </span><span id="IPLocation" class="displayValue "></span></div>
+                                </div>
                             </div>
+
+                            @*Vendor information begin*@
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                        <a id="btn_vendorDetails" data-toggle="modal" data-target="#vendorDetailsModal" class="btn btn-info" data-additionalprocess="chosen">
+                                            <span class="fa fa-edit smallRightMargin"></span>
+                                            Edit
+                                        </a>
+                                    </div>
+                                    Vendor Information
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="flex">
+                                        <div class="flex-column-2">
+                                            <div class="readOnlySection"><span class="displayLabel">Vendor Code: </span><span id="VI_VendorCode" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Alias/DBA: </span><span id="Alias_DBA" class="displayValue "> </span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">First Name: </span><span id="FirstName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Middle Name: </span><span id="MiddleName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Last Name: </span><span id="LastName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Phone Number: </span><span id="PhoneNumber" class="displayValue "></span></div>
+                                        </div>
+                                        <div class="flex-column-2">
+                                            <div class="readOnlySection"><span class="displayLabel">Payee Name: </span><span id="VI_PayeeName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Company Name: </span><span id="CompanyName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Taxpayer ID Number: </span><span id="TaxpayerID" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Direct Deposit Notification Email: </span><span id="DirectDepositNotificationEmail" class="displayValue "></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*Vendor information end*@
+
+                            @*//Banking Information begin *@
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                        <a id="btn_BankDetails" data-toggle="modal" data-target="#bankDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
+                                            <span class="fa fa-edit smallRightMargin"></span>
+                                            Edit
+                                        </a>
+                                    </div>
+                                    Banking Information
+                                </div>
+                                <div class="panel-body">
+                                    <div class="" style="margin-bottom:0;">
+                                        <div id="claimInfoWrapper">
+                                            <div class="flex">
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel">Type of Account: </span><span id="TypeofAccount" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel">Bank Account #: </span><span id="BankAccountNumber" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel">Bank Routing #: </span><span id="BankRoutingNumber" class="displayValue "></span></div>
+                                                </div>
+
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel">Financial Institution Name: </span><span id="FinancialInstitutionName" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel">Attachment Type: </span><span id="AttachmentType" class="displayValue "></span></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*//Authorized Information end *@
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                        <a id="btn_certificationDetails" data-toggle="modal" data-target="#certificationDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
+                                            <span class="fa fa-edit smallRightMargin"></span>
+                                            Edit
+                                        </a>
+                                    </div>
+                                    Certification Information
+                                </div>
+                                <div class="panel-body">
+                                    <div class="" style="margin-bottom:0;">
+                                        <div id="claimInfoWrapper">
+                                            <div class="flex">
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Name: </span><span id="AuthorizedSignerName" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Title: </span><span id="AuthorizedSignerTitle" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Phone: </span><span id="AuthorizedSignerPhone" class="displayValue "></span></div>
+                                                </div>
+
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Email: </span><span id="AuthorizedSignerEmail" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Confirmation #: </span><span id="CI_ConfirmationNumber" class="displayValue "></span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Certification Information end *@
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                        <a id="btn_deptDetails" data-toggle="modal" data-target="#departmentDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
+                                            <span class="fa fa-edit smallRightMargin"></span>
+                                            Edit
+                                        </a>
+                                    </div>
+                                    Department Information
+                                </div>
+                                <div class="panel-body">
+                                    <div class="" style="margin-bottom:0;">
+                                        <div id="claimInfoWrapper">
+                                            <div class="flex">
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Name: </span><span id="DeptName" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Contact Person Name: </span><span id="DeptContactPersonName" class="displayValue "></span></div>
+                                                </div>
+
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Email Address: </span><span id="DeptEmailAddress" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Contact #: </span><span id="DeptContactNumber" class="displayValue "></span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*Department Information *@
+
+                            @*Direct Deposit Payment Option Selected begin*@
+
+                            @*<div class="panel panel-default panel-sm">
+                                    <div class="panel-heading">
+                                        Direct Deposit Payment Option Selected
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="" style="margin-bottom:0;">
+                                            <div id="claimInfoWrapper">
+                                                <div id="div_ddPaymentOptionSelected" class="flex">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    Direct Deposit Payment Option Selected
+                                </div>
+                                <ul id="ul_ddoptionList" class="list-group list-group-sm"> </ul>
+                            </div>
+
+                            @*Direct Deposit Payment Option Selected *@
+                        </div>
+                    </div>
+
+                    <div id="div_supervisor_review_panel" class="panel panel-default panel-sm">
+                        <div class="panel-heading">
+                            Review
                         </div>
 
-                        @*Vendor information begin*@
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                    <a   id="btn_vendorDetails" data-toggle="modal" data-target="#vendorDetailsModal" class="btn btn-info" data-additionalprocess="chosen">
-                                        <span class="fa fa-edit smallRightMargin"></span>
-                                        Edit
-                                    </a>
-                                </div>
-                                Vendor Information
-                            </div>
-
-                            <div class="panel-body">
+                        <ul class="list-group list-group-sm">
+                            <li id="div_processor_review" class="list-group-item list-group-item-sm">
                                 <div class="flex">
-                                    <div class="flex-column-2">
-                                        <div class="readOnlySection"><span class="displayLabel">Vendor Code: </span><span id="VI_VendorCode" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Alias/DBA: </span><span id="Alias_DBA" class="displayValue "> </span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">First Name: </span><span id="FirstName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Middle Name: </span><span id="MiddleName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Last Name: </span><span id="LastName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Phone Number: </span><span id="PhoneNumber" class="displayValue "></span></div>
+                                    <div class="flex-column-1">
+                                        Processor:
                                     </div>
-                                    <div class="flex-column-2">
-                                        <div class="readOnlySection"><span class="displayLabel">Payee Name: </span><span id="VI_PayeeName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Company Name: </span><span id="CompanyName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Taxpayer ID Number: </span><span id="TaxpayerID" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Direct Deposit Notification Email: </span><span id="DirectDepositNotificationEmail" class="displayValue "></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @*Vendor information end*@
-
-                        @*//Banking Information begin *@
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                    <a id="btn_BankDetails" data-toggle="modal" data-target="#bankDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                        <span class="fa fa-edit smallRightMargin"></span>
-                                        Edit
-                                    </a>
-                                </div>
-                                Banking Information
-                            </div>
-                            <div class="panel-body">
-                                <div class="" style="margin-bottom:0;">
-                                    <div id="claimInfoWrapper">
-                                        <div class="flex">
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel">Type of Account: </span><span id="TypeofAccount" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel">Bank Account #: </span><span id="BankAccountNumber" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel">Bank Routing #: </span><span id="BankRoutingNumber" class="displayValue "></span></div>
-                                            </div>
-
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel">Financial Institution Name: </span><span id="FinancialInstitutionName" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel">Attachment Type: </span><span id="AttachmentType" class="displayValue "></span></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        @*//Authorized Information end *@
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                    <a id="btn_certificationDetails" data-toggle="modal" data-target="#certificationDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                        <span class="fa fa-edit smallRightMargin"></span>
-                                        Edit
-                                    </a>
-                                </div>
-                                Certification Information
-                            </div>
-                            <div class="panel-body">
-                                <div class="" style="margin-bottom:0;">
-                                    <div id="claimInfoWrapper">
-                                        <div class="flex">
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Name: </span><span id="AuthorizedSignerName" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Title: </span><span id="AuthorizedSignerTitle" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Phone: </span><span id="AuthorizedSignerPhone" class="displayValue "></span></div>
-                                            </div>
-
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Email: </span><span id="AuthorizedSignerEmail" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Confirmation #: </span><span id="CI_ConfirmationNumber" class="displayValue "></span></div>
+                                    <div class="flex-column-3">
+                                        @*(Assigned To Processor)*@
+                                        <span id="span_processoreview_status"></span>
+                                        <div class="pull-right">
+                                            <div class="btn-group btn-group-xs">
+                                                <a id="btn_proce_approve" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
+                                                <a data-toggle="modal" data-target="#printApplicationModal" class="btn btn-danger">&nbsp;print&nbsp;</a>
+                                                <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        @*Certification Information end *@
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                    <a id="btn_deptDetails" data-toggle="modal" data-target="#departmentDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                        <span class="fa fa-edit smallRightMargin"></span>
-                                        Edit
-                                    </a>
-                                </div>
-                                Department Information
-                            </div>
-                            <div class="panel-body">
-                                <div class="" style="margin-bottom:0;">
-                                    <div id="claimInfoWrapper">
-                                        <div class="flex">
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Name: </span><span id="DeptName" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Contact Person Name: </span><span id="DeptContactPersonName" class="displayValue "></span></div>
-                                            </div>
-
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Email Address: </span><span id="DeptEmailAddress" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Contact #: </span><span id="DeptContactNumber" class="displayValue "></span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @*Department Information *@
-
-                        @*Direct Deposit Payment Option Selected begin*@
-
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                Direct Deposit Payment Option Selected
-                            </div>
-                            <div class="panel-body">
-                                <div class="" style="margin-bottom:0;">
-                                    <div id="claimInfoWrapper">
-                                        <div id="div_ddPaymentOptionSelected" class="flex">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @*Direct Deposit Payment Option Selected *@
-                    </div>
-                </div>
-
-                <h1> test here  </h1>
-
-                <ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-                           aria-selected="true">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-                           aria-selected="false">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#contact-just" role="tab" aria-controls="contact-just"
-                           aria-selected="false">Contact</a>
-                    </li>
-                </ul>
-                <div class="tab-content card pt-5" id="myTabContentJust">
-                    <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-                        <p>
-                            Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro
-                            synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher
-                            retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip
-                            placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.
-                        </p>
-                    </div>
-                    <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-                        <p>
-                            Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1
-                            labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft
-                            beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad
-                            vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
-                            helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
-                            anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party
-                            scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
-                        </p>
-                    </div>
-                    <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
-                        <p>
-                            Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro
-                            fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
-                            skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings
-                            gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork
-                            biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl
-                            craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.
-                        </p>
-                    </div>
-                </div>
-
-
-
-                <div id="div_notes_tab" class="mainBox tab-pane show" role="tabpanel" aria-labelledby="notes-tab">
-                    <ul class="nav nav-tabs bottomMargin" role="tablist">
-                        <li role="presentation" class="active">
-                            <a class="tabs leftMargin tablinks" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline">Timeline</a>
-                        </li>
-                        <li role="presentation" class="">
-                            @*<a href="#div_notescontent_tab" class="tabs" aria-controls="Notes" role="tab">Notes</a>*@
-                            <a class="tabs nav-link tablinks" id="nts-tab" data-toggle="tab" href="#nts" role="tab" aria-controls="nts"
-                               aria-selected="false">notes</a>
-                        </li>
-                    </ul>
-
-                    @*<ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item active">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="System Charts"
-                                   aria-selected="true">System Charts</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                                   aria-selected="false">User charts</a>
+
+                            <li id="div_supervisor_proce_review" class="list-group-item list-group-item-sm">
+                                <div class="flex">
+                                    <div class="flex-column-1">
+                                        Processor:
+                                    </div>
+                                    <div class="flex-column-3">
+                                        <span id="span_review_processor_Approval_msg"></span>  @*Approved by Monique Tsoi on 4/27/2020*@
+                                        <div>
+                                            Note: <span id="span_review_processor_notes">test srini forward application to Supervisor</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
-                        </ul>*@
 
+                            <li id="div_supervisor_review" class="list-group-item list-group-item-sm">
+                                <div class="flex">
+                                    <div class="flex-column-1">
+                                        Supervisor:
+                                    </div>
+                                    <div id="div_suervisorreview_status" class="flex-column-3">
+                                        <span id="span_suervisorreview_status"></span>
+                                        <div class="pull-right">
+                                            <div class="btn-group btn-group-xs">
+                                                <a id="btn_reviewApprove" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
+                                                <a id="btn_reviewReturn" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
+                                                <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
+                                                <a id="btn_reviewPrint" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
 
+                        </ul>
+                    </div>
 
-                    <div class="tab-pane fade active tabcontent" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
-                        <div class="listGroup">
-                            <h3>4/24/2020</h3>
-                            <div class="list-group notificationList">
-                                <div class="list-group-item">
-                                    <span>1:23 PM</span> -
-                                    <span>Application was submitted.</span>
-                                    <span class="pull-right"></span>
+                    @*</center1>*@
+                </div>
+
+                <div id="div_notes_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="notes-tab">
+                    <center>
+                        <ul class="nav nav-tabs bottomMargin" role="tablist">
+                            <li role="presentation" class="timelineLi active">
+                                <a class="tabs leftMargin tablinks" id="timeline-tab" data-toggle="tab" href="#timeline" role="tabpanel" aria-controls="timeline">Timeline</a>
+                            </li>
+                            <li role="presentation" class="timelineLi">
+                                <a class="tabs nav-link tablinks" id="nts-tab" data-toggle="tab" href="#notes" role="tabpanel" aria-controls="nts"
+                                   aria-selected="true">Notes</a>
+                            </li>
+                        </ul>
+                    </center>
+                    <div class="tab-content  tgroup container" id="myTabContent" style="width: 100% !important;  margin: 10px auto !important;position: relative !important;">
+
+                        <div class="tab-pane fade show active in" id="timeline" role="tabpanel" aria-labelledby="timeline-tab"></div>
+
+                        <div class="tab-pane fade active" id="notes" role="tabpanel" aria-labelledby="nts-tab">
+                            <div class="pull-right">
+                                <a id="btn_addNotes" class="btn btn-success" data-toggle="modal" data-target="#addNotesModal">
+                                    <span class="glyphicon glyphicon-plus smallRightMargin"></span>
+                                    Add
+                                </a>
+
+                            </div>
+
+                            <br>
+                            </br>
+
+                            <div id="searchResults" class="divSeparator">
+                                <div id="divNotesTable" class="resultsLocator">
+                                    <ul id="noteList" class="list-group">
+                                        <li class="list-group-item list-group-item-warning emptyResultMessage">Notes list is empty.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    @*<div id="div_notescontent_tab" class="mainBox tab-pane show fade " role="tabpanel" aria-labelledby="div_notescontent_tab">*@
-                    @*<a class="leftNavItem  leftNavItemActive" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
-                        aria-selected="true"><span class="fa fa-fw fa-sitemap"></span>Summary</a>*@
-                    @* </div>*@
-
-                    <div class="tab-pane fade active tabcontent" id="nts" role="tabpanel" aria-labelledby="nts-tab">
-                        <h1> contents here44 </h1>
-                    </div>
                 </div>
 
-                <div id="div_supervisor_review_panel" class="panel panel-default panel-sm">
-                    <div class="panel-heading">
-                        Review
-                    </div>
 
-                    <ul class="list-group list-group-sm">
-                        <li id="div_processor_review" class="list-group-item list-group-item-sm">
-                            <div class="flex">
-                                <div class="flex-column-1">
-                                    Processor:
-                                </div>
-                                <div class="flex-column-3">
-                                    @*(Assigned To Processor)*@
-                                    <span id="span_processoreview_status"></span>
-                                    <div class="pull-right">
-                                        <div class="btn-group btn-group-xs">
-                                            <a id="btn_proce_approve" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
-                                            <a data-toggle="modal" data-target="#printApplicationModal" class="btn btn-danger">&nbsp;print&nbsp;</a>
-                                            <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                <div id="div_attachment_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_attachment_tab">
+                    <div class="tab-content  tgroup container" id="myTabContent1" style="width: 100% !important;  margin: 10px auto !important;position: relative !important;">
+                        <div class="pull-right">
+                            <a id="btn_addUploadMore" class="btn btn-success">
+                                <span class="glyphicon glyphicon-plus smallRightMargin"></span>
+                                Upload More
+                            </a>
+                            <input type="file" id="file-input" style="display:none" />
 
-                        <li id="div_supervisor_proce_review" class="list-group-item list-group-item-sm">
-                            <div class="flex">
-                                <div class="flex-column-1">
-                                    Processor:
-                                </div>
-                                <div class="flex-column-3">
-                                    <span id="span_review_processor_Approval_msg"></span>  @*Approved by Monique Tsoi on 4/27/2020*@
+                            @*<div class="container" style="text-align: center;vertical-align:central" id="pnlAttachment" visible="false">
+                                <label for="attachment">
+                                    Attachment
+                                    <span>
+                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="You may only attach one file.
+                    The maximum allowed file size is 10 MB.
+                    The file you attach must either be .PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, or .PNG. No other file types are allowed." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                    </span>
+                                </label>
+
+                                <div style="text-align: center" class="custom-file-input" visible="false">
+
+                                    <input type="file" accept="image/*,.PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, .PNG">
+                                    <input type="text" id="txtattachment">
+                                    <input type="button" style="width: 150px" class="btn-primary btn button-header-color" value="Upload Attachment">
                                     <div>
-                                        Note: <span id="span_review_processor_notes">test srini forward application to Supervisor</span>
+                                        <span id="fileError_or_Info" style="text-align: center" class="errmessage" />
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </div>*@
 
-                        <li id="div_supervisor_review" class="list-group-item list-group-item-sm">
-                            <div class="flex">
-                                <div class="flex-column-1">
-                                    Supervisor:
-                                </div>
-                                <div id="div_suervisorreview_status" class="flex-column-3">
-                                    <span id="span_suervisorreview_status"></span>
-                                    <div class="pull-right">
-                                        <div class="btn-group btn-group-xs">
-                                            <a id="btn_reviewApprove"data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
-                                            <a id="btn_reviewReturn" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
-                                            <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-                                            <a id="btn_reviewPrint"  class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
 
-                    </ul>
+
+                        </div>
+
+                        <br>
+                        </br>
+
+                        <div id="div_documentAttachment" class="divSeparator">
+                            <table id="attachmentGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="border-collapse:collapse; border: 1px solid black; width:100%">
+                                <thead>
+                                    <tr class="button-header-color">
+                                        @*<th></th>*@
+                                        <th>AttachmentFileName</th>
+                                        <th>DisplayName</th>
+                                        <th>UploadedDate</th>
+                                        <th>Command</th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
                 </div>
-
 
             </div>
         </div>
     </div>
-
 </div>

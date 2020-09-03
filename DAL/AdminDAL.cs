@@ -101,11 +101,6 @@ namespace DAL
             }
             return new Tuple<List<DAL_M_ApplicationList>, List<DAL_M_ApplicationList>, int>(lst_PendingAssignment, lst_MyApproval, AppPendingOver60Days);
         }
-
-
-
-
-
         public Tuple<List<DAL_M_IdTextClass>, List<DAL_M_IdTextClass>, List<DAL_M_IdTextClass>> GetApplicationCustomFilterList()
         {
             List<DAL_M_IdTextClass> applicationTypeList = new List<DAL_M_IdTextClass>();
@@ -157,8 +152,39 @@ namespace DAL
             return new Tuple<List<DAL_M_IdTextClass>, List<DAL_M_IdTextClass>, List<DAL_M_IdTextClass>>(applicationTypeList, userList, statusList);
         }
 
+        public List<DAL_M_AttachmentData> GetAttachmentsData(string confirmationNumber)
+        {
+            List<DAL_M_AttachmentData> lst_DAL_M_AttachmentData = new List<DAL_M_AttachmentData>();
+            try
+            {
+                DataSet ds = new DataSet("AttachmentsData");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetAttachmentsData", con);
+                    sqlComm.Parameters.AddWithValue("@Conf", confirmationNumber);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
 
-
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_AttachmentData v = new DAL_M_AttachmentData();
+                        v.ConfirmationNum = ds.Tables[0].Rows[i]["confirmationNum"].ToString();
+                        v.AttachmentFileName = ds.Tables[0].Rows[i]["AttachmentFileName"].ToString();
+                        v.DisplayName = ds.Tables[0].Rows[i]["DisplayName"].ToString();
+                        v.UploadedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
+                        lst_DAL_M_AttachmentData.Add(v);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in GetAttachmentsData.  Message: " + ex.Message);
+            }
+            return lst_DAL_M_AttachmentData;
+        }
 
         public Tuple<List<DAL_M_ApplicationList>, int, int> GetAppliationAgeAssigned(int roleId, string userId, string status, string age1, string age2, string age3)
         {
@@ -205,10 +231,10 @@ namespace DAL
             return new Tuple<List<DAL_M_ApplicationList>, int, int>(lst_DAL_M_ApplicationList, totalApplicationCount, totalApplicationCountOver60);
         }
 
-
         public DAL_M_VendorDD GetApplicationSummary(string confirmationNumber)
         {
             DAL_M_VendorDD reqM = new DAL_M_VendorDD();
+            List<DAL_M_LocationAddress> LocationAddressList = new List<DAL_M_LocationAddress>();
             List<string> reqDetails = new List<string>();
 
             try
@@ -224,59 +250,80 @@ namespace DAL
                     da.SelectCommand = sqlComm;
                     da.Fill(ds);
 
-                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    //for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    //{
+                    if (ds.Tables[0].Rows.Count <= 0)
                     {
-                        reqM.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString();
-                        reqM.Vendorname = ds.Tables[0].Rows[i]["VendorName"].ToString();
-                        reqM.AliasDBAName = ds.Tables[0].Rows[i]["AliasDBAName"].ToString();
-                        reqM.FirstName = ds.Tables[0].Rows[i]["FirstName"].ToString();
-                        reqM.MiddleName = ds.Tables[0].Rows[i]["MiddleName"].ToString();
-                        reqM.LastName = ds.Tables[0].Rows[i]["LastName"].ToString();
-                        reqM.CompanyName = ds.Tables[0].Rows[i]["CompanyName"].ToString();
-                        reqM.SSN = ds.Tables[0].Rows[i]["SSN"].ToString();
-
-                        reqM.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
-                        reqM.RequestDate = ds.Tables[0].Rows[i]["RequestDate"].ToString();
-
-                        reqM.ProcessorID = ds.Tables[0].Rows[i]["ProcessorID"].ToString();
-                        reqM.AssignedBy = ds.Tables[0].Rows[i]["AssignedBy"].ToString();
-                        reqM.AssignmentDate = ds.Tables[0].Rows[i]["AssignmentDate"].ToString(); //DateTime.Parse(ds.Tables[0].Rows[i]["AssignmentDate"].ToString());
-
-                        //Console.WriteLine(aDate.ToString("MM/dd/yyyy hh:mm tt"));
-
-                        reqM.AccountType = Int32.Parse(ds.Tables[0].Rows[i]["AccountType"].ToString());
-                        reqM.AccountTypeDesc = ds.Tables[0].Rows[i]["AccountTypeDesc"].ToString();
-                        reqM.BankRoutingNo = ds.Tables[0].Rows[i]["BankRountingNumber"].ToString();
-                        reqM.BankAccountNumber = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
-                        reqM.FinancialIns = ds.Tables[0].Rows[i]["FininstName"].ToString();
-                        reqM.DDNotifyEmail = ds.Tables[0].Rows[i]["DDNotifyEmail"].ToString();
-                        reqM.Status = Int32.Parse(ds.Tables[0].Rows[i]["Status"].ToString());
-                        reqM.StatusDesc = ds.Tables[0].Rows[i]["StatusDesc"].ToString();
-
-                        reqM.Signername = ds.Tables[0].Rows[i]["AuthorizedName"].ToString();
-                        reqM.Signertitle = ds.Tables[0].Rows[i]["AuthorizedTitle"].ToString();
-                        reqM.Signerphone = ds.Tables[0].Rows[i]["AuthorizedPhone"].ToString();
-                        reqM.Signeremail = ds.Tables[0].Rows[i]["AuthorizedEmail"].ToString();
-
-                        reqM.CaseNo = ds.Tables[0].Rows[i]["CaseNo"].ToString();
-                        reqM.PhoneNumber = ds.Tables[0].Rows[i]["PhoneNumber"].ToString();
-                        reqM.DepartmentName = ds.Tables[0].Rows[i]["DepartmentName"].ToString();
-                        reqM.DepartmentContactName = ds.Tables[0].Rows[i]["DepartmentContactName"].ToString();
-                        reqM.DepartmentEmail = ds.Tables[0].Rows[i]["DepartmentEmail"].ToString();
-                        reqM.DepartmentContactNo = ds.Tables[0].Rows[i]["DepartmentContactNo"].ToString();
-                        reqM.ClosedDate = ds.Tables[0].Rows[i]["ClosedDate"].ToString();
-
-                        reqM.Source_ip = ds.Tables[0].Rows[i]["Source_ip"].ToString();
-                        reqM.Source_device = ds.Tables[0].Rows[i]["Source_device"].ToString();
-                        reqM.User_agent = ds.Tables[0].Rows[i]["User_agent"].ToString();
-                        reqM.Comment = ds.Tables[0].Rows[i]["Comment"].ToString();
+                        return null;
                     }
 
-                    for (int i = 0; i <= ds.Tables[1].Rows.Count - 1; i++)
+                    int i = 0;
+                    reqM.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString();
+                    reqM.Vendorname = ds.Tables[0].Rows[i]["VendorName"].ToString();
+                    reqM.AliasDBAName = ds.Tables[0].Rows[i]["AliasDBAName"].ToString();
+                    reqM.FirstName = ds.Tables[0].Rows[i]["FirstName"].ToString();
+                    reqM.MiddleName = ds.Tables[0].Rows[i]["MiddleName"].ToString();
+                    reqM.LastName = ds.Tables[0].Rows[i]["LastName"].ToString();
+                    reqM.CompanyName = ds.Tables[0].Rows[i]["CompanyName"].ToString();
+                    reqM.SSN = ds.Tables[0].Rows[i]["SSN"].ToString();
+
+                    reqM.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
+                    reqM.RequestDate = ds.Tables[0].Rows[i]["RequestDate"].ToString();
+
+                    reqM.ProcessorID = ds.Tables[0].Rows[i]["ProcessorID"].ToString();
+                    reqM.AssignedBy = ds.Tables[0].Rows[i]["AssignedBy"].ToString();
+                    reqM.AssignmentDate = ds.Tables[0].Rows[i]["AssignmentDate"].ToString(); //DateTime.Parse(ds.Tables[0].Rows[i]["AssignmentDate"].ToString());
+
+                    //Console.WriteLine(aDate.ToString("MM/dd/yyyy hh:mm tt"));
+
+                    reqM.AccountType = Int32.Parse(ds.Tables[0].Rows[i]["AccountType"].ToString());
+                    reqM.AccountTypeDesc = ds.Tables[0].Rows[i]["AccountTypeDesc"].ToString();
+                    reqM.BankRoutingNo = ds.Tables[0].Rows[i]["BankRountingNumber"].ToString();
+                    reqM.BankAccountNumber = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
+                    reqM.FinancialIns = ds.Tables[0].Rows[i]["FininstName"].ToString();
+                    reqM.DDNotifyEmail = ds.Tables[0].Rows[i]["DDNotifyEmail"].ToString();
+                    reqM.Status = Int32.Parse(ds.Tables[0].Rows[i]["Status"].ToString());
+                    reqM.StatusDesc = ds.Tables[0].Rows[i]["StatusDesc"].ToString();
+
+                    reqM.Signername = ds.Tables[0].Rows[i]["AuthorizedName"].ToString();
+                    reqM.Signertitle = ds.Tables[0].Rows[i]["AuthorizedTitle"].ToString();
+                    reqM.Signerphone = ds.Tables[0].Rows[i]["AuthorizedPhone"].ToString();
+                    reqM.Signeremail = ds.Tables[0].Rows[i]["AuthorizedEmail"].ToString();
+
+                    reqM.CaseNo = ds.Tables[0].Rows[i]["CaseNo"].ToString();
+                    reqM.PhoneNumber = ds.Tables[0].Rows[i]["PhoneNumber"].ToString();
+                    reqM.DepartmentName = ds.Tables[0].Rows[i]["DepartmentName"].ToString();
+                    reqM.DepartmentContactName = ds.Tables[0].Rows[i]["DepartmentContactName"].ToString();
+                    reqM.DepartmentEmail = ds.Tables[0].Rows[i]["DepartmentEmail"].ToString();
+                    reqM.DepartmentContactNo = ds.Tables[0].Rows[i]["DepartmentContactNo"].ToString();
+                    reqM.ClosedDate = ds.Tables[0].Rows[i]["ClosedDate"].ToString();
+
+                    reqM.Source_ip = ds.Tables[0].Rows[i]["Source_ip"].ToString();
+                    reqM.Source_device = ds.Tables[0].Rows[i]["Source_device"].ToString();
+                    reqM.User_agent = ds.Tables[0].Rows[i]["User_agent"].ToString();
+                    reqM.Comment = ds.Tables[0].Rows[i]["Comment"].ToString();
+                    ///}
+
+                    for (int j = 0; j <= ds.Tables[1].Rows.Count - 1; j++)
                     {
-                        reqDetails.Add(ds.Tables[1].Rows[i]["Address"].ToString());
+                        reqDetails.Add(ds.Tables[1].Rows[j]["Address"].ToString());
                     }
                     reqM.LocationAddress = reqDetails;
+
+
+
+                    for (int k = 0; k <= ds.Tables[1].Rows.Count - 1; k++)
+                    {
+                        DAL_M_LocationAddress loc = new DAL_M_LocationAddress();
+
+                        loc.Street = ds.Tables[1].Rows[k]["Street"].ToString();
+                        loc.City = ds.Tables[1].Rows[k]["City"].ToString();
+                        loc.State = ds.Tables[1].Rows[k]["State"].ToString();
+                        loc.Zip = ds.Tables[1].Rows[k]["Zip"].ToString();
+                        LocationAddressList.Add(loc);
+                    }
+
+                    reqM.LocationAddressList = (LocationAddressList);
                     con.Close();
                 }
             }
@@ -286,7 +333,6 @@ namespace DAL
             }
             return reqM;
         }
-
 
         public string UpdateApplicationStatus(string confirmationNumber, int statusCode, string comment, string reasonType, string processorID, string assignedBy)
         {
@@ -339,7 +385,6 @@ namespace DAL
             }
             return "SUCCESS";
         }
-
         public string UpdateVendorAuthorizationDetails(DAL.Models.DAL_M_VendorDD adminModel)
         {
             try
@@ -364,7 +409,6 @@ namespace DAL
             }
             return "SUCCESS";
         }
-
         public string UpdateVendorDetails(DAL.Models.DAL_M_VendorDD adminModel)
         {
             try
@@ -395,7 +439,6 @@ namespace DAL
             }
             return "SUCCESS";
         }
-
         public string UpdateVendorBankDetails(DAL.Models.DAL_M_VendorDD adminModel)
         {
             try
@@ -420,7 +463,6 @@ namespace DAL
             }
             return "SUCCESS";
         }
-
         public string UpdateDepartmentDetails(DAL.Models.DAL_M_VendorDD adminModel)
         {
             try
@@ -445,9 +487,6 @@ namespace DAL
             }
             return "SUCCESS";
         }
-
-
-
         public List<DAL_M_IdTextClass> GetProcessorsList()
         {
             List<DAL_M_IdTextClass> processorsList = new List<DAL_M_IdTextClass>();
@@ -481,11 +520,8 @@ namespace DAL
             }
             return processorsList;
         }
-
-
         public List<DAL_M_TransportDataGeneric> GetTimeLineByConfirmationNumber(string confirmationNumber)
         {
-            DAL_M_TransportDataGeneric timeLine = new DAL_M_TransportDataGeneric();
             List<DAL_M_TransportDataGeneric> timeLines = new List<DAL_M_TransportDataGeneric>();
 
             try
@@ -503,11 +539,14 @@ namespace DAL
 
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
+                        DAL_M_TransportDataGeneric timeLine = new DAL_M_TransportDataGeneric();
+
                         //Tuple<DateTime, DateTime> DateandTime = getDate_Time_Seperately(DateTime.Parse(ds.Tables[0].Rows[i]["LastUpdateDateTime"].ToString()));
-                        timeLine.TimeLineDate = DateTime.Parse("HH:mm"); // DateandTime.Item1;
-                                                                         // TimeSpan t1 = DateTime.Parse(ds.Tables[0].Rows[i]["LastUpdateDateTime"].ToString()).TimeOfDay.ToString();
-                        timeLine.TimeLineTime = DateTime.Parse(ds.Tables[0].Rows[i]["LastUpdateDateTime"].ToString()); //DateandTime.Item1;
+                        ////timeLine.TimeLineDate = DateTime.Parse("HH:mm"); // DateandTime.Item1;
+                        ////                                                 // TimeSpan t1 = DateTime.Parse(ds.Tables[0].Rows[i]["LastUpdateDateTime"].ToString()).TimeOfDay.ToString();
+                        ////timeLine.TimeLineTime = DateTime.Parse(ds.Tables[0].Rows[i]["LastUpdateDateTime"].ToString()); //DateandTime.Item1;
                         timeLine.Status = ds.Tables[0].Rows[i]["StatusDesc"].ToString();
+                        timeLine.TimeLineMessage = ds.Tables[0].Rows[i]["TimeLineMessage"].ToString();
                         timeLines.Add(timeLine);
                     }
                     con.Close();
@@ -515,43 +554,122 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                LogManager.log.Error("Error in GetApplicationSummary.  Message: " + ex.Message);
+                LogManager.log.Error("Error in GetTimeLineByConfirmationNumber.  Message: " + ex.Message);
             }
             return timeLines;
         }
+        public string InsertUpdateNotes(DAL_M_Notes vm_Notes)
+        {
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("InsertUpdateNotes", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", vm_Notes.ConfirmationNumber);
+                    sqlComm.Parameters.AddWithValue("@Note_Type", vm_Notes.NotesType);
+                    sqlComm.Parameters.AddWithValue("@Note_Content", vm_Notes.Notes);
 
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Insert / Update Notes.  Message: " + ex.Message);
+                return "Error";
+            }
+            return "SUCCESS";
+        }
+        public List<DAL_M_Notes> GetNotesByConfirmationNumber(string confirmationNumber)
+        {
+            List<DAL_M_Notes> notesList = new List<DAL_M_Notes>();
+            try
+            {
+                DataSet ds = new DataSet("Notes");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetNotesByConfirmationNumber", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", confirmationNumber);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_Notes v = new DAL_M_Notes();
+                        v.NotesId = Int32.Parse(ds.Tables[0].Rows[i]["Note_Id"].ToString());
+                        v.NotesType = ds.Tables[0].Rows[i]["Note_Type"].ToString();
+                        v.Notes = ds.Tables[0].Rows[i]["Note_Content"].ToString();
+
+                        notesList.Add(v);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in GetTimeLineByConfirmationNumber.  Message: " + ex.Message);
+            }
+            return notesList;
+        }
         public Tuple<DateTime, DateTime> getDate_Time_Seperately(DateTime dt)
         {
             //DateTime dt = DateTime.Parse("6/22/2009 07:00:00 AM");
 
             //dt.ToString("HH:mm");
             return null;
+        }
+        public string UpdateRetireAttachment(DAL.Models.DAL_M_VendorDD attachmentModel)
+        {
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("UpdateRetireAttachment", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", attachmentModel.Confirmation);
+                    sqlComm.Parameters.AddWithValue("@AttachmentFileName", attachmentModel.VendorAttachmentFileName);
 
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Retiring Attachment.  Message: " + ex.Message);
+                return "Error";
+            }
+            return "SUCCESS";
         }
 
 
+        public string InsertDocumentAttachment(DAL.Models.DAL_M_VendorDD attachmentModel)
+        {
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("InsertDocumentAttachment", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", attachmentModel.Confirmation);
+                    sqlComm.Parameters.AddWithValue("@AttachmentFileName", attachmentModel.VendorAttachmentFileName);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUser", attachmentModel.LastUpdatedUser);
+                    sqlComm.Parameters.AddWithValue("@TypeID", attachmentModel.DocumentAttachmentTypeId);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Uploading Attachment.  Message: " + ex.Message);
+                return "ERROR";
+            }
+            return "SUCCESS";
+        }
 
-
-
-
-        //        DAL_M_VendorDD
-
-        //        VendorNumber
-        //RequestType
-        //RequestDate
-        //FininstName
-        //AuthorizedName
-        //AuthorizedTitle
-        //AuthorizedPhone
-        //AuthorizedPhoneExt
-        //AuthorizedEmail
-        //Comment
-        //OfficeNotes
-        //AccountType
-        //BankAccountNumber
-        //BankRountingNumber
-        //DDNotifyEmail
-        //Status
 
 
     }

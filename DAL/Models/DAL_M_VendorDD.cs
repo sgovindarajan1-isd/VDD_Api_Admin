@@ -5,6 +5,14 @@ using System.Web;
 
 namespace DAL.Models
 {
+
+    public class DAL_M_LocationAddress
+    {
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
+    }
     public class DAL_M_VendorDD
     {
         public string Vendorname { get; set; }
@@ -68,5 +76,10 @@ namespace DAL.Models
         //
 
         public List<string> LocationAddress { get; set; }
+        public List<DAL_M_LocationAddress> LocationAddressList { get; set; }
+        public string LastUpdatedUser { get; set; }
+        public int DocumentAttachmentTypeId { get; set; }
+        public string DocumentAttachmentTypeName{ get; set; }
+
     }
 }
