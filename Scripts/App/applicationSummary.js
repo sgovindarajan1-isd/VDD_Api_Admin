@@ -606,7 +606,7 @@
             },
             success: function (data) {
                 toastr.options.positionClass = "toast-bottom-right";
-                toastr.warning("Successfully Bank Details updated");
+                toastr.warning("Bank information updated successfully.");
 
                 $('#bankDetailsModal').modal('hide');
 
@@ -656,7 +656,7 @@
             },
             success: function (data) {
                 toastr.options.positionClass = "toast-bottom-right";
-                toastr.warning("Successfully Certification Details updated");
+                toastr.warning("Certification information updated successfully.");
                 $('#certificationDetailsModal').modal('hide');
 
                 //$("#txt_pop_SignerName").val(SignerName);
@@ -708,7 +708,7 @@
             },
             success: function (data) {
                 toastr.options.positionClass = "toast-bottom-right";
-                toastr.warning("Successfully Department Details updated");
+                toastr.warning("Department information updated successfully.");
 
                 $('#departmentDetailsModal').modal('hide');
                 //populate from popup
@@ -752,7 +752,7 @@
             },
             success: function (data) {
                 toastr.options.positionClass = "toast-bottom-right";
-                toastr.warning("Successfully Added Notes.");
+                toastr.warning("Successfully added notes.");
 
 
                 var a = '<li class="list-group-item list-group-item-warning emptyResultMessage"> <span style="font-weight:bold; padding-right:10px" >' + '</span >' + notes + '</li>';
@@ -1189,7 +1189,7 @@
                 }
             });
         } else {
-            alert("Attachment File type is not supported.");
+            alert("Attachment file type is not supported.");
         }
     };
 

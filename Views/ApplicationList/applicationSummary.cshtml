@@ -1,16 +1,7 @@
 ﻿<link href="~/Content/applicationsummary.css" rel="stylesheet" />
-@*<link href="~/Content/main2.css" rel="stylesheet" />*@
-@*<link href="~/Content/dashboard.css" rel="stylesheet" />*@
-
-<link href="//cdn.datatables.net/responsive/2.2.3/css/dataTables.responsive.css" />
-<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
-
-@*<script src="~/Scripts/App/dashboard.js"></script>*@
+<script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>
 <script src="~/Scripts/App/AdminMain.js"></script>
 <script src="~/Scripts/App/applicationSummary.js"></script>
-<script src="//cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.js"></script>
 
 <script>
     $(function () {
@@ -135,110 +126,202 @@
             </div>
             <div class="modal-body" style="text-align:left">
 
-                <div class="modal-body form-horizontal ">
-                    <div class="subSection" style="text-align:left;">
-                        <div class="form-group padding-bottom-div">
-                            <label for="Vendor Code">
-                                Vendor Code:
-                            </label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_VendorCode" maxlength="15" placeholder="Vendor Code" value="" required>
-                                <span id="vendorcode" class="errmessage" />
+
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Vendor Code: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_VendorCode" maxlength="15" placeholder="Vendor Code" value="" required>
+                                    <span id="vendorcode" class="errmessage" />
+                                </span>
+
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">First Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_FirstName" placeholder="First Name" value="" required>
+                                    <span id="firstName" class="errmessage" />
+                                </span>
+
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Middle Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_MiddleName" placeholder="Middle Name">
+                                    <span id="middleName" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Last Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_LastName" placeholder="Last Name">
+                                    <span id="lastName" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Phone Number: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_PhoneNumber" placeholder="Phone Number">
+                                    <span id="phoneNumber" class="errmessage" />
+                                </span>
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Cell Phone: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_CellPhone" placeholder="Cell Phone">
+                                    <span id="cellPhone" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Payee Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_PayeeName" placeholder="Payee Name" readonly disabled>
+                                    <span id="payeeName" class="errmessage" />
+                                </span>
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Company Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_CompanyName" placeholder="Company Name">
+                                    <span id="companyName" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Alias/DBA: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_AliasDBA" placeholder="Alias/DBA">
+                                    <span id="aliasDBA" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Taxpayer ID Number: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_Tin" placeholder="Taxpayer Id Number">
+                                    <span id="tin" class="errmessage" />
+                                </span>
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Direct Deposit Notification Email: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_DDNotify" placeholder="Direct Deposit Notification Email">
+                                    <span id="ddNotify" class="errmessage" />
+                                </span>
                             </div>
                         </div>
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="First Name">
-                                First Name:
-                            </label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_FirstName" placeholder="First Name" value="" required>
-                                <span id="firstName" class="errmessage" />
-                            </div>
-                        </div>
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Middle Name"> Middle Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_MiddleName" placeholder="Middle Name">
-                                <span id="middleName" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Last Name">Last Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_LastName" placeholder="Last Name">
-                                <span id="lastName" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Phone Number">Phone Number:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_PhoneNumber" placeholder="Phone Number">
-                                <span id="phoneNumber" class="errmessage" />
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Cell Phone">Cell Phone:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_CellPhone" placeholder="Cell Phone">
-                                <span id="cellPhone" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Last Name">Payee Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_PayeeName" placeholder="Payee Name" readonly disabled>
-                                <span id="payeeName" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Company Name">Company Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_CompanyName" placeholder="Company Name">
-                                <span id="companyName" class="errmessage" />
-                            </div>
-                        </div>
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Alias/DBA">Alias/DBA:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_AliasDBA" placeholder="Alias/DBA">
-                                <span id="aliasDBA" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Taxpayer Id Number">Taxpayer Id Number:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_Tin" placeholder="Taxpayer Id Number">
-                                <span id="tin" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Direct Deposit Notification Email">Direct Deposit Notification Email:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_DDNotify" placeholder="Direct Deposit Notification Email">
-                                <span id="ddNotify" class="errmessage" />
-                            </div>
-                        </div>
-                        <br><br>
                     </div>
                 </div>
+
+
+
+                @*<div class="modal-body form-horizontal ">
+                    <div class="subSection" style="text-align:left;">*@
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Vendor Code">
+                                    Vendor Code:
+                                </label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_VendorCode" maxlength="15" placeholder="Vendor Code" value="" required>
+                                    <span id="vendorcode" class="errmessage" />
+                                </div>
+                            </div>*@
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="First Name">
+                                    First Name:
+                                </label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_FirstName" placeholder="First Name" value="" required>
+                                    <span id="firstName" class="errmessage" />
+                                </div>
+                            </div>*@
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Middle Name"> Middle Name:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_MiddleName" placeholder="Middle Name">
+                                    <span id="middleName" class="errmessage" />
+                                </div>
+                            </div>*@
+
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Last Name">Last Name:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_LastName" placeholder="Last Name">
+                                    <span id="lastName" class="errmessage" />
+                                </div>
+                            </div>*@
+
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Phone Number">Phone Number:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_PhoneNumber" placeholder="Phone Number">
+                                    <span id="phoneNumber" class="errmessage" />
+                                </div>
+                            </div>*@
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Cell Phone">Cell Phone:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_CellPhone" placeholder="Cell Phone">
+                                    <span id="cellPhone" class="errmessage" />
+                                </div>
+                            </div>*@
+
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Payee Name">Payee Name:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_PayeeName" placeholder="Payee Name" readonly disabled>
+                                    <span id="payeeName" class="errmessage" />
+                                </div>
+                            </div>*@
+
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Company Name">Company Name:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_CompanyName" placeholder="Company Name">
+                                    <span id="companyName" class="errmessage" />
+                                </div>
+                            </div>*@
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Alias/DBA">Alias/DBA:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_AliasDBA" placeholder="Alias/DBA">
+                                    <span id="aliasDBA" class="errmessage" />
+                                </div>
+                            </div>*@
+
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Taxpayer Id Number">Taxpayer Id Number:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_Tin" placeholder="Taxpayer Id Number">
+                                    <span id="tin" class="errmessage" />
+                                </div>
+                            </div>*@
+
+
+                        @*<div class="form-group padding-bottom-div">
+                                <label for="Direct Deposit Notification Email">Direct Deposit Notification Email:</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="txt_pop_DDNotify" placeholder="Direct Deposit Notification Email">
+                                    <span id="ddNotify" class="errmessage" />
+                                </div>
+                            </div>*@
+                        @*<br><br>
+                    </div>
+                </div>*@
             </div>
 
             <div class="modal-footer">
@@ -257,9 +340,54 @@
             </div>
             <div class="modal-body" style="text-align:left">
 
-                <div class="modal-body form-horizontal ">
-                    <div class="subSection" style="text-align:left;">
-                        <div class="form-group padding-bottom-div">
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Type of Account: </span>
+                                <span class="displayValue ">
+                                    <select id="txt_pop_AccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT ">
+                                        <option value="1" selected>SELECT TYPE OF ACCOUNT</option>
+                                        <option value="1">Checking</option>
+                                        <option value="2">Savings</option>
+                                    </select>
+                                    <span id="accountType" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Bank Account #: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_BankAcNo" maxlength="15" placeholder="Bank Account Number" value="" required>
+                                    <span id="bankAcNo" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Bank Routing #: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_RoutingNo" maxlength="15" placeholder="Bank Routing Number" value="" required>
+                                    <span id="bankAcNo" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Financial Institution Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_FinancialIns" placeholder="Financial Institution Name">
+                                    <span id="financialIns" class="errmessage" />
+                                </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="modal-body form-horizontal ">
+                    <div class="subSection" style="text-align:left;">*@
+                        @*<div class="form-group padding-bottom-div">
                             <label for="Type Of Account">Type of Account:</label>
                             <div class="">
                                 <select id="txt_pop_AccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT ">
@@ -269,9 +397,9 @@
                                 </select>
                                 <span id="accountType" class="errmessage" />
                             </div>
-                        </div>
+                        </div>*@
 
-                        <div class="form-group padding-bottom-div">
+                        @*<div class="form-group padding-bottom-div">
                             <label for="Bank Account Number">
                                 Bank Account #:
                             </label>
@@ -279,9 +407,9 @@
                                 <input type="text" class="form-control" id="txt_pop_BankAcNo" maxlength="15" placeholder="Bank Account Number" value="" required>
                                 <span id="bankAcNo" class="errmessage" />
                             </div>
-                        </div>
+                        </div>*@
 
-                        <div class="form-group padding-bottom-div">
+                        @*<div class="form-group padding-bottom-div">
                             <label for="Bank Routing Number">
                                 Bank Routing #:
                             </label>
@@ -289,18 +417,18 @@
                                 <input type="text" class="form-control" id="txt_pop_RoutingNo" maxlength="15" placeholder="Bank Routing Number" value="" required>
                                 <span id="bankAcNo" class="errmessage" />
                             </div>
-                        </div>
+                        </div>*@
 
-                        <div class="form-group padding-bottom-div">
+                        @*<div class="form-group padding-bottom-div">
                             <label for="Type Of Account">Financial Institution Name:</label>
                             <div class="">
                                 <input type="text" class="form-control" id="txt_pop_FinancialIns" placeholder="Financial Institution Name">
                                 <span id="financialIns" class="errmessage" />
                             </div>
-                        </div>
-                        <br><br>
+                        </div>*@
+                        @*<br><br>
                     </div>
-                </div>
+                </div>*@
             </div>
 
             <div class="modal-footer">
@@ -319,72 +447,121 @@
             </div>
             <div class="modal-body" style="text-align:left">
 
-                <div class="modal-body form-horizontal ">
-                    <div class="subSection" style="text-align:left;">
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Name" class="certify-text-spacing">
-                                Authorized Signer’s Name
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Authorized Signer’s Name: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control" id="txt_pop_SignerName" maxlength="50" placeholder="Authorized Signer’s Name" value="" required>
                                     <span id="signerName" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Title" class="certify-text-spacing" ">
-                                Authorized Signer’s Title
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Authorized Signer’s Title: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control" id="txt_pop_SignerTitle" maxlength="50" placeholder="Authorized Signer’s Title" value="" required>
                                     <span id="signerTitle" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Phone" class="certify-text-spacing" style="padding-right: 15px;">
-                                Authorized Signer’s Phone #
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Authorized Signer’s Phone #: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control item" id="txt_pop_SignerPhone" maxlength="15" placeholder="(___)___-____" required>
                                     <span id="signerPhone" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Email" class="certify-text-spacing" style="padding-right: 15px;">
-                                Authorized Signer’s Email
-                            </label>
-
-                            <div class="">
-                                <div style="float:left">
-                                    <input type="text" class="form-control" id="txt_pop_SignerEmail" maxlength="100" placeholder=" Authorized Signer’s Email" @*value="a@a.com*@ required>
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Authorized Signer’s Email: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_SignerEmail" maxlength="100" placeholder=" Authorized Signer’s Email" required>
                                     <span id="signerEmail" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Certification" class="certify-text-spacing" style="padding-right: 15px;">
-                                Certification #:
-                            </label>
-
-                            <div class="">
-                                <div style="float:left">
-                                    <input type="text" class="form-control" id="txt_pop_Certification" maxlength="100" placeholder="Certification" @*value="a@a.com*@ readonly disabled>
-                                    <span id="certification" class="errmessage" />
-                                </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Confirmation #: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_Certification" maxlength="100" placeholder="Confirmation" readonly disabled>
+                                    <span id="confirmation" class="errmessage" />
+                                </span>
                             </div>
+
+
                         </div>
-                        <br><br>
                     </div>
                 </div>
+
+                @*<div class="modal-body form-horizontal ">
+            <div class="subSection" style="text-align:left;">
+                <div class="form-group padding-bottom-div">
+                    <label for="Signer Name" class="certify-text-spacing">
+                        Authorized Signer’s Name
+                    </label>
+                    <div class="">
+                        <div style="float:left">
+                            <input type="text" class="form-control" id="txt_pop_SignerName" maxlength="50" placeholder="Authorized Signer’s Name" value="" required>
+                            <span id="signerName" class="errmessage" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group padding-bottom-div">
+                    <label for="Signer Title" class="certify-text-spacing" ">
+                        Authorized Signer’s Title
+                    </label>
+                    <div class="">
+                        <div style="float:left">
+                            <input type="text" class="form-control" id="txt_pop_SignerTitle" maxlength="50" placeholder="Authorized Signer’s Title" value="" required>
+                            <span id="signerTitle" class="errmessage" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group padding-bottom-div">
+                    <label for="Signer Phone" class="certify-text-spacing" style="padding-right: 15px;">
+                        Authorized Signer’s Phone #
+                    </label>
+                    <div class="">
+                        <div style="float:left">
+                            <input type="text" class="form-control item" id="txt_pop_SignerPhone" maxlength="15" placeholder="(___)___-____" required>
+                            <span id="signerPhone" class="errmessage" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group padding-bottom-div">
+                    <label for="Signer Email" class="certify-text-spacing" style="padding-right: 15px;">
+                        Authorized Signer’s Email
+                    </label>
+
+                    <div class="">
+                        <div style="float:left">
+                            <input type="text" class="form-control" id="txt_pop_SignerEmail" maxlength="100" placeholder=" Authorized Signer’s Email"  required>
+                            <span id="signerEmail" class="errmessage" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group padding-bottom-div">
+                    <label for="Certification" class="certify-text-spacing" style="padding-right: 15px;">
+                        Certification #:
+                    </label>
+
+                    <div class="">
+                        <div style="float:left">
+                            <input type="text" class="form-control" id="txt_pop_Certification" maxlength="100" placeholder="Certification"  readonly disabled>
+                            <span id="certification" class="errmessage" />
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>*@
 
             </div>
 
@@ -404,59 +581,98 @@
             </div>
             <div class="modal-body" style="text-align:left">
 
-                <div class="modal-body form-horizontal ">
-                    <div class="subSection" style="text-align:left;">
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Name" class="certify-text-spacing">
-                                Dept. Name:
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Dept. Name: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control" id="txt_pop_DeptName" maxlength="50" placeholder=" Dept. Name" value="" required>
                                     <span id="deptName" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Title" class="certify-text-spacing" ">
-                                Dept. Contact Person Name:
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Dept. Contact Person Name:</span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control" id="txt_pop_DeptcontactName" maxlength="50" placeholder="Dept. Contact Person Name" value="" required>
                                     <span id="deptcontactName" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="dept Email" class="certify-text-spacing" style="padding-right: 15px;">
-                                Dept. Email Address:
-                            </label>
-
-                            <div class="">
-                                <div style="float:left">
-                                    <input type="text" class="form-control" id="txt_pop_DeptEmailAddress" maxlength="100" placeholder="Dept. Email Address" @*value="a@a.com*@ required>
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Dept. Email Address: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_DeptEmailAddress" maxlength="100" placeholder="Dept. Email Address" required>
                                     <span id="deptEmail" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="dept Contact" class="certify-text-spacing" style="padding-right: 15px;">
-                                Dept. Contact #:
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Dept. Contact #: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control item" id="txt_pop_DeptContact" maxlength="15" placeholder="(___)___-____" required>
                                     <span id="deptPhone" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
                         </div>
-                        <br><br>
                     </div>
                 </div>
+
+                @*<div class="modal-body form-horizontal ">
+            <div class="subSection" style="text-align:left;">
+                <div class="form-group padding-bottom-div">
+                    <label for="Signer Name" class="certify-text-spacing">
+                        Dept. Name:
+                    </label>
+                    <div class="">
+                        <div style="float:left">
+                            <input type="text" class="form-control" id="txt_pop_DeptName" maxlength="50" placeholder=" Dept. Name" value="" required>
+                            <span id="deptName" class="errmessage" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group padding-bottom-div">
+                    <label for="Signer Title" class="certify-text-spacing" ">
+                        Dept. Contact Person Name:
+                    </label>
+                    <div class="">
+                        <div style="float:left">
+                            <input type="text" class="form-control" id="txt_pop_DeptcontactName" maxlength="50" placeholder="Dept. Contact Person Name" value="" required>
+                            <span id="deptcontactName" class="errmessage" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group padding-bottom-div">
+                    <label for="dept Email" class="certify-text-spacing" style="padding-right: 15px;">
+                        Dept. Email Address:
+                    </label>
+
+                    <div class="">
+                        <div style="float:left">
+                            <input type="text" class="form-control" id="txt_pop_DeptEmailAddress" maxlength="100" placeholder="Dept. Email Address"  required>
+                            <span id="deptEmail" class="errmessage" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group padding-bottom-div">
+                    <label for="dept Contact" class="certify-text-spacing" style="padding-right: 15px;">
+                        Dept. Contact #:
+                    </label>
+                    <div class="">
+                        <div style="float:left">
+                            <input type="text" class="form-control item" id="txt_pop_DeptContact" maxlength="15" placeholder="(___)___-____" required>
+                            <span id="deptPhone" class="errmessage" />
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>*@
 
             </div>
 
@@ -855,25 +1071,25 @@
                             <input type="file" id="file-input" style="display:none" />
 
                             @*<div class="container" style="text-align: center;vertical-align:central" id="pnlAttachment" visible="false">
-                                <label for="attachment">
-                                    Attachment
-                                    <span>
-                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="You may only attach one file.
-                    The maximum allowed file size is 10 MB.
-                    The file you attach must either be .PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, or .PNG. No other file types are allowed." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
-                                    </span>
-                                </label>
+                                            <label for="attachment">
+                                                Attachment
+                                                <span>
+                                                    <img data-toggle="popover" data-popover="true" data-placement="top" data-content="You may only attach one file.
+                                The maximum allowed file size is 10 MB.
+                                The file you attach must either be .PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, or .PNG. No other file types are allowed." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                                </span>
+                                            </label>
 
-                                <div style="text-align: center" class="custom-file-input" visible="false">
+                                            <div style="text-align: center" class="custom-file-input" visible="false">
 
-                                    <input type="file" accept="image/*,.PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, .PNG">
-                                    <input type="text" id="txtattachment">
-                                    <input type="button" style="width: 150px" class="btn-primary btn button-header-color" value="Upload Attachment">
-                                    <div>
-                                        <span id="fileError_or_Info" style="text-align: center" class="errmessage" />
-                                    </div>
-                                </div>
-                            </div>*@
+                                                <input type="file" accept="image/*,.PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, .PNG">
+                                                <input type="text" id="txtattachment">
+                                                <input type="button" style="width: 150px" class="btn-primary btn button-header-color" value="Upload Attachment">
+                                                <div>
+                                                    <span id="fileError_or_Info" style="text-align: center" class="errmessage" />
+                                                </div>
+                                            </div>
+                                        </div>*@
 
 
 

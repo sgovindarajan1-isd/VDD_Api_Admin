@@ -122,23 +122,19 @@
 
                         return data;
                     },
-                    "title": "Confirmation #"
+                    "title": "Confirmation #", "width": '52px' 
                 },
                 { 'data': 'VendorName', "title": "Payee Name" },
                 { 'data': 'ReceivedDate', "title": "Received Dt"},
                 { 'data': 'AssignedDate', "title": "Assignment Dt"},
                 { 'data': 'ApplicationAge', "title": "Application Age"},
-                { 'data': 'StatusDesc', "width": '140px', "title": "Status"}
+                { 'data': 'StatusDesc', "title": "Status"}
             ],
 
             columnDefs: [
-                //{
-                //    "render": function (data, type, row) {
-                //        return data + ' - ssss';
-                //    },
-                //    "targets": 0
-                //},
-
+                { "width": "30%", "targets": [0,1] },
+                { "width": "10%", "targets": [2,3,4] },
+                { "width": "5%", "targets": [5] },
                 {
                     searching: false,
                     data: null,
