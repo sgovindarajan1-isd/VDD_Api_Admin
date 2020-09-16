@@ -232,6 +232,21 @@ namespace DAL
             return "SUCCESS";
         }
 
+        private DataTable CreateTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ConfirmationNum", typeof(string));
+            dt.Columns.Add("VEND_CUST_CD", typeof(string));
+            dt.Columns.Add("AD_ID", typeof(string));
+            dt.Columns.Add("Active", typeof(Int32));
+            dt.Columns.Add("Address1", typeof(string));
+            dt.Columns.Add("Address2", typeof(string));
+            dt.Columns.Add("City", typeof(string));
+            dt.Columns.Add("State", typeof(string));
+            dt.Columns.Add("ZipCode", typeof(string));
+
+            return dt;
+        }
 
 
         public Tuple<string, string> SubmitVendor(DAL_M_VendorDD vmvendorDD)
@@ -239,18 +254,24 @@ namespace DAL
             Tuple<string, string> ret = null;
             try
             {
+                DataTable reqDetails = CreateTable();
+                foreach (string locid in vmvendorDD.LocationIDs)
+                {
+                    reqDetails.Rows.Add(vmvendorDD.Confirmation, vmvendorDD.Vendorname, locid, 1);
+                }
+
                 DataSet ds = new DataSet("Vendor");
                 using (SqlConnection con = DBconnection.Open())
                 {
-                    foreach (string locid in vmvendorDD.LocationIDs)
+                    //foreach (string locid in vmvendorDD.LocationIDs)
                     {
-                        SqlCommand sqlComm = new SqlCommand("SubmitVendorDetails", con);
+                        SqlCommand sqlComm = new SqlCommand("SubmitVendorDetails_test", con);
                         sqlComm.Parameters.AddWithValue("@VEND_CUST_CD", vmvendorDD.Vendorname);
-                        sqlComm.Parameters.AddWithValue("@AD_ID", locid);
+                        //sqlComm.Parameters.AddWithValue("@AD_ID", locid);
                         sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);//vmvendorDD.Confirmation)
-                        sqlComm.Parameters.AddWithValue("@REQUESTDATE", vmvendorDD.SubmitDateTime);
+                        sqlComm.Parameters.AddWithValue("@RequestDate", vmvendorDD.SubmitDateTime);
 
-                        sqlComm.Parameters.AddWithValue("@STATUS", 5);  //  5 pending 
+                        sqlComm.Parameters.AddWithValue("@Status", 5);  //  5 pending 
                         sqlComm.Parameters.AddWithValue("@DDNotifyEmail", vmvendorDD.DDNotifyEmail);
                         sqlComm.Parameters.AddWithValue("@AccountType", vmvendorDD.AccountType);
                         sqlComm.Parameters.AddWithValue("@AccountNumber", vmvendorDD.BankAccountNumber);
@@ -264,6 +285,8 @@ namespace DAL
                         sqlComm.Parameters.AddWithValue("@AuthorizedPhoneExt", "");
                         sqlComm.Parameters.AddWithValue("@AuthorizedEmail", vmvendorDD.Signeremail);
                         sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", vmvendorDD.SubmitDateTime);
+                        sqlComm.Parameters.AddWithValue("@RequestType", vmvendorDD.RequestType);
+                        sqlComm.Parameters.AddWithValue("@TableTypeRequestDetail", reqDetails);
 
                         sqlComm.CommandType = CommandType.StoredProcedure;
                         sqlComm.ExecuteNonQuery();
@@ -282,7 +305,6 @@ namespace DAL
 
         public Tuple<string, string> SubmitAttachmentFile(DAL_M_VendorDD vmvendorDD)
         {
-            Tuple<string, string> ret = null;
             try
             {
                 DataSet ds = new DataSet("Vendor");
@@ -296,6 +318,19 @@ namespace DAL
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.ExecuteNonQuery();
+
+                    //if there is EventHandlerTaskAsyncHelper second attachment,  when submit from DDMS
+                    if ( (vmvendorDD.AttachmentFileName_ddwetform != null) && (!string.IsNullOrEmpty(vmvendorDD.AttachmentFileName_ddwetform.Trim())) )
+                    {
+                        SqlCommand sqlComm_ddwetform = new SqlCommand("SubmitVendorAttachment", con);
+                        sqlComm_ddwetform.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
+                        sqlComm_ddwetform.Parameters.AddWithValue("@AttachmentFileName", vmvendorDD.AttachmentFileName_ddwetform);
+                        sqlComm_ddwetform.Parameters.AddWithValue("@LastUpdatedUser", "");
+                        sqlComm_ddwetform.Parameters.AddWithValue("@LastUpdateDateTime", DateTime.Now);
+
+                        sqlComm_ddwetform.CommandType = CommandType.StoredProcedure;
+                        sqlComm_ddwetform.ExecuteNonQuery();
+                    }
                     con.Close();
                 }
             }
@@ -309,7 +344,6 @@ namespace DAL
 
         public Tuple<string, string> InsertVendorReportFileName(DAL_M_VendorDD vmvendorDD)
         {
-            Tuple<string, string> ret = null;
             try
             {
                 DataSet ds = new DataSet("Vendor");
@@ -323,12 +357,13 @@ namespace DAL
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.ExecuteNonQuery();
+
                     con.Close();
                 }
             }
             catch (Exception ex)
             {
-                LogManager.log.Error("Error in SubmitAttachmentFile.  Message: " + ex.Message);
+                LogManager.log.Error("Error in InsertVendorReportFileName.  Message: " + ex.Message);
                 return null;
             }
             return new Tuple<string, string>("SUCCESS", "true");
@@ -336,7 +371,6 @@ namespace DAL
 
         public string InsertRequestLog(DAL_M_VendorDD vmvendorDD)
         {
-            string ret = string.Empty;
             try
             {
                 using (SqlConnection con = DBconnection.Open())

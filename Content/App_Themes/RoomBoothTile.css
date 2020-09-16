@@ -1,0 +1,673 @@
+﻿/* tablet-oriented layout:  groups stack vertically, no tile columns are used; there are maximum four square tiles per row */
+@media only screen and (max-width: 768px)
+{
+
+    /* remove float, place tiles below each other instead of horizontally */
+    div.RadTileList.rtlistResponsive
+    {
+        height: auto ;
+        width: auto ;
+        overflow-x: hidden;
+    }
+
+    div.RadTileList.rtlistResponsive .rtlistGroup,
+    div.RadTileList.rtlistResponsive .rtlistGroupSeparator, 
+    div.RadTileList.rtlistResponsive .rtlistWrapper
+    {
+        float: none;
+        clear: both;
+    }
+
+    /* make the tiles wrapper use the entire viewport width */
+    div.RadTileList.rtlistResponsive .rtlistWrapper
+    {
+        width: 100vw;
+    }
+
+    div.RadTileList.rtlistResponsive .rtlistScrollWrapper
+    {
+        width: auto;
+    }
+
+    /* group separator is now horizontal */
+    div.RadTileList.rtlistResponsive .rtlistGroupSeparator
+    {
+        width: auto;
+        height: 30px;
+        margin: 10px 0;
+    }
+
+
+}
+
+/* phone-oriented layout: groups stack vertically, two square tiles per row, no tile columns. Tiles are zoomed to fit. */
+@media only screen and (max-width: 480px)
+{
+    /* inherit the page's font-size that is set by the developer */
+    RadTileList.rtlistResponsive
+    {
+        font-size: inherit;
+    }
+
+    div.RadTileList.rtlistResponsive .rtlistWrapper, 
+    div.RadTileList.rtlistResponsive .RadTile
+    {
+        font-size: inherit;
+    }
+
+    /* avoid sizing problems by forcing a box model */
+    div.RadTileList.rtlistResponsive .RadTile
+    {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    /* zoom the image for RadImageTiles to 100% of the tile size */
+    div.RadTileList.rtlistResponsive .rtileContentImage, 
+    div.RadTileList.rtlistResponsive .RadImageTile .rtileIconImage
+    {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* zoom the RadIconTile contents */
+    div.RadTileList.rtlistResponsive .RadTile.RadIconTile .rtileTopContent
+    {
+        height: 100%;
+    }
+
+    /* make the RadIconTile icon 50% of the tile */
+    div.RadTileList.rtlistResponsive .RadTile.RadIconTile .rtileIconImage
+    {
+        width: 50%;
+        max-width: 50%;
+        margin-top: 8vw;
+    }
+
+    /* set size for the square tile according to the viewport size */
+    div.RadTileList.rtlistResponsive .RadTile.rtileSquare
+    {
+        width: 46vw;
+        height: 46vw;
+    }
+
+    /* set size for the wide tile according to the viewport size */
+    div.RadTileList.rtlistResponsive .RadTile.rtileWide
+    {
+        width: 92vw;
+        height: 46vw;
+    }
+
+    /* set font size for the Tiles' Title element */
+    div.RadTileList.rtlistResponsive .RadTile h6.rtileTitle
+    {
+        font-size: 4.1vw;
+    }
+    /* set font size for the Tiles' Badge element */
+    div.RadTileList.rtlistResponsive .RadTile .rtileBadge
+    {
+        font-size: 4.1vw;
+    }
+}
+
+
+.RadTileList {
+       zoom: 1;
+       *position:relative: ;
+       overflow-x: auto;
+}
+.RadTileList, .RadTileList * {
+       box-sizing: content-box;
+       -moz-box-sizing: content-box;
+}
+.RadTileList div {
+       -webkit-touch-callout: none;
+       -webkit-user-select: none;
+       -khtml-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+       user-select: none;
+       cursor: default;
+}
+.RadTileList .rtlistGroupSeparator {
+       width: 80px !important;
+       height: 100% !important;
+       vertical-align: top !important;
+       float: left !important;
+       margin: 0 15px 0 10px !important;
+       visibility:collapse !important;
+    
+}
+.RadTileList .rtlistScrollWrapper {
+       zoom: 1;
+       height: 100%;
+}
+.RadTileList .rtlistScrollWrapper::after {
+       content: "";
+       clear: both;
+       display: block;
+}
+.RadTileList_Default {
+       font-family: "Segoe UI",Arial,Helvetica,sans-serif;
+       font-size: 12px;
+}
+.RadTileList::after {
+       content: "";
+       clear: both;
+       display: block;
+}
+.demo-container {
+       max-width: 1200px;
+}
+td {
+       vertical-align: middle;
+}
+table {
+       border-collapse: collapse;
+}
+#tableAlignCenter {
+       margin-left: auto;
+       margin-right: auto;
+       border-color: #444444;
+       border-collapse: collapse;
+       margin: 0 auto;
+       width: 1200px;
+}
+body {
+       line-height: 1;
+}
+html, body {
+       font-family: Arial, Helvetica, sans-serif;
+       font-size: 9pt;
+       margin: 0;
+       padding: 0;
+       height: 100%;
+       width: 100%;
+}
+body {
+       background-color: rgb(247,247,247);
+       margin: 0 auto;
+       width: 1200px;
+       height: auto !important;
+}
+html {
+       background: url('Images/logincover12082014.gif') no-repeat center center fixed;
+       -webkit-background-size: cover;
+       -moz-background-size: cover;
+       -o-background-size: cover;
+       background-size: cover;
+}
+.demo-container{
+    max-width: 850px;
+}
+
+
+/* group heading tile appearance */
+.groupHeadingTitle
+{
+    height: 150px;
+    width: 150px;
+    position: relative;
+}
+
+.innerTitle
+{
+    width: 150px;
+    height: 40px;
+    top: 50%;
+    margin-top: -20px;
+    position: absolute;
+    font-size: 17px;
+    line-height: 20px;
+    padding-left: 10px;
+}
+
+/*div.noHover.RadTile
+{
+    border-color: red !important;
+}*/
+
+/*eCAPDD Tile CSS overwrite*/
+.demo-container {
+    max-width: 1200px !important;
+    height:100% !important;
+    /*margin-left:auto !important;
+    margin-right:auto !important;
+    text-align:center !important;*/
+}
+
+.RoomFilter{
+    /*float: left!important;*/ 
+    width:500px !important;
+    margin-top:10px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    margin-bottom: 20px !important;
+    vertical-align:middle !important;
+    
+}
+.RoomFilterVisitor{
+    float: left!important; 
+    position:relative;
+    top: 15px;
+    width:auto !important;    
+    margin-left:20px !important;
+   font-family:Arial !important;
+    font-size:14px !important;
+   vertical-align:middle !important;
+    
+}
+.RoomFilterDDL{
+    float: left!important; 
+     position:relative;
+    top: 12px;
+    width:auto !important;    
+    margin-left:20px !important;
+   font-family:Arial !important;
+    font-size:14px !important;
+    vertical-align:middle !important;
+    
+}
+.RoomFilterSearch{
+    float: left!important; 
+    position:relative;
+    top: 8px;
+    width:auto !important;    
+    margin-left:20px !important;
+   font-family:Arial !important;
+    font-size:14px !important;
+    vertical-align:middle !important;
+    
+    
+}
+.TileContainerLeft {
+    float: left !important;
+    margin-top: 10px !important;
+   margin-left:auto !important;
+    margin-right:auto !important;
+   width: 1200px !important;
+    height: 1100px !important;
+    /*connie test remove scroll bar from tile container*/
+    /*height:1100px;*/
+}
+
+.RadTileList RadTileList_Default
+{
+     width:800px !important;
+}
+.RadTileList_Default .rtlistScrollWrapper {
+        height:10px !important;
+        width:0px !important;
+        margin-right:5px !important;
+        margin-left:5px !important;
+    }
+
+.RadTileList .rtlistGroup {
+    vertical-align: top !important;
+    float: left !important;
+    width: 1200px !important;
+   
+}
+
+
+
+
+.RadTileList_Default .rtlistScrollWrapper .rtlistGroupSeparator {
+        height:10px !important;
+         
+      
+       
+    }
+.RadTileList .rtlistGroupSeparator{
+      
+     /*visibility:visible !important;*/
+}
+.rtlistScrollWrapper{
+    width:30px !important;
+}
+
+
+.rtileSquare.RadTile {
+    position: relative !important;
+    float: left !important;
+    height: 70px !important;
+    width: 140px !important;
+    margin: 0 5px 5px 0 !important;
+    vertical-align: top !important;
+    overflow: hidden !important;
+    /*background-color:rgb(22,85,140) !important;*/
+     /*TILE BACKGROUND COLOR - */
+         /*background-color: #aad0f2;*/
+         background-color:#a6dcf8; 
+         /*background-color:#cfccd3;*/
+          /*background-color:#d2d3d5;*/
+    
+     /*background-color:#1c80cc;*/
+    
+     /*background-color:#67aadc;*/
+     /*background-color: #4898d4;*/
+     /*border-bottom:solid 2px #808080 !important;
+     border-right:solid 1px #808080 !important;*/
+   
+}
+/*media screen*/
+.RadTile h6.rtileTitle {
+    color: #403d3e !important;
+    /*color:white !important;*/
+    width: 140px !important;   
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    position: absolute !important;
+    margin-bottom: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-top: 1px !important;
+    padding-bottom: 2px !important;
+    font-weight: normal !important;
+    bottom: 0px !important;
+    left: 0px !important;
+    text-align: center !important;
+     font-size: 14px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight:bold !important;
+}
+
+.rtileSquare.RadTile:hover, .rtileSquare.RadTile:active, .rtileSquare.RadTile:focus  {
+    position: relative !important;
+    float: left !important;
+    height: 70px !important;
+    width: 140px !important;
+    margin: 0 5px 5px 0 !important;
+    vertical-align: top !important;
+    overflow: hidden !important;
+    border:solid 2px #004b84 !important;
+    /*background-color:rgb(22,85,140) !important;*/
+     /*background-color: #aad0f2;*/
+     /*background-color:#ffffff !important;
+     opacity:0.6 !important;*/
+     /*border:solid 2px #0072c6 !important;*/
+      /*color: #e2eff8 !important;*/
+     
+     
+   
+}
+
+/*.RadTileList .rtlistGroup::before {
+    content:"Room/Booth" !important;
+   
+}*/
+
+
+.RadTileList .rtlistWrapper {
+    width: 100% !important;
+    vertical-align: top !important;
+    float: left !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+   
+}
+
+#ctl00_main_RadTileList1 {
+    height: 100% !important; 
+    -ms-overflow-x: hidden !important;
+}
+
+/* peek template appearance 
+.peekTemplateClass
+{
+    width: 130px;
+    height: 130px;
+    padding: 10px;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+/* group heading tile appearance */
+.groupHeadingTitle
+{
+    height: 100px;
+    width: 100px;
+    position: relative;
+}
+
+
+
+.RadTile h6.rtileTitle {
+    
+    z-index: 0 !important;
+}
+
+.RadTextTile.RadTile .rtileContent {
+    padding: 4px 4px 0 !important;
+    vertical-align: middle !important;
+}
+
+
+
+.RadTile h6.rtileTitleOccupied {
+   
+    width: 65px !important;    
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    position: absolute !important;
+    margin-bottom: 0px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    padding-top: 1px !important;
+    padding-bottom: 2px !important;
+    font-weight: normal !important;
+    bottom: 0px !important;
+    /*z-index: 99 !important;*/
+    left: 0px !important;
+    text-align: center !important;
+    font-size: 14px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight:bold !important;
+}
+
+.RadTile h6.rtileTitleOutOfService {
+   
+    width: 140px !important;   
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    position: absolute !important;
+    margin-bottom: 0px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    padding-top: 1px !important;
+    padding-bottom: 2px !important;
+    font-weight: normal !important;
+    bottom: 0px !important;
+    /*z-index: 99 !important;*/
+    left: 0px !important;
+    text-align: center !important;
+     font-size: 14px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    /*font-weight:bold !important;*/
+}
+.RadTile h6.rtileTitleOutOfService.rtileTopContent{
+    color:#ffffff !important;
+}
+
+
+
+.bestmatches{
+    color: #ffffff !important;
+    text-align: center;
+    display: inline-block;
+    width: 138px;    
+    background-color: #0072c6;    
+    color: #403d3e;
+    left: 0px;
+    border-left:1px solid #4898d4;
+    border-right:1px solid #4898d4;
+    padding-top:1px;
+    padding-bottom:1px;   
+    margin-top:5px;
+    font-family:Arial, Helvetica, sans-serif !important;
+
+}
+
+
+
+
+.available{
+    
+    
+    text-align: center;
+    display: inline-block;
+     /*width: 140px;*/   
+    width: 139px;       
+    left: 0px;
+    padding-right:15px; 
+ 
+}
+
+/*Top Content to display Room Number at left upper corner*/
+.rtileTopContent {
+    overflow: hidden !important;
+    vertical-align: top !important;
+    height:20px !important;
+    color:#004b84;
+    /*text-shadow: 1px 1px 1px #000, 0px 1px 1px #403d3e;*/
+    font-size:15px;
+    margin-top:0px !important;
+    padding-top:0px !important;
+    
+    
+      
+
+    
+    
+}
+
+
+
+.RadTileList_Default .rtlistGroupSeparatorVisible{
+    border:3px solid red !important;
+}
+    
+.GroupTitle{
+     font-family:Arial !important;
+    font-size:14px !important;
+    margin-left:20px;
+    color:#004b84;
+    font-weight:bold;
+
+}
+
+/*INTERVIEW BOOTHS*/
+/*.rtlistGroup:first-child::before {
+    content: "Interview Booth" !important;
+    clear: both;
+    display:inline;
+    font-weight:bolder;
+    font-size:20px;
+    color:#0066b2;
+    text-shadow: 4px 2px 3px rgba(0,0,0,0.3);
+    font-family:Arial !important;
+   
+   
+
+   
+}*/
+
+/*/*INTERVIEW ROOMS*/
+/*.rtlistGroup:first-child::after {
+    content: "Interview Room";
+    clear: both;
+    display: block;
+    font-weight:bolder;
+    font-size:20px;    
+    padding-top:10px !important;
+    color:#0066b2;
+    text-shadow: 4px 2px 3px rgba(0,0,0,0.3);
+    font-family:Arial !important;
+     
+}*/
+
+
+
+
+/*DPSS RESERVED ROOMS*/
+/*:nth-child(3).rtlistGroup::after {
+    content: "DPSS Reserved Rooms" !important;
+    clear: both;
+    display: inline;
+    font-weight: bolder;
+    font-size: 20px;
+    color: #0066b2;
+    text-shadow: 4px 2px 3px rgba(0,0,0,0.3);
+    font-family: Arial !important;
+    padding-top:10px !important;
+    
+}*/
+
+
+:nth-child(1).rtlistGroup::before {
+    content: "Interview Booth";
+    padding-left:5px;
+    display:block;      
+    font-family: Arial !important;
+    font-size: 20px;
+    color: #fff;
+    font-weight:bold;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.4);
+    background: #0066b2;
+    background: -moz-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: -webkit-gradient(left top, right top, color-stop(12%, #0066b2), color-stop(48%, #ffffff), color-stop(99%, #f6f6f6), color-stop(100%, #f6f6f6));
+    background: -webkit-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: -o-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: -ms-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: linear-gradient(to right, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0066b2', endColorstr='#f6f6f6', GradientType=1 );
+   
+   
+
+   
+}
+
+:nth-child(3).rtlistGroup::before {    
+    content: "Interview Room";
+    padding-left:5px;
+    display:block;      
+    font-family: Arial !important;
+    font-size: 20px;
+    color: #fff;
+    font-weight:bold;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.4);         
+    background: #0066b2;
+    background: -moz-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: -webkit-gradient(left top, right top, color-stop(12%, #0066b2), color-stop(48%, #ffffff), color-stop(99%, #f6f6f6), color-stop(100%, #f6f6f6));
+    background: -webkit-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: -o-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: -ms-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: linear-gradient(to right, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0066b2', endColorstr='#f6f6f6', GradientType=1 );
+    
+}
+
+
+
+:nth-child(5).rtlistGroup::before {
+    content: "Others";
+    padding-left:5px;
+    display:block;      
+    font-family: Arial !important;
+    font-size: 20px;
+    color: #fff;
+    font-weight:bold;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.4);    
+    background: #0066b2;
+    background: -moz-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: -webkit-gradient(left top, right top, color-stop(12%, #0066b2), color-stop(48%, #ffffff), color-stop(99%, #f6f6f6), color-stop(100%, #f6f6f6));
+    background: -webkit-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: -o-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: -ms-linear-gradient(left, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    background: linear-gradient(to right, #0066b2 12%, #ffffff 48%, #f6f6f6 99%, #f6f6f6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0066b2', endColorstr='#f6f6f6', GradientType=1 );
+    
+}
+
+

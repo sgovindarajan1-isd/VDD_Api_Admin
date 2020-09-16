@@ -2,6 +2,9 @@
     //$("#top-menu11").hide();
     $("#menu_TopPanel").hide();
     $("#menu_div_TopPanel").hide();
+    $("#liNavigation").hide();
+    $("#pnl_login_footer").hide();
+
     //GetVendorNumber()  //   have two  different method  works no issues,  for now  post is not working
     //loginUser1();
     //loginUser();
@@ -9,17 +12,14 @@
 
     //$.getJSON("https://api.ipify.org/?format=json", function (e) {
     //    debugger;
-    //    alert(e.ip);
     //});
 
     //$.get("https://ipinfo.io", function (response) {
-    //    alert(response.ip);
     //}, "json");
 
 
     //$.getJSON("http://smart-ip.net/geoip-json?callback=?", function (data) {
     //    debugger;
-    //    alert(data.host);
     //});
 
     //function myIP() {
@@ -80,10 +80,18 @@
 //    };
 
     function loginUser(userId, password) {
-        ////  To do :  test values for easy access,  remove later
-        //var userId = 'e622505';   // supervisor
-        //var userId = 'c197831';   //  processor
-        var password = '3New90703'; 
+
+        //testing values
+        if ($(location).attr('href').indexOf("local") > -1) {
+            ////  To do :  test values for easy access,  remove later
+            //var userId = 'e622505';   // data entry -- old supervisor
+
+            var userId = 'c197831';   //  processor
+            var password = '';
+        }
+        //testing values
+
+        sessionStorage.clear();
 
         var SecuredToken = '';
 
@@ -107,7 +115,6 @@
 
                 if (data.data.List_userRoles.length > 0) {
                     sessionStorage.setItem('RoleId', data.data.List_userRoles[0].RoleId);
-                    //alert(" your role is  - " + sessionStorage.getItem('RoleId') + "  Role Name " + data.data.List_userRoles[0].RoleName);
                 }
 
                 sessionStorage.setItem('UserId', userId);
@@ -115,12 +122,24 @@
                 sessionStorage.setItem('UserRoles', data.data.List_userRoles);  // example  data.data.List_userRoles[0].UserID UserName UserStatus RoleId RoleName PermissionName
                 $("#id_userName").text(data.data.userProfile_2.displayNameField);
 
-                debugger;
+                sessionStorage.setItem('deptUser', false);  //  from active directory, if the user dept code is "Audit controller" then disbursement user otherwise dept user.
+
+
 
                 if (data.data.IsValidUser == true) {
                     //var UserName = data.data.userId;
                     // Setting global variable to authendicate the user
-                    window.location.href = '/home/dashboard';
+
+                    // if DeptUser go
+                      //deptuser landing page and dataentry role
+                    //else if  //Dispersement user and dataentry role
+                       //vendor code entry page
+                    if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+                        window.location.href = '/draft/_partialVendor';
+                    }
+                    else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole)  || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+                        window.location.href = '/home/dashboard';
+                    }
                     //vdd.GlobalVariables.UserName = data.data.UserId;
                     $("#loaderDiv").hide();
                 }

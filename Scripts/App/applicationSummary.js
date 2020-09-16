@@ -4,16 +4,13 @@
     var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
     var role = sessionStorage.getItem('RoleId');
     // to do later
- 
+
 
     //if ($("#approveApplicationModal").hasClass('processorapprove')) {
-    //    alert('has processorapprove');
     //}
     //else if ($("#approveApplicationModal").hasClass('supervisorapprove')) {
-    //    alert('has supervisorapprove');
     //}
     //else {
-    //    alert('no no approve clas');
     //}
 
     $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
@@ -42,7 +39,7 @@
     //});
 
     $("#div_notes_tab").click(function (e) {
-      //  $("#div_notes_tab").addClass("show");
+        //  $("#div_notes_tab").addClass("show");
     });
 
     $("#timeline-tab").click(function (e) {
@@ -218,27 +215,27 @@
         var j = 1;
         $.each(data.LocationAddressList, function (index, value) {
 
-           
+
             var _address = value.Street;  //"16000 south street";
             var _city = value.City;
             var _state = value.State;
             var _zip = value.Zip;
 
-        var str = '<li class="list-group-item list-group-item-sm">'+
-            ' <div class="flex">' +
-               ' <ul class="noTopMargin flex-column-2">'+
-                   ' <li>'+
-                   ' <span class="smallRightMargin"><b>' + j + '.</b></span><b>ADDRESS:</b> ' + _address + '<span style= "padding-left: 150px"><b>CITY:</b></span> '+_city+
-                        '</li>'+
-                   ' <li>'+
-                   '<span class="smallRightMargin"></span><b>STATE:</b> ' + _state +'<span style= "padding-left: 310px">  <b>ZIP CODE:</b> '+ _zip +
-                   '</li>'+
-                '</ul>'+
-           ' </div>'+
+            var str = '<li class="list-group-item list-group-item-sm">' +
+                ' <div class="flex">' +
+                ' <ul class="noTopMargin flex-column-2">' +
+                ' <li>' +
+                ' <span class="smallRightMargin"><b>' + j + '.</b></span><b>ADDRESS:</b> ' + _address + '<span style= "padding-left: 150px"><b>CITY:</b></span> ' + _city +
+                '</li>' +
+                ' <li>' +
+                '<span class="smallRightMargin"></span><b>STATE:</b> ' + _state + '<span style= "padding-left: 310px">  <b>ZIP CODE:</b> ' + _zip +
+                '</li>' +
+                '</ul>' +
+                ' </div>' +
                 ' </li>';
 
             $("#ul_ddoptionList").append(str);
-          j = j + 1;
+            j = j + 1;
         });
 
 
@@ -485,7 +482,7 @@
                     }
                     else if (status == 6) {
                         $("#header_status").text("Rejected");
-                    }                    
+                    }
                 }
                 else if (status == 2) {  // assign = 2  
                     $('#assignApplicationModal').modal('hide');
@@ -499,13 +496,13 @@
                     }
                     else if (status == 4) {
                         $("#header_status").text("Approved");
-                    }                   
+                    }
                 }
 
                 //  Make invisible the tool bar and button after status changes
                 $("#btn_Reject").hide();
                 $("#btn_Assign").hide();
-                $("#div_supervisor_review_panel").hide();                
+                $("#div_supervisor_review_panel").hide();
                 //
 
             }
@@ -809,23 +806,17 @@
 
     }
 
-    //$("#bankDetailsModal").on('shown', function () {
-    //    alert("I want this to appear after the modal has opened!");
-    //});
-
     $('#bankDetailsModal').on('shown.bs.modal', function (e) {
         $("#txt_pop_BankAcNo").val($("#BankAccountNumber").text());
         $("#txt_pop_RoutingNo").val($("#BankRoutingNumber").text());
         $("#txt_pop_FinancialIns").val($("#FinancialInstitutionName").text());
-        
-      //  $("#txt_pop_AccountType").text("1");
+
         if ($("#TypeofAccount").text().toLowerCase().indexOf("checking") >= 0) {
             $("#txt_pop_AccountType").prop('selectedIndex', 1);
         }
         else {
             $("#txt_pop_AccountType").prop('selectedIndex', 2);
         }
-        //$("#TypeofAccount").text(1);
     });
 
     $('#certificationDetailsModal').on('shown.bs.modal', function (e) {
@@ -858,38 +849,6 @@
     })
 
     //  Attachment Document Related functions
-
-
-   // $('#attachmentGrid .clsdownload').each(function () {
-   //// $('#btn_Download').each(function () {
-   //     debugger;
-   //     $(this).on('click', function (evt) {
-   //         debugger;
-   //         $this = $(this);
-   //         var dtRow = $this.parents('tr');
-   //     });
-   // });
-
-    //$('#attachmentGrid .some-class').on('click', 'tbody tr', function () {
-    //$('#attachmentGrid').on('click', '.clsdownload tbody tr', function () {
-    //$('#attachmentGrid .clsdownload').on('click', 'tbody tr', function () {
-    //    //alert('suc cess');
-    //    //sessionStorage.setItem('selectedConfirmationNumber', $('#ddGrid').DataTable().row(this).data().ConfirmationNum);
-    //    //sessionStorage.setItem('selectedRequestType', $('#ddGrid').DataTable().row(this).data().RequestType);
-
-    //    var a = $('#attachmentGrid').data('row', $(this).closest('tr'));
-    //    alert($('#attachmentGrid').DataTable().row(this).data().DisplayName);
-    //});
-
-    //$(".some-class").on('click', '.some-class', function () {
-    //    debugger;
-    //    var $btn = $(this);
-    //    var $tr = $btn.closest('tr');
-    //    var dataTableRow = $('#attachmentGrid').DataTable().row($tr[0]); // get the DT row so we can use the API on it
-    //    var rowData = dataTableRow.data();
-    //    alert(rowData.msg);
-    //});
-
 
 
     /* Srini: 8/30/2020 Helper function:  Download file used in application summary page,   */
@@ -932,14 +891,14 @@
 
         //download_file("/Uploads/58202010105_SP8313_VC.png", "58202010105_SP8313_VC.png"); //call function
         download_file("/Uploads/" + data.AttachmentFileName, data.AttachmentFileName); //call function
-        
+
     });
     //
     $('#attachmentGrid').on('click', '.clsretire', function (e) {
         var closestRow = $(this).closest('tr');
         var data = $('#attachmentGrid').DataTable().row(closestRow).data();
         var confirmationNum = data.ConfirmationNum;
-        var fname = data.AttachmentFileName; 
+        var fname = data.AttachmentFileName;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
@@ -952,11 +911,11 @@
             success: function (data) {
                 debugger;
                 // REMOVE THE LINE
-               // closestRow.remove();
+                // closestRow.remove();
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("This attachment retired from the Application!");
 
-                setAttachment(data.data.attachments); 
+                setAttachment(data.data.attachments);
 
                 //var t = $('#attachmentGrid').DataTable();
                 //t.draw();
@@ -1001,20 +960,21 @@
                 //{ 'data': 'DisplayName', "title": "" },
                 { 'data': 'UploadedDate', "title": "" },
                 //{ 'data': 'Command', "title": "" },
-                { 'data': null,
+                {
+                    'data': null,
                     "bSortable": false,
                     "width": '5px'
 
                     //
                     //,"mRender": function (o) { return '<a href=#/' + o.userid + '>' + 'Edit' + '</a>'; }
-                    ,"mRender": function (o) {
+                    , "mRender": function (o) {
                         return '<div id = "div_action "class= "pull-right btn-group" >' +
                             '<span class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>' +
                             '<ul class="dropdown-menu context-menu-left-showOnLeft">' +
                             '<li>' +
                             //'<a title="Download Document" href="#"' + o.DisplayName + '>' +
 
-                            '<a class="clsdownload" title="Download Document" > ' +       
+                            '<a class="clsdownload" title="Download Document" > ' +
 
                             '<span class="glyphicon glyphicon-download-alt"></span>' +
                             '<span>Download</span>' +
@@ -1028,53 +988,16 @@
                             //'</a>' +
                             //'</li>' +
 
-                        '<li>' +
+                            '<li>' +
                             '<a title="Retire File" class="clsretire"  data-rowclass="documentRow">' +
                             '<span class="fa fa-trash-o"></span>' +
                             ' Retire' +
-                        '</a>' +
+                            '</a>' +
                             ' </li>' +
                             '</ul>' +
                             '</div>'
                     }
-                    //
-                    //,createdCell: function (td, cellData, rowData, row, col) {
-                    //    //var b = $('<button>the button</button>').click(function () {
-                    //    //    alert(rowData.msg);
-                    //    //});
-                    //    '<div id = "div_action "class= "pull-right btn-group" >' +
-                    //        '<span class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>' +
-                    //        '<ul class="dropdown-menu context-menu-left-showOnLeft">' +
-                    //        '<li>' +
-                    //        //'<a title="Download Document" href="#"' + o.DisplayName + '>' +
-
-                    //        '<a title="Download Document" > ' +       
-
-                    //        '<span class="glyphicon glyphicon-download-alt"></span>' +
-                    //        '<span class="clsdownload" >Download</span>' +
-                    //        '</a>' +
-                    //        '</li>' +
-
-                    //        '<li>' +
-                    //        '<a title="Rename File" href="#" onclick="return ShowModal(this);" action-target="#">' +
-                    //        ' <span class="glyphicon glyphicon-pencil"></span>' +
-                    //        'Rename' +
-                    //        '</a>' +
-                    //        '</li>' +
-                    //    '<li>' +
-                    //        '<a title="Retire File" href="javascript:void(0);" class="confirmModal" data-action-target="#" data-rowclass="documentRow">' +
-                    //        '<span class="fa fa-trash-o"></span>' +
-                    //        ' Retire' +
-                    //    '</a>' +
-                    //        ' </li>' +
-                    //        '</ul>' +
-                    //        '</div>'
-
-                    //    $(td).html(b);
-                    //}
-                    //
-
-                }               
+                }
             ],
 
             columnDefs: [
@@ -1096,13 +1019,13 @@
             contentType: 'application/json; charset=utf-8',
             type: "POST",
             dataType: 'json',
-            data: JSON.stringify({ 'ConfirmationNum': confirmationNum}),
+            data: JSON.stringify({ 'ConfirmationNum': confirmationNum }),
             headers: {
                 'Authorization': 'Basic ' + btoa('admin')
             },
             url: "/api/values/GetAttachmentsData/",
             success: function (data) {
-                setAttachment(data.data.attachments); 
+                setAttachment(data.data.attachments);
             },
             error: function (_XMLHttpRequest, textStatus, errorThrown) {
                 if (_XMLHttpRequest.status == '401') {
@@ -1118,10 +1041,7 @@
         reader.onload = function (e) {
             var img = new Image();
             img.src = reader.result;
-           // sessionStorage.setItem('imagefile-selectedFile', reader.result);
         }
-
-      ////  var aa = reader.readAsDataURL(file);
         var img = new Image();
         return img;
     };
@@ -1132,7 +1052,7 @@
     $('#file-input').change(handleFileSelect);
 
     $('input[type="file"]').change(function (e) {
-   // "#btn_addUploadMore").click(function (e) {
+        // "#btn_addUploadMore").click(function (e) {
         var ext = ['.PDF', '.DOC', '.DOCX', '.JPG', '.JPEG', '.GIF', '.PNG'];
         var fileName = e.target.files[0].name;
         var file = e.target.files[0];
@@ -1148,13 +1068,8 @@
             else {
                 sessionStorage.setItem('selectedFile', imagefile);  //  if sessionstorage 'uploadedfile'  works delete this key
 
-               // $("#txtattachment").val(fileName);
-                //sessionStorage.setItem('originalfileName', fileName);  //  original file name: we keep this in case coming back from  next screen 
-
                 uploadfile(file, fileName, fileExtenstion.toLowerCase());
 
-                //  add the file na,e t o grid
-                //$("#modifiedFileName").text(fileName);
             }
         }
     });
@@ -1170,7 +1085,7 @@
             var fileData = new FormData();
 
             // Looping over all files and add it to FormData object  
-            fileData.append(files.name, files);            
+            fileData.append(files.name, files);
 
             // Adding one more key to FormData object for modified file name 
             fileData.append('modifiedFilename', modifiedFileName);
@@ -1185,7 +1100,6 @@
                     UploadDocumentAttachment(files.name);
                 },
                 error: function (err) {
-                    // alert(err.statusText);
                 }
             });
         } else {
@@ -1197,7 +1111,7 @@
     function UploadDocumentAttachment(fileName) {
         debugger;
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
-        var attachmentFileName = fileName; 
+        var attachmentFileName = fileName;
         var documentAttachmentTypeId = 4;	//Other Attachment in documenttype table
 
         $.ajax({
@@ -1221,15 +1135,15 @@
                 var currentDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Document attachment successfully uploaded.");
-                setAttachment(data.data.attachments); 
+                setAttachment(data.data.attachments);
 
-               // var t = $('#attachmentGrid').DataTable();
-               // t.row.add({
-               //     "ConfirmationNum": confirmationNum,
-               //     "AttachmentFileName": fileName,
-               //     "DisplayName": fileName,
-               //     "UploadedDate": currentDate,
-               //}).draw();
+                // var t = $('#attachmentGrid').DataTable();
+                // t.row.add({
+                //     "ConfirmationNum": confirmationNum,
+                //     "AttachmentFileName": fileName,
+                //     "DisplayName": fileName,
+                //     "UploadedDate": currentDate,
+                //}).draw();
 
                 $("#menuDocCount").text(data.data.attachments.length);
 

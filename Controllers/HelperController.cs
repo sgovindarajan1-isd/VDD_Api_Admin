@@ -18,19 +18,19 @@ namespace eCAPDDApi.Controllers
             return View();
         }
 
-
-
         [HttpPost]
         public ActionResult UploadAttachmentFile()
         {
-            //string testanddelete = GetIPAddress();
-
             string fname = string.Empty;
             string Uploadpath = string.Empty;
             // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)
             {
                 string modifiedFilename = Request.Form["modifiedFilename"];
+                if (modifiedFilename == null)
+                {
+                    modifiedFilename = Request.Form["modifiedFilename_ddwetform"];
+                }
                 try
                 {
                     //  Get all files from Request object  
@@ -67,5 +67,45 @@ namespace eCAPDDApi.Controllers
                 return Json("No files selected.");
             }
         }
+
+        public string ValidateRoughtingNumber(string aba)
+        {
+            string bankName = string.Empty;
+            try
+            {
+                abaService.ABAServiceSoapClient abaWebService = new abaService.ABAServiceSoapClient("ABAServiceSoap");
+                string token = abaWebService.Logon(3387, "lacounty".Trim(), "RXdqmYHg".Trim());
+                bool validRouting = abaWebService.VerifyABA(token, aba);
+
+
+                string xml = abaWebService.GetBanksPrimarySortXML(token, aba);
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(xml);
+                //XmlNodeList nodeList = xmlDoc.SelectNodes("//InstitutionName[@type='M']");
+                XmlNodeList nodeList = xmlDoc.SelectNodes("//InstitutionName[@type='B']");
+
+                if (nodeList.Count > 0)
+                {
+                    XmlNode node = nodeList[0];
+                    if (node.InnerText.Length > 40)
+                    {
+                        bankName = node.InnerText.Substring(0, 40);
+                    }
+                    else
+                    {
+                        bankName = node.InnerText;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //if (ex.Message == "No banks found!")
+                bankName = "No banks found";
+            }
+
+            return bankName;
+        }
+
+
     }
 }

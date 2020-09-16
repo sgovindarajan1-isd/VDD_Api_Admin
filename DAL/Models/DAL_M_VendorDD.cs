@@ -32,6 +32,7 @@ namespace DAL.Models
         public string Confirmation { get; set; }
         public DateTime SubmitDateTime { get; set; }
         public string VendorAttachmentFileName { get; set; }
+        public string AttachmentFileName_ddwetform { get; set; }
         public string VendorReportFileName { get; set; }
         public List<string> LocationIDs { get; set; }
         public string Source_ip { get; set; }
@@ -41,12 +42,11 @@ namespace DAL.Models
 
         //  Used in Application summary
         public string VendorNumber { get; set; }
-        public string AliasDBAName { get; set; }
+        public string AliasDBAName { get; set; }        
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string CompanyName { get; set; }
-        public string SSN { get; set; }  //TaxpayerIDNumber
 
         public string AccountTypeDesc { get; set; }
         public string RequestType { get; set; }
@@ -64,8 +64,6 @@ namespace DAL.Models
         public string AssignmentDate { get; set; }
 
         //  Draft submission informations
-        public string AliasDBA { get; set; }
-        public string TaxpayerID { get; set; }
         public string CaseNo { get; set; }
         public string PhoneNumber { get; set; }
         public string DepartmentName { get; set; }
@@ -73,10 +71,12 @@ namespace DAL.Models
         public string DepartmentEmail { get; set; }
         public string DepartmentContactNo { get; set; }
         public string ClosedDate { get; set; }
+        public string TaxpayerID { get; set; }
         //
 
         public List<string> LocationAddress { get; set; }
         public List<DAL_M_LocationAddress> LocationAddressList { get; set; }
+        public List<string> LocationAddressDescList { get; set; }
         public string LastUpdatedUser { get; set; }
         public int DocumentAttachmentTypeId { get; set; }
         public string DocumentAttachmentTypeName{ get; set; }

@@ -124,6 +124,18 @@
     <Reference Include="Microsoft.Owin, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportViewer.WebForms.10.0.40219.1\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
@@ -165,6 +177,7 @@
     <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
@@ -307,9 +320,16 @@
     <Compile Include="Areas\RouteDebugger\RouteDebuggerConfig.cs" />
     <Compile Include="BasicAunthendicationAtribute.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="Connected Services\abaService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\ApplicationListController.cs" />
+    <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -328,6 +348,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="vddDataSet.cs">
+      <DependentUpon>vddDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="vddDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>vddDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Web References\gov.lacounty.webadminisd\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -338,7 +366,163 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\RouteDebugger\Content\rdstyle.css" />
     <Content Include="Areas\RouteDebugger\Scripts\detect.js" />
+    <None Include="Connected Services\abaService\abaservice.disco" />
+    <None Include="Connected Services\abaService\configuration91.svcinfo" />
+    <None Include="Connected Services\abaService\configuration.svcinfo" />
+    <None Include="Connected Services\abaService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\applicationsummary.css" />
+    <Content Include="Content\App_Themes\ConferenceRoomScheduler.css" />
+    <Content Include="Content\App_Themes\demo-container-bg.jpg" />
+    <Content Include="Content\App_Themes\demo-container-bg.png" />
+    <Content Include="Content\App_Themes\demo-container-sprite.png" />
+    <Content Include="Content\App_Themes\header.css" />
+    <Content Include="Content\App_Themes\headerfront.css" />
+    <Content Include="Content\App_Themes\header_ie7.css" />
+    <Content Include="Content\App_Themes\Images\admin_icon.jpg" />
+    <Content Include="Content\App_Themes\Images\arrowdown.jpg" />
+    <Content Include="Content\App_Themes\Images\ATTACHMENT.jpg" />
+    <Content Include="Content\App_Themes\Images\BANKINGINFO.jpg" />
+    <Content Include="Content\App_Themes\Images\blue.jpg" />
+    <Content Include="Content\App_Themes\Images\bluekey06042015.jpg" />
+    <Content Include="Content\App_Themes\Images\bluekey_ipadPortrait.jpg" />
+    <Content Include="Content\App_Themes\Images\blurry-cityscape-smaller.jpg" />
+    <Content Include="Content\App_Themes\Images\blurry-cityscape-smaller_old.jpg" />
+    <Content Include="Content\App_Themes\Images\calendar.gif" />
+    <Content Include="Content\App_Themes\Images\camera.png" />
+    <Content Include="Content\App_Themes\Images\checked.jpg" />
+    <Content Include="Content\App_Themes\Images\CheckSample.jpg" />
+    <Content Include="Content\App_Themes\Images\colalogo_1.png" />
+    <Content Include="Content\App_Themes\Images\ContactUs.jpg" />
+    <Content Include="Content\App_Themes\Images\CountySeal.png" />
+    <Content Include="Content\App_Themes\Images\CountySeal_old.png" />
+    <Content Include="Content\App_Themes\Images\county_logo.gif" />
+    <Content Include="Content\App_Themes\Images\CR1.png" />
+    <Content Include="Content\App_Themes\Images\CR2.png" />
+    <Content Include="Content\App_Themes\Images\CR3.png" />
+    <Content Include="Content\App_Themes\Images\CURRENTBANK.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016 - Copy.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016-b.png" />
+    <Content Include="Content\App_Themes\Images\DD01192016-c.png" />
+    <Content Include="Content\App_Themes\Images\DD01192016-d.png" />
+    <Content Include="Content\App_Themes\Images\DD01192016-e.png" />
+    <Content Include="Content\App_Themes\Images\DD01192016-f.png" />
+    <Content Include="Content\App_Themes\Images\DD01192016-hh_authorizationadmin.png" />
+    <Content Include="Content\App_Themes\Images\DD01192016.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016Admin.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_03312016.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_03312016b.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_04072016.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_04122016.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_04132016.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_04132016b.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_04132016c.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_04142016a.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_04162016d.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_05312016.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_05312016_b.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_old.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_old02042016.jpg" />
+    <Content Include="Content\App_Themes\Images\DD01192016_old1.jpg" />
+    <Content Include="Content\App_Themes\Images\DD_front.jpg" />
+    <Content Include="Content\App_Themes\Images\delete.gif" />
+    <Content Include="Content\App_Themes\Images\demo-container-bg.jpg" />
+    <Content Include="Content\App_Themes\Images\demo-container-bg.png" />
+    <Content Include="Content\App_Themes\Images\demo-container-sprite.png" />
+    <Content Include="Content\App_Themes\Images\doc-25.png" />
+    <Content Include="Content\App_Themes\Images\docx-1429.png" />
+    <Content Include="Content\App_Themes\Images\fa fa-booktop.jpg" />
+    <Content Include="Content\App_Themes\Images\fa fa-booktop.png" />
+    <Content Include="Content\App_Themes\Images\fa fa-envelope.jpg" />
+    <Content Include="Content\App_Themes\Images\fa fa-envelope.png" />
+    <Content Include="Content\App_Themes\Images\fa fa-envelopetop.png" />
+    <Content Include="Content\App_Themes\Images\fa fa-information.jpg" />
+    <Content Include="Content\App_Themes\Images\fa fa-information.png" />
+    <Content Include="Content\App_Themes\Images\fa fa-informationtop.png" />
+    <Content Include="Content\App_Themes\Images\face.jpg" />
+    <Content Include="Content\App_Themes\Images\faq.jpg" />
+    <Content Include="Content\App_Themes\Images\Footer_QuestionIcon.png" />
+    <Content Include="Content\App_Themes\Images\GE.jpg" />
+    <Content Include="Content\App_Themes\Images\grid_background.gif" />
+    <Content Include="Content\App_Themes\Images\Icon_v4.png" />
+    <Content Include="Content\App_Themes\Images\Icon_v4_old.png" />
+    <Content Include="Content\App_Themes\Images\imagesCA8DDL73.jpg" />
+    <Content Include="Content\App_Themes\Images\imagesCAEGVWFF.jpg" />
+    <Content Include="Content\App_Themes\Images\INQUIRY.jpg" />
+    <Content Include="Content\App_Themes\Images\jpg-44.png" />
+    <Content Include="Content\App_Themes\Images\LACChildSupport-Services.jpg" />
+    <Content Include="Content\App_Themes\Images\legend_fix.png" />
+    <Content Include="Content\App_Themes\Images\loading.gif" />
+    <Content Include="Content\App_Themes\Images\loading.jpg" />
+    <Content Include="Content\App_Themes\Images\loading_bar.gif" />
+    <Content Include="Content\App_Themes\Images\lock.jpg" />
+    <Content Include="Content\App_Themes\Images\lockword.jpg" />
+    <Content Include="Content\App_Themes\Images\logincover12082014.gif" />
+    <Content Include="Content\App_Themes\Images\login_icon.png" />
+    <Content Include="Content\App_Themes\Images\logo1.JPG" />
+    <Content Include="Content\App_Themes\Images\logo2.JPG" />
+    <Content Include="Content\App_Themes\Images\logo3.JPG" />
+    <Content Include="Content\App_Themes\Images\mp3-58.png" />
+    <Content Include="Content\App_Themes\Images\NewCountySeal02102014.png" />
+    <Content Include="Content\App_Themes\Images\pattern.png" />
+    <Content Include="Content\App_Themes\Images\PAYEECERT.jpg" />
+    <Content Include="Content\App_Themes\Images\pdf-74.png" />
+    <Content Include="Content\App_Themes\Images\print.gif" />
+    <Content Include="Content\App_Themes\Images\progressbarNumberStep1.jpg" />
+    <Content Include="Content\App_Themes\Images\progressbarNumberStep2.jpg" />
+    <Content Include="Content\App_Themes\Images\progressbarNumberStep3.jpg" />
+    <Content Include="Content\App_Themes\Images\progressbarNumberStep4.jpg" />
+    <Content Include="Content\App_Themes\Images\progressbarNumberStep5.jpg" />
+    <Content Include="Content\App_Themes\Images\progressbarNumberStep6.jpg" />
+    <Content Include="Content\App_Themes\Images\qsf-demo-canvas-bg.png" />
+    <Content Include="Content\App_Themes\Images\question.jpg" />
+    <Content Include="Content\App_Themes\Images\question_icon.png" />
+    <Content Include="Content\App_Themes\Images\redR without.jpg" />
+    <Content Include="Content\App_Themes\Images\redR.jpg" />
+    <Content Include="Content\App_Themes\Images\redR_without.png" />
+    <Content Include="Content\App_Themes\Images\save.gif" />
+    <Content Include="Content\App_Themes\Images\section_bg.jpg" />
+    <Content Include="Content\App_Themes\Images\STAFFINFO.jpg" />
+    <Content Include="Content\App_Themes\Images\title_bg.gif" />
+    <Content Include="Content\App_Themes\Images\title_bg.jpg" />
+    <Content Include="Content\App_Themes\Images\title_bg_short.jpg" />
+    <Content Include="Content\App_Themes\Images\triangledown.jpg" />
+    <Content Include="Content\App_Themes\Images\triangleright.jpg" />
+    <Content Include="Content\App_Themes\Images\unchecked.jpg" />
+    <Content Include="Content\App_Themes\Images\UPDATEINFORMATION.jpg" />
+    <Content Include="Content\App_Themes\Images\UPDATENOTE.jpg" />
+    <Content Include="Content\App_Themes\Images\Vendor.jpg" />
+    <Content Include="Content\App_Themes\Images\VENDORINFORMATION.jpg" />
+    <Content Include="Content\App_Themes\Images\wave_02022015.png" />
+    <Content Include="Content\App_Themes\Images\wave_top_02022015.png" />
+    <Content Include="Content\App_Themes\Images\wma-115.png" />
+    <Content Include="Content\App_Themes\Images\xls-121.png" />
+    <Content Include="Content\App_Themes\Images\xlsx-1567.png" />
+    <Content Include="Content\App_Themes\Images\YellowY.jpg" />
+    <Content Include="Content\App_Themes\Images\YellowY_without.png" />
+    <Content Include="Content\App_Themes\login.css" />
+    <Content Include="Content\App_Themes\loginadmin.css" />
+    <Content Include="Content\App_Themes\login_ie7.css" />
+    <Content Include="Content\App_Themes\login_ie8.css" />
+    <Content Include="Content\App_Themes\login_ipad.css" />
+    <Content Include="Content\App_Themes\membership.css" />
+    <Content Include="Content\App_Themes\membership_ie7.css" />
+    <Content Include="Content\App_Themes\orko.css" />
+    <Content Include="Content\App_Themes\orkoadmin.css" />
+    <Content Include="Content\App_Themes\orko_ie8.css" />
+    <Content Include="Content\App_Themes\pattern.png" />
+    <Content Include="Content\App_Themes\qsf-demo-canvas-bg.png" />
+    <Content Include="Content\App_Themes\ReportpagesM.css" />
+    <Content Include="Content\App_Themes\ReportStyle.css" />
+    <Content Include="Content\App_Themes\reset.css" />
+    <Content Include="Content\App_Themes\reveal.css" />
+    <Content Include="Content\App_Themes\RoomBoothTile.css" />
+    <Content Include="Content\App_Themes\sitewide.css" />
+    <Content Include="Content\App_Themes\Style.css" />
+    <Content Include="Content\App_Themes\styles.css" />
+    <Content Include="Content\App_Themes\styles_ie7.css" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -353,9 +537,25 @@
     <Content Include="Content\DataTable\dataTables.responsive.css" />
     <Content Include="Content\DataTable\jquery.dataTables.min.css" />
     <Content Include="Content\DataTable\select.dataTables.min.css" />
+    <Content Include="Content\images\attachment_step.png" />
+    <Content Include="Content\images\attachment_step_on.png" />
+    <Content Include="Content\images\bank_step.png" />
+    <Content Include="Content\images\bank_step_on.png" />
+    <Content Include="Content\images\certify_step.png" />
+    <Content Include="Content\images\certify_step_on.png" />
+    <Content Include="Content\images\confirmation_step.png" />
+    <Content Include="Content\images\confirmation_step_on.png" />
     <Content Include="Content\images\DD01192016.jpg" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\info_step.png" />
+    <Content Include="Content\images\info_step_on.png" />
+    <Content Include="Content\images\submit_step.png" />
+    <Content Include="Content\images\submit_step_on.png" />
+    <Content Include="Content\images\user_step.png" />
+    <Content Include="Content\images\user_step_on.png" />
+    <Content Include="Content\images\verify_step.png" />
+    <Content Include="Content\images\verify_step_on.png" />
     <Content Include="Content\login.css" />
     <Content Include="Content\main2.css" />
     <Content Include="Content\mainmenu.css" />
@@ -370,6 +570,12 @@
     <Content Include="Scripts\App\DataTable\dataTables.responsive.js" />
     <Content Include="Scripts\App\DataTable\dataTables.select.min.js" />
     <Content Include="Scripts\App\DataTable\jquery.dataTables.min.js" />
+    <Content Include="Scripts\App\draft\bankdetails.js" />
+    <Content Include="Scripts\App\draft\certifyconfirm.js" />
+    <Content Include="Scripts\App\draft\draftMain.js" />
+    <Content Include="Scripts\App\draft\jquery.json.js" />
+    <Content Include="Scripts\App\draft\location.js" />
+    <Content Include="Scripts\App\draft\vendordetails.js" />
     <Content Include="Scripts\App\login.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -396,6 +602,8 @@
     <Content Include="Areas\RouteDebugger\Views\RouteDebugger\Index.cshtml" />
     <Content Include="Log4Net.config" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\App_Themes\Images\Thumbs.db" />
+    <None Include="Connected Services\abaService\abaservice.wsdl" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -409,13 +617,35 @@
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Home\dashboard.cshtml" />
+    <Content Include="Views\ApplicationList\applicationList.cshtml" />
+    <Content Include="Views\ApplicationList\applicationSummary.cshtml" />
+    <Content Include="Views\Draft\Report.cshtml" />
+    <Content Include="Views\Draft\_partialAttachment.cshtml" />
+    <Content Include="Views\Draft\_partialBankDetails.cshtml" />
+    <Content Include="Views\Draft\_partialBankVerify.cshtml" />
+    <Content Include="Views\Draft\_partialCertify.cshtml" />
+    <Content Include="Views\Draft\_partialConfirmation.cshtml" />
+    <Content Include="Views\Draft\_partialLocations.cshtml" />
+    <Content Include="Views\Draft\_partialLogin.cshtml" />
+    <Content Include="Views\Draft\_partialReport.cshtml" />
+    <Content Include="Views\Draft\_partialSubmit.cshtml" />
+    <Content Include="Views\Draft\_partialVendor.cshtml" />
     <Content Include="Web References\gov.lacounty.webadminisd\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Home\dashboard.cshtml" />
-    <Content Include="Views\ApplicationList\applicationList.cshtml" />
-    <Content Include="Views\ApplicationList\applicationSummary.cshtml" />
+    <Content Include="vddDataSet.xsc">
+      <DependentUpon>vddDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="vddDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>vddDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="vddDataSet.xss">
+      <DependentUpon>vddDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Web References\gov.lacounty.webadminisd\service.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -500,6 +730,12 @@
       <Project>{7932e25e-b628-48eb-b225-41d381e7c72a}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\abaService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="VendorAuthorizationForm.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

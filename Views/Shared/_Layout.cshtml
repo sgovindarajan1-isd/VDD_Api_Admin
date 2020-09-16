@@ -50,6 +50,7 @@
                                 </a>
 
                                 <a id="menu_applicatoinList" text="Application List" class="navLink">APPLICATION LIST</a>
+                                <a id="menu_enterApplication" text="Enter Application" class="navLink">ENTER APPLICATION</a>
                                 <a class="navLink" href="./Admin_Users.html">ADMIN</a>
                                 <a id="lnkReports" text="Case List" class="navLink" href="./Reports.html">REPORTS</a>
 
@@ -74,13 +75,99 @@
     </div>
 
     <div id="wp_content">
-        <div id="liNavigation" class="row-wrapper row  row-home-gray">
 
-        </div>
+ 
+
 
         <div id="grey-info-bar" class="content-font row-wrapper">
             <div class="logo-bar-wrapper1">
                 <div class="col-xs-12">
+
+                    @*Navigation round button start *@
+
+                    <div id="liNavigation" class="row-wrapper row  row-home-gray">
+                        <div class="row-inner ">
+                            <div class="col-xs-12">
+                                <div class="wizard">
+                                    <div class="wizard-inner">
+                                        <div class="connecting-line"></div>
+                                        <ul class="nav nav-tabs" role="tablist" id="ul">
+
+                                            <li role="presentation" id="li_vendorstep" class="liselect" style="text-align:center" value="1">
+                                                <span title="Vendor Information" class="wizard-step" style="text-align:center">
+                                                    <span class="round-tab">
+                                                        <img id="img_vendor_step" src="/Content/Images/user_step_on.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+
+                                            <li role="presentation" id="li_infostep" class="liselect" style="text-align:center" value="2">
+                                                <span title="Payment Information" class="wizard-step" style="text-align:center">
+                                                    <span class="round-tab">
+                                                        <img id="img_info_step" src="/Content/Images/info_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_bankstep" class="liselect" value="3">
+                                                <span title="Enter Banking Information" class="wizard-step">
+                                                    <span id="span_bankstep" class="round-tab disabled ">
+                                                        <img id="img_bank_step" src="/Content/Images/bank_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+
+                                            </li>
+
+                                            <li role="presentation" id="li_attachmentstep" class="liselect" value="4">
+                                                <span title="Add Attachment" class="wizard-step">
+                                                    <span id="span_attachmentstep" class="round-tab disabled ">
+                                                        <img id="img_bank_attachment_step" src="/Content/Images/attachment_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_verify_step" class="liselect" value="5">
+                                                <span title="Verify Banking Information" class="wizard-step">
+                                                    <span id="span_verify_step" class="round-tab disabled ">
+                                                        <img id="img_bank_verify_step" src="/Content/Images/verify_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_certify_step" class="liselect" value="6">
+                                                <span title="Certify" class="wizard-step">
+                                                    <span id="span_certify_step" class="round-tab disabled ">
+                                                        <img id="img_certify_step" src="/Content/Images/certify_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_submit_step" class="liselect" value="7">
+                                                <span title="Submit" class="wizard-step">
+                                                    <span class="round-tab disabled ">
+                                                        <img id="img_submit_step" src="/Content/Images/submit_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_confirmation_step" class="liselect" value="8">
+                                                <span title="Confirmation" class="wizard-step">
+                                                    <span class="round-tab disabled ">
+                                                        <img id="img_confirmation_step" src="/Content/Images/confirmation_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @*Navigation round button end *@
+
                     <h3 id="lbl_header">
                         Direct Deposit Management System
                         <span id="btn_loginLock" class="fa fa-expeditedssl fa-right" style="font-size: 22px;"></span>
@@ -133,10 +220,10 @@
         <hr class="row-wrapper">
         <footer>
             <div id="pnlfooter" style="text-align:center; display:inline-block; width:100%">
-                <div>
-                    <a href="./User Account_UserProfile.html">Profile</a>&nbsp;|&nbsp;
+                <div id="pnl_login_footer">
+                    <a href="/Home/Index">Profile</a>&nbsp;|&nbsp;
                     <a id="btn_logout" href="/Home/Index">Logout</a>&nbsp;|&nbsp;
-                    <a href="./Help.html">Help</a>
+                    <a href="/Home/Index">Help</a>
                 </div>
                 <div>County of Los Angeles Department of Auditor Controller</div>
             </div>

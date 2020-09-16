@@ -1,0 +1,265 @@
+﻿@{
+    ViewBag.Title = "Submit";
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/App/draft/certifyconfirm.js"></script>
+    <link href="~/Content/main2.css" rel="stylesheet" />
+}
+<div class="container" style="padding-top: 20px;">
+    <div class="col-lg-offset-3">
+        <span class="fontBold">Vendor information </span>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Type of Application</span> </div>
+            <div class="col-md-6"> <span id="typeofApplication" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Vendor Code</span> </div>
+            <div class="col-md-6"> <span id="vendorCode" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Payee Name</span> </div>
+            <div class="col-md-6"> <span id="payeeName" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>First Name</span> </div>
+            <div class="col-md-6"> <span id="firstName" /> </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6"> <span>Middle Name</span> </div>
+            <div class="col-md-6"> <span id="middleName" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Last Name</span> </div>
+            <div class="col-md-6"> <span id="lastName" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Company Name</span> </div>
+            <div class="col-md-6"> <span id="companyName" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Alias/DBA Name</span> </div>
+            <div class="col-md-6"> <span id="aliasDBAName" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Taxpayer ID Number</span> </div>
+            <div class="col-md-6"> <span id="tin" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Case No.</span> </div>
+            <div class="col-md-6"> <span id="caseNo" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Direct Deposit Notification Email</span> </div>
+            <div class="col-md-6"> <span id="ddNotificationEmail" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span>Phone Number</span> </div>
+            <div class="col-md-6"> <span id="phoneNumber" /> </div>
+        </div>
+
+        @* Bank Details start *@
+
+
+
+        @*<h10 style="padding-top:10px">
+            <span class="fontBold">Banking information </span>
+        </h10>*@
+
+        <div style="margin-top:90px">
+            <span class="fontBold">
+                Banking information
+            </span>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Type of Account</span>
+            </div>
+            <div class="col-md-6">
+                <span id="typeofAccount" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Bank Account Number</span>
+            </div>
+            <div class="col-md-6">
+                <span id="accountNumber" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Bank Routing Number</span>
+            </div>
+            <div class="col-md-6">
+                <span id="routingNumber" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Financial Institution Name</span>
+            </div>
+            <div class="col-md-6">
+                <span id="finInsName" />
+            </div>
+        </div>
+        @* Bank Details End*@
+
+        @* Address Details start*@
+        <div id="banklocations" style="padding-top:90px">
+            <span class="fontBold">
+                Direct Deposit Payment Option Selected
+            </span>
+
+            <div>
+                Assign this bank account to the following addresses:
+            </div>
+
+        </div>
+        @* Address Details End*@
+
+        @* Authorization*@
+        <div style="padding-top:20px">
+            <span class="fontBold">
+                Certifications
+            </span>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Authorized Signer’s Name</span>
+            </div>
+            <div class="col-md-6">
+                <span id="signername" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Authorized Signer’s Title</span>
+            </div>
+            <div class="col-md-6">
+                <span id="signertitle" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Authorized Signer’s Phone Number</span>
+            </div>
+            <div class="col-md-6">
+                <span id="signerphone" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <span>Authorized Signer’s E-mail Address</span>
+            </div>
+            <div class="col-sm-6">
+                <span id="signeremail" />
+            </div>
+        </div>
+
+        @* deptment end*@
+        <div style="padding-top:20px">
+            <span class="fontBold">
+                Department
+            </span>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Department Name</span>
+            </div>
+            <div class="col-md-6">
+                <span id="deptName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Department Contact Person Name</span>
+            </div>
+            <div class="col-md-6">
+                <span id="deptPerson" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Department Email</span>
+            </div>
+            <div class="col-md-6">
+                <span id="deptEmail" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <span>Department Contact Number</span>
+            </div>
+            <div class="col-sm-6">
+                <span id="deptPhone" />
+            </div>
+        </div>
+
+        <div style="padding-top:20px">
+            <span class="fontBold">
+                Attachments
+            </span>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Total</span>
+            </div>
+            <div class="col-md-6">
+                <span id="span_totalAttachment" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <span>Type</span>
+            </div>
+            <div class="col-md-6">
+                <span id="span_TypeofAttachment" />
+            </div>
+        </div>
+
+
+
+        @* deptment end*@
+
+        @*<div style="padding-top :10pt; text-align: center">
+            <button style="float: left" class="btn btn-back" id="btn_submit_back"> Back </button>
+            <button style="float: right" class="btn btn-continue" id="btn_submit_next"> Submit </button>
+        </div>*@
+
+
+        </br>
+        </br>
+        <div class="form-group" style="padding-top :10pt">
+            <div class="col-sm-6">
+                <button style="float: left" class="btn btn-back" id="btn_submit_back"> Back </button>
+            </div>
+            <div class="col-sm-6">
+                <button style="float: left" class="btn btn-continue" id="btn_submit_next"> Submit </button>
+            </div>
+        </div>
+
+
+    </div>
+</div>

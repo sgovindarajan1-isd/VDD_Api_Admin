@@ -1,0 +1,25 @@
+﻿/* Hide SAVE button from add new appointment screen*/
+#ctl00_main_RadScheduler1_Form_insert {
+    display:none !important;
+}
+
+.RadScheduler_Default .rsHeader {
+    border: 1px solid #929292;
+    z-index:1 !important;
+}
+.RadScheduler .rsWrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 0 !important;
+}
+
+.RadScheduler .rsAptEditSizingWrapper {
+    position: relative !important;
+    width: 100%;
+    visibility: hidden;
+}
+
+ 
+
+

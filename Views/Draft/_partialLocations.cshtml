@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <link href="~/Content/main2.css" rel="stylesheet" />
+    <script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/App/draft/location.js"></script>
+}
+
+<div id="pendingMessage" class="para errmessage" style="font-weight:bold; text-align:center" visible="false"></div>
+
+<div id="div_location_grid" class="gj-margin-top-10">
+    <div class="para">
+        <p> Your Direct Deposit bank account will be associated with the following address(es).</p>
+    </div>
+
+    <table id="ddGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="border-collapse:collapse; border: 1px solid black; width:100%">
+        <thead>
+            <tr class="button-header-color">
+                <th></th>
+                <th>Address</th>
+                <th>Routing Number</th>
+                <th>Acccount #</th>
+                <th>Account Type</th>
+                <th>Remittance Email</th>
+                <th>Current Payment Status</th>
+            </tr>
+        </thead>
+    </table>
+
+    <div class="para">
+        <p> To update your address information, please contact the Department you're doing business with.</p>
+    </div>
+</div>
+
+@*end- enter payment informations*@
+<div id="div_enterPaymentInfo" class="container row-wrapper gj-margin-top-10 form-horizontal">
+    <br><br>
+    <span style="font-size:Large;font-weight:normal;">Enter the address(es) that will be associated to the Direct Deposit bank account. </span><span id="main_Label1" style="font-size:Large;font-weight:normal;"></span> <br><br>
+
+    <fieldset style="float: left">
+
+        <div class="col-sm-12" style="padding-left:0px">
+            <div class="form-group padding-bottom-div1">
+                <label for="" class="col-sm-1" style="width:110px; padding-left:0px; padding-right:0px;">
+                    Address 1
+                </label>
+
+                <div class="col-sm-7">
+                    <div class="input-group" style="width:100%;">
+                        <input type="text" class="form-control" maxlength="38" id="txtAddress1" placeholder="Address 1" value="" required="">
+                    </div>
+                    <span id="span_Address1" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div1">
+                <label for="Address 2" class="col-sm-2" style="width:110px; padding-left:0px; padding-right:0px; ">
+                    Address 2
+                </label>
+                <div class="col-sm-7">
+                    <div class="input-group" style="width:100%;">
+                        <input type="text" class="form-control" maxlength="38" id="txtAddress2" placeholder="Address 2" value="" required="">
+                    </div>
+                    <span id="span_Address2" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div1">
+                <label for="City" class="col-sm-2" style="width:110px; padding-left:0px; padding-right:0px; ">
+                    City
+                </label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="txtCity" maxlength="28" placeholder="City" value="" required="">
+                    <span id="span_city" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div1">
+                <label for="State" class="col-sm-2" style="width:110px; padding-left:0px; padding-right:0px; ">
+                    State
+                </label>
+                <div class="col-sm-7" style="width:15%;">
+                    <input type="text" class="form-control" id="txtState" maxlength="2" placeholder="State" value="" required="">
+                    <span id="span_state" class="errmessage">
+                    </span>
+                </div>
+
+                <label for="Zip Code" class="col-sm-1" style="padding-left:0px; padding-right:0px; margin-left:150px; margin-right:20px;">
+                    Zip Code
+                </label>
+                <div class="col-sm-7" style="width:28%; padding-left:0px; margin-left:0px;">
+                    <input type="text" class="form-control" id="txtZipCode" maxlength="10" placeholder="Zip Code" value="" required="">
+                    <span id="span_zipcode" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div" style="padding-bottom:50px;">
+                <div style="padding: 20pt 3pt 0pt 95pt; text-align: left; padding-bottom:0px;">
+                    <button class="btn btn-success pull" id="btn_Location_add" style="width:100px;"> Add </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-default" id="btn_Location_reset" style="width:100px;"> Reset </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group padding-bottom-div" style="width:100%;">
+            <div class="col-sm-8" style="text-align:left; padding-left:0px;">
+                <label>Your Direct Deposit bank account will be associated with the following addresses </label>
+            </div>
+        </div>
+
+        <table id="ddLocationAddressGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+            <thead>
+                <tr class="button-header-color">
+                    <th></th>
+                    <th></th>
+                    <th>CombinedAddress</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zipcode</th>
+
+                </tr>
+            </thead>
+        </table>
+
+    </fieldset>
+</div>
+@*end- enter payment informations*@
+
+
+<div style="padding : 50pt 3pt; text-align: center" class="container row-wrapper">
+    <button style="float: left" class="btn btn-back" id="btn_location_back"> Back </button>
+    <button style="float: right" class="btn btn-continue" id="btn_location_next"> Continue </button>
+</div>

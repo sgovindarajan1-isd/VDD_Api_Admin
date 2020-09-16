@@ -1,0 +1,706 @@
+﻿    .pageTitle h2
+    {
+        color: rgb(88, 117, 146);
+        font-size: 1.8em;
+        font-weight: bold;
+        line-height: 2em;
+        text-align: center;
+    }
+    
+    /* ----------------------
+		    Button Bar Styles Gray color 02032015
+	    ------------------------*/
+       #buttonBarWhole
+    {
+        /*background-color: #dadac8;*/
+        background-color: #D3D3D3;
+        -webkit-box-shadow: 0px 2px 3px rgba(46, 50, 50, 0.92);
+        -moz-box-shadow: 0px 2px 3px rgba(46, 50, 50, 0.92);
+        box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.92);
+        clear: both;
+        float: left;
+        min-width: 1000px;
+        width: 100%;
+        z-index: 1;
+    }
+    #buttonBar
+    {
+        /*background-color: #dadac8;*/
+        background-color: #D3D3D3;
+        -webkit-box-shadow: 0px 2px 3px rgba(46, 50, 50, 0.92);
+        -moz-box-shadow: 0px 2px 3px rgba(46, 50, 50, 0.92);
+        box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.92);
+        clear: both;
+        float: left;
+        min-width: 1000px;
+        width: 100%;
+        z-index: 1;
+    }
+    #buttonBar ol
+    {
+        list-style-type: none;
+        float: left;
+        margin: 10px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #buttonBar li
+    {
+        float: left;
+        margin: 0 5px;
+        position: relative;
+    }
+    #buttonBar span
+    {
+        line-height: 33px;
+    }
+    
+    #buttonBar p.loggedInUser
+    {
+        float:left; 
+        font-weight: normal;
+        font-size: 10pt;
+        /*line-height:30px;*/
+        line-height:20px;
+        padding:0px;
+        margin: 0 0 0 200px;
+    }
+
+     body 
+    {
+    /*background-color: rgb(247,247,247);
+         margin: 0 auto;
+          width:1200px;
+          height:1200px;
+   */
+   /*background-image: url('Images/blurry-cityscape-smaller.jpg');
+    
+     -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+          width:1200px;
+         height: 1500px; 
+               margin: 0 auto;*/
+
+
+      }
+           /*#footer {
+  position: relative;
+  margin-top: 50px; 
+  height: 120px;
+  clear:both;
+    background-color: #364C71;
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 120px;
+
+  }*/
+             #header_container {  border:0px solid #364C71; top:0; height:95px; left:0; position:relative; width:100%; z-index:9999; background-image:none;
+                      background-position-x:0%;background-position-y:0%;line-height:30px;background-clip:border-box;display:block;background-origin:padding-box;background-repeat:repeat;
+                      background-size:auto;box-sizing:border-box;font-weight:400;}
+
+            #header {  font-size:14px;line-height:25px; margin:0px 0 0 auto; height: 115px; box-sizing:border-box; filter:none; display:block; clear:none; box-sizing:border-box; top:0;content:normal;margin-left:auto;margin-right:auto; width:80%;}
+
+            #footer_container { background-color: #0E1A2B; border:0px solid #364C71; bottom:0; height:95px; left:0; position:relative; width:100%; z-index:9999; background-image:none;
+                      background-position-x:0%;background-position-y:0%;line-height:30px;background-clip:border-box;display:block;background-origin:padding-box;background-repeat:repeat;
+                      background-size:auto;box-sizing:border-box;font-weight:400;
+  }
+ #footer { box-shadow: 0px 500px 0px 500px #0E1A2B;border:0;font-size:14px;line-height:22.5px; margin:50px 0 0 auto; height: 93px; box-sizing:border-box; filter:none; display:block; clear:none; box-sizing:border-box;content:normal; margin-left:260px;margin-right:260px; width:100%}
+  #footbot {
+     clear:both;float:left;list-style-image:none;list-style-position:outside;list-style-type:none;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;
+
+ }
+
+   
+html, body {
+	     height: 100%;
+           overflow-x:hidden;
+ 
+
+}
+           .wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -100px; 
+}
+.footer, .push {
+	height: 100px; 
+  
+}
+
+    #titleimage
+    {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/DD01192016Admin.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 120px;
+
+     position: relative;
+  height: 120px;
+  clear:both;
+  
+  
+
+      }
+
+     #titleCountySeal
+    {
+  
+     background-image: url('Images/CountySeal.png');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 120px;
+
+     position: relative;
+  height: 120px;
+  clear:both;
+  
+  
+
+      }
+
+
+
+
+
+
+
+
+       
+.left {float:left}
+.right {float:right}
+.clear {clear:both}
+li {
+    display: inline-block;
+    color: white;
+    float: none;
+}
+      
+li a { color: white; }
+
+.LoginBox{
+    /*width:10px;
+    float: right!important; 
+    position:relative;
+     margin-left:auto;
+    margin-right:auto;*/
+  width:0px;
+    float: left!important; 
+    position:relative;
+     margin-left:auto;
+    margin-right:auto;
+}
+       .LoginWrapper{
+    width:100% !important;   
+    margin-left:0px !important;
+    margin-right:0px !important;
+    vertical-align:middle !important;
+}
+.wrapperTitle{
+    width:230px;
+   /*margin-left:auto;
+    margin-right:auto;
+    float: left!important; 
+    position:relative;*/
+
+       margin-left:0px !important;
+    margin-right:0px !important;
+      position:relative;
+      float: left!important; 
+    
+   
+}   
+.wrapperTitleMain{
+    width:880px;
+   /*margin-left:auto;
+    margin-right:auto;
+    float: left!important; 
+    position:relative;*/
+
+       margin-left:0px !important;
+    margin-right:0px !important;
+      position:relative;
+      float: left!important; 
+    
+   
+}   
+.eCAPDDTitle{
+    font-style:normal;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:30px;
+    text-align:left;
+    color:#005cad;
+    /*line-height:1em;*/   
+    text-shadow: 1px 1px 1px #000, 3px 3px 6px #403d3e;
+}
+.eCAPDDSubTitle{
+    font-style:normal;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:20px;
+    /*text-shadow: 1px 1px 1px #000, 3px 3px 6px #403d3e;*/
+    color:#403d3e;
+    text-align:left;
+}
+          .titleVendorInfo 
+    {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/VendorInformation.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+       .titleGE 
+    {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/GE.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+       .titlePayeecert
+         {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/PAYEECERT.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+
+         .titleVendor
+         {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/Vendor.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+
+           .titleBank
+         {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/BANKINGINFO.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+
+               .titleAttach
+         {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/ATTACHMENT.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+
+               .titleContactUs
+                   {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/ContactUs.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+               
+               .titleUpdateInfo
+                   {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/UPDATEINFORMATION.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+                            .titleCurrentBank
+                   {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/CurrentBank.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+               
+
+                           .titleStaffInfo
+                   {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/StaffInfo.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+
+                                                     .titleInquiry
+                   {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/INQUIRY.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+  
+      }
+
+ .titleStep1
+                   {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/progressbarNumberStep1.jpg');
+  line-height: 90px;
+  
+      }
+
+       #tableAlignTopCenter
+       {
+          margin-left: 0;
+          margin-right: auto;
+          border-color: #444444;
+          border-collapse:collapse;
+          margin: 0 auto;
+          /*width:1900px;*/
+
+          border:0px solid #364C71; top:0; left:0; position:relative; width:100%; z-index:9999; background-image:none;
+                      background-position-x:0%;background-position-y:0%;background-clip:border-box;display:block;background-origin:padding-box;background-repeat:repeat;
+                      background-size:auto;box-sizing:border-box;font-weight:400;
+
+                        }
+
+      #tableAlignCenter
+       {
+          margin-left: 0;
+          margin-right: auto;
+          border-color: #444444;
+          border-collapse:collapse;
+          margin: 0 auto;
+          width:1900px;
+
+                        }
+
+
+
+
+  html {
+      /*background: url('Images/logincover12082014.gif') no-repeat center center fixed;*/
+    /*background-color: rgb(188, 209, 226);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+
+      /*background: url('Images/blurry-cityscape-smaller.jpg') no-repeat center center fixed;*/
+      background-color: rgb(247,247,247); 
+       -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+               margin: 0 auto;
+                  /*width:1200px;*/
+         /*height: 1500px;*/ 
+}     
+
+    .containerbox
+  {
+       background-color: rgb(247,247,247);     
+       width: 1125px;
+    top:15%;
+     /*margin: 10px 50px 50px 50px;*/
+    border-width:0px;
+       border:0px solid black !important;
+       margin-left:100px;
+       margin-right:0px;
+       padding-left:15px;
+       padding-right:15px;
+
+
+   }
+       .containerboxPrintAttach
+  {
+       background-color: rgb(247,247,247); 
+       width: 1200px;
+       left: 20%;
+    top:0%;
+     margin: 0px 0px 0px 120px;
+    border-width:1px;
+       border:0px solid black !important
+
+
+   }
+   .containerboxPrint
+  {
+       background-color: rgb(247,247,247); 
+       width: 1200px;
+       left: 20%;
+    top:0%;
+     margin: 0px 0 0 0px;
+    border-width:1px;
+       border:0px solid black !important
+
+
+   }
+ 
+   .collapsePanel {
+      /*width: 880px;
+      height:0px;
+      background-color:white;
+      overflow:hidden;*/
+
+      width: 880px;
+           margin-left:0px !important;
+    margin-right:0px !important;
+    
+      float: left!important; 
+}
+ 
+.collapsePanelHeader{   
+      width:900px;            
+      height:100%;
+      /*color: Yellow;*/
+      /*background-color: white;*/
+      font-weight:bold;
+      float:none;
+      padding:10px; 
+      cursor: pointer; 
+      vertical-align: middle;
+}
+
+
+   /*Show images for resolution greated than 1024*/
+   /*@media only screen and (min-width: 799px) {        
+    img{ 
+        display:block;
+  
+    }         
+    }*/
+    /*hide images for resolution lesser than 1024*/
+    /*@media only screen and (max-width: 799px) {        
+    img{
+        display:none;
+       
+    }        
+    }*/
+
+  	   @media only screen 
+and (min-device-width : 481px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape)
+and (-webkit-min-device-pixel-ratio: 2){ 
+      
+ 
+/*LMRS New login page container */
+
+
+.containerbox {
+ 
+       background-color: rgb(247,247,247);     
+       width: 90%;
+    border-width:1px;
+       border:1px solid black !important;    
+   margin: auto;
+  top: 0; left: 0; bottom: 0; right: 0;
+     
+        
+    flex-direction: column;
+    flex-wrap: nowrap;   
+           
+
+}
+
+  .LoginWrapper{
+    width:90% !important;   
+    margin-left:0px !important;
+    margin-right:0px !important;
+    vertical-align:middle !important;
+}
+.wrapperTitle{
+    width:230px;
+   margin-left:auto;
+    margin-right:auto;
+    float: left!important; 
+    position:relative;
+   
+}
+.wrapperTitleMain{
+    width:880px;
+   /*margin-left:auto;
+    margin-right:auto;
+    float: left!important; 
+    position:relative;*/
+
+       margin-left:0px !important;
+    margin-right:0px !important;
+      position:relative;
+      float: left!important; 
+    
+   
+}  
+.eCAPDDTitle{
+    font-style:normal;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:19px;
+    text-align:left;
+    color: black;
+    /*color:#005cad;*/
+    /*line-height:1em;*/   
+    /*text-shadow: 1px 1px 1px #000, 3px 3px 6px #403d3e;*/
+}
+.eCAPDDSubTitle{
+    font-style:normal;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:16px;
+    /*text-shadow: 1px 1px 1px #000, 3px 3px 6px #403d3e;*/
+    color:#403d3e;
+    text-align:left;
+}
+.LoginBox{
+
+  width:0px;
+    float: left!important; 
+    position:relative;
+     margin-left:auto;
+    margin-right:auto;
+}
+  #titleimage 
+    {
+
+     background-image: url('Images/DD01192016.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 120px;
+
+
+      }
+
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait)
+and (-webkit-min-device-pixel-ratio: 2) { 
+
+html, body {
+     /*background-color: rgb(133,124,124);*/
+     /*background: url('Images/blurry-cityscape-smaller.jpg') no-repeat center center fixed;*/
+      background-color: rgb(247,247,247); 
+     -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+     background-size: cover;
+    
+       
+ 
+}
+/*ecapsdd New login page container */
+
+.containerbox {
+ 
+       background-color: rgb(247,247,247);     
+       width: 90%;
+    border-width:1px;
+       border:1px solid black !important;    
+   margin: 0;
+  top: 0; left: 0; bottom: 0; right: 0;
+     
+        
+    flex-direction: column;
+    flex-wrap: nowrap;   
+           
+
+}
+.scroller{
+     width: 880px; 
+     -webkit-overflow-scrolling: touch; 
+     overflow-x: scroll;
+}
+  .LoginWrapper{
+    width:80% !important;   
+    margin-left:0px !important;
+    margin-right:0px !important;
+    vertical-align:middle !important;
+}
+.wrapperTitle{
+    width:230px;
+   margin-left:auto;
+    margin-right:auto;
+    float: left!important; 
+    position:relative;
+	
+   
+}
+
+.wrapperTitleMain{
+    width:880px;
+   /*margin-left:auto;
+    margin-right:auto;
+    float: left!important; 
+    position:relative;*/
+
+       margin-left:0px !important;
+    margin-right:0px !important;
+      position:relative;
+      float: left!important; 
+    
+   
+}  
+
+.eCAPDDTitle{
+    font-style:normal;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:19px;
+    text-align:left;
+    color: black;
+    /*color:#005cad;*/
+    /*line-height:1em;*/   
+    /*text-shadow: 1px 1px 1px #000, 3px 3px 6px #403d3e;*/
+}
+.eCAPDDSubTitle{
+    font-style:normal;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:16px;
+    /*text-shadow: 1px 1px 1px #000, 3px 3px 6px #403d3e;*/
+    color:#403d3e;
+    text-align:left;
+}
+.LoginBox{
+
+  width:0%;
+    float: left!important; 
+    position:relative;
+     margin-left:auto;
+    margin-right:auto;
+	
+}
+  #titleimage 
+    {
+
+     background-image: url('Images/DD01192016.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 120px;
+
+
+      }
+}

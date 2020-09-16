@@ -1,0 +1,119 @@
+﻿body
+{
+	font-family: Verdana, Arial;
+}
+.ReportTitle 
+{
+	font-size: 14px;
+	font-weight: bold;
+	color: #636363;
+	text-transform: uppercase;
+}
+.Select
+{
+	font-size: 12px;
+	font-weight: bold;
+	border-bottom: thin solid #636363;
+	text-transform: none;
+	margin: 10px;
+}
+.Content
+{
+	background-color: #f1f6de;	
+}
+.textbold 
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 16px;
+	font-weight: bold;
+	padding: 20px 0 5px 0;
+}
+.ItemStyle
+{
+	font-size: 11px;
+	font-family: Verdana, Arial;
+}
+.ItemStyleRight
+{
+	font-size: 11px;
+	font-family: Verdana, Arial;
+	text-align: right;
+}
+.ItemStyleRightBold
+{
+	font-size: 11px;
+	font-family: Verdana, Arial;
+	font-weight: bold;
+	text-align: right;
+}
+.Header
+{
+	font-size: 12px;
+	font-family: Verdana, Arial;
+	font-weight: bold;
+}
+
+.HeaderStyleText
+{
+	font-size: 12px;
+	font-family: Verdana, Arial;
+	font-weight: bold;
+	color: Black;
+	text-transform: none;
+} 
+
+.HeaderStyle,
+.HeaderStyleCenter,
+.HeaderStyleRight
+{
+	font-size: 12px;
+	font-family: Verdana, Arial;
+	font-weight: bold;
+	background-color: #e5f0cb;
+	color: #000;
+	text-transform: none;
+	border-bottom: thin solid #636363;
+}
+.HeaderStyleCenter
+{
+	text-align: center;
+}
+.HeaderStyleRight
+{
+	text-align: right;
+}
+.FooterStyle
+{
+	border-top: thin solid #636363;
+	font-weight: bold;
+	background-color: #DADAC8;
+	color: #636363;
+	font-size: 11px;
+}
+.FooterStyleRight
+{
+	border-top: thin solid #636363;
+	font-weight: bold;
+	background-color: #DADAC8;
+	color: #636363;
+	font-size: 11px;
+	text-align: right;
+}
+.FooterStyleRightBold
+{
+	border-top: thin solid #636363;
+	font-weight: bold;
+	background-color: #DADAC8;
+	color: black;
+	font-size: 11px;
+	text-align: right;
+}
+.printbutton
+{
+    font-size: 10pt;
+}
+.dateText
+{
+    width: 80px;
+}

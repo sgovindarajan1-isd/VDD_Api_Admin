@@ -4691,9 +4691,13 @@ html{
 	line-height: 1.5em;
 	float: left;
 	display: inline}.doubleInLine{
-	width: 50%}.form-control{
+	width: 50%}
+.form-control {
 	width: auto;
-	width: initial!important}.modal-body{
+	width: initial !important 
+					}
+			   
+    .modal-body{
 	text-align: left;
 	padding: 15px 30px}video{
 	max-width: 100%;
@@ -4705,7 +4709,8 @@ html{
 	padding: 0;
 	width: 78em;  /*vdd it was 72em  to make the summary content size wider*/
 	text-align: left;
-	background-color: #fff}.footer{
+	background-color: #fff
+}.footer{
 	text-align: center}.banner{
 	margin: .5em 0 0 0}
 .content {

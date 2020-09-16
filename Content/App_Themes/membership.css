@@ -1,0 +1,97 @@
+﻿/*	--------------------------------------------------
+	Typography
+	-------------------------------------------------- */
+
+
+/*	--------------------------------------------------
+	Layout
+	-------------------------------------------------- */
+	#messages, #membership
+    {
+        float: left;
+        margin: 5px 0 0 20px;
+    }
+        
+    #membership .roleList
+    {
+        width: 600px;
+    }
+
+    #membership .userList
+    {
+        width: 960px;
+    }
+
+    #membership .user
+    {
+        width: 450px;
+    }
+
+    #messages p, #membership p
+    {
+        margin-bottom: 10px;
+    }
+
+    #membership fieldset
+    {
+        float: left;
+        padding-bottom: 15px;
+    }
+
+    #membership fieldset.role
+    {
+        margin: 20px 0px 0px;
+    }
+    
+    #membership select
+    {
+        height: 25px;
+    }
+
+    #membership table
+    {
+        border-collapse: separate;
+        border-spacing: 3px;    
+    }
+
+    #membership .roleCell
+    {
+        width: 200px;   
+    }
+    
+    /* Overrides some styles from sitewide.css */
+    .container
+    {
+        clear:none;
+        margin-left: 40px;
+        margin-top: 30px;
+        width: 480px;
+    }
+    
+    fieldset.roles
+    {
+        width: 400px;
+    }
+    
+    /* For use with comments in an ItemTemplate */
+    span.comments
+    {
+        display: block;
+        min-height: 20px;
+        max-height: 150px;
+        overflow-y: auto;
+        margin-right: 5px;
+    }
+
+/*	--------------------------------------------------
+	Colors
+	-------------------------------------------------- */
+    #membership table td.titleCell
+    {
+         background-color: #dae1e7;
+    }
+
+    #membership table td.titleCellEdit
+    {
+         background-color: #fff298;
+    }

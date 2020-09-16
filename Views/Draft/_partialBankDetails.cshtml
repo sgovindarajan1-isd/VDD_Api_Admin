@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Bank Details";
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/App/draft/bankdetails.js"></script>
+    <link href="~/Content/main2.css" rel="stylesheet" />
+}
+<div class="container">
+    <div class="row rowtwo" style="padding: 30px 5px 10px 5px">
+        <div class="col-sm-7 columnTwo" style="padding:20px 1px 10px 1px">
+            <div class="form-group padding-bottom-div">
+                <label for="Type Of Account" class="col-sm-7">Type of Account</label>
+                <div class="col-sm-5">
+                    <select id="txtAccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT " >
+                        <option value="1" selected>SELECT TYPE OF ACCOUNT</option>
+                        <option value="1">Checking</option>
+                        <option value="2">Savings</option>
+                    </select>
+                    <span id="accountType" class="errmessage" />
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Bank Account Number" class="col-sm-7">
+                    Bank Account Number
+                    <span>
+                        <img data-toggle="popover"  data-popover="true" data-placement="top" data-content="See sample check image to identify the Bank Account Number. Only enter numeric characters and no dashes." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtBankAcNo" maxlength="15" placeholder="Bank Account Number" value="" required>
+                    <span id="bankAcNo" class="errmessage" />
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Re-Bank Account Number" class="col-sm-7">
+                    Re-Bank Account Number
+                    <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Re-enter the Bank Account Number that was previously entered. Only enter numeric characters and no dashes." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtRe-BankAcNo"  maxlength="15" placeholder="Re-Bank Account Number" value="" required>
+                    <span id="re_BankAcNo" class="errmessage" />
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="" class="col-sm-7">
+                    Bank Routing Number
+                    <span>
+                        <img data-toggle="popover" data-popover="true" data-placement="top"  data-content="See sample check image to identify the Bank Routing Number." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                    </span>
+                </label>
+
+                <div class="col-sm-5">
+                    @*<div class="input-group">*@
+                        <input type="text" class="form-control" maxlength="9" id="txtBankRoutingNo" placeholder="Routing Number" required>
+                        @*<span class="input-group-btn" style="width:0;">
+                            <button id="btn_verifyBank" class="btn btn-primary button-header-color" type="button">Verify Bank</button>
+                        </span>*@
+                    @*</div>*@
+                    <span id="bankRoutingNo" class="errmessage" />
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Type Of Account" class="col-sm-7">Financial Institution Name</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtFinancialIns" placeholder="Financial Institution Name" readonly disabled>
+                    <span id="financialIns" class="errmessage" />
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Type Of Account" class="col-sm-7">
+                    Direct Deposit Notification Email Address
+                    <span>
+                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Remittance advice will be sent to this email address." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" maxlength="50" id="txtDDNotifyEmail" placeholder="Notification Email" @*value="a@a.com"*@ required>
+                    <span id="dDNotifyEmail" class="errmessage" />
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Type Of Account" class="col-sm-7">
+                    Re-enter Notification Email Address
+                    <span>
+                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Re-enter the email address where remittance advice will be sent." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" maxlength="50" id="txtReDDNotifyEmail" placeholder="Re-enter Notification Email" @*value="a@a.com"*@ required>
+                    <span id="reDDNotifyEmail" class="errmessage" />
+                </div>
+            </div>
+        </div>
+
+        <div  class="col-sm-5 columnTwo">
+            <img id="img_checkImage" src="~/Content/images/EnterBanking.png" class="responsive" />
+        </div>
+    </div>
+
+    @*<div style="padding-bottom: 3pt; text-align: center">
+        <button class="btn-primary btn btn-back" id="btn_bank_back"> Back </button>
+        <button class="btn-primary btn btn-continue" id="btn_bank_next"> Next </button>
+    </div>*@
+
+    <div style="padding-top :10pt; text-align: center" class="row-wrapper">
+        <button style="float: left" class="btn btn-back" id="btn_bank_back"> Back </button>
+        <button style="float: right" class="btn btn-continue" id="btn_bank_next"> Continue </button>
+    </div>
+</div>
+

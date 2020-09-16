@@ -265,7 +265,7 @@ namespace DAL
                     reqM.MiddleName = ds.Tables[0].Rows[i]["MiddleName"].ToString();
                     reqM.LastName = ds.Tables[0].Rows[i]["LastName"].ToString();
                     reqM.CompanyName = ds.Tables[0].Rows[i]["CompanyName"].ToString();
-                    reqM.SSN = ds.Tables[0].Rows[i]["SSN"].ToString();
+                    reqM.Ssn = ds.Tables[0].Rows[i]["Ssn"].ToString();
 
                     reqM.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
                     reqM.RequestDate = ds.Tables[0].Rows[i]["RequestDate"].ToString();
@@ -424,7 +424,7 @@ namespace DAL
                     sqlComm.Parameters.AddWithValue("@PhoneNumber", adminModel.PhoneNumber);
                     //sqlComm.Parameters.AddWithValue("@PayeeName", adminModel.Payeename);
                     sqlComm.Parameters.AddWithValue("@CompanyName", adminModel.CompanyName);
-                    sqlComm.Parameters.AddWithValue("@AliasDBA", adminModel.AliasDBA);
+                    sqlComm.Parameters.AddWithValue("@AliasDBA", adminModel.AliasDBAName);
                     sqlComm.Parameters.AddWithValue("@TaxpayerID", adminModel.TaxpayerID);
                     sqlComm.Parameters.AddWithValue("@DDnotifyEmail", adminModel.DDNotifyEmail);
                     sqlComm.CommandType = CommandType.StoredProcedure;

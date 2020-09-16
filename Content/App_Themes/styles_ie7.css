@@ -1,0 +1,23 @@
+﻿	/* ----------------------
+		Custom Fieldset/Legend Styles
+	------------------------*/
+		/*  For use with the fieldset/legend div alternative only;
+			Don't use with the HTML controls */
+        .fieldset {
+            margin: 20px 10px 10px;
+        }
+
+    /* ----------------------
+		    Button Bar Styles
+	    ------------------------*/
+        #buttonBar ol {
+            padding-bottom: 10px;
+        }
+    
+	/* ----------------------
+		Div Table
+	------------------------*/
+		div.row
+		{
+			width: 97%;
+		}
