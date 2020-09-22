@@ -146,7 +146,8 @@
 
         getReviewPanelInformation(data);  //   This section show the and hide the History information.
 
-        $("#id_userName").text(userName);
+        $("#lbl_userName").text(userName); //id_userName
+
         $("#head_confirmationNum").text(confirmationNum);
         $("#header_status").text(data.StatusDesc);
 
@@ -409,6 +410,13 @@
         if (role == 11)  // processor
             status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
         else {
+            debugger;
+            if ($("#VendorCode").text() == '') {
+                $('#approveApplicationModal').modal('hide');
+                toastr.options.positionClass = "toast-bottom-right";
+                toastr.warning("Vendor Code Missing, Please check the entry!");
+                return;
+            }
             status = 4
             assignedTo = $("#AssignedProcessor").text();; //  final approval  assigned to supervisor him self
         }

@@ -65,7 +65,6 @@ namespace DAL
                         v.RemittanceEmail = ds.Tables[0].Rows[i]["DDNotifyEmail"].ToString();
                         v.Status = ds.Tables[0].Rows[i]["DDStatus"].ToString();
                         lst_VM_Vendor.Add(v);
-
                     }
                     con.Close();
                 }
@@ -129,7 +128,6 @@ namespace DAL
 
                     if (ds.Tables[0].Rows.Count > 0)
                     {
-
                         for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                         {
                             DAL_M_UserProfile u = new DAL_M_UserProfile();
@@ -157,7 +155,6 @@ namespace DAL
             }
             return ret;
         }
-
 
         public string  GetApplicationStatus(string  confirmationNumber)
         {
@@ -194,7 +191,6 @@ namespace DAL
         }
 
         public string PostContactus(DAL_M_ContactUs vmcontactus) {
-
             string userid = string.Empty;
             if (vmcontactus.UserId != null)
                 userid = vmcontactus.UserId;
@@ -248,24 +244,34 @@ namespace DAL
             return dt;
         }
 
-
         public Tuple<string, string> SubmitVendor(DAL_M_VendorDD vmvendorDD)
         {
-            Tuple<string, string> ret = null;
             try
             {
                 DataTable reqDetails = CreateTable();
-                foreach (string locid in vmvendorDD.LocationIDs)
+                if (vmvendorDD.LocationAddressList == null)
                 {
-                    reqDetails.Rows.Add(vmvendorDD.Confirmation, vmvendorDD.Vendorname, locid, 1);
+                    foreach (string locid in vmvendorDD.LocationIDs)
+                    {
+                        reqDetails.Rows.Add(vmvendorDD.Confirmation, vmvendorDD.Vendorname, locid, 1, "","","","","");
+                    }
                 }
+                else
+                {
+                    foreach (DAL_M_LocationAddress loc in vmvendorDD.LocationAddressList)
+                    {
+                        reqDetails.Rows.Add(vmvendorDD.Confirmation, vmvendorDD.Vendorname, loc.LocationID, 1, loc.Address1, loc.Address2, loc.City, loc.State, loc.ZipCode);
+                    }
+                }
+                // foreach (string locid in vmvendorDD.LocationIDs)
+                //reqDetails.Rows.Add(vmvendorDD.Confirmation, vmvendorDD.Vendorname, locid, 1, vmvendorDD);
 
                 DataSet ds = new DataSet("Vendor");
                 using (SqlConnection con = DBconnection.Open())
                 {
                     //foreach (string locid in vmvendorDD.LocationIDs)
                     {
-                        SqlCommand sqlComm = new SqlCommand("SubmitVendorDetails_test", con);
+                        SqlCommand sqlComm = new SqlCommand("SubmitVendorDetails", con);
                         sqlComm.Parameters.AddWithValue("@VEND_CUST_CD", vmvendorDD.Vendorname);
                         //sqlComm.Parameters.AddWithValue("@AD_ID", locid);
                         sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);//vmvendorDD.Confirmation)
@@ -288,12 +294,26 @@ namespace DAL
                         sqlComm.Parameters.AddWithValue("@RequestType", vmvendorDD.RequestType);
                         sqlComm.Parameters.AddWithValue("@TableTypeRequestDetail", reqDetails);
 
+                        sqlComm.Parameters.AddWithValue("@SubmitFromWhere", vmvendorDD.SubmitFromWhere);
+                        sqlComm.Parameters.AddWithValue("@PayeeName", vmvendorDD.Payeename);
+                        sqlComm.Parameters.AddWithValue("@FirstName", vmvendorDD.FirstName);
+                        sqlComm.Parameters.AddWithValue("@MiddleName", vmvendorDD.MiddleName);
+                        sqlComm.Parameters.AddWithValue("@LastName", vmvendorDD.LastName);
+                        sqlComm.Parameters.AddWithValue("@CompanyName", vmvendorDD.CompanyName);
+                        sqlComm.Parameters.AddWithValue("@AliasDBA", vmvendorDD.AliasDBAName);
+                        sqlComm.Parameters.AddWithValue("@TaxpayerID", vmvendorDD.TaxpayerID);
+                        sqlComm.Parameters.AddWithValue("@CaseNo", vmvendorDD.CaseNo);
+                        sqlComm.Parameters.AddWithValue("@PhoneNumber", vmvendorDD.PhoneNumber);
+                        sqlComm.Parameters.AddWithValue("@DepartmentName", vmvendorDD.DepartmentName);
+                        sqlComm.Parameters.AddWithValue("@DepartmentContactName", vmvendorDD.DepartmentContactName);
+                        sqlComm.Parameters.AddWithValue("@DepartmentEmail", vmvendorDD.DepartmentEmail);
+                        sqlComm.Parameters.AddWithValue("@DepartmentContactNo", vmvendorDD.DepartmentContactNo);
+
                         sqlComm.CommandType = CommandType.StoredProcedure;
                         sqlComm.ExecuteNonQuery();
                     }
                     con.Close();
                 }
-
             }
             catch (Exception ex)
             {

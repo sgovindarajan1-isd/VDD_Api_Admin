@@ -14,6 +14,13 @@ namespace eCAPDDApi.Controllers
             return View();
         }
 
+        
+
+        public ActionResult _partialDraftLanding()
+        {
+            return View();
+        }
+
         public ActionResult _partialLocations()
         {
             return View();

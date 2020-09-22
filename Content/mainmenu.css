@@ -4694,7 +4694,7 @@ html{
 	width: 50%}
 .form-control {
 	width: auto;
-	width: initial !important 
+	/*width: initial !important    VDD  to make the vendor details all text in full width*/ 
 					}
 			   
     .modal-body{

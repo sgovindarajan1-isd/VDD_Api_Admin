@@ -41,7 +41,7 @@
     <br><br>
     <span style="font-size:Large;font-weight:normal;">Enter the address(es) that will be associated to the Direct Deposit bank account. </span><span id="main_Label1" style="font-size:Large;font-weight:normal;"></span> <br><br>
 
-    <fieldset style="float: left">
+    @*<fieldset style="float: left">*@
 
         <div class="col-sm-12" style="padding-left:0px">
             <div class="form-group padding-bottom-div1">
@@ -92,11 +92,11 @@
                     </span>
                 </div>
 
-                <label for="Zip Code" class="col-sm-1" style="padding-left:0px; padding-right:0px; margin-left:150px; margin-right:20px;">
+                <label for="Zip Code" class="col-sm-1" style="padding-left:0px;  padding-right:0px; margin-left:150px; margin-right:20px;">
                     Zip Code
                 </label>
                 <div class="col-sm-7" style="width:28%; padding-left:0px; margin-left:0px;">
-                    <input type="text" class="form-control" id="txtZipCode" maxlength="10" placeholder="Zip Code" value="" required="">
+                    <input type="text" class="form-control" id="txtZipCode" maxlength="5" placeholder="Zip Code" value="" required="">
                     <span id="span_zipcode" class="errmessage">
                     </span>
                 </div>
@@ -118,10 +118,11 @@
         <table id="ddLocationAddressGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
             <thead>
                 <tr class="button-header-color">
-                    <th></th>
+                    @*<th></th>*@
                     <th></th>
                     <th>CombinedAddress</th>
-                    <th>Address</th>
+                    <th>Address1</th>
+                    <th>Address2</th>
                     <th>City</th>
                     <th>State</th>
                     <th>Zipcode</th>
@@ -130,7 +131,7 @@
             </thead>
         </table>
 
-    </fieldset>
+    @*</fieldset>*@
 </div>
 @*end- enter payment informations*@
 

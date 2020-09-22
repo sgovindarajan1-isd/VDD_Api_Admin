@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="VendorApiDataSet" targetNamespace="http://tempuri.org/VendorApiDataSet.xsd" xmlns:mstns="http://tempuri.org/VendorApiDataSet.xsd" xmlns="http://tempuri.org/VendorApiDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="VendorApiDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="VendorApiDataSet" msprop:Generator_UserDSName="VendorApiDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="VendorAPIDataSet" msprop:Generator_TableClassName="VendorAPIDataSetDataTable" msprop:Generator_TableVarName="tableVendorAPIDataSet" msprop:Generator_RowChangedName="VendorAPIDataSetRowChanged" msprop:Generator_TablePropName="VendorAPIDataSet" msprop:Generator_RowDeletingName="VendorAPIDataSetRowDeleting" msprop:Generator_RowChangingName="VendorAPIDataSetRowChanging" msprop:Generator_RowEvHandlerName="VendorAPIDataSetRowChangeEventHandler" msprop:Generator_RowDeletedName="VendorAPIDataSetRowDeleted" msprop:Generator_RowClassName="VendorAPIDataSetRow" msprop:Generator_UserTableName="VendorAPIDataSet" msprop:Generator_RowEvArgName="VendorAPIDataSetRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="VendorNumber" msprop:Generator_ColumnVarNameInTable="columnVendorNumber" msprop:Generator_ColumnPropNameInRow="VendorNumber" msprop:Generator_ColumnPropNameInTable="VendorNumberColumn" msprop:Generator_UserColumnName="VendorNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="VendorName" msprop:Generator_ColumnVarNameInTable="columnVendorName" msprop:Generator_ColumnPropNameInRow="VendorName" msprop:Generator_ColumnPropNameInTable="VendorNameColumn" msprop:Generator_UserColumnName="VendorName" type="xs:string" minOccurs="0" />
+              <xs:element name="ssn" msprop:Generator_ColumnVarNameInTable="columnssn" msprop:Generator_ColumnPropNameInRow="ssn" msprop:Generator_ColumnPropNameInTable="ssnColumn" msprop:Generator_UserColumnName="ssn" type="xs:string" minOccurs="0" />
+              <xs:element name="DDNotifiEmail" msprop:Generator_ColumnVarNameInTable="columnDDNotifiEmail" msprop:Generator_ColumnPropNameInRow="DDNotifiEmail" msprop:Generator_ColumnPropNameInTable="DDNotifiEmailColumn" msprop:Generator_UserColumnName="DDNotifiEmail" type="xs:string" minOccurs="0" />
+              <xs:element name="BankAccountNumber" msprop:Generator_ColumnVarNameInTable="columnBankAccountNumber" msprop:Generator_ColumnPropNameInRow="BankAccountNumber" msprop:Generator_ColumnPropNameInTable="BankAccountNumberColumn" msprop:Generator_UserColumnName="BankAccountNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="BankRoutingNo" msprop:Generator_ColumnVarNameInTable="columnBankRoutingNo" msprop:Generator_ColumnPropNameInRow="BankRoutingNo" msprop:Generator_ColumnPropNameInTable="BankRoutingNoColumn" msprop:Generator_UserColumnName="BankRoutingNo" type="xs:string" minOccurs="0" />
+              <xs:element name="FinancialIns" msprop:Generator_ColumnVarNameInTable="columnFinancialIns" msprop:Generator_ColumnPropNameInRow="FinancialIns" msprop:Generator_ColumnPropNameInTable="FinancialInsColumn" msprop:Generator_UserColumnName="FinancialIns" type="xs:string" minOccurs="0" />
+              <xs:element name="Signeremail" msprop:Generator_ColumnVarNameInTable="columnSigneremail" msprop:Generator_ColumnPropNameInRow="Signeremail" msprop:Generator_ColumnPropNameInTable="SigneremailColumn" msprop:Generator_UserColumnName="Signeremail" type="xs:string" minOccurs="0" />
+              <xs:element name="Signername" msprop:Generator_ColumnVarNameInTable="columnSignername" msprop:Generator_ColumnPropNameInRow="Signername" msprop:Generator_ColumnPropNameInTable="SignernameColumn" msprop:Generator_UserColumnName="Signername" type="xs:string" minOccurs="0" />
+              <xs:element name="Signerphone" msprop:Generator_ColumnVarNameInTable="columnSignerphone" msprop:Generator_ColumnPropNameInRow="Signerphone" msprop:Generator_ColumnPropNameInTable="SignerphoneColumn" msprop:Generator_UserColumnName="Signerphone" type="xs:string" minOccurs="0" />
+              <xs:element name="Signertitle" msprop:Generator_ColumnVarNameInTable="columnSignertitle" msprop:Generator_ColumnPropNameInRow="Signertitle" msprop:Generator_ColumnPropNameInTable="SignertitleColumn" msprop:Generator_UserColumnName="Signertitle" type="xs:string" minOccurs="0" />
+              <xs:element name="VendorAttachmentFileName" msprop:Generator_ColumnVarNameInTable="columnVendorAttachmentFileName" msprop:Generator_ColumnPropNameInRow="VendorAttachmentFileName" msprop:Generator_ColumnPropNameInTable="VendorAttachmentFileNameColumn" msprop:Generator_UserColumnName="VendorAttachmentFileName" type="xs:string" minOccurs="0" />
+              <xs:element name="AccountType" msprop:Generator_ColumnVarNameInTable="columnAccountType" msprop:Generator_ColumnPropNameInRow="AccountType" msprop:Generator_ColumnPropNameInTable="AccountTypeColumn" msprop:Generator_UserColumnName="AccountType" type="xs:string" minOccurs="0" />
+              <xs:element name="SubmittedDate" msprop:Generator_ColumnVarNameInTable="columnSubmittedDate" msprop:Generator_ColumnPropNameInRow="SubmittedDate" msprop:Generator_ColumnPropNameInTable="SubmittedDateColumn" msprop:Generator_UserColumnName="SubmittedDate" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalAttachment" msprop:Generator_ColumnVarNameInTable="columnTotalAttachment" msprop:Generator_ColumnPropNameInRow="TotalAttachment" msprop:Generator_ColumnPropNameInTable="TotalAttachmentColumn" msprop:Generator_UserColumnName="TotalAttachment" type="xs:string" minOccurs="0" />
+              <xs:element name="ConfirmationNumber" msprop:Generator_ColumnVarNameInTable="columnConfirmationNumber" msprop:Generator_ColumnPropNameInRow="ConfirmationNumber" msprop:Generator_ColumnPropNameInTable="ConfirmationNumberColumn" msprop:Generator_UserColumnName="ConfirmationNumber" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

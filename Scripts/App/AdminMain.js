@@ -6,14 +6,23 @@
 };
 
 $(document).ready(function () {
+	if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+		$('#menu_userName').text(sessionStorage.getItem('userName'));
+		$('#div_advanceSearch').hide();
+		$('#menu_applicatoinList').hide();
+		$('#menu_enterApplication').hide();
+		$('#menu_admin').hide();
+		$('#menu_reports').hide();
+	}
+	else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+	}
+
     //$("#top-menu11").show();
     $("#menu_applicatoinList").click(function () {
-        debugger;
         window.location.href = '/applicationList/applicationList';
     });
 
     $("#menu_enterApplication").click(function () {
-        debugger;
         window.location.href = '/draft/_partialVendor';
 	});
 
@@ -26,15 +35,20 @@ $(document).ready(function () {
     
 
     $("#lnkHome").click(function () {
-        window.location.href = '/home/dashboard';
+        //window.location.href = '/home/dashboard';
+		if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+			window.location.href = '/draft/_partialDraftLanding';//'/draft/_partialVendor';
+		}
+		else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+			window.location.href = '/home/dashboard';
+		}
     });
-
 
     $("#btn_logout").click(function () {
         //$('#logoutModal').modal('hide');
         sessionStorage.clear();
         window.location.href = "/Home/Index";
-    });
+	});
    
 });
 // start  draft master

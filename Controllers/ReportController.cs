@@ -80,7 +80,7 @@ namespace eCAPDDApi.Controllers
             else if (vendordetails.AccountType == 2)
                 dr["AccountType"] = "Saving";
             else
-                dr["BankAccountType"] = "Error";
+                dr["AccountType"] = "Error";
             dr["BankAccountNumber"] = vendordetails.BankAccountNumber;
             dr["BankRoutingNo"] = vendordetails.BankRoutingNo;
             dr["FinancialIns"] = vendordetails.FinancialIns;
@@ -89,18 +89,22 @@ namespace eCAPDDApi.Controllers
             dr["Signerphone"] = vendordetails.Signerphone;
             dr["Signertitle"] = vendordetails.Signertitle;
             dr["VendorAttachmentFileName"] = vendordetails.VendorAttachmentFileName;
-
-            dr["TotalAttachment"] = "Total: 1";
+            
+            dr["TotalAttachment"] = "Total: 2";
             dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString();
             dr["ConfirmationNumber"] = vendordetails.Confirmation;
             dt.Rows.Add(dr);
             return dt;
         }
 
-        public string getMaskedSSN(string ssn)
-        {
-            string retValue = "***-**-" + ssn.Substring(ssn.Length - 4, 4);
-            return retValue;
+        public string getMaskedSSN(string ssn) {
+            if (ssn.Trim().Length < 9) {
+                return ssn;
+            }
+            else
+            {
+                return "***-**-" + ssn.Substring(ssn.Trim().Length - 4, 4);
+            }
         }
 
 

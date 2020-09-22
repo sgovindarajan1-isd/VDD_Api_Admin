@@ -15,24 +15,24 @@
     // testing values
     if ($(location).attr('href').indexOf("local") > -1) {
         $("#txtApplicationType").val('1');
-        $("#txtVendorCode").val('1');
-        $("#txtPayeeName").val('1');
-        $("#txtFirstName").val('1');
-        $("#txtMiddleName").val('1');
-        $("#txtLastName").val('1');
-        $("#txtAliasDBAName").val('1');
-        $("#txtCompanyName").val('1');
-        $("#txtTIN").val('1');
-        $("#txtCaseNo").val('1');
-        $("#txtPhoneNumber").val('1');
+        $("#txtVendorCode").val('');
+        $("#txtPayeeName").val('Payee');
+        $("#txtFirstName").val('Firstname');
+        $("#txtMiddleName").val('MiddleName');
+        $("#txtLastName").val('LastName');
+        $("#txtAliasDBAName").val('Alias Name');
+        $("#txtCompanyName").val('Company Name');
+        $("#txtTIN").val('123456789');
+        $("#txtCaseNo").val('Case no');
+        $("#txtPhoneNumber").val('(562)-331-0000');
     }
     // testing values
 
-    $('#lbl_userName').text(sessionStorage.getItem('userName'));
+    $('#id_userName').text(sessionStorage.getItem('userName')); //lbl_userName 
 
     $('#btn_vendor_next').on('click', function (e) {
         debugger;
-        var txtApplicationType = $("#txtApplicationType").val();
+        var txtApplicationType = $("#txtApplicationType").val();  //  to get selected text  $("#txtApplicationType option:selected").text();
         var txtVendorCode = $("#txtVendorCode").val();
         var txtPayeeName = $("#txtPayeeName").val();
         var txtFirstName = $("#txtFirstName").val();
@@ -139,8 +139,14 @@
         var ApplicationType = '';
         var VendorCode = '';
         var PayeeName = '';
-        if ($("#txtApplicationType").val().trim().length > 0) ApplicationType = $("#txtApplicationType").val();
-        if ($("#txtVendorCode").val().trim().length > 0) VendorCode = $("#txtVendorCode").val();
+        if ($("#txtApplicationType").val().trim().length > 0) ApplicationType = $("#txtApplicationType option:selected").text();
+        if ($("#txtVendorCode").val().trim().length > 0) {
+            VendorCode = $("#txtVendorCode").val();
+        }
+        else {
+            VendorCode = '';
+        }
+
         if ($("#txtPayeeName").val().trim().length > 0) PayeeName = $("#txtPayeeName").val();
         //if ($("#txtFirstName").val() FirstName
         //if ($("#txtMiddleName").val() MiddleName
@@ -153,15 +159,15 @@
 
 
         vendordetailsRow.push({
-            ApplicationType: $("#txtApplicationType").val(),
-            VendorCode: $("#txtVendorCode").val(),
+            ApplicationType: $("#txtApplicationType option:selected").text(),
+            VendorCode: VendorCode,
             PayeeName: $("#txtPayeeName").val(),
             FirstName: $("#txtFirstName").val(),
             MiddleName: $("#txtMiddleName").val(),
             LastName: $("#txtLastName").val(),
             CompanyName: $("#txtCompanyName").val(),
             AliasDBAName: $("#txtAliasDBAName").val(),
-            TIN: $("#txtTIN").val(),
+            TaxpayerID: $("#txtTIN").val(),
             CaseNo: $("#txtCaseNo").val(),
             PhoneNumber: $("#txtPhoneNumber").val()
         });

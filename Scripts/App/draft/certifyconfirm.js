@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     var vendorDetails = {};
-    //var bankDetails = {};
+    var LocationAddressList = new Array();
     var bankDetails = new Array();
     var locationList = new Array();
 
@@ -271,7 +271,10 @@
 
         if (!(vendorobj == null) || (vendorobj == 'undefined')) {
             $("#typeofApplication").html(vendorobj[0].ApplicationType);
-            $("#vendorCode").html(vendorobj[0].VendorCode);
+            if ((vendorobj[0].VendorCode == null) || (vendorobj[0].VendorCode == ''))
+                $("#vendorCode").html('Not Available now');
+            else
+                $("#vendorCode").html(vendorobj[0].VendorCode);
             $("#payeeName").html(vendorobj[0].PayeeName);
             $("#firstName").html(vendorobj[0].FirstName);
             $("#middleName").html(vendorobj[0].MiddleName);
@@ -315,6 +318,7 @@
             vendorDetails.FinancialIns = bankobj[0].FinancialIns;
             vendorDetails.DDNotifyEmail = bankobj[0].DDNotifyEmail;
         }
+        debugger;
         var paymentJsonObj = JSON.parse(sessionStorage.getItem("paymentJson"));
         $.each(paymentJsonObj, function (key, value) {
             var s = '<div class="form-group">' +
@@ -323,8 +327,18 @@
                 '</div >' +
                 '</div >';
             $('#banklocations').append(s);
-            var bankDetl = {};
-            bankDetl.address = value.VendorAddress;
+            //var bankDetl = {};
+            //bankDetl.address = value.VendorAddress;
+
+            var payDetails = {};
+            payDetails.LocationID = value.LocationID;
+            payDetails.Address1 = value.PaymentAddress1;
+            payDetails.Address2 = value.PaymentAddress2;
+            payDetails.City = value.PaymentCity;
+            payDetails.State = value.PaymentState;
+            payDetails.ZipCode = value.PaymentZipCode;
+
+            LocationAddressList.push(payDetails);
             locationList.push(value.VendorAddress);
             bankDetails.push(value.LocationID);
         });
@@ -363,8 +377,12 @@
         //var uniqueFileName = getUniqueFileNameusingCurrentTime();
         //vendorDetails.VendorReportFileName = uniqueFileName + "_" + vendorNumber + "_VendorReport.pdf";
 
+
+        vendorDetails.LocationAddressList = LocationAddressList;
         vendorDetails.locationIDs = bankDetails;
         vendorDetails.locationAddressDescList = locationList;
+
+        
 
         vendorDetails.Source_ip = "Source_ip";//getSourceip();
         vendorDetails.Source_device = "Source_device";
@@ -410,6 +428,8 @@
     }
 
     function submitDetailstoDB() {
+        debugger;
+        vendorDetails.SubmitFromWhere = "DRAFT";
         var venDetails = JSON.stringify(vendorDetails);
         $.ajax({
             contentType: 'application/json; charset=utf-8',
@@ -430,7 +450,7 @@
 
                 var uniqueDatetime = getUniqueFileNameusingCurrentTime();
                 vendorDetails.VendorReportFileName = "VCM_" + vendorDetails.Confirmation + "_" + uniqueDatetime + ".pdf";
-              //  temporary until api side report fix to do createReportandGettheFielName(vendorDetails);
+                createReportandGettheFielName(vendorDetails);
             }
             , complete: function (jqXHR) {
             }

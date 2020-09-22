@@ -7,11 +7,13 @@ namespace DAL.Models
 {
 
     public class DAL_M_LocationAddress
-    {
-        public string Street { get; set; }
+    { 
+        public string LocationID { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
         public string City { get; set; }
         public string State { get; set; }
-        public string Zip { get; set; }
+        public string ZipCode { get; set; }
     }
     public class DAL_M_VendorDD
     {
@@ -34,7 +36,6 @@ namespace DAL.Models
         public string VendorAttachmentFileName { get; set; }
         public string AttachmentFileName_ddwetform { get; set; }
         public string VendorReportFileName { get; set; }
-        public List<string> LocationIDs { get; set; }
         public string Source_ip { get; set; }
         public string Source_device { get; set; }
         public string User_agent { get; set; }
@@ -64,6 +65,7 @@ namespace DAL.Models
         public string AssignmentDate { get; set; }
 
         //  Draft submission informations
+        public string SubmitFromWhere { get; set; }
         public string CaseNo { get; set; }
         public string PhoneNumber { get; set; }
         public string DepartmentName { get; set; }
@@ -75,6 +77,7 @@ namespace DAL.Models
         //
 
         public List<string> LocationAddress { get; set; }
+        public List<string> LocationIDs { get; set; }
         public List<DAL_M_LocationAddress> LocationAddressList { get; set; }
         public List<string> LocationAddressDescList { get; set; }
         public string LastUpdatedUser { get; set; }

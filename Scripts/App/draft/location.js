@@ -114,36 +114,22 @@
             }
         }
         else {
-            var tblPay = $('#enterPaymentInfoGrid').DataTable();
             var j = 1;
-            //
-            tbl = $('#enterPaymentInfoGrid').DataTable();
-            debugger;
-
-            var data = $('#enterPaymentInfoGrid').DataTable().rows.data();
-
-            data.each(function (value, index) {
-                debugger
-            });
-
-            return;
+            var tbl = $('#ddLocationAddressGrid').DataTable();
 
             tbl.rows().every(function () {
                 var data = this.data();
-                var id = this.id();
-            });
-            return;
-
-            $.each(tblPay.rows.data(), function () {
                 paymentRows.push({
                     VendorNumber: vendorNumber,
                     VendorName: '',
                     LocationID: 'tmp-' + j,  //  temp loc id
                     Addressonly: true,
-                    PaymentAddress: this["Address"],
-                    PaymentCity: this["City"],
-                    PaymentState: this["State"],
-                    PaymentZip: this["Zipcode"],
+                    VendorAddress: data.Address1 + ' ' + data.Address2 + ' '+data.City + ' '+ data.State+ ' '+ data.Zipcode,
+                    PaymentAddress1: data.Address1, //this["Address"],
+                    PaymentAddress2: data.Address2,
+                    PaymentCity: data.City,
+                    PaymentState: data.State,
+                    PaymentZipCode: data.Zipcode, 
                     RoutingNumber: '',
                     AcccountNo: '',
                     AccountType: '',
@@ -153,29 +139,29 @@
                   j = j + 1;
             })
         }
-        sessionStorage.setItem('paymentJson', JSON.stringify(paymentRows));
-        window.location.href = '/draft/_partialBankDetails';
-    
-        //else if ($('#ddLocationAddressGrid').DataTable().data().count() > 0) {
-        //    window.location.href = '/draft/_partialBankDetails';
-        //}
-       
+
+        debugger;
+        if (paymentRows.length > 0) {
+            sessionStorage.setItem('paymentJson', JSON.stringify(paymentRows));
+            window.location.href = '/draft/_partialBankDetails';
+        }
     });
 
 $('#btn_Location_add').on('click', function (e) {
     debugger;
-    //if ( ($('#txtAddress1').val().trim().length == 0 && $('#txtAddress2').val().trim().length == 0) || $('#txtCity').val().trim().length == 0 || $('#txtState').val().trim().length == 0 || $('#txtZipCode').val().trim().length  == 0) {
-    //    toastr.options.positionClass = "toast-bottom-right";
-    //    toastr.warning("Please enter the complete address to Continue!");
-    //    return;
-    //}
+    if ( ($('#txtAddress1').val().trim().length == 0 && $('#txtAddress2').val().trim().length == 0) || $('#txtCity').val().trim().length == 0 || $('#txtState').val().trim().length == 0 || $('#txtZipCode').val().trim().length  == 0) {
+        toastr.options.positionClass = "toast-bottom-right";
+        toastr.warning("Please enter the complete address to Continue!");
+        return;
+    }
 
     var tbl = $('#ddLocationAddressGrid').DataTable();  //enterPaymentInfoGrid
     tbl.row.add({
         "": true,
         "": paymentSrNumber,
         "CombinedAddress": $('#txtAddress1').val() + ' ' + $('#txtAddress2').val()
-        , "Address": $('#txtAddress1').val() + ' ' + $('#txtAddress2').val()
+        , "Address1": $('#txtAddress1').val()
+        , "Address2": $('#txtAddress2').val()
         , "City": $('#txtCity').val()
         , "State": $('#txtState').val()
         , "Zipcode": $('#txtZipCode').val()
@@ -196,26 +182,27 @@ $('#btn_Location_reset').on('click', function (e) {
     $('#ddLocationAddressGrid').dataTable({
         responsive: true,
         columns: [   
-            { 'data': '' },
+            //{ 'data': '' },
             { 'data': '' },
             { 'data': 'CombinedAddress' },
-            { 'data': 'Address' },
+            { 'data': 'Address1' },
+            { 'data': 'Address2' },
             { 'data': 'City' },
             { 'data': 'State' },
             { 'data': 'Zipcode' }
         ],
         columnDefs: [
             {
-                searchable: true,
-                width: '3%',
-                targets: 0,
-                data: true,
-                defaultContent: '',
-                orderable: false,               
+                //searchable: true,
+                //width: '3%',
+                //targets: 0,
+                //data: true,
+                //defaultContent: '',
+                //orderable: false,               
                // className: 'select-checkbox',
-                'render': function (data, type, full, meta) {
-                    return '<input type="checkbox" class="selected">';
-                }
+                //'render': function (data, type, full, meta) {
+                //    return '<input type="checkbox" class="selected">';
+                //}
             },
         ],
 

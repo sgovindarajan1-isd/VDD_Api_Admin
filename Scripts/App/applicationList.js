@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $("#id_userName").text(sessionStorage.getItem('UserName'));
+    $("#lbl_userName").text(sessionStorage.getItem('UserName'));  //id_userName
 
     var pendingAssignList = [];
     var pendingMyApprovalList = [];

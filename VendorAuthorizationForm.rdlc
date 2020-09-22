@@ -7,14 +7,14 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>8418ed67-fe0f-4be8-b151-9c190e530d94</rd:DataSourceID>
+      <rd:DataSourceID>7372516a-f999-45d1-ace3-39f397dffc7d</rd:DataSourceID>
     </DataSource>
     <DataSource Name="VendorLocationsDataSet">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>b2c74e75-28f6-4660-98c9-8ac1d2aac25b</rd:DataSourceID>
+      <rd:DataSourceID>63606221-a79b-41b2-8212-2f9fd7596533</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
