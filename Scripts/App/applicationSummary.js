@@ -215,12 +215,12 @@
 
         var j = 1;
         $.each(data.LocationAddressList, function (index, value) {
-
+            debugger;
 
             var _address = value.Street;  //"16000 south street";
             var _city = value.City;
             var _state = value.State;
-            var _zip = value.Zip;
+            var _zip = value.ZipCode;
 
             var str = '<li class="list-group-item list-group-item-sm">' +
                 ' <div class="flex">' +

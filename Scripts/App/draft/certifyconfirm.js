@@ -19,8 +19,9 @@
         $('#txtSignerPhone').mask('(000)000-0000');
         $('#txtDeptPhone').mask('(000)000-0000');
 
+        $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
-        $("#img_bank_verify_step").attr('src', '/Content/Images/info_step.png');
+        $("#img_bank_verify_step").attr('src', '/Content/Images/verify_step.png');
         $("#img_certify_step").attr('src', '/Content/Images/certify_step_on.png');
         $("#img_certify_step").addClass("active");
         $("#li_certify_step").addClass("active");
@@ -69,6 +70,7 @@
         }
     }
     else if ($(location).attr('href').indexOf("_partialSubmit") > -1) {
+        $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_certify_step").attr('src', '/Content/Images/certify_step.png');
         $("#img_submit_step").attr('src', '/Content/Images/submit_step_on.png');
@@ -86,6 +88,7 @@
         getSubmitDetails();
     }
     else if ($(location).attr('href').indexOf("_partialConfirmation") > -1) {
+        $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_certify_step").attr('src', '/Content/Images/certify_step.png');
         $("#img_submit_step").attr('src', '/Content/Images/submit_step.png');

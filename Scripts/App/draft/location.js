@@ -7,12 +7,12 @@
     $('#img_vendor_step').attr('src', '/Content/Images/user_step.png');
     $("#img_info_step").attr('src', '/Content/Images/info_step_on.png');
 
-    
+
     $("#img_info_step").addClass("active")
     $('#li_infostep').addClass("active");
     $('#li_infostep').removeClass("disabled");
     $("#img_info_step").parent().css("border-color", "#7030A0");
-   
+
     $('#lbl_userName').text(sessionStorage.getItem('userName'));
     var vendorNumber = sessionStorage.getItem('vendorNumber');
     $('#lbl_header').html('Payment Information');
@@ -92,7 +92,7 @@
         var table = $('#ddGrid').DataTable();
 
         if ($("#ddGrid").is(":visible")) {
-       // if (table.rows().data().length > 0) {
+            // if (table.rows().data().length > 0) {
             if (table.rows('.selected').any()) {
                 $.each(table.rows('.selected').data(), function () {
                     paymentRows.push({
@@ -124,19 +124,19 @@
                     VendorName: '',
                     LocationID: 'tmp-' + j,  //  temp loc id
                     Addressonly: true,
-                    VendorAddress: data.Address1 + ' ' + data.Address2 + ' '+data.City + ' '+ data.State+ ' '+ data.Zipcode,
+                    VendorAddress: data.Address1 + ' ' + data.Address2 + ' ' + data.City + ' ' + data.State + ' ' + data.Zipcode,
                     PaymentAddress1: data.Address1, //this["Address"],
                     PaymentAddress2: data.Address2,
                     PaymentCity: data.City,
                     PaymentState: data.State,
-                    PaymentZipCode: data.Zipcode, 
+                    PaymentZipCode: data.Zipcode,
                     RoutingNumber: '',
                     AcccountNo: '',
                     AccountType: '',
                     RemittanceEmail: '',
                     Status: '',
                 });
-                  j = j + 1;
+                j = j + 1;
             })
         }
 
@@ -147,44 +147,44 @@
         }
     });
 
-$('#btn_Location_add').on('click', function (e) {
-    debugger;
-    if ( ($('#txtAddress1').val().trim().length == 0 && $('#txtAddress2').val().trim().length == 0) || $('#txtCity').val().trim().length == 0 || $('#txtState').val().trim().length == 0 || $('#txtZipCode').val().trim().length  == 0) {
-        toastr.options.positionClass = "toast-bottom-right";
-        toastr.warning("Please enter the complete address to Continue!");
-        return;
-    }
+    $('#btn_Location_add').on('click', function (e) {
+        debugger;
+        if (($('#txtAddress1').val().trim().length == 0 && $('#txtAddress2').val().trim().length == 0) || $('#txtCity').val().trim().length == 0 || $('#txtState').val().trim().length == 0 || $('#txtZipCode').val().trim().length == 0) {
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.warning("Please enter the complete address to Continue!");
+            return;
+        }
 
-    var tbl = $('#ddLocationAddressGrid').DataTable();  //enterPaymentInfoGrid
-    tbl.row.add({
-        "": true,
-        "": paymentSrNumber,
-        "CombinedAddress": $('#txtAddress1').val() + ' ' + $('#txtAddress2').val()
-        , "Address1": $('#txtAddress1').val()
-        , "Address2": $('#txtAddress2').val()
-        , "City": $('#txtCity').val()
-        , "State": $('#txtState').val()
-        , "Zipcode": $('#txtZipCode').val()
-    }).draw(false);
+        var tbl = $('#ddLocationAddressGrid').DataTable();  //enterPaymentInfoGrid
+        tbl.row.add({
+            "": true,
+            "": paymentSrNumber,
+            "Address": $('#txtAddress1').val() + ' ' + $('#txtAddress2').val() + ' ' + $('#txtCity').val() + ' ' + $('#txtState').val() + ' ' + $('#txtZipCode').val()
+            , "Address1": $('#txtAddress1').val()
+            , "Address2": $('#txtAddress2').val()
+            , "City": $('#txtCity').val()
+            , "State": $('#txtState').val()
+            , "Zipcode": $('#txtZipCode').val()
+        }).draw(false);
 
-    paymentSrNumber++;
-});
+        paymentSrNumber++;
+    });
 
-$('#btn_Location_reset').on('click', function (e) {
-    debugger;
-    $('#txtAddress1').val('');
-    $('#txtAddress2').val('');
-    $('#txtCity').val('');
-    $('#txtState').val('');
-    $('#txtZipCode').val('');
-});
+    $('#btn_Location_reset').on('click', function (e) {
+        debugger;
+        $('#txtAddress1').val('');
+        $('#txtAddress2').val('');
+        $('#txtCity').val('');
+        $('#txtState').val('');
+        $('#txtZipCode').val('');
+    });
 
     $('#ddLocationAddressGrid').dataTable({
         responsive: true,
-        columns: [   
+        columns: [
             //{ 'data': '' },
-            { 'data': '' },
-            { 'data': 'CombinedAddress' },
+            { 'data': ''},
+            { 'data': 'Address' },
             { 'data': 'Address1' },
             { 'data': 'Address2' },
             { 'data': 'City' },
@@ -192,18 +192,41 @@ $('#btn_Location_reset').on('click', function (e) {
             { 'data': 'Zipcode' }
         ],
         columnDefs: [
-            {
-                //searchable: true,
-                //width: '3%',
-                //targets: 0,
-                //data: true,
-                //defaultContent: '',
-                //orderable: false,               
-               // className: 'select-checkbox',
-                //'render': function (data, type, full, meta) {
-                //    return '<input type="checkbox" class="selected">';
-                //}
-            },
+            { "width": "2px", "targets": [0] },
+            { "visible": false, "targets": [2, 3, 4,5,6] },
+
+            //{
+            //    "targets": [2],
+            //    "visible": false
+            //},
+            //{
+            //    "targets": [3],
+            //    "visible": false
+            //},
+            //{
+            //    "targets": [4],
+            //    "visible": false
+            //},
+            //{
+            //    "targets": [5],
+            //    "visible": false
+            //},
+            //{
+            //    "targets": [6],
+            //    "visible": false
+            //},
+
+            //searchable: true,
+            //width: '3%',
+            //targets: 0,
+            //data: true,
+            //defaultContent: '',
+            //orderable: false,               
+            // className: 'select-checkbox',
+            //'render': function (data, type, full, meta) {
+            //    return '<input type="checkbox" class="selected">';
+            //}
+
         ],
 
         //'rowCallback': function (row, data, dataIndex) {
