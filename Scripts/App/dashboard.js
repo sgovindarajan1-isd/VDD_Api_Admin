@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     $("#menu_TopPanel").show();
     $("#menu_div_TopPanel").show();
-    $("#lbl_userName").text(sessionStorage.getItem('UserName')); //id_userName
+    $("#lbl_userName").text(sessionStorage.getItem('userName')); //id_userName
 
     debugger;
    

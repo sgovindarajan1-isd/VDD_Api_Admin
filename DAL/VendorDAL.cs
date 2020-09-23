@@ -132,6 +132,8 @@ namespace DAL
                         {
                             DAL_M_UserProfile u = new DAL_M_UserProfile();
                             u.UserID = ds.Tables[0].Rows[i]["UserID"].ToString();
+                            u.UserName = ds.Tables[0].Rows[i]["UserName"].ToString();
+                            u.Department = ds.Tables[0].Rows[i]["Department"].ToString();
                             u.RoleId = ds.Tables[0].Rows[i]["RoleId"].ToString();
                             u.RoleName = ds.Tables[0].Rows[i]["RoleName"].ToString();
                             u.RoleDescription = ds.Tables[0].Rows[i]["RoleDescription"].ToString();

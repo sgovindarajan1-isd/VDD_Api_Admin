@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    debugger;
     var vendorDetails = {};
     var LocationAddressList = new Array();
     var bankDetails = new Array();
@@ -13,6 +14,7 @@
 
     //$(".nav li").removeClass("active");
     if ($(location).attr('href').indexOf("_partialCertify") > -1) {
+        debugger;
 
         $('#txtSignerPhone').mask('(000)000-0000');
         $('#txtDeptPhone').mask('(000)000-0000');
@@ -46,7 +48,7 @@
 
         var certifyobj = JSON.parse(sessionStorage.getItem("certifydetailsJson"));
 
-        if (sessionStorage.getItem('deptUser') == false) {
+        if (sessionStorage.getItem('deptUser') == "false") {
             $("#lbl_disp_proxysigninfoHeader").hide();
             $("#lbl_signerName").html("Name");
             $("#lbl_signerTitle").html("Title");
@@ -281,7 +283,7 @@
             $("#lastName").html(vendorobj[0].LastName);
             $("#companyName").html(vendorobj[0].CompanyName);
             $("#aliasDBAName").html(vendorobj[0].AliasDBAName);
-            $("#tin").html(vendorobj[0].TIN);
+            $("#tin").html(vendorobj[0].TaxpayerID);
             $("#caseNo").html(vendorobj[0].CaseNo);
             //$("#ddNotificationEmail").html(vendorobj[0].ddNotificationEmail);
             $("#phoneNumber").html(vendorobj[0].PhoneNumber);
@@ -295,7 +297,7 @@
             vendorDetails.LastName = vendorobj[0].LastName;
             vendorDetails.CompanyName = vendorobj[0].CompanyName;
             vendorDetails.AliasDBAName = vendorobj[0].AliasDBAName;
-            vendorDetails.Ssn = vendorobj[0].TIN;
+            vendorDetails.Ssn = vendorobj[0].TaxpayerID;
             vendorDetails.CaseNo = vendorobj[0].CaseNo;
             //vendorDetails.DDNotificationEmail = vendorobj[0].
             vendorDetails.PhoneNumber = vendorobj[0].PhoneNumber;

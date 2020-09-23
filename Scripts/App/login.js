@@ -88,7 +88,7 @@
             ////  To do :  test values for easy access,  remove later
             //var userId = 'e622505';   // data entry -- old supervisor
 
-            var userId = 'e631971';//'c197831';   //  processor
+          //  var userId = 'e631971';//'c197831';   //  processor
             var password = '';
         }
         //testing values
@@ -113,6 +113,16 @@
                 if (data.data.List_userRoles.length > 0) {
                     sessionStorage.setItem('RoleId', data.data.List_userRoles[0].RoleId);
                 }
+                if (data.data.List_userRoles.length > 0) {
+                    if (data.data.List_userRoles[0].Department == "AUDITOR CONTROLLER") {
+                        // Dispersement user
+                        sessionStorage.setItem('deptUser', false);  //  from active directory, if the user dept code is "Audit controller" then disbursement user otherwise dept user.
+                    }
+                    else {
+                        // Department user
+                        sessionStorage.setItem('deptUser', true);
+                    }
+                }
                 sessionStorage.setItem('UserId', userId);
                 sessionStorage.setItem('userName', data.data.userProfile_2.displayNameField);
                 sessionStorage.setItem('UserRoles', data.data.List_userRoles);  // example  data.data.List_userRoles[0].UserID UserName UserStatus RoleId RoleName PermissionName
@@ -120,7 +130,6 @@
 
                 //var userHasonlyDataEntryRole =  UserHasonlyDataEntryRole(data.data.List_userRoles, GlobalRoles.DataEntryRole);
 
-                sessionStorage.setItem('deptUser', false);  //  from active directory, if the user dept code is "Audit controller" then disbursement user otherwise dept user.
                 if (data.data.IsValidUser == true) {
 
                     //Users in Active directory - Department code like “Audi controller” are identified as “disbursement” user otherwise  “Dept” users.

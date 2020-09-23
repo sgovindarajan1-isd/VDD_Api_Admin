@@ -316,8 +316,9 @@ namespace DAL
                     {
                         DAL_M_LocationAddress loc = new DAL_M_LocationAddress();
 
-                        loc.Address1 = ds.Tables[1].Rows[k]["Address1"].ToString();
-                        loc.Address2 = ds.Tables[1].Rows[k]["Address2"].ToString();
+                        //loc.Address1 = ds.Tables[1].Rows[k]["Address1"].ToString();
+                        //loc.Address2 = ds.Tables[1].Rows[k]["Address2"].ToString();
+                        loc.Street = ds.Tables[1].Rows[k]["Street"].ToString();
                         loc.City = ds.Tables[1].Rows[k]["City"].ToString();
                         loc.State = ds.Tables[1].Rows[k]["State"].ToString();
                         loc.ZipCode = ds.Tables[1].Rows[k]["Zip"].ToString();

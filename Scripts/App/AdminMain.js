@@ -15,6 +15,7 @@ $(document).ready(function () {
 		$('#menu_reports').hide();
 	}
 	else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+		$('#menu_userName').hide();
 	}
 
     //$("#top-menu11").show();

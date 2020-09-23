@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var userName = sessionStorage.getItem('UserName');
+    var userName = sessionStorage.getItem('userName');
     var userId = sessionStorage.getItem('UserId');
     var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
     var role = sessionStorage.getItem('RoleId');
@@ -103,7 +103,7 @@
             if (status == 21 || status == 22) {
                 $("#div_supervisor_proce_review").show();
                 var msg = summaryData.StatusDesc + " by " + summaryData.ProcessorID + " on " + summaryData.AssignmentDate;
-                $("#span_review_processor_Approval_msg").text(msg);  //Approved by Monique Tsoi on 4/27/2020
+                $("#span_review_processor_Approval_msg").text(msg);  
                 $("#span_review_processor_notes").text(summaryData.Comment);
             }
             else {

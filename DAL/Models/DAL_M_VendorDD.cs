@@ -9,6 +9,7 @@ namespace DAL.Models
     public class DAL_M_LocationAddress
     { 
         public string LocationID { get; set; }
+        public string Street { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
