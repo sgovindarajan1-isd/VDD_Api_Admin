@@ -73,7 +73,7 @@
         $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_certify_step").attr('src', '/Content/Images/certify_step.png');
-        $("#img_submit_step").attr('src', '/Content/Images/submit_step_on.png');
+        $("#img_submit_step").attr('src', '/Content/Images/confirmation_step_on.png');
         $("#img_submit_step").addClass("active");
         $("#li_submit_step").addClass("active");
         $("#img_submit_step").parent().css("border-color", "#7030A0");
@@ -91,7 +91,7 @@
         $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_certify_step").attr('src', '/Content/Images/certify_step.png');
-        $("#img_submit_step").attr('src', '/Content/Images/submit_step.png');
+        $("#img_submit_step").attr('src', '/Content/Images/confirmation_step.png');
         $("#img_confirmation_step").attr('src', '/Content/Images/confirmation_step_on.png');
         $("#img_confirmation_step").addClass("active");
         $("#li_confirmation_step").addClass("active");

@@ -325,6 +325,22 @@ namespace DAL
             return new Tuple<string, string>("SUCCESS", "true");
         }
 
+        private int getDocumentTypeID(string filename) {
+            int typeid = 0;
+            if (filename.IndexOf("_VC") > 0)
+                typeid = 1;
+            else if (filename.IndexOf("_ST") > 0)
+                typeid = 2;
+            else if (filename.IndexOf("_VL") > 0)
+                typeid = 3;
+            else if (filename.IndexOf("_OA") > 0)
+                typeid = 4;
+            else if (filename.IndexOf("VCM_") > 0)
+                typeid = 5;
+
+            return typeid; ;
+        }
+
         public Tuple<string, string> SubmitAttachmentFile(DAL_M_VendorDD vmvendorDD)
         {
             try
@@ -334,6 +350,7 @@ namespace DAL
                 {
                     SqlCommand sqlComm = new SqlCommand("SubmitVendorAttachment", con);
                     sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
+                    sqlComm.Parameters.AddWithValue("@TypeID", getDocumentTypeID(vmvendorDD.VendorAttachmentFileName));
                     sqlComm.Parameters.AddWithValue("@AttachmentFileName", vmvendorDD.VendorAttachmentFileName);
                     sqlComm.Parameters.AddWithValue("@LastUpdatedUser", "");
                     sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", DateTime.Now);
@@ -344,8 +361,10 @@ namespace DAL
                     //if there is EventHandlerTaskAsyncHelper second attachment,  when submit from DDMS
                     if ( (vmvendorDD.AttachmentFileName_ddwetform != null) && (!string.IsNullOrEmpty(vmvendorDD.AttachmentFileName_ddwetform.Trim())) )
                     {
+                        int dtypeid = 6; 
                         SqlCommand sqlComm_ddwetform = new SqlCommand("SubmitVendorAttachment", con);
                         sqlComm_ddwetform.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
+                        sqlComm_ddwetform.Parameters.AddWithValue("@TypeID", dtypeid);
                         sqlComm_ddwetform.Parameters.AddWithValue("@AttachmentFileName", vmvendorDD.AttachmentFileName_ddwetform);
                         sqlComm_ddwetform.Parameters.AddWithValue("@LastUpdatedUser", "");
                         sqlComm_ddwetform.Parameters.AddWithValue("@LastUpdateDateTime", DateTime.Now);
@@ -400,15 +419,15 @@ namespace DAL
                     SqlCommand sqlComm = new SqlCommand("InsertRequestLog", con);
                     sqlComm.Parameters.AddWithValue("@VEND_CUST_CD", vmvendorDD.Vendorname);
                     sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
-                    sqlComm.Parameters.AddWithValue("@Source_ip", vmvendorDD.Source_ip);
-                    sqlComm.Parameters.AddWithValue("@Source_device", vmvendorDD.Source_device);
+                    sqlComm.Parameters.AddWithValue("@Source_ip", vmvendorDD.Source_IP); 
+                    sqlComm.Parameters.AddWithValue("@Source_device", vmvendorDD.Source_Device);
                     sqlComm.Parameters.AddWithValue("@User_agent", vmvendorDD.User_agent);
-                    sqlComm.Parameters.AddWithValue("@Host_headers", vmvendorDD.Host_headers);
+                    sqlComm.Parameters.AddWithValue("@Host_headers", vmvendorDD.Source_Host_Headers);
+                    sqlComm.Parameters.AddWithValue("@Source_Location", vmvendorDD.Source_Location);
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.ExecuteNonQuery();
                     con.Close();
                 }
-
             }
             catch (Exception ex)
             {

@@ -16,6 +16,17 @@ namespace DAL.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
     }
+
+    public class DAL_M_Checklist
+    {
+        public int CheckListID { get; set; }
+        public string ConfirmationNumber { get; set; }
+        public string CheckListName { get; set; }
+        public int Active { get; set; }
+        public string LastUpdatedUser { get; set; }
+        public string LastUpdateDateTime { get; set; }
+    }
+
     public class DAL_M_VendorDD
     {
         public string Vendorname { get; set; }
@@ -37,10 +48,12 @@ namespace DAL.Models
         public string VendorAttachmentFileName { get; set; }
         public string AttachmentFileName_ddwetform { get; set; }
         public string VendorReportFileName { get; set; }
-        public string Source_ip { get; set; }
-        public string Source_device { get; set; }
+        public string Source_IP { get; set; }
+        public string Source_Device { get; set; }
+        public string Source_Location { get; set; }
         public string User_agent { get; set; }
-        public string Host_headers { get; set; }
+        public string Source_Host_Headers { get; set; }
+
 
         //  Used in Application summary
         public string VendorNumber { get; set; }

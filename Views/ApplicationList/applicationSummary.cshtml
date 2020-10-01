@@ -1,7 +1,9 @@
 ﻿<link href="~/Content/applicationsummary.css" rel="stylesheet" />
+<link href="~/Content/button.css" rel="stylesheet" />
 <script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>
 <script src="~/Scripts/App/AdminMain.js"></script>
 <script src="~/Scripts/App/applicationSummary.js"></script>
+<script src="~/Scripts/App/checklist.js"></script>
 
 <script>
     $(function () {
@@ -61,6 +63,85 @@
             <div class="modal-footer">
                 <input id="btn_SubmitNotes" class="btn btn-sm btn-primary" type="submit" value="Add">
                 <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="addchecklistModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="header_checklistpopup">Item #1</h4>
+            </div>
+            <div class="mainContents" style="width:100%;">
+                <div class="mainBox">
+                    <div>
+
+                        <div class="modal-body" style="text-align:left">
+                            <div class="form-group subSection">
+                                <label for="comment">Note:</label>
+                                <textarea class="form-control" rows="5" id="txt_checklist_comment"></textarea>
+                            </div>
+                            <span id="accountType">0 / 256 characters</span>
+                        </div>
+
+                        <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                            <a class="btn btn-success" id="btn_checklistAdd" data-additionalprocess="ckeditor">
+                                <span class="glyphicon glyphicon-plus smallRightMargin"></span>
+                                Add
+                            </a>
+                        </div>
+
+                        <ul class="nav nav-tabs bottomMargin" role="tablist">
+                            <li role="presentation" class="active"><a href="javascript:void(0);" class="tabs leftMargin" aria-controls="Notes" role="tab">Comments</a></li>
+                        </ul>
+
+                        <div id="searchResults_cl" class="divSeparator" style="width:100%px;">
+                            <div id="divNotesTable_cl" class="resultsLocator" style="width:100%px;">
+                                <ul id="noteList_cl" class="list-group" style="padding:0 0 0 0;">
+                                    @*<li id="userRow_126_cl" class="noteRow list-group-item" style="">
+                                            <div style="color:#000000;">
+                                                <span><strong>4/24/2020 (5:29 PM) - </strong></span>
+                                                <span class=""><strong>Jaime Valles</strong></span>
+
+                                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                                    <a class="btn btn-info btnedit_Checklist" value="66" action-target="" data-additionalprocess="ckeditor">
+                                                        <span value="66"  class="fa fa-edit  smallRightMargin"></span>
+                                                        Edit
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <p>Revised comment entered for Item #1 on checklist.</p>
+
+                                            </div>
+                                        </li>
+                                        <li id="userRow_80_cl" class="noteRow list-group-item">
+                                            <div style="color:#000000;">
+                                                <span><strong>4/24/2020 (10:02 AM) - </strong></span>
+                                                <span><strong>Davin Huch</strong></span>
+
+                                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                                    <a class="btn btn-info btnedit_Checklist" value="6" action-target="" data-additionalprocess="ckeditor">
+                                                        <span value="6" class="fa fa-edit  smallRightMargin"></span>
+                                                        Edit1111
+                                                    </a>
+                                                </div>
+
+                                            </div>
+
+                                            <div>
+                                                <p>Test comment entered for Item #1.
+                                            </div>
+                                        </li>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -222,106 +303,106 @@
 
                 @*<div class="modal-body form-horizontal ">
                     <div class="subSection" style="text-align:left;">*@
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Vendor Code">
-                                    Vendor Code:
-                                </label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_VendorCode" maxlength="15" placeholder="Vendor Code" value="" required>
-                                    <span id="vendorcode" class="errmessage" />
-                                </div>
-                            </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Vendor Code">
+                            Vendor Code:
+                        </label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_VendorCode" maxlength="15" placeholder="Vendor Code" value="" required>
+                            <span id="vendorcode" class="errmessage" />
+                        </div>
+                    </div>*@
 
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="First Name">
-                                    First Name:
-                                </label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_FirstName" placeholder="First Name" value="" required>
-                                    <span id="firstName" class="errmessage" />
-                                </div>
-                            </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="First Name">
+                            First Name:
+                        </label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_FirstName" placeholder="First Name" value="" required>
+                            <span id="firstName" class="errmessage" />
+                        </div>
+                    </div>*@
 
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Middle Name"> Middle Name:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_MiddleName" placeholder="Middle Name">
-                                    <span id="middleName" class="errmessage" />
-                                </div>
-                            </div>*@
-
-
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Last Name">Last Name:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_LastName" placeholder="Last Name">
-                                    <span id="lastName" class="errmessage" />
-                                </div>
-                            </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Middle Name"> Middle Name:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_MiddleName" placeholder="Middle Name">
+                            <span id="middleName" class="errmessage" />
+                        </div>
+                    </div>*@
 
 
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Phone Number">Phone Number:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_PhoneNumber" placeholder="Phone Number">
-                                    <span id="phoneNumber" class="errmessage" />
-                                </div>
-                            </div>*@
-
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Cell Phone">Cell Phone:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_CellPhone" placeholder="Cell Phone">
-                                    <span id="cellPhone" class="errmessage" />
-                                </div>
-                            </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Last Name">Last Name:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_LastName" placeholder="Last Name">
+                            <span id="lastName" class="errmessage" />
+                        </div>
+                    </div>*@
 
 
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Payee Name">Payee Name:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_PayeeName" placeholder="Payee Name" readonly disabled>
-                                    <span id="payeeName" class="errmessage" />
-                                </div>
-                            </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Phone Number">Phone Number:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_PhoneNumber" placeholder="Phone Number">
+                            <span id="phoneNumber" class="errmessage" />
+                        </div>
+                    </div>*@
+
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Cell Phone">Cell Phone:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_CellPhone" placeholder="Cell Phone">
+                            <span id="cellPhone" class="errmessage" />
+                        </div>
+                    </div>*@
 
 
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Company Name">Company Name:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_CompanyName" placeholder="Company Name">
-                                    <span id="companyName" class="errmessage" />
-                                </div>
-                            </div>*@
-
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Alias/DBA">Alias/DBA:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_AliasDBA" placeholder="Alias/DBA">
-                                    <span id="aliasDBA" class="errmessage" />
-                                </div>
-                            </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Payee Name">Payee Name:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_PayeeName" placeholder="Payee Name" readonly disabled>
+                            <span id="payeeName" class="errmessage" />
+                        </div>
+                    </div>*@
 
 
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Taxpayer Id Number">Taxpayer Id Number:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_Tin" placeholder="Taxpayer Id Number">
-                                    <span id="tin" class="errmessage" />
-                                </div>
-                            </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Company Name">Company Name:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_CompanyName" placeholder="Company Name">
+                            <span id="companyName" class="errmessage" />
+                        </div>
+                    </div>*@
+
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Alias/DBA">Alias/DBA:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_AliasDBA" placeholder="Alias/DBA">
+                            <span id="aliasDBA" class="errmessage" />
+                        </div>
+                    </div>*@
 
 
-                        @*<div class="form-group padding-bottom-div">
-                                <label for="Direct Deposit Notification Email">Direct Deposit Notification Email:</label>
-                                <div class="">
-                                    <input type="text" class="form-control" id="txt_pop_DDNotify" placeholder="Direct Deposit Notification Email">
-                                    <span id="ddNotify" class="errmessage" />
-                                </div>
-                            </div>*@
-                        @*<br><br>
-                    </div>
-                </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Taxpayer Id Number">Taxpayer Id Number:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_Tin" placeholder="Taxpayer Id Number">
+                            <span id="tin" class="errmessage" />
+                        </div>
+                    </div>*@
+
+
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Direct Deposit Notification Email">Direct Deposit Notification Email:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_DDNotify" placeholder="Direct Deposit Notification Email">
+                            <span id="ddNotify" class="errmessage" />
+                        </div>
+                    </div>*@
+                @*<br><br>
+                        </div>
+                    </div>*@
             </div>
 
             <div class="modal-footer">
@@ -387,48 +468,48 @@
 
                 @*<div class="modal-body form-horizontal ">
                     <div class="subSection" style="text-align:left;">*@
-                        @*<div class="form-group padding-bottom-div">
-                            <label for="Type Of Account">Type of Account:</label>
-                            <div class="">
-                                <select id="txt_pop_AccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT ">
-                                    <option value="1" selected>SELECT TYPE OF ACCOUNT</option>
-                                    <option value="1">Checking</option>
-                                    <option value="2">Savings</option>
-                                </select>
-                                <span id="accountType" class="errmessage" />
-                            </div>
-                        </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Type Of Account">Type of Account:</label>
+                        <div class="">
+                            <select id="txt_pop_AccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT ">
+                                <option value="1" selected>SELECT TYPE OF ACCOUNT</option>
+                                <option value="1">Checking</option>
+                                <option value="2">Savings</option>
+                            </select>
+                            <span id="accountType" class="errmessage" />
+                        </div>
+                    </div>*@
 
-                        @*<div class="form-group padding-bottom-div">
-                            <label for="Bank Account Number">
-                                Bank Account #:
-                            </label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_BankAcNo" maxlength="15" placeholder="Bank Account Number" value="" required>
-                                <span id="bankAcNo" class="errmessage" />
-                            </div>
-                        </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Bank Account Number">
+                            Bank Account #:
+                        </label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_BankAcNo" maxlength="15" placeholder="Bank Account Number" value="" required>
+                            <span id="bankAcNo" class="errmessage" />
+                        </div>
+                    </div>*@
 
-                        @*<div class="form-group padding-bottom-div">
-                            <label for="Bank Routing Number">
-                                Bank Routing #:
-                            </label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_RoutingNo" maxlength="15" placeholder="Bank Routing Number" value="" required>
-                                <span id="bankAcNo" class="errmessage" />
-                            </div>
-                        </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Bank Routing Number">
+                            Bank Routing #:
+                        </label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_RoutingNo" maxlength="15" placeholder="Bank Routing Number" value="" required>
+                            <span id="bankAcNo" class="errmessage" />
+                        </div>
+                    </div>*@
 
-                        @*<div class="form-group padding-bottom-div">
-                            <label for="Type Of Account">Financial Institution Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_FinancialIns" placeholder="Financial Institution Name">
-                                <span id="financialIns" class="errmessage" />
-                            </div>
-                        </div>*@
-                        @*<br><br>
-                    </div>
-                </div>*@
+                @*<div class="form-group padding-bottom-div">
+                        <label for="Type Of Account">Financial Institution Name:</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="txt_pop_FinancialIns" placeholder="Financial Institution Name">
+                            <span id="financialIns" class="errmessage" />
+                        </div>
+                    </div>*@
+                @*<br><br>
+                        </div>
+                    </div>*@
             </div>
 
             <div class="modal-footer">
@@ -497,71 +578,71 @@
                 </div>
 
                 @*<div class="modal-body form-horizontal ">
-            <div class="subSection" style="text-align:left;">
-                <div class="form-group padding-bottom-div">
-                    <label for="Signer Name" class="certify-text-spacing">
-                        Authorized Signer’s Name
-                    </label>
-                    <div class="">
-                        <div style="float:left">
-                            <input type="text" class="form-control" id="txt_pop_SignerName" maxlength="50" placeholder="Authorized Signer’s Name" value="" required>
-                            <span id="signerName" class="errmessage" />
+                        <div class="subSection" style="text-align:left;">
+                            <div class="form-group padding-bottom-div">
+                                <label for="Signer Name" class="certify-text-spacing">
+                                    Authorized Signer’s Name
+                                </label>
+                                <div class="">
+                                    <div style="float:left">
+                                        <input type="text" class="form-control" id="txt_pop_SignerName" maxlength="50" placeholder="Authorized Signer’s Name" value="" required>
+                                        <span id="signerName" class="errmessage" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group padding-bottom-div">
+                                <label for="Signer Title" class="certify-text-spacing" ">
+                                    Authorized Signer’s Title
+                                </label>
+                                <div class="">
+                                    <div style="float:left">
+                                        <input type="text" class="form-control" id="txt_pop_SignerTitle" maxlength="50" placeholder="Authorized Signer’s Title" value="" required>
+                                        <span id="signerTitle" class="errmessage" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group padding-bottom-div">
+                                <label for="Signer Phone" class="certify-text-spacing" style="padding-right: 15px;">
+                                    Authorized Signer’s Phone #
+                                </label>
+                                <div class="">
+                                    <div style="float:left">
+                                        <input type="text" class="form-control item" id="txt_pop_SignerPhone" maxlength="15" placeholder="(___)___-____" required>
+                                        <span id="signerPhone" class="errmessage" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group padding-bottom-div">
+                                <label for="Signer Email" class="certify-text-spacing" style="padding-right: 15px;">
+                                    Authorized Signer’s Email
+                                </label>
+
+                                <div class="">
+                                    <div style="float:left">
+                                        <input type="text" class="form-control" id="txt_pop_SignerEmail" maxlength="100" placeholder=" Authorized Signer’s Email"  required>
+                                        <span id="signerEmail" class="errmessage" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group padding-bottom-div">
+                                <label for="Certification" class="certify-text-spacing" style="padding-right: 15px;">
+                                    Certification #:
+                                </label>
+
+                                <div class="">
+                                    <div style="float:left">
+                                        <input type="text" class="form-control" id="txt_pop_Certification" maxlength="100" placeholder="Certification"  readonly disabled>
+                                        <span id="certification" class="errmessage" />
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
                         </div>
-                    </div>
-                </div>
-
-                <div class="form-group padding-bottom-div">
-                    <label for="Signer Title" class="certify-text-spacing" ">
-                        Authorized Signer’s Title
-                    </label>
-                    <div class="">
-                        <div style="float:left">
-                            <input type="text" class="form-control" id="txt_pop_SignerTitle" maxlength="50" placeholder="Authorized Signer’s Title" value="" required>
-                            <span id="signerTitle" class="errmessage" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group padding-bottom-div">
-                    <label for="Signer Phone" class="certify-text-spacing" style="padding-right: 15px;">
-                        Authorized Signer’s Phone #
-                    </label>
-                    <div class="">
-                        <div style="float:left">
-                            <input type="text" class="form-control item" id="txt_pop_SignerPhone" maxlength="15" placeholder="(___)___-____" required>
-                            <span id="signerPhone" class="errmessage" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group padding-bottom-div">
-                    <label for="Signer Email" class="certify-text-spacing" style="padding-right: 15px;">
-                        Authorized Signer’s Email
-                    </label>
-
-                    <div class="">
-                        <div style="float:left">
-                            <input type="text" class="form-control" id="txt_pop_SignerEmail" maxlength="100" placeholder=" Authorized Signer’s Email"  required>
-                            <span id="signerEmail" class="errmessage" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group padding-bottom-div">
-                    <label for="Certification" class="certify-text-spacing" style="padding-right: 15px;">
-                        Certification #:
-                    </label>
-
-                    <div class="">
-                        <div style="float:left">
-                            <input type="text" class="form-control" id="txt_pop_Certification" maxlength="100" placeholder="Certification"  readonly disabled>
-                            <span id="certification" class="errmessage" />
-                        </div>
-                    </div>
-                </div>
-                <br><br>
-            </div>
-        </div>*@
+                    </div>*@
 
             </div>
 
@@ -621,58 +702,58 @@
                 </div>
 
                 @*<div class="modal-body form-horizontal ">
-            <div class="subSection" style="text-align:left;">
-                <div class="form-group padding-bottom-div">
-                    <label for="Signer Name" class="certify-text-spacing">
-                        Dept. Name:
-                    </label>
-                    <div class="">
-                        <div style="float:left">
-                            <input type="text" class="form-control" id="txt_pop_DeptName" maxlength="50" placeholder=" Dept. Name" value="" required>
-                            <span id="deptName" class="errmessage" />
-                        </div>
-                    </div>
-                </div>
+                        <div class="subSection" style="text-align:left;">
+                            <div class="form-group padding-bottom-div">
+                                <label for="Signer Name" class="certify-text-spacing">
+                                    Dept. Name:
+                                </label>
+                                <div class="">
+                                    <div style="float:left">
+                                        <input type="text" class="form-control" id="txt_pop_DeptName" maxlength="50" placeholder=" Dept. Name" value="" required>
+                                        <span id="deptName" class="errmessage" />
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="form-group padding-bottom-div">
-                    <label for="Signer Title" class="certify-text-spacing" ">
-                        Dept. Contact Person Name:
-                    </label>
-                    <div class="">
-                        <div style="float:left">
-                            <input type="text" class="form-control" id="txt_pop_DeptcontactName" maxlength="50" placeholder="Dept. Contact Person Name" value="" required>
-                            <span id="deptcontactName" class="errmessage" />
-                        </div>
-                    </div>
-                </div>
+                            <div class="form-group padding-bottom-div">
+                                <label for="Signer Title" class="certify-text-spacing" ">
+                                    Dept. Contact Person Name:
+                                </label>
+                                <div class="">
+                                    <div style="float:left">
+                                        <input type="text" class="form-control" id="txt_pop_DeptcontactName" maxlength="50" placeholder="Dept. Contact Person Name" value="" required>
+                                        <span id="deptcontactName" class="errmessage" />
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="form-group padding-bottom-div">
-                    <label for="dept Email" class="certify-text-spacing" style="padding-right: 15px;">
-                        Dept. Email Address:
-                    </label>
+                            <div class="form-group padding-bottom-div">
+                                <label for="dept Email" class="certify-text-spacing" style="padding-right: 15px;">
+                                    Dept. Email Address:
+                                </label>
 
-                    <div class="">
-                        <div style="float:left">
-                            <input type="text" class="form-control" id="txt_pop_DeptEmailAddress" maxlength="100" placeholder="Dept. Email Address"  required>
-                            <span id="deptEmail" class="errmessage" />
-                        </div>
-                    </div>
-                </div>
+                                <div class="">
+                                    <div style="float:left">
+                                        <input type="text" class="form-control" id="txt_pop_DeptEmailAddress" maxlength="100" placeholder="Dept. Email Address"  required>
+                                        <span id="deptEmail" class="errmessage" />
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="form-group padding-bottom-div">
-                    <label for="dept Contact" class="certify-text-spacing" style="padding-right: 15px;">
-                        Dept. Contact #:
-                    </label>
-                    <div class="">
-                        <div style="float:left">
-                            <input type="text" class="form-control item" id="txt_pop_DeptContact" maxlength="15" placeholder="(___)___-____" required>
-                            <span id="deptPhone" class="errmessage" />
+                            <div class="form-group padding-bottom-div">
+                                <label for="dept Contact" class="certify-text-spacing" style="padding-right: 15px;">
+                                    Dept. Contact #:
+                                </label>
+                                <div class="">
+                                    <div style="float:left">
+                                        <input type="text" class="form-control item" id="txt_pop_DeptContact" maxlength="15" placeholder="(___)___-____" required>
+                                        <span id="deptPhone" class="errmessage" />
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
                         </div>
-                    </div>
-                </div>
-                <br><br>
-            </div>
-        </div>*@
+                    </div>*@
 
             </div>
 
@@ -733,7 +814,7 @@
                                 <span class="fa fa-fw fa-file-text"></span>Documents
                                 <span id="menuDocCount" class="badge pull-right UpdateMenuDocumentCount">7</span>
                             </a>
-                            <a class="leftNavItem " href=""><span class="fa fa-fw fa-folder-open"></span>Check List</a>
+                            <a class="leftNavItem " href="#div_checklist_tab" aria-controls="div_checklist_tab"><span class="fa fa-fw fa-folder-open"></span>Check List</a>
                             <a class="leftNavItem " href=""><span class="fa fa-fw fa-link"></span>Linked Applications<span class="badge pull-right">0</span></a>
                             <a class="leftNavItem " href=""><span class="fa fa-fw fa-archive"></span>Application Archive</a>
                             @*<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
@@ -973,9 +1054,9 @@
                                         <span id="span_processoreview_status"></span>
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-xs">
-                                                <a id="btn_proce_approve" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
-                                                <a data-toggle="modal" data-target="#printApplicationModal" class="btn btn-danger">&nbsp;print&nbsp;</a>
-                                                <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
+                                                <a id="btn_proce_approve" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
+                                                <a data-toggle="modal" style="margin:5px;" data-target="#printApplicationModal" class="btn btn-danger">&nbsp;print&nbsp;</a>
+                                                <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1005,10 +1086,10 @@
                                         <span id="span_suervisorreview_status"></span>
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-xs">
-                                                <a id="btn_reviewApprove" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
-                                                <a id="btn_reviewReturn" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
-                                                <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-                                                <a id="btn_reviewPrint" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>
+                                                <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
+                                                <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
+                                                <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
+                                                <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1017,8 +1098,6 @@
 
                         </ul>
                     </div>
-
-                    @*</center1>*@
                 </div>
 
                 <div id="div_notes_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="notes-tab">
@@ -1069,30 +1148,6 @@
                                 Upload More
                             </a>
                             <input type="file" id="file-input" style="display:none" />
-
-                            @*<div class="container" style="text-align: center;vertical-align:central" id="pnlAttachment" visible="false">
-                                            <label for="attachment">
-                                                Attachment
-                                                <span>
-                                                    <img data-toggle="popover" data-popover="true" data-placement="top" data-content="You may only attach one file.
-                                The maximum allowed file size is 10 MB.
-                                The file you attach must either be .PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, or .PNG. No other file types are allowed." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
-                                                </span>
-                                            </label>
-
-                                            <div style="text-align: center" class="custom-file-input" visible="false">
-
-                                                <input type="file" accept="image/*,.PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, .PNG">
-                                                <input type="text" id="txtattachment">
-                                                <input type="button" style="width: 150px" class="btn-primary btn button-header-color" value="Upload Attachment">
-                                                <div>
-                                                    <span id="fileError_or_Info" style="text-align: center" class="errmessage" />
-                                                </div>
-                                            </div>
-                                        </div>*@
-
-
-
                         </div>
 
                         <br>
@@ -1111,7 +1166,144 @@
                                     </tr>
                                 </thead>
                             </table>
+                        </div>
+                    </div>
+                </div>
 
+                <div id="div_checklist_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_checklist_tab">
+                    <div class="tab-content  tgroup container" id="myTabContent1" style="width: 100% !important;  margin: 10px auto !important;position: relative !important;">
+
+                        <div class="row">
+                            <div class="col-lg-12 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <div id="completedClaimsTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                                                <table class="table table-striped table-bordered display responsive no-wrap dataTable" id="completedClaimsTable" width="100%" cellspacing="0" role="grid" aria-describedby="completedClaimsTable_info" style="width: 100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting" tabindex="0" aria-controls="completedClaimsTable" rowspan="1" colspan="1" style="width: 0px;" aria-label=": activate to sort column ascending"></th>
+                                                            <th class="sorting_desc" tabindex="0" aria-controls="completedClaimsTable" rowspan="1" colspan="1" style="width: 100%px;" aria-label="Claim #: activate to sort column ascending">Item</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="completedClaimsTable" rowspan="1" colspan="1" style="width: 100%px; text-align:center;" aria-label="Claimant Name: activate to sort column ascending">Yes / No</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="completedClaimsTable" rowspan="1" colspan="1" style="width: 83px;" aria-label="Assigned Date: activate to sort column ascending">Comments</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr role="row" class="odd">
+                                                            <td>1</td>
+                                                            <td class="sorting_2"> Is there another vendor code in eCAPS for this applicant?</td>
+                                                            <td>
+                                                                <label class="switch switch-yes-no">
+                                                                    <input id="input1" value="1" class="switch-input" type="checkbox" />
+                                                                    <span id="span1" value="1" class="switch-button" data-on="Yes" data-off="No">
+                                                                    </span><span class="switch-handle"></span>
+                                                                </label>
+                                                            </td>
+                                                            @*<td><a value ="1" data-toggle="modal" data-target="#addNotesModal" >04/24/2020</a></td>*@
+                                                            <td>
+                                                                <a value="1" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe">
+                                                                    <span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;">
+                                                                    </span>Add
+                                                                </a>
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>2</td>
+                                                            <td class="sorting_2"> Is the vendor already on direct deposit with the same bank information?</td>
+                                                            <td>
+                                                                <label class="switch switch-yes-no">
+                                                                    <input id="input2" value="2" class="switch-input" type="checkbox" />
+                                                                    <span id="span2" value="2" class="switch-button" data-on="Yes" data-off="No">
+                                                                    </span><span class="switch-handle"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td><a value="2" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td>3</td>
+                                                            <td class="sorting_2"> Does the email domain on the application match with eCAPS?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="3" class="switch-input" type="checkbox" /><span id="span3" value="3" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="3" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>4</td>
+                                                            <td class="sorting_2"> Did the vendor provide a voided check?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="4" class="switch-input" type="checkbox" /><span id="span4" value="4" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="4" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        <tr role="row" class="odd">
+                                                            <td>5</td>
+                                                            <td class="sorting_2"> Did the vendor provide the first page of a bank statement?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="5" class="switch-input" type="checkbox" /><span id="span5" value="5" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="5" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>6</td>
+                                                            <td class="sorting_2"> Did the vendor provide a bank verification letter?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="6" class="switch-input" type="checkbox" /><span id="span6" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="6" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td>7</td>
+                                                            <td class="sorting_2"> Did eCAPS Legal Name match with the voided check, bank statement or bank letter?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="7" class="switch-input" type="checkbox" /><span id="span7" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="7" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>8</td>
+                                                            <td class="sorting_2"> Does the bank account number and routing number on the application match with the attachment provided by the vendor?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="8" class="switch-input" type="checkbox" /><span id="span8" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="8" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        <tr role="row" class="odd">
+                                                            <td>9</td>
+                                                            <td class="sorting_2"> If there is a DBA in eCAPS, is it registered within the County it's doing business in?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="9" class="switch-input" type="checkbox" /><span id="span9" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="9" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>10</td>
+                                                            <td class="sorting_2"> Does the application's banking information match Early Warning?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="10" class="switch-input" type="checkbox" /><span id="span10" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="10" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>11</td>
+                                                            <td class="sorting_2"> Does the paid check image's banking information match with the application?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="11" class="switch-input" type="checkbox" /><span id="span11" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="11" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>12</td>
+                                                            <td class="sorting_2"> Does authorized signer name match on Lexis Advance?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="12" class="switch-input" type="checkbox" /><span id="span12" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="12" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>13</td>
+                                                            <td class="sorting_2"> Is there a need to send the confirmation letter?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="13" class="switch-input" type="checkbox" /><span id="span13" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="13" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>14</td>
+                                                            <td class="sorting_2"> Were there any W payments in J1099? If Yes, the interfaced VCM must change the Remittance Advice Format from RA2 to RA1.</td>
+                                                            <td>
+                                                                <label class="switch switch-yes-no">
+                                                                    <input value="14" class="switch-input" type="checkbox" />
+                                                                    <span id="span14" value="14" class="switch-button" data-on="Yes" data-off="No"></span>
+                                                                    <span class="switch-handle"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td><a value="14" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -351,6 +351,7 @@
     <Compile Include="Models\IdTextClass.cs" />
     <Compile Include="Models\VM_login.cs" />
     <Compile Include="Models\VM_R_Vend_User.cs" />
+    <Compile Include="Models\VM_SourceIPInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -547,6 +548,7 @@
     <Content Include="Content\button-images\CountySeal.png" />
     <Content Include="Content\button-images\fa fa-envelope.png" />
     <Content Include="Content\button-images\fa fa-information.png" />
+    <Content Include="Content\button.css" />
     <Content Include="Content\css.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\DataTable\dataTables.responsive.css" />
@@ -580,6 +582,7 @@
     <Content Include="Scripts\App\AdminMain.js" />
     <Content Include="Scripts\App\applicationList.js" />
     <Content Include="Scripts\App\applicationSummary.js" />
+    <Content Include="Scripts\App\checklist.js" />
     <Content Include="Scripts\App\dashboard.js" />
     <Content Include="Scripts\App\DataTable\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\App\DataTable\dataTables.responsive.js" />

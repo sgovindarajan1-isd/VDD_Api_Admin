@@ -8,10 +8,11 @@ using System.Web.Http.Cors;
 using eCAPDDApi.Models;
 using DAL;
 using System.Threading;
+
+using Newtonsoft.Json;
+
 namespace eCAPDDApi.Controllers
 {
-
-
     public class VendorConfirmationEmail
     {
         public string MessageBody { get; set; }
@@ -21,7 +22,6 @@ namespace eCAPDDApi.Controllers
         public string EmailCC { get; set; }
         //public string EmailBCC { get; set; }
     }
-
 
     [RoutePrefix("api/values")]
 
@@ -191,12 +191,27 @@ namespace eCAPDDApi.Controllers
             }
 
             return response;
-        }
+        }      
+
+        //  get source info
+        //private string GetIp()
+        //{
+        //    string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+        //    if (string.IsNullOrEmpty(ip))
+        //    {
+        //        ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+        //    }
+        //    return ip;
+        //}
+
+        /// --------------------------
+        //
 
         [HttpPost]
         public HttpResponseMessage LoginExternalVendor_authen([FromBody] VM_R_Vend_User vmuser)
         {
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
+
             VendorDAL clsdal = new VendorDAL();
             List<VM_R_Vend_User> data = new List<VM_R_Vend_User>();
 
@@ -208,7 +223,6 @@ namespace eCAPDDApi.Controllers
                 vm_LoginData.UserName = result.Item1;
                 vm_LoginData.IsValidUser = result.Item2;
                 vm_LoginData.ValidateToken = Thread.CurrentPrincipal.Identity.Name;
-
                 data.Add(vm_LoginData);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
@@ -267,8 +281,9 @@ namespace eCAPDDApi.Controllers
                     userProfile = v1,
                     userProfile_2 = v3,
                     List_userRoles = result.Item1,
-                    IsValidUser = result.Item2
-                };
+                    IsValidUser = result.Item2,
+                    //SourceIP = GetIp()
+            };
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             }
@@ -530,6 +545,189 @@ namespace eCAPDDApi.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             //return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage InsertUpdateDocumentCheckList([FromBody] DAL.Models.DAL_M_Checklist checklistModel)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+            string ret = adminDAL.InsertUpdateDocumentCheckList(checklistModel);
+            if (ret == "ERROR")
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "error" });
+            }
+
+            var data = new
+            {
+                returnValue = "Success",
+            };
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetDocumentCheckList([FromBody] DAL.Models.DAL_M_Checklist dal_M_Checklist)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetDocumentCheckList(dal_M_Checklist.ConfirmationNumber);
+            var data = new
+            {
+                ChecklistItems = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage InsertUpdateChecklistNotes([FromBody] DAL.Models.DAL_M_Notes vm_checklistNotes)
+        {
+            
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.InsertUpdateChecklistNotes(vm_checklistNotes);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }        
+
+        [HttpPost]
+        public HttpResponseMessage GetChecklistNotesByChecklistIDandNotesID([FromBody] DAL.Models.DAL_M_Checklist dal_M_Checklist)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetChecklistNotesByChecklistIDandNotesID(dal_M_Checklist.ConfirmationNumber, dal_M_Checklist.CheckListID);
+            var data = new
+            {
+                ChecklistNotes = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage RetrieveSourceIPInfo([FromBody] VM_SourceIPInfo dal_M_Checklist)
+        {
+            string GEOLOCATION;
+            string ServerName = Request.RequestUri.GetLeftPart(UriPartial.Authority); // this can be stored in the requests log table
+            string IPADDR = Request.RequestUri.AbsoluteUri;//.UserHostAddress;    //localhost will have ::1. Other internal clients will have 10.*
+            string Headers = Request.Headers.ToString(); // this can be stored in the requests log table
+
+            // populate actual values if the request is not from the localhost
+            VM_SourceIPInfo ipInfo = new VM_SourceIPInfo();
+            ipInfo.Source_Host_Headers= Headers;
+            ipInfo.SourceServerName = ServerName;
+            ipInfo.Source_Device = getOSInfo();
+
+            if (!ServerName.Contains("localhost"))
+            {
+                try
+                {
+                    string info = new WebClient().DownloadString("http://api.db-ip.com/v2/free/" + IPADDR);
+                    ipInfo = JsonConvert.DeserializeObject<VM_SourceIPInfo>(info);
+
+                    // any IP that starts with 10. or 192. will be internal to LA County network but may show the city name differently because of the location of the edge router
+                    //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + ipInfo.City + Environment.NewLine + ipInfo.StateProv;
+                    ipInfo.Source_IP = IPADDR;
+                    ipInfo.Source_Location = ipInfo.City + ", " + ipInfo.StateProvCode + " (" + ipInfo.CountryCode + ")";
+                }
+                catch (Exception)
+                {
+                }
+            }
+            else
+            {
+                //Initialize with user friendly values representing localhost
+                ServerName = "LOCALHOST";
+                IPADDR = "127.0.0.1";
+                GEOLOCATION = "VDD APPLICATION SERVER";
+                //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + GEOLOCATION;
+
+                ipInfo.SourceServerName = ServerName;
+                ipInfo.Source_IP = IPADDR;
+                ipInfo.Source_Location = GEOLOCATION;
+            }
+
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = ipInfo });
+            return response;
+        }
+
+        public String GetMobileVersion(string userAgent, string device)
+        {
+            var temp = userAgent.Substring(userAgent.IndexOf(device) + device.Length).TrimStart();
+            var version = string.Empty;
+
+            foreach (var character in temp)
+            {
+                var validCharacter = false;
+                int test = 0;
+
+                if (Int32.TryParse(character.ToString(), out test))
+                {
+                    version += character;
+                    validCharacter = true;
+                }
+
+                if (character == '.' || character == '_')
+                {
+                    version += '.';
+                    validCharacter = true;
+                }
+
+                if (validCharacter == false)
+                    break;
+            }
+
+            return version;
+        }
+        private String getOSInfo()
+        {
+            var ua = System.Web.HttpContext.Current.Request.UserAgent; // Request.UserAgent;
+
+            if (ua.Contains("Android"))
+                return string.Format("Android {0}", GetMobileVersion(ua, "Android"));
+
+            if (ua.Contains("iPad"))
+                return string.Format("iPad OS {0}", GetMobileVersion(ua, "OS"));
+
+            if (ua.Contains("iPhone"))
+                return string.Format("iPhone OS {0}", GetMobileVersion(ua, "OS"));
+
+            if (ua.Contains("Linux") && ua.Contains("KFAPWI"))
+                return "Kindle Fire";
+
+            if (ua.Contains("RIM Tablet") || (ua.Contains("BB") && ua.Contains("Mobile")))
+                return "Black Berry";
+
+            if (ua.Contains("Windows Phone"))
+                return string.Format("Windows Phone {0}", GetMobileVersion(ua, "Windows Phone"));
+
+            if (ua.Contains("Mac OS"))
+                return "Mac OS";
+
+            if (ua.Contains("Windows NT 5.1") || ua.Contains("Windows NT 5.2"))
+                return "Windows XP";
+
+            if (ua.Contains("Windows NT 6.0"))
+                return "Windows Vista";
+
+            if (ua.Contains("Windows NT 6.1"))
+                return "Windows 7";
+
+            if (ua.Contains("Windows NT 6.2"))
+                return "Windows 8";
+
+            if (ua.Contains("Windows NT 6.3"))
+                return "Windows 8.1";
+
+            if (ua.Contains("Windows NT 10"))
+                return "Windows NT 10";
+
+            //fallback to basic platform:
+            return (ua.Contains("Mobile") ? " Mobile " : "");
         }
 
         //[HttpPost]

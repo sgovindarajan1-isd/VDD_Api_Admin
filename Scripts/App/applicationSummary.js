@@ -20,23 +20,8 @@
         var index = $(this).index();
         $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
         $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");  //.addClass("show")
+   });
 
-        ////$(this).siblings('a.leftNavItemActive').removeClass("leftNavItemActive");
-        ////$(this).addClass("leftNavItemActive");
-        ////var index = $(this).index();
-        ////$("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("leftNavItemActive");
-        ////$("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("leftNavItemActive");  //.addClass("show")
-
-    });
-
-    //$("ul.nav-tabs>li.timelineLi>a").click(function (e) {
-    //    e.preventDefault();
-    //    $(this).siblings('a.active').removeClass("active").removeClass("in");
-    //    $(this).addClass("active").addClass("in");
-    //    var index = $(this).index();
-    //    $("div.tgroup>div.tab-pane1").removeClass("active").removeClass("in");
-    //    $("div.tgroup>div.tab-pane1").eq(index).addClass("active").addClass("in");
-    //});
 
     $("#div_notes_tab").click(function (e) {
         //  $("#div_notes_tab").addClass("show");
@@ -74,6 +59,8 @@
     GetTimeLineByConfirmationNumber(confirmationNum);
     GetNotesByConfirmationNumber(confirmationNum);
     GetAttachmentDocuments(confirmationNum);
+    GetDocumentCheckList(confirmationNum);
+    
 
     function getReviewPanelInformation(summaryData) {
         var status = summaryData.Status;
@@ -103,7 +90,7 @@
             if (status == 21 || status == 22) {
                 $("#div_supervisor_proce_review").show();
                 var msg = summaryData.StatusDesc + " by " + summaryData.ProcessorID + " on " + summaryData.AssignmentDate;
-                $("#span_review_processor_Approval_msg").text(msg);  
+                $("#span_review_processor_Approval_msg").text(msg);
                 $("#span_review_processor_notes").text(summaryData.Comment);
             }
             else {
@@ -112,19 +99,6 @@
             $("#span_suervisorreview_status").text(statusDesc);
         }
     }
-
-
-    //$("#tab_Notes").click(function () {
-    //    //    $('#div_summaryContent').detach();
-    //    //    $('#div_summaryContent').html($("#div_Notes_tab").html());
-
-    //        $("#div_summary_tab").removeClass('show');
-    //        $("#div_summary_tab").addClass('fade');
-
-    //        $("#div_notes_tab").removeClass('fade');
-    //        $("#div_notes_tab").addClass('show');
-
-    //    });
 
     function assignDetailsFromDatabase(data) {
         if ((data == null) || (data == 'undefined')) {
@@ -181,9 +155,9 @@
         $("#DirectDepositNotificationEmail").text(data.DDNotifyEmail);
 
         $("#ClosedDate").text(data.ClosedDate);
-        $("#IPAddress").text(data.Source_ip);
-        $("#IPDevice").text(data.Source_device);
-        $("#IPLocation").text(getTheIPLocation(data.Source_ip));
+        $("#IPAddress").text(data.Source_IP);
+        $("#IPDevice").text(data.Source_Device);
+        $("#IPLocation").text(data.Source_Location);
         $("#EnteredBy").text(data.User_agent);
 
         //Banking Information
@@ -329,15 +303,6 @@
         })
     };
 
-    function getTheIPLocation(source_ip) {
-        if (source_ip == null || source_ip == 'undefined' || source_ip == "") {
-            return ""
-        }
-        else {
-            return "Test Ip location"
-        }
-    }
-
     function getApplicationSummary(confirmationNum) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
@@ -350,42 +315,7 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                //data.data.applicationSummary
                 assignDetailsFromDatabase(data.data.applicationSummary);
-
-                //
-                //AccountType: 1
-                //AccountTypeDesc: "Checking Deposit"
-                //AuthorizedPhoneExt: null
-                //BankAccountNumber: "049170145"
-                //BankRoutingNo: "122242843"
-                //Comment: null
-                //Confirmation: null
-                //DDNotifyEmail: "cherise@aaaflag.com"
-                //FinancialIns: "BANK OF THE WEST"
-                //Host_headers: null
-                //LocationAddress: (3)["8955 NATIONAL BLVD., LOS ANGELES, CA, 90034-3307", "8954 W. PICO BLVD., LOS ANGELES, CA, 90035-3334", "1201 S. BROADWAY, LOS ANGELES, CA, 90015-2107"]
-                //LocationIDs: null
-                //OfficeNotes: null
-                //Payeename: null
-                //RequestDate: "6/29/2017 12:45:50 PM"
-                //RequestType: "DDOL"
-                //Signeremail: null
-                //Signername: null
-                //Signerphone: null
-                //Signertitle: null
-                //Source_device: null
-                //Source_ip: null
-                //Ssn: null
-                //Status: "Assigned to Processor"
-                //SubmitDateTime: "0001-01-01T00:00:00"
-                //User_agent: null
-                //VendorAttachmentFileName: null
-                //VendorNumber: "036469"
-                //VendorReportFileName: null
-                //Vendorname: null
-
-                //
             }
             , complete: function (jqXHR) {
             }
@@ -417,8 +347,8 @@
                 toastr.warning("Vendor Code Missing, Please check the entry!");
                 return;
             }
-            status = 4
-            assignedTo = $("#AssignedProcessor").text();; //  final approval  assigned to supervisor him self
+            status = 4;
+            assignedTo = userName;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
         }
 
         UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
@@ -435,7 +365,7 @@
             status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
         else {
             status = 6
-            assignedTo = $("#AssignedProcessor").text();; //  final reject  assigned to supervisor him self
+            assignedTo = userName; //$("#AssignedProcessor").text();; //  final reject  assigned to supervisor him self
         }
 
 
@@ -463,6 +393,23 @@
         UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, 'Assign');//  Status  2	Assigned to Processor
     });
 
+
+    function getActualFullDate() {
+        var date = new Date(),
+            yr = date.getFullYear(),
+            month = date.getMonth() + 1,
+            day = date.getDate();
+
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return month + '/' + day + '/' + yr + ' (' + strTime +')';
+    }
+
     function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, action) {
         var confirmNum = confirmationNum;
 
@@ -471,7 +418,6 @@
             type: "POST",
             url: "/api/values/UpdateApplicationStatus/",
             dataType: 'json',
-            // data: JSON.stringify({ 'Confirmation': 'PJDZBM' }),  
             data: JSON.stringify({
                 'Confirmation': confirmationNum, 'status': status, 'Comment': comment, 'ReasonType': reason_type, 'ProcessorID': assignedTo, 'AssignedBy': assignedFrom
             }),
@@ -480,12 +426,17 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
+
+                $("#AssignedProcessor").text(assignedTo);
+                $("#AssignedBy").text(assignedFrom);
+                $("#ClosedDate").text(getActualFullDate());
+
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Application " + message);
 
                 if (status == 22 || status == 6) {   //reject  status = 6;  	Recommend Reject  = 22
                     $('#rejectApplicationModal').modal('hide');
-                    if (status == 22) {
+                   if (status == 22) {
                         $("#header_status").text("Recommend Reject");
                     }
                     else if (status == 6) {
@@ -740,16 +691,19 @@
 
     $("#btn_SubmitNotes").click(function (confirmationNum) {
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
+        var notesType = "General"; // to do needed  place holder to pull from 
         var notes = $("#txt_Notes_comment").val();
-        var NotesType = "General"; // to do needed  place holder to pull from 
+        InsertUpdateNotes(confirmationNum, notesType, notes); 
+    });
 
+    function InsertUpdateNotes(confirmationNum, notesType, notes) { 
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
             url: "/api/values/InsertUpdateNotes/",
             dataType: 'json',
             data: JSON.stringify({
-                'ConfirmationNumber': confirmationNum, 'NotesType': NotesType, 'Notes': notes
+                'ConfirmationNumber': confirmationNum, 'NotesType': notesType, 'Notes': notes
             }),
 
             headers: {
@@ -779,7 +733,7 @@
                 }
             }
         });
-    });
+    };
 
     function GetProcessorsList() {
         $.ajax({
@@ -939,7 +893,6 @@
     });
 
     function setAttachment(data) {
-        debugger;
         $("#menuDocCount").text(data.length);
 
         $('#attachmentGrid').DataTable().destroy();
@@ -1115,7 +1068,6 @@
         }
     };
 
-
     function UploadDocumentAttachment(fileName) {
         debugger;
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
@@ -1171,4 +1123,28 @@
         });
     };
 
+    function GetDocumentCheckList(confirmationNum) {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            dataType: 'json',
+            data: JSON.stringify({ 'ConfirmationNumber': confirmationNum }),
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            url: "/api/values/GetDocumentCheckList/",
+            success: function (data) {
+                debugger;
+                for (var item in data.data.ChecklistItems) {
+                    $('input[value=' + data.data.ChecklistItems[item].CheckListID + ']').attr('checked', 'checked')
+                    $('a[value=' + data.data.ChecklistItems[item].CheckListID + ']').text(data.data.ChecklistItems[item].LastUpdateDateTime);
+                }
+            },
+            error: function (_XMLHttpRequest, textStatus, errorThrown) {
+                if (_XMLHttpRequest.status == '401') {
+                    window.location.href = "/Home/UnAuthorized";
+                }
+            }
+        });
+    }
 });

@@ -42,7 +42,7 @@
                         { 'data': 'AcccountNo', "width": '12%' },
                         { 'data': 'AccountType' },
                         { 'data': 'RemittanceEmail' },
-                        { 'data': 'Status', "width": '140px' }
+                        { 'data': 'Status', "width": '140px', 'className': 'payment-status-color' }
                     ],
 
                     columnDefs: [

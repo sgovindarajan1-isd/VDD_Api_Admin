@@ -298,9 +298,11 @@ namespace DAL
                     reqM.DepartmentContactNo = ds.Tables[0].Rows[i]["DepartmentContactNo"].ToString();
                     reqM.ClosedDate = ds.Tables[0].Rows[i]["ClosedDate"].ToString();
 
-                    reqM.Source_ip = ds.Tables[0].Rows[i]["Source_ip"].ToString();
-                    reqM.Source_device = ds.Tables[0].Rows[i]["Source_device"].ToString();
+                    reqM.Source_IP= ds.Tables[0].Rows[i]["Source_ip"].ToString();
+                    reqM.Source_Device = ds.Tables[0].Rows[i]["Source_device"].ToString();
+                    reqM.Source_Location = ds.Tables[0].Rows[i]["Source_Location"].ToString();
                     reqM.User_agent = ds.Tables[0].Rows[i]["User_agent"].ToString();
+
                     reqM.Comment = ds.Tables[0].Rows[i]["Comment"].ToString();
                     ///}
 
@@ -672,7 +674,132 @@ namespace DAL
             return "SUCCESS";
         }
 
+        public string InsertUpdateDocumentCheckList(DAL.Models.DAL_M_Checklist checklistModel)
+        {
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("InsertUpdateDocumentCheckList", con);
+                    sqlComm.Parameters.AddWithValue("@CheckListID", checklistModel.CheckListID);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", checklistModel.ConfirmationNumber);
+                    sqlComm.Parameters.AddWithValue("@Active", checklistModel.Active);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUser", checklistModel.LastUpdatedUser);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in updating CheckList.  Message: " + ex.Message);
+                return "ERROR";
+            }
+            return "SUCCESS";
+        }
 
+        
+        public List<DAL_M_Checklist> GetDocumentCheckList(string confirmationNumber)
+        {
+            List<DAL_M_Checklist> Checklist_list = new List<DAL_M_Checklist>();
+            try
+            {
+                DataSet ds = new DataSet("CheckList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetDocumentCheckList", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", confirmationNumber);
 
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_Checklist v = new DAL_M_Checklist();
+                        v.CheckListID = Int32.Parse(ds.Tables[0].Rows[i]["CheckListID"].ToString());
+                        v.CheckListName = ds.Tables[0].Rows[i]["CheckListName"].ToString();
+                        v.Active = int.Parse(ds.Tables[0].Rows[i]["Active"].ToString());
+                        v.LastUpdateDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
+                        v.LastUpdatedUser = ds.Tables[0].Rows[i]["LastUpdatedUser"].ToString();
+                        
+                        Checklist_list.Add(v);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in GetDocumentCheckList.  Message: " + ex.Message);
+            }
+            return Checklist_list;
+        }
+
+        
+        public string InsertUpdateChecklistNotes(DAL_M_Notes vm_Notes)
+        {
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("InsertUpdateChecklistNotes", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", vm_Notes.ConfirmationNumber);
+                    sqlComm.Parameters.AddWithValue("@ChecklistId", vm_Notes.ChecklistId);
+                    sqlComm.Parameters.AddWithValue("@Note_Type", vm_Notes.NotesType);
+                    sqlComm.Parameters.AddWithValue("@Note_Content", vm_Notes.Notes);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Insert / Update Checklist Notes.  Message: " + ex.Message);
+                return "Error";
+            }
+            return "SUCCESS";
+        }
+
+        public List<DAL_M_Notes> GetChecklistNotesByChecklistIDandNotesID(string confirmationNumber, int CheckListID)
+        {
+            List<DAL_M_Notes> checkListNotes = new List<DAL_M_Notes>();
+
+            try
+            {
+                DataSet ds = new DataSet("CheckListNotes");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetChecklistNotesByChecklistIDandNotesID", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", confirmationNumber);
+                    sqlComm.Parameters.AddWithValue("@CheckListID", CheckListID);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_Notes clNotes = new DAL_M_Notes();
+                        clNotes.Notes = ds.Tables[0].Rows[i]["Note_Content"].ToString();
+                        clNotes.NotesId = int.Parse(ds.Tables[0].Rows[i]["Note_ID"].ToString());  
+                        clNotes.NotesType = ds.Tables[0].Rows[i]["Note_Type"].ToString();
+                        clNotes.ChecklistId = int.Parse(ds.Tables[0].Rows[i]["ChecklistId"].ToString());
+                        clNotes.LastUpdatedDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
+                        clNotes.LastUpdatedUser = ds.Tables[0].Rows[i]["LastUpdatedUser"].ToString();
+
+                        checkListNotes.Add(clNotes);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in GetChecklistNotesByChecklistIDandNotesID.  Message: " + ex.Message);
+            }
+            return checkListNotes;
+        }
     }
 }

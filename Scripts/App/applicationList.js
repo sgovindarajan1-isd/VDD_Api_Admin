@@ -40,10 +40,11 @@
     });    
 
     $("#btn_customizeFilter").click(function () {
+        debugger;
         var filterApptype = $("#filterApplicationType  option:selected").text();
-        var filterUser = $("#filterUser  option:selected").text();3
+        var filterUser = $("#filterUser  option:selected").text();
         var filterStatus = $("#filterStatus  option:selected").text();
-        var age = $("#filerAge  option:selected").text();
+        var age = $("#filerAge  option:selected").val();
         
        // Default view for Supervisor
        if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
@@ -60,13 +61,10 @@
     });
    
     $("#btn_0_15_days").click(function () {
-        //table.columns([column_no]).search( $( '#txtSearch' ).val() ).draw();
-        //https://jsfiddle.net/07rnpgs1/
-       // table.columns([4]).search(15).draw();
         getApplicationListFilteredByAge(15);
     });
 
-    $("#btn_31_60_days").click(function () {
+    $("#btn_16_30_days").click(function () {
         getApplicationListFilteredByAge(30);
     });
 

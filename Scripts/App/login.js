@@ -15,45 +15,7 @@
     }
     else {
         $("#pnl_login_footer").hide();
-    }
-
-    //GetVendorNumber()  //   have two  different method  works no issues,  for now  post is not working
-    // Post_GetVendorNamebyNameFromURI();
-
-    //$.getJSON("https://api.ipify.org/?format=json", function (e) {
-    //    debugger;
-    //});
-
-    //$.get("https://ipinfo.io", function (response) {
-    //}, "json");
-
-
-    //$.getJSON("http://smart-ip.net/geoip-json?callback=?", function (data) {
-    //    debugger;
-    //});
-
-    //function myIP() {
-    //    debugger;
-    //    if (window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
-    //    else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-
-    //    xmlhttp.open("GET", "http://api.hostip.info/get_html.php ", false);
-    //    xmlhttp.send();
-
-    //    hostipInfo = xmlhttp.responseText.split("n");
-
-    //    for (i = 0; hostipInfo.length >= i; i++) {
-    //        ipAddress = hostipInfo[i].split(":");
-    //        if (ipAddress[0] == "IP") {
-    //            ipAddress[1];
-    //        }
-    //    }
-
-    //    return false;
-    //}
-
-    //myIP();
-
+    }       
 
     $("#btn_login").click(function () {
         var txt_userName = $('#txt_userName').val();
@@ -78,7 +40,6 @@
 
     //function UserHasonlyDataEntryRole(rolesList, role) {
     //    foreach()
-    //    alert('UserHasonlyDataEntryRole');
     //    debugger;
     //}
 
@@ -89,7 +50,7 @@
             //var userId = 'e622505';   // data entry -- old supervisor
 
           //  var userId = 'e631971';//'c197831';   //  processor
-            var password = '';
+            //var password = '';
         }
         //testing values
 
@@ -114,7 +75,7 @@
                     sessionStorage.setItem('RoleId', data.data.List_userRoles[0].RoleId);
                 }
                 if (data.data.List_userRoles.length > 0) {
-                    if (data.data.List_userRoles[0].Department == "AUDITOR CONTROLLER") {
+                    if (data.data.List_userRoles[0].Department == "Auditor-Controller #050") {
                         // Dispersement user
                         sessionStorage.setItem('deptUser', false);  //  from active directory, if the user dept code is "Audit controller" then disbursement user otherwise dept user.
                     }

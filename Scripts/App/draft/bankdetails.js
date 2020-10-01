@@ -87,21 +87,16 @@
             $("#divmodifiedFileName").hide();
         }
 
-
         var attachobj_ddwetform = sessionStorage.getItem('uploadedfile_ddwetform');
         if ((attachobj_ddwetform != null) && (attachobj_ddwetform != 'undefined')) {
             $("#divmodifiedFileName_ddwetform").show();
-            //$("#pnlAttachment_ddwetform").show();
 
             $("#txtattachment_ddwetform").val(sessionStorage.getItem('originalfileName_ddwetform'));
             $("#modifiedFileName_ddwetform").text(sessionStorage.getItem('uploadedfile_ddwetform'));
         }
         else {
-        //    $("#pnlAttachment_ddwetform").hide();
             $("#divmodifiedFileName_ddwetform").hide();
         }
-
-
     }
     else if ($(location).attr('href').indexOf("_partialBankVerify") > -1) {
         $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
@@ -144,26 +139,8 @@
             $('a#filelink').text(sessionStorage.getItem('uploadedfile'));
             $("#divBankVerifyImage").css('display', 'block');
         }
-
-        ////  ddwetform
-        //var img = new Image();
-        //img.src = sessionStorage.getItem('uploadedfile_ddwetform');
-        //$(".imagearea").html(img);
-
-        //var str = ".pdf,.doc,.docx,";
-        //var strarray = str.split(",");
-        //if (strarray.indexOf(sessionStorage.getItem('uploadedfileExtension_ddwetform').toLowerCase()) <= -1) {
-        //    $("#Verifyimg_ddwetform").attr("src", "/Uploads/" + sessionStorage.getItem('uploadedfile_ddwetform'));
-        //    $("#divddWetDoc").css('display', 'block');
-        //}
-        //else {
-        //    $("#filelink_ddwetform").attr("href", "/Uploads/" + sessionStorage.getItem('uploadedfile_ddwetform'));
-        //    $('a#filelink_ddwetform').text(sessionStorage.getItem('uploadedfile'));
-        //    $("#divddwetformImage").css('display', 'block');
-        //}
-        ////
-
     }
+
     $('#lbl_userName').text(sessionStorage.getItem('userName'));
     var vendorNumber = sessionStorage.getItem('vendorNumber');
 
@@ -332,8 +309,12 @@
     });
 
     $("#btn_FileAttachmentDelete").on('click', function () {
-        sessionStorage.setItem('selectedFile', null);
-        sessionStorage.setItem('imagefile-selectedFile', null);
+        sessionStorage.removeItem('selectedFile');
+        sessionStorage.removeItem('imagefile-selectedFile');
+        sessionStorage.removeItem('originalfileName');
+        sessionStorage.removeItem('uploadedfile');
+        sessionStorage.removeItem('uploadedfileExtension');
+
         $("#modifiedFileName").text("");
         $("#fileError_or_Info").html("");
         $("#divmodifiedFileName").hide();
@@ -341,8 +322,12 @@
     });
 
     $("#btn_FileAttachmentDelete_ddwetform").on('click', function () {
-        sessionStorage.setItem('selectedFile_ddwetform', null);
-        sessionStorage.setItem('imagefile-selectedFile_ddwetform', null);
+        sessionStorage.removeItem('selectedFile_ddwetform');
+        sessionStorage.removeItem('imagefile-selectedFile_ddwetform');
+        sessionStorage.removeItem('originalfileName_ddwetform');
+        sessionStorage.removeItem('uploadedfile_ddwetform');
+        sessionStorage.removeItem('uploadedfileExtension_ddwetform');
+
         $("#modifiedFileName_ddwetform").text("");
         $("#fileError_or_Info_ddwetform").html("");
         $("#divmodifiedFileName_ddwetform").hide();
@@ -407,7 +392,7 @@
         }
 
         if ((financialIns.length <= 0) || (financialIns === ("no banks found"))) {
-            $("#financialIns").html('Financial Institution Name is required, Click on Verify Bank button.');
+            $("#financialIns").html('Financial Institution Name is required.');
             bool = false;
         } else {
             $("#financialIns").html('');
