@@ -20,7 +20,7 @@
         var index = $(this).index();
         $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
         $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");  //.addClass("show")
-   });
+    });
 
 
     $("#div_notes_tab").click(function (e) {
@@ -60,7 +60,7 @@
     GetNotesByConfirmationNumber(confirmationNum);
     GetAttachmentDocuments(confirmationNum);
     GetDocumentCheckList(confirmationNum);
-    
+
 
     function getReviewPanelInformation(summaryData) {
         var status = summaryData.Status;
@@ -212,30 +212,6 @@
             $("#ul_ddoptionList").append(str);
             j = j + 1;
         });
-
-
-        //var j = 1;
-        //var _address = summaryData.LocationAddressList[0].City;  //"16000 south street";
-        //var _city = "Downey";
-        //var _state = "NJ";
-        //var _zip = "08802";
-        //$.each(data.LocationAddress, function (index, value) {
-        //    var str = '<li class="list-group-item list-group-item-sm">' +
-        //        ' <div class="flex">' +
-        //        ' <ul class="noTopMargin flex-column-2">' +
-        //        ' <li>' +
-        //        ' <span class="smallRightMargin"><b>' + i + '.</b></span><b>ADDRESS:</b> ' + _address + '<span><b>CITY:</b></span> ' + _city +
-        //        '</li>' +
-        //        ' <li>' +
-        //        '<span class="smallRightMargin"></span><b>STATE:</b> ' + _state + '<b>ZIP CODE:</b> ' + _zip +
-        //        '</li>' +
-        //        '</ul>' +
-        //        ' </div>' +
-        //        ' </li>';
-
-        //    $("#ul_ddoptionList").append(str);
-        //    j = j + 1;
-        //});
     };
 
     function GetTimeLineByConfirmationNumber(confirmationNum) {
@@ -407,7 +383,7 @@
         hours = hours ? hours : 12; // the hour '0' should be '12'
         minutes = minutes < 10 ? '0' + minutes : minutes;
         var strTime = hours + ':' + minutes + ' ' + ampm;
-        return month + '/' + day + '/' + yr + ' (' + strTime +')';
+        return month + '/' + day + '/' + yr + ' (' + strTime + ')';
     }
 
     function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, action) {
@@ -436,7 +412,7 @@
 
                 if (status == 22 || status == 6) {   //reject  status = 6;  	Recommend Reject  = 22
                     $('#rejectApplicationModal').modal('hide');
-                   if (status == 22) {
+                    if (status == 22) {
                         $("#header_status").text("Recommend Reject");
                     }
                     else if (status == 6) {
@@ -693,10 +669,10 @@
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
         var notesType = "General"; // to do needed  place holder to pull from 
         var notes = $("#txt_Notes_comment").val();
-        InsertUpdateNotes(confirmationNum, notesType, notes); 
+        InsertUpdateNotes(confirmationNum, notesType, notes);
     });
 
-    function InsertUpdateNotes(confirmationNum, notesType, notes) { 
+    function InsertUpdateNotes(confirmationNum, notesType, notes) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
@@ -907,7 +883,7 @@
             , data: data,
             columns: [
                 {
-                    "data": "DisplayName",
+                    "data": "AttachmentFileName",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
                             data = '<a target="blank" href="/Uploads/' + row.AttachmentFileName + '">' + data + ' </a>';    //'58202010105_SP8313_VC.png'
@@ -915,39 +891,36 @@
 
                         return data;
                     },
-                    "title": "Documents"
+                    "title": "File Name"
                 },
-                //{ 'data': 'AttachmentFileName', "title": "" },
-                //{ 'data': 'DisplayName', "title": "" },
-                { 'data': 'UploadedDate', "title": "" },
-                //{ 'data': 'Command', "title": "" },
+                {
+                    "data": "DisplayName",
+                    "title": "File Type"
+                },
+                {
+                    'data': 'UploadedDate', "title": "Uploaded Date"
+                    , "render": function (data, type, row, meta) {
+                        if (type === 'display') {
+                            data = '<span class="fa fa-calendar">'+ data + ' </span>';    
+                        }
+                        return data;
+                    }
+                },
                 {
                     'data': null,
                     "bSortable": false,
                     "width": '5px'
-
-                    //
-                    //,"mRender": function (o) { return '<a href=#/' + o.userid + '>' + 'Edit' + '</a>'; }
                     , "mRender": function (o) {
                         return '<div id = "div_action "class= "pull-right btn-group" >' +
                             '<span class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>' +
                             '<ul class="dropdown-menu context-menu-left-showOnLeft">' +
                             '<li>' +
-                            //'<a title="Download Document" href="#"' + o.DisplayName + '>' +
-
                             '<a class="clsdownload" title="Download Document" > ' +
 
                             '<span class="glyphicon glyphicon-download-alt"></span>' +
                             '<span>Download</span>' +
                             '</a>' +
                             '</li>' +
-
-                            //'<li>' +
-                            //'<a title="Rename File fun" onclick="return getReturn(this);" >' +
-                            //' <span class="glyphicon glyphicon-pencil"></span>' +
-                            //'Rename' +
-                            //'</a>' +
-                            //'</li>' +
 
                             '<li>' +
                             '<a title="Retire File" class="clsretire"  data-rowclass="documentRow">' +
@@ -962,6 +935,7 @@
             ],
 
             columnDefs: [
+                //{ "class": "fa fa-calendar" , "targets": [1] },
                 {
                     searching: false,
                     data: null,
@@ -971,7 +945,12 @@
             ],
             select: {
                 selector: 'td:first-child'
-            }
+            },
+
+            //"createdRow": function (row, data, dataIndex) {
+            //    $(row).find('td:eq(1)')
+            //        .addClass('fa fa-calendar');
+            //}
         });
     };
 

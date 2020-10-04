@@ -5,7 +5,34 @@
     AdminRole: 4
 };
 
+
+//  Pop over on question mark on mouse hover - starting
+var originalLeave = $.fn.popover.Constructor.prototype.leave;
+$.fn.popover.Constructor.prototype.leave = function (obj) {
+	var self = obj instanceof this.constructor ?
+		obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+	var container, timeout;
+
+	originalLeave.call(this, obj);
+
+	if (obj.currentTarget) {
+		container = $(obj.currentTarget).siblings('.popover')
+		timeout = self.timeout;
+		container.one('mouseenter', function () {
+			clearTimeout(timeout);
+			container.one('mouseleave', function () {
+				$.fn.popover.Constructor.prototype.leave.call(self, self);
+			});
+		})
+	}
+};
+
+$('body').popover({ selector: '[data-popover]', trigger: 'hover', placement: 'auto', delay: { show: 50, hide: 400 } });
+//  Popover on question mark on mouse hover  - Ending
+
 $(document).ready(function () {
+	
+
 	if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
 		$('#menu_userName').text(sessionStorage.getItem('userName'));
 		$('#div_advanceSearch').hide();
@@ -18,7 +45,6 @@ $(document).ready(function () {
 		$('#menu_userName').hide();
 	}
 
-    //$("#top-menu11").show();
     $("#menu_applicatoinList").click(function () {
         window.location.href = '/applicationList/applicationList';
     });
@@ -32,8 +58,7 @@ $(document).ready(function () {
 	}
 	else {
 		$("#liNavigation").hide();
-	}
-    
+	}    
 
     $("#lnkHome").click(function () {
         //window.location.href = '/home/dashboard';
@@ -54,31 +79,6 @@ $(document).ready(function () {
 });
 // start  draft master
 
-//  Pop over on question mark on mouse hover - starting
-var originalLeave = $.fn.popover.Constructor.prototype.leave;
-$.fn.popover.Constructor.prototype.leave = function (obj) {
-	var self = obj instanceof this.constructor ?
-		obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
-	var container, timeout;
-
-	originalLeave.call(this, obj);
-
-	if (obj.currentTarget) {
-		container = $(obj.currentTarget).siblings('.popover')
-		timeout = self.timeout;
-		container.one('mouseenter', function () {
-			//We entered the actual popover – call off the dogs
-			clearTimeout(timeout);
-			//Let's monitor popover content instead
-			container.one('mouseleave', function () {
-				$.fn.popover.Constructor.prototype.leave.call(self, self);
-			});
-		})
-	}
-};
-
-$('body').popover({ selector: '[data-popover]', trigger: 'click hover', placement: 'auto', delay: { show: 50, hide: 400 } });
-//  Popover on question mark on mouse hover  - Ending
 
 //  session timeout begin
 function IsSessionAlive() {

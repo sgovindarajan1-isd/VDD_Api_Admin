@@ -18,6 +18,19 @@
     $('#lbl_header').html('Payment Information');
     var paymentSrNumber = 1;
 
+    function validateNumber(event) {
+        var key = window.event ? event.keyCode : event.which;
+        if (event.keyCode === 8 || event.keyCode === 46) {
+            return true;
+        } else if (key < 48 || key > 57) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    $('#txtZipCode').keypress(validateNumber);
+   
     $.ajax({
         contentType: 'application/json; charset=utf-8',
         type: "POST",
@@ -65,7 +78,7 @@
                 var table = $('#ddGrid').DataTable();
                 table.rows(function (idx, data, node) {
                     if (data.Status.toLowerCase() === 'pending') {  // direct deposit
-                        $("#pendingMessage").text("Your request is currently pending review. Please allow up to 15 days to process the request.")
+                        $("#pendingMessage").text("Your request is currently pending review. Please allow up to 20 days to process the request.")
                         $('#btn_deposit_next').hide();
                         return false;
                     }
@@ -194,51 +207,8 @@
         columnDefs: [
             { "width": "2px", "targets": [0] },
             { "visible": false, "targets": [2, 3, 4,5,6] },
-
-            //{
-            //    "targets": [2],
-            //    "visible": false
-            //},
-            //{
-            //    "targets": [3],
-            //    "visible": false
-            //},
-            //{
-            //    "targets": [4],
-            //    "visible": false
-            //},
-            //{
-            //    "targets": [5],
-            //    "visible": false
-            //},
-            //{
-            //    "targets": [6],
-            //    "visible": false
-            //},
-
-            //searchable: true,
-            //width: '3%',
-            //targets: 0,
-            //data: true,
-            //defaultContent: '',
-            //orderable: false,               
-            // className: 'select-checkbox',
-            //'render': function (data, type, full, meta) {
-            //    return '<input type="checkbox" class="selected">';
-            //}
-
         ],
 
-        //'rowCallback': function (row, data, dataIndex) {
-        //    // Get row ID
-        //    var rowId = data[0];
-
-        //    // If row ID is in the list of selected row IDs
-        //    if ($.inArray(rowId, rows_selected) !== -1) {
-        //        $(row).find('input[type="checkbox"]').prop('checked', true);
-        //        $(row).addClass('selected');
-        //    }
-        //},
         select: {
             style: 'multi',
             selector: 'td:first-child'

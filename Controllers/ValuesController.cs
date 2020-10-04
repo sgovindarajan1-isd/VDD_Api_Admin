@@ -231,6 +231,30 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
+
+        [HttpPost]
+        public HttpResponseMessage GetVendorNameByVendorCode([FromBody] VM_R_Vend_User vmuser)
+        {
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "Vendor not found");
+            AdminDAL adminDAL = new AdminDAL();
+
+            string result = adminDAL.GetVendorNameByVendorCode(vmuser.UserId);
+            if (result != null)
+            {
+                var data = new
+                {
+                    VendorName = result,
+                };
+                response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Error" });
+            }
+
+            return response;
+        }
+
         [HttpPost]
         public HttpResponseMessage GetVendorDetailsByName([FromBody] VM_Vendor vmVendor)
         {
@@ -524,7 +548,6 @@ namespace eCAPDDApi.Controllers
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
         }
-
 
         [HttpPost]
         public HttpResponseMessage InsertDocumentAttachment([FromBody] DAL.Models.DAL_M_VendorDD attachmentModel)

@@ -390,8 +390,10 @@ namespace DAL
                 DataSet ds = new DataSet("Vendor");
                 using (SqlConnection con = DBconnection.Open())
                 {
+                    int type_id = 5;  // VCM Request Submission Receipt
                     SqlCommand sqlComm = new SqlCommand("SubmitVendorAttachment", con);
                     sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
+                    sqlComm.Parameters.AddWithValue("@TypeID", type_id);
                     sqlComm.Parameters.AddWithValue("@AttachmentFileName", vmvendorDD.VendorReportFileName);
                     sqlComm.Parameters.AddWithValue("@LastUpdatedUser", "");
                     sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", DateTime.Now);

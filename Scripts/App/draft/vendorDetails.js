@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    debugger;
     $("#liNavigation").show();
     $(".round-tab").css("border-color", "#e0e0e0");
 
@@ -11,6 +10,7 @@
     $("#li_vendorstep").removeClass("disabled");
     $("#img_vendor_step").parent().css("border-color", "#7030A0");
     $('#lbl_header').html('Vendor Information');
+    $('#txtPhoneNumber').mask('(000)000-0000');
 
     // testing values
     if ($(location).attr('href').indexOf("local") > -1) {
@@ -28,10 +28,37 @@
     }
     // testing values
 
+    $("#txtVendorCode").focusout(function () {
+        if ($("#txtVendorCode").val().trim().length > 0) {
+            GetVendorNameByVendorCode($("#txtVendorCode").val());
+        }
+    }).click(function (e) {
+        e.stopPropagation();
+        return true;
+    });   
+    
+    function GetVendorNameByVendorCode(vname) {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "post",
+            dataType: 'json',
+            data: JSON.stringify({ 'UserId': vname }),
+            url: "/api/values/GetVendorNameByVendorCode/",
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            success: function (data) {
+                $("#txtPayeeName").val(data.data.VendorName);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#txtPayeeName").val("No Payee Name found");
+            }
+        });
+    };
+
     $('#id_userName').text(sessionStorage.getItem('userName')); //lbl_userName 
 
     $('#btn_vendor_next').on('click', function (e) {
-        debugger;
         var txtApplicationType = $("#txtApplicationType").val();  //  to get selected text  $("#txtApplicationType option:selected").text();
         var txtVendorCode = $("#txtVendorCode").val();
         var txtPayeeName = $("#txtPayeeName").val();
@@ -118,7 +145,10 @@
         }
 
         if (txtPhoneNumber.length <= 0) {
-            $("#span_PhoneNumber").html('Phone Number.');
+            $("#span_PhoneNumber").html('Phone Number is required.');
+            bool = false;
+        } else if (!validatePhone(txtPhoneNumber)) {
+            $("#span_PhoneNumber").html('Valid Phone Number is required.');
             bool = false;
         } else {
             $("#span_PhoneNumber").html('');
@@ -133,7 +163,6 @@
     });
 
     function storeDetails() {
-        debugger;
         var vendordetailsRow = [];
 
         var ApplicationType = '';

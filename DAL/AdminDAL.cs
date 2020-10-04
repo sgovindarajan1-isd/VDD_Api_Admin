@@ -413,6 +413,40 @@ namespace DAL
             }
             return "SUCCESS";
         }
+
+
+        public string GetVendorNameByVendorCode(string user_id )
+        {
+            string ret = string.Empty;
+            try
+            {
+                DataSet ds = new DataSet("Vendor");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetVendorNameByVendorCode", con);
+                    sqlComm.Parameters.AddWithValue("@VendorCode", user_id);  
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        if (ds.Tables[0].Rows[0]["VendorName"].ToString() != string.Empty)
+                        {
+                            ret = ds.Tables[0].Rows[0]["VendorName"].ToString();
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error(ex.Message);
+            }
+            return ret;
+        }
+
         public string UpdateVendorDetails(DAL.Models.DAL_M_VendorDD adminModel)
         {
             try
@@ -648,7 +682,6 @@ namespace DAL
             }
             return "SUCCESS";
         }
-
 
         public string InsertDocumentAttachment(DAL.Models.DAL_M_VendorDD attachmentModel)
         {

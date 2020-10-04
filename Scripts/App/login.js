@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    //$("#top-menu11").hide();
     $("#menu_TopPanel").hide();
     $("#menu_div_TopPanel").hide();
     $("#liNavigation").hide();
@@ -8,7 +7,6 @@
         $("#lbl_userName").hide();
     }
 
-    debugger;
     if ($(location).attr('href').indexOf("_partialDraftLanding") > -1) {
         $('#lbl_userName').text(sessionStorage.getItem('userName'));
         $("#pnl_login_footer").show();
@@ -47,9 +45,8 @@
         //testing values
         if ($(location).attr('href').indexOf("local") > -1) {
             ////  To do :  test values for easy access,  remove later
-            //var userId = 'e622505';   // data entry -- old supervisor
-
-          //  var userId = 'e631971';//'c197831';   //  processor
+            var userId = 'e622505';   // data entry -- old supervisor
+            //  var userId = 'e631971';//'c197831';   //  processor
             //var password = '';
         }
         //testing values
@@ -70,7 +67,6 @@
                 'Authorization': 'Basic ' + btoa('admin')  // This method can be called before login,  so there wont be any security token created,  hense this by pass
             },
             success: function (data) {
-                debugger;
                 if (data.data.List_userRoles.length > 0) {
                     sessionStorage.setItem('RoleId', data.data.List_userRoles[0].RoleId);
                 }
@@ -126,7 +122,6 @@
                 $("#loaderDiv").hide();
             }
             , error: function (jqXHR, textStatus, errorThrown) {
-                debugger;
                 $("#fileError_or_Info").html(jqXHR.responseJSON.data);
                 $("#loaderDiv").hide();
             }
