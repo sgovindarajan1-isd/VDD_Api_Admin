@@ -358,7 +358,21 @@ namespace DAL
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.ExecuteNonQuery();
 
-                    //if there is EventHandlerTaskAsyncHelper second attachment,  when submit from DDMS
+
+                    //VCM Document
+                    int type_id = 5;  // VCM Request Submission Receipt
+                    sqlComm.Parameters.Clear();
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
+                    sqlComm.Parameters.AddWithValue("@TypeID", type_id);
+                    sqlComm.Parameters.AddWithValue("@AttachmentFileName", vmvendorDD.VendorReportFileName);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUser", "");
+                    sqlComm.Parameters.AddWithValue("@LastUpdateDateTime", DateTime.Now);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+
+
+                    //if there is second attachment,  when submit from DDMS
                     if ( (vmvendorDD.AttachmentFileName_ddwetform != null) && (!string.IsNullOrEmpty(vmvendorDD.AttachmentFileName_ddwetform.Trim())) )
                     {
                         int dtypeid = 6; 

@@ -96,7 +96,7 @@ namespace DAL.Models
         public List<string> LocationAddressDescList { get; set; }
         public string LastUpdatedUser { get; set; }
         public int DocumentAttachmentTypeId { get; set; }
-        public string DocumentAttachmentTypeName{ get; set; }
-
+        public string DocumentAttachmentTypeName { get; set; }
+        public string ReturnErrorSuccessMsg { get; set; }
     }
 }

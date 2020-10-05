@@ -9,6 +9,11 @@ using eCAPDDApi.Models;
 using DAL;
 using System.Threading;
 
+using Microsoft.Reporting.WebForms;
+//using System.Web.Mvc;
+using System.Data;
+using System.IO;
+
 using Newtonsoft.Json;
 
 namespace eCAPDDApi.Controllers
@@ -31,8 +36,7 @@ namespace eCAPDDApi.Controllers
     public class ValuesController : ApiController
     {
         [HttpPost]
-        public HttpResponseMessage LoginUser([FromBody] IdTextClass idtext)
-        {
+        public HttpResponseMessage LoginUser([FromBody] IdTextClass idtext){
             List<VM_login> data = new List<VM_login>();
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
@@ -122,6 +126,7 @@ namespace eCAPDDApi.Controllers
 
             return "Success";
         }
+      
 
         [HttpPost]
         public HttpResponseMessage SubmitVendorDD([FromBody]DAL.Models.DAL_M_VendorDD vmvendorDD)
@@ -129,15 +134,22 @@ namespace eCAPDDApi.Controllers
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
             VendorDAL clsdal = new VendorDAL();
 
-            VM_vendorDD vmvendorreturn = new VM_vendorDD();
+            //VM_vendorDD vmvendorreturn = new VM_vendorDD();
 
             string confirmNumber = GenerateConfirmationNumber(6);
             DateTime updateDate = DateTime.Now;
+
+            var uniqueDatetime = DateTime.Now.ToString("ddMMyyyyhhmmss");
+            vmvendorDD.VendorReportFileName = "VCM_" + confirmNumber + "_" + uniqueDatetime + ".pdf";
+
 
             vmvendorDD.Confirmation = confirmNumber;
             vmvendorDD.SubmitDateTime = updateDate;
 
             Tuple<string, string> result = clsdal.SubmitVendor(vmvendorDD);
+
+            string str = ShowReport(vmvendorDD);
+
             if (result != null)
             {
 
@@ -145,21 +157,23 @@ namespace eCAPDDApi.Controllers
                 string resultRequestLog = clsdal.InsertRequestLog(vmvendorDD);
                 if ((resultAttach != null) && (resultRequestLog != string.Empty))
                 {
-                    vmvendorreturn.Confirmation = confirmNumber;
-                    vmvendorreturn.SubmitDateTime = updateDate;
+                    vmvendorDD.Confirmation = confirmNumber;
+                    vmvendorDD.SubmitDateTime = updateDate;
 
-                    vmvendorreturn.ReturnErrorSuccessMsg = SendEmail(vmvendorDD.Payeename, confirmNumber, vmvendorDD.DDNotifyEmail);
+                    vmvendorDD.ReturnErrorSuccessMsg = SendEmail(vmvendorDD.Payeename, confirmNumber, vmvendorDD.DDNotifyEmail);
                 }
                 else
                 {
-                    vmvendorreturn.Confirmation = "ERROR-in attach";
-                    vmvendorreturn.ReturnErrorSuccessMsg = "Error in submitting Attachment file/Request Log";
+                    vmvendorDD.VendorReportFileName = "Error-in attachment";
+                    //vmvendorreturn.
+                    vmvendorDD.Confirmation = "ERROR-in attachment";
+                    vmvendorDD.ReturnErrorSuccessMsg = "Error in submitting Attachment file/Request Log";
                 }
-                response = Request.CreateResponse(HttpStatusCode.OK, new { data = vmvendorreturn });
+                response = Request.CreateResponse(HttpStatusCode.OK, new { data = vmvendorDD });
             }
             else
             {
-                vmvendorreturn.Confirmation = "ERROR-submit vendor confirmation";
+                vmvendorDD.Confirmation = "ERROR-submit vendor confirmation";
             }
 
             return response;
@@ -347,7 +361,6 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
-
         [HttpPost]
         public HttpResponseMessage GetApplicationSummary([FromBody] IdTextClass idTextClass)
         {
@@ -491,7 +504,6 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
-
         [HttpPost]
         public HttpResponseMessage InsertUpdateNotes([FromBody] DAL.Models.DAL_M_Notes vm_Notes)
         {
@@ -611,7 +623,7 @@ namespace eCAPDDApi.Controllers
             var dt = adminDAL.InsertUpdateChecklistNotes(vm_checklistNotes);
             var data = new
             {
-                returnValue = dt,
+                ModifiedNoteId = dt,
             };
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
@@ -753,35 +765,160 @@ namespace eCAPDDApi.Controllers
             return (ua.Contains("Mobile") ? " Mobile " : "");
         }
 
-        //[HttpPost]
-        //public HttpResponseMessage GetApplicationUserList()
-        //{
-        //    AdminDAL adminDAL = new AdminDAL();
+        // ------------- Reporting 
+        private string PDFExport(LocalReport report, string rptPathandFileName, string rptFileName)
+        {
+            try
+            {
+                string[] streamids;
+                string mimetype;
+                string encod;
+                string fextension;
+                string deviceInfo =
+                  "<DeviceInfo>" +
+                  "  <OutputFormat>EMF</OutputFormat>" +
+                  "  <PageWidth>8.5in</PageWidth>" +
+                  "  <PageHeight>11in</PageHeight>" +
+                  "  <MarginTop>0.25in</MarginTop>" +
+                  "  <MarginLeft>0.25in</MarginLeft>" +
+                  "  <MarginRight>0.25in</MarginRight>" +
+                  "  <MarginBottom>0.25in</MarginBottom>" +
+                  "</DeviceInfo>";
+                Warning[] warnings;
 
-        //    var dt = adminDAL.GetApplicationUserList();
-        //    var data = new
-        //    {
-        //        returnValue = dt,
-        //    };
-        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-        //    return response;
-        //}
+                byte[] bytes = report.Render("PDF", deviceInfo, out mimetype, out encod, out fextension, out streamids, out warnings);
+                string localPath = AppDomain.CurrentDomain.BaseDirectory;
+                System.IO.File.WriteAllBytes(rptPathandFileName, bytes);
 
-        //[HttpPost]
-        //public HttpResponseMessage GetApplicationStatusList()
-        //{
-        //    AdminDAL adminDAL = new AdminDAL();
+                return rptFileName;
+            }
+            catch (Exception ex)
+            {
+                return "error " + ex.Message + " -*- " + rptPathandFileName + " -*- " + rptFileName;
+            }
+        }
 
-        //    var dt = adminDAL.GetApplicationStatusList();
-        //    var data = new
-        //    {
-        //        returnValue = dt,
-        //    };
-        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-        //    return response;
-        //}
+        public DataTable createVendorDataTable(DAL.Models.DAL_M_VendorDD vendordetails)
+        {
+            DataTable dt = new DataTable();
+            dt.Clear();
+            dt.Columns.Add("VendorNumber");
+            dt.Columns.Add("VendorName");
+            dt.Columns.Add("ssn");
+            dt.Columns.Add("DDNotifiEmail");
+            dt.Columns.Add("AccountType");
+            dt.Columns.Add("BankAccountNumber");
+            dt.Columns.Add("BankRoutingNo");
+            dt.Columns.Add("FinancialIns");
+            dt.Columns.Add("Signeremail");
+            dt.Columns.Add("Signername");
+            dt.Columns.Add("Signerphone");
+            dt.Columns.Add("Signertitle");
+            dt.Columns.Add("VendorAttachmentFileName");
+            dt.Columns.Add("SubmittedDate");
+            dt.Columns.Add("TotalAttachment");
+            dt.Columns.Add("ConfirmationNumber");
+            DataRow dr = dt.NewRow();
+            dr["VendorNumber"] = vendordetails.Vendorname;
+            dr["VendorName"] = vendordetails.Payeename;
+
+            dr["ssn"] = getMaskedSSN(vendordetails.Ssn);
+            dr["DDNotifiEmail"] = vendordetails.DDNotifyEmail;
+            if (vendordetails.AccountType == 1)
+                dr["AccountType"] = "Checking";
+            else if (vendordetails.AccountType == 2)
+                dr["AccountType"] = "Saving";
+            else
+                dr["AccountType"] = "Error";
+            dr["BankAccountNumber"] = vendordetails.BankAccountNumber;
+            dr["BankRoutingNo"] = vendordetails.BankRoutingNo;
+            dr["FinancialIns"] = vendordetails.FinancialIns;
+            dr["Signeremail"] = vendordetails.Signeremail;
+            dr["Signername"] = vendordetails.Signername;
+            dr["Signerphone"] = vendordetails.Signerphone;
+            dr["Signertitle"] = vendordetails.Signertitle;
+            dr["VendorAttachmentFileName"] = vendordetails.VendorAttachmentFileName;
+
+            dr["TotalAttachment"] = "Total: 2";
+            dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString();
+            dr["ConfirmationNumber"] = vendordetails.Confirmation;
+            dt.Rows.Add(dr);
+            return dt;
+        }
+
+        public string getMaskedSSN(string ssn)
+        {
+            if (ssn.Trim().Length < 9)
+            {
+                return ssn;
+            }
+            else
+            {
+                return "***-**-" + ssn.Substring(ssn.Trim().Length - 4, 4);
+            }
+        }
 
 
+        public DataTable createLocationDataTable(DAL.Models.DAL_M_VendorDD vendordetails)
+        {
+            if (vendordetails.LocationAddressDescList.Count <= 0)
+                return null;
+            DataTable dt = new DataTable();
+            dt.Clear();
+            dt.Columns.Add("LocationAddress");
+
+            int cnt = 1;
+            foreach (string locadd in vendordetails.LocationAddressDescList)
+            {
+                if (locadd != null && locadd != string.Empty)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["LocationAddress"] = cnt.ToString() + ". " + locadd;
+                    cnt++;
+                    dt.Rows.Add(dr);
+                }
+            }
+
+            return dt;
+        }
+
+        public string ShowReport(DAL.Models.DAL_M_VendorDD vendordetails)
+        {
+
+            string localPath = AppDomain.CurrentDomain.BaseDirectory;
+            string uploadPath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];  //  here is the path where  vendorreport file will be saved
+            //string uploadFileName = Path.Combine(Server.MapPath("~/" + uploadPath + "/ "), vendordetails.VendorReportFileName);
+
+            string uploadFileName = localPath + uploadPath + "\\"+ vendordetails.VendorReportFileName;
+
+            ReportViewer viewer = new ReportViewer();
+            viewer.ProcessingMode = ProcessingMode.Local;
+            viewer.SizeToReportContent = true;
+            viewer.SizeToReportContent = true;
+            viewer.AsyncRendering = true;
+            viewer.LocalReport.ReportPath = "VendorAuthorizationForm.rdlc";
+
+            DataTable vdt = createVendorDataTable(vendordetails);
+            ReportDataSource rds = new ReportDataSource("VendorDataSet", vdt);
+
+            // location ds
+            DataTable ldt = createLocationDataTable(vendordetails);
+            ReportDataSource lds = new ReportDataSource("VendorDataLocDataSet", ldt);
+
+            viewer.LocalReport.DataSources.Clear();
+            viewer.LocalReport.DataSources.Add(rds);
+            viewer.LocalReport.DataSources.Add(lds);
+
+            string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
+            return retFileName; //Json(retFileName);
+
+            //var data = new
+            //{
+            //    FileNameFromReportViewer = retFileName,
+            //};
+            //var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            //return response;
+        }
 
     }
 }

@@ -2,7 +2,7 @@
     var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
     var userId = sessionStorage.getItem('UserId');
     var globalSelectedItemNumber = 0;
-    var globalSelectedItemNumber_forEdit = 0;
+    var globalSelected_NotesIdforEdit = 0;
 
     //  Check list
     $('.switch-input').change(function () {
@@ -63,47 +63,64 @@
         GetChecklistNotesByChecklistIDandNotesID(confirmationNum, $(this).attr('value'));
     });
 
+    
     $("#btn_checklistAdd").click(function () {
+        globalSelected_NotesIdforEdit = 0;
+        $("#txt_checklist_comment").val('');
+    });
+
+    $("#btn_checklistSubmit").click(function () {
         debugger;
         var checklistItemNumber = globalSelectedItemNumber;
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
         var notesType = "Checklist"; // to do needed  place holder to pull from 
         var notes = $("#txt_checklist_comment").val();
-
-        InsertUpdateChecklistNotes(confirmationNum, checklistItemNumber, notesType, notes)
+        if (notes.length <= 0) {
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.warning("Please enter Notes to add!");
+            return;
+        }
+        InsertUpdateChecklistNotes(confirmationNum, checklistItemNumber, notesType, notes, globalSelected_NotesIdforEdit);
+        globalSelected_NotesIdforEdit = 0;  // resetting for add edit
     });
 
-    $("a.btnedit_Checklist").click(function () {
-        debugger;
-        globalSelectedItemNumber_forEdit = $(this).attr('value');  // this work is pending
+    $("#noteList_cl").on("click", "a.btnedit_Checklist", function () {
+        $("#txt_checklist_comment").val($(this).parent().attr('data-value'));
+        globalSelected_NotesIdforEdit = $(this).attr('value');  // this work is pending
     });
 
-    function InsertUpdateChecklistNotes(confirmationNum, checklistItemNumber, notesType, notes) {
-        debugger;
+    function InsertUpdateChecklistNotes(confirmationNum, checklistItemNumber, notesType, notes, modifyOrnewNoteId) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
             url: "/api/values/InsertUpdateChecklistNotes/",
             dataType: 'json',
             data: JSON.stringify({
-                'ConfirmationNumber': confirmationNum, 'ChecklistId': checklistItemNumber, 'NotesType': notesType, 'Notes': notes
+                'ConfirmationNumber': confirmationNum, 'ChecklistId': checklistItemNumber, 'NotesType': notesType, 'Notes': notes, NotesId: modifyOrnewNoteId
             }),
 
             headers: {
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
+                debugger;
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Successfully added Checklist.");
+                var today = new Date();
+                var tdate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear() ;
+                //var time = today.getHours() + ":" + today.getMinutes();
+                var ttime = (today.getHours() > 12) ? (today.getHours() - 12 + ':' + today.getMinutes() + ' PM') : (today.getHours() + ':' + today.getMinutes() + ' AM');
+                var dateTime = tdate + ' ' + ttime;
 
                 var a = '<li class="noteRow list-group-item">'+
                     '<div style="color:#000000;">'+
-                    '<span><strong>'+Date.parse(new Date()).toString() +'</strong></span>'+
+                    '<span><strong>' + dateTime +' '+ '</strong></span>'+
                     '<span><strong>'+ sessionStorage.getItem('userName')+
                     '</strong></span>'+
 
-                    '<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">' +
-                    '<a class="btn btn-info btnedit_Checklist" value="' + checklistItemNumber +'">' +
+                    '<div class="pull-right btn-group btn-group-xs" role="group" aria-label="..." data-value="' + notes + '"> ' +
+                   // '<a class="btn btn-info btnedit_Checklist" value="' + checklistItemNumber +'">' +
+                    '<a class="btn btn-info btnedit_Checklist" value=' + data.data.ModifiedNoteId + '>' +
                     '<span class="fa fa-edit smallRightMargin "></span>' +
                     'Edit' +
                     '</a>' +
@@ -116,9 +133,11 @@
                 '</li>'
 
 
-                //var a = '<li class="list-group-item list-group-item-warning emptyResultMessage"> <span style="font-weight:bold; padding-right:10px" >' + '</span >' + notes + '</li>';
                 $("#noteList_cl").append(a);
-                $('#addchecklistModal').modal('hide');
+                $('a[value=' + checklistItemNumber + ']').text(tdate);
+
+
+               // $('#addchecklistModal').modal('hide');
             }
             , complete: function (jqXHR) {
             }
@@ -151,14 +170,15 @@
             success: function (data) {
                 debugger;
                 for (var item in data.data.ChecklistNotes) {
+                    //var selectedNotes = [];
+                    //selectedNotes.push('selectedNoteId': data.data.ChecklistNotes[item].NotesId);
                     var a = '<li class="noteRow list-group-item">' +
                         '<div style="color:#000000;">' +
                         '<span><strong>' + data.data.ChecklistNotes[item].LastUpdatedDateTime +' - '+'</strong></span>' +
                         '<span><strong>' + data.data.ChecklistNotes[item].LastUpdatedUser +
                         '</strong></span>' +
-
-                        '<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">' +
-                        '<a class="btn btn-info btnedit_Checklist" value="' + data.data.ChecklistNotes[item].ChecklistId + '">' +
+                        '<div class="pull-right btn-group btn-group-xs" role="group" aria-label="..."  data-value="' + data.data.ChecklistNotes[item].Notes + '"> '+
+                        '<a class="btn btn-info btnedit_Checklist" value=' + data.data.ChecklistNotes[item].NotesId+ '>' +
                         '<span class="fa fa-edit smallRightMargin "></span>' +
                         'Edit' +
                         '</a>' +

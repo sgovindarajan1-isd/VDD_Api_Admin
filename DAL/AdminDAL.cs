@@ -730,7 +730,6 @@ namespace DAL
             }
             return "SUCCESS";
         }
-
         
         public List<DAL_M_Checklist> GetDocumentCheckList(string confirmationNumber)
         {
@@ -770,8 +769,9 @@ namespace DAL
         }
 
         
-        public string InsertUpdateChecklistNotes(DAL_M_Notes vm_Notes)
+        public int InsertUpdateChecklistNotes(DAL_M_Notes vm_Notes)
         {
+            int returnNoteId = 0;
             try
             {
                 using (SqlConnection con = DBconnection.Open())
@@ -779,20 +779,29 @@ namespace DAL
                     SqlCommand sqlComm = new SqlCommand("InsertUpdateChecklistNotes", con);
                     sqlComm.Parameters.AddWithValue("@ConfirmationNumber", vm_Notes.ConfirmationNumber);
                     sqlComm.Parameters.AddWithValue("@ChecklistId", vm_Notes.ChecklistId);
+                    sqlComm.Parameters.AddWithValue("@NotesId", vm_Notes.NotesId);  // for update
                     sqlComm.Parameters.AddWithValue("@Note_Type", vm_Notes.NotesType);
                     sqlComm.Parameters.AddWithValue("@Note_Content", vm_Notes.Notes);
+                    SqlParameter OutputNoteId = new SqlParameter("@OutputNoteId", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    sqlComm.Parameters.Add(OutputNoteId);
+
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.ExecuteNonQuery();
+
+                    returnNoteId = int.Parse(OutputNoteId.Value.ToString());
                     con.Close();
                 }
             }
             catch (Exception ex)
             {
                 LogManager.log.Error("Error in Insert / Update Checklist Notes.  Message: " + ex.Message);
-                return "Error";
+                return 0;
             }
-            return "SUCCESS";
+            return returnNoteId;
         }
 
         public List<DAL_M_Notes> GetChecklistNotesByChecklistIDandNotesID(string confirmationNumber, int CheckListID)

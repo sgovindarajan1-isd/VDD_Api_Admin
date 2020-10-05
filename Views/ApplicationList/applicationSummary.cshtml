@@ -55,6 +55,7 @@
             <div class="modal-body" style="text-align:left">
                 <div class="form-group subSection">
                     <label for="comment">Note:</label>
+                    
                     <textarea class="form-control" rows="5" id="txt_Notes_comment"></textarea>
                 </div>
                 <span id="accountType">0 / 256 characters</span>
@@ -82,17 +83,25 @@
                         <div class="modal-body" style="text-align:left">
                             <div class="form-group subSection">
                                 <label for="comment">Note:</label>
+                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                    <a class="pull-right btn btn-success" id="btn_checklistAdd" data-additionalprocess="ckeditor">
+                                        <span class="glyphicon glyphicon-plus smallRightMargin"></span>
+                                        Add
+                                    </a>
+                                </div>
+                                <br>
                                 <textarea class="form-control" rows="5" id="txt_checklist_comment"></textarea>
                             </div>
                             <span id="accountType">0 / 256 characters</span>
+
+                            <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                <a class="btn btn-success" id="btn_checklistSubmit" data-additionalprocess="ckeditor">
+                                    Submit
+                                </a>
+                            </div>
                         </div>
 
-                        <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                            <a class="btn btn-success" id="btn_checklistAdd" data-additionalprocess="ckeditor">
-                                <span class="glyphicon glyphicon-plus smallRightMargin"></span>
-                                Add
-                            </a>
-                        </div>
+                        
 
                         <ul class="nav nav-tabs bottomMargin" role="tablist">
                             <li role="presentation" class="active"><a href="javascript:void(0);" class="tabs leftMargin" aria-controls="Notes" role="tab">Comments</a></li>
