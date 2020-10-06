@@ -3,7 +3,7 @@
     var userId = sessionStorage.getItem('UserId');
     var globalSelectedItemNumber = 0;
     var globalSelected_NotesIdforEdit = 0;
-
+    var glabaleditedNotesItemtoUpdate = null;
     //  Check list
     $('.switch-input').change(function () {
         debugger;
@@ -81,11 +81,13 @@
             return;
         }
         InsertUpdateChecklistNotes(confirmationNum, checklistItemNumber, notesType, notes, globalSelected_NotesIdforEdit);
-        globalSelected_NotesIdforEdit = 0;  // resetting for add edit
+       
     });
 
     $("#noteList_cl").on("click", "a.btnedit_Checklist", function () {
+        debugger;
         $("#txt_checklist_comment").val($(this).parent().attr('data-value'));
+        glabaleditedNotesItemtoUpdate = $(this).parent();
         globalSelected_NotesIdforEdit = $(this).attr('value');  // this work is pending
     });
 
@@ -132,11 +134,20 @@
                     '</div>'+
                 '</li>'
 
+                if (modifyOrnewNoteId == 0) {  //For new update or update.
+                    $("#noteList_cl").append(a);
+                    $('a[value=' + checklistItemNumber + ']').text(tdate);
+                }
+                else {
+                    //update the text box
+                    //glabaleditedNotesItemtoUpdate.update(notes);//.attr('data-value', notes);
+                    //glabaleditedNotesItemtoUpdate.innerHTML = notes;
 
-                $("#noteList_cl").append(a);
-                $('a[value=' + checklistItemNumber + ']').text(tdate);
-
-
+                    //$(glabaleditedNotesItemtoUpdate + ' p:first').html(notes);
+                    var test = glabaleditedNotesItemtoUpdate.find('p:first').html();
+                    glabaleditedNotesItemtoUpdate.find('p:first').html(notes);
+                }
+                globalSelected_NotesIdforEdit = 0;  // resetting for add edit
                // $('#addchecklistModal').modal('hide');
             }
             , complete: function (jqXHR) {

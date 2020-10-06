@@ -4,7 +4,6 @@
 <script src="~/Scripts/App/AdminMain.js"></script>
 <script src="~/Scripts/App/applicationSummary.js"></script>
 <script src="~/Scripts/App/checklist.js"></script>
-
 <script>
     $(function () {
         $("#tabs").tabs();
@@ -55,7 +54,7 @@
             <div class="modal-body" style="text-align:left">
                 <div class="form-group subSection">
                     <label for="comment">Note:</label>
-                    
+
                     <textarea class="form-control" rows="5" id="txt_Notes_comment"></textarea>
                 </div>
                 <span id="accountType">0 / 256 characters</span>
@@ -101,7 +100,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <ul class="nav nav-tabs bottomMargin" role="tablist">
                             <li role="presentation" class="active"><a href="javascript:void(0);" class="tabs leftMargin" aria-controls="Notes" role="tab">Comments</a></li>
@@ -463,7 +462,6 @@
     </div>
 </div>
 
-
 <div id="div_action " class="pull-right btn-group">
     <span class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
     <ul class="dropdown-menu context-menu-left-showOnLeft">
@@ -489,7 +487,6 @@
     </ul>
 </div>
 
-
 <div class="container row-wrapper">
     <h1 id="heading_appsummaryHeader"></h1>
     <div class="centerColumn">
@@ -503,18 +500,21 @@
 
                     <div class="menu claimMenu bhoechie-tab-menu" role="tablist">
                         <div class="list-group">
-                            <a class="leftNavItem active" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab" 
+                            <a class="leftNavItem active" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
                                aria-selected="true"><span class="fa fa-fw fa-sitemap"></span>Summary</a>
-                            <a class="leftNavItem " id="tab_Notes" href="#div_notes_tab" role="tab" aria-controls="div_notes_tab" 
+                            <a class="leftNavItem " id="tab_Notes" href="#div_notes_tab" role="tab" aria-controls="div_notes_tab"
                                aria-selected="false"><span class="fa fa-fw fa-pencil"></span>Notes</a>
 
                             <a class="leftNavItem " href="#div_attachment_tab" aria-controls="div_attachment_tab" role="tab">
                                 <span class="fa fa-fw fa-file-text"></span>Documents
-                                <span id="menuDocCount" class="badge pull-right UpdateMenuDocumentCount">7</span>
+                                <span id="menuDocCount" class="badge pull-right UpdateMenuDocumentCount">0</span>
                             </a>
                             <a class="leftNavItem " href="#div_checklist_tab" aria-controls="div_checklist_tab"><span class="fa fa-fw fa-folder-open"></span>Check List</a>
-                            <a class="leftNavItem " href=""><span class="fa fa-fw fa-link"></span>Linked Applications<span class="badge pull-right">0</span></a>
-                            <a class="leftNavItem " href=""><span class="fa fa-fw fa-archive"></span>Application Archive</a>
+                            <a class="leftNavItem " id="menu_linkApplication" href="">
+                                <span class="fa fa-fw fa-link"></span>Linked Applications
+                                <span id="menuLinkAppCount" class="badge pull-right">0</span>
+                            </a>
+                            <a class="leftNavItem " id="menu_archieveApplication" href="#div_ArchieveApplication_tab"  aria-controls="div_ArchieveApplication_tab"><span class="fa fa-fw fa-archive"></span>Application Archive</a>
                         </div>
                     </div>
                 </div>
@@ -835,7 +835,6 @@
                     </div>
                 </div>
 
-
                 <div id="div_attachment_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_attachment_tab">
                     <div class="tab-content  tgroup container" id="myTabContent1" style="width: 100% !important;  margin: 10px auto !important;position: relative !important;">
 
@@ -1009,7 +1008,109 @@
                     </div>
                 </div>
 
+                <div id="div_linkApplication_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_linkApplication_tab">
+
+                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                        <a class="btn btn-info" href="#">
+                            <span class="glyphicon glyphicon-search smallRightMargin"></span>
+                            Find New Links
+                        </a>
+                    </div>
+
+                    <h2 class="smallBottomMargin">Linked Applications</h2>
+
+                    <table id="ddAlreadyLinkedGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+                        <thead>
+                            <tr class="button-header-color">
+                                <th>Linked_ConfirmationNum</th>
+                                <th>VendorNumber</th>
+                                <th>Payeename</th>
+                                @*<th>BankAccountNumber</th>*@
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <h2 class="smallBottomMargin">Matched Applications</h2>
+                    <table id="ddAvailableLinkGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+                        <thead>
+                            <tr class="button-header-color">
+                                <th>ConfirmationNum</th>
+                                <th>VendorNumber</th>
+                                <th>VendorName</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    @*<ul class="list-group list-group-sm">
+                            <li class="list-group-item list-group-item-warning emptyItem" aria-hidden="true">Matched Applications list is empty.</li>
+
+                            <li class="list-group-item matchedClaimRow">
+                                <div class="pull-right btn-group btn-group-xs">
+                                    <a href="javascript:void(0);" data-method="post" data-url="#" class="btn btn-primary nonFormSubmit">
+                                        <span class="fa fa-link"></span>
+                                        Link
+                                    </a>
+                                    <a href="javascript:void(0);" data-action-target="#" class="btn btn-danger confirmModal">
+                                        <span class="fa fa-trash"></span>
+                                        Dismiss
+                                    </a>
+                                </div>
+
+                                <div class="flex">
+                                    <div class="flex-column-4">
+                                        <span>Application: </span>
+                                        <a href="#" class="bold">
+                                            DDOL-AXKUTG
+                                        </a>
+                                    </div>
+                                    <div class="flex-column-4">
+                                        <span>Vendor CD: </span>
+                                        <span>014473</span>
+                                    </div>
+                                    <div class="flex-column-4">
+                                        <span>Vendor NM: </span>
+                                        <span>COASTAL LAW FIRM</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>*@
+
+                </div>
+                <div id="div_ArchieveApplication_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_ArchieveApplication_tab">
+                    <h2 class="bottomMargin">Application Trash</h2>
+
+                    @*<div class="panel panel-default panel-sm">
+                            <div class="panel-heading">
+
+                                Suggested Documents
+                            </div>
+                            <ul id="suggestedDocumentList" class="list-group list-group-hover">
+                                <li class="list-group-item list-group-item-warning emptyItem">Suggested Documents list is empty.</li>
+                            </ul>
+                        </div>*@
+
+                    <div class="panel panel-default panel-sm">
+                        <div class="panel-heading">
+                            Documents
+                        </div>
+                        <table id="ddArchieveGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+                            <thead>
+                                <tr class="button-header-color">
+                                    <th>AttachmentFileName</th>
+                                    @*<th>Description</th>*@
+                                    <th>UploadedDate</th>
+                                    <th>Command</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script src="~/Scripts/App/linkApplication.js"></script>
+<script src="~/Scripts/App/archieve.js"></script>

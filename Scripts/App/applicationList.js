@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $("#lbl_userName").text(sessionStorage.getItem('userName'));  //id_userName
-
+    
     var pendingAssignList = [];
     var pendingMyApprovalList = [];
     var userId = sessionStorage.getItem('UserId');

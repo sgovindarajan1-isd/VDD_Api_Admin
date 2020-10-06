@@ -5,7 +5,6 @@
     var role = sessionStorage.getItem('RoleId');
     // to do later
 
-
     //if ($("#approveApplicationModal").hasClass('processorapprove')) {
     //}
     //else if ($("#approveApplicationModal").hasClass('supervisorapprove')) {
@@ -21,7 +20,6 @@
         $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
         $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");  //.addClass("show")
     });
-
 
     $("#div_notes_tab").click(function (e) {
         //  $("#div_notes_tab").addClass("show");
@@ -60,7 +58,8 @@
     GetNotesByConfirmationNumber(confirmationNum);
     GetAttachmentDocuments(confirmationNum);
     GetDocumentCheckList(confirmationNum);
-
+    GetAlreadyLinkedApplicationByConfirmationNum(confirmationNum);  // for count display
+    
 
     function getReviewPanelInformation(summaryData) {
         var status = summaryData.Status;
@@ -144,6 +143,8 @@
 
         // vendor Information
         $("#VI_VendorCode").text(data.VendorNumber);
+        sessionStorage.setItem('selectedVendorNumber', data.VendorNumber);  // vendorcode
+        sessionStorage.setItem('selectedBankAccountNumber', data.BankAccountNumber);
         $("#Alias_DBA").text(data.AliasDBAName);
         $("#FirstName").text(data.FirstName);
         $("#MiddleName").text(data.MiddleName);
@@ -1118,6 +1119,30 @@
                     $('input[value=' + data.data.ChecklistItems[item].CheckListID + ']').attr('checked', 'checked')
                     $('a[value=' + data.data.ChecklistItems[item].CheckListID + ']').text(data.data.ChecklistItems[item].LastUpdateDateTime);
                 }
+            },
+            error: function (_XMLHttpRequest, textStatus, errorThrown) {
+                if (_XMLHttpRequest.status == '401') {
+                    window.location.href = "/Home/UnAuthorized";
+                }
+            }
+        });
+    }
+
+    function GetAlreadyLinkedApplicationByConfirmationNum(confirmationNum) {  //  this is called here jest to get count display at the  side menu
+        debugger;
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            dataType: 'json',
+            data: JSON.stringify({
+                'Confirmation': confirmationNum
+            }),
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            url: "/api/values/GetLinkedApplicationByConfirmationNum/",
+            success: function (data) {
+                $("#menuLinkAppCount").text(data.data.linkedApplication.length);
             },
             error: function (_XMLHttpRequest, textStatus, errorThrown) {
                 if (_XMLHttpRequest.status == '401') {

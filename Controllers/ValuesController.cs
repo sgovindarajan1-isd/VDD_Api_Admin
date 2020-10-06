@@ -15,6 +15,7 @@ using System.Data;
 using System.IO;
 
 using Newtonsoft.Json;
+using Microsoft.Reporting.Map.WebForms.BingMaps;
 
 namespace eCAPDDApi.Controllers
 {
@@ -207,19 +208,7 @@ namespace eCAPDDApi.Controllers
             return response;
         }      
 
-        //  get source info
-        //private string GetIp()
-        //{
-        //    string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-        //    if (string.IsNullOrEmpty(ip))
-        //    {
-        //        ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-        //    }
-        //    return ip;
-        //}
-
         /// --------------------------
-        //
 
         [HttpPost]
         public HttpResponseMessage LoginExternalVendor_authen([FromBody] VM_R_Vend_User vmuser)
@@ -244,7 +233,6 @@ namespace eCAPDDApi.Controllers
 
             return response;
         }
-
 
         [HttpPost]
         public HttpResponseMessage GetVendorNameByVendorCode([FromBody] VM_R_Vend_User vmuser)
@@ -643,12 +631,37 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
+        //  get source info
+        private string GetIpAddress()
+        {
+            string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (string.IsNullOrEmpty(ip))
+            {
+                ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            }
+            return ip;
+        }
+
+        //private string GetIpAddress()
+        //{
+        //    return System.Web.HttpContext.Current.Request.UserHostAddress;
+        //    //if (Request.System.Web.HttpContext.Current.UserHostAddress != null)
+        //    //{
+        //    //    Int64 macinfo = new Int64();
+        //    //    string macSrc = macinfo.ToString("X");
+        //    //    if (macSrc == "0")
+        //    //    {
+        //    //        return  userip;
+        //    //    }
+        //    //}
+        //}
+
         [HttpPost]
         public HttpResponseMessage RetrieveSourceIPInfo([FromBody] VM_SourceIPInfo dal_M_Checklist)
         {
             string GEOLOCATION;
             string ServerName = Request.RequestUri.GetLeftPart(UriPartial.Authority); // this can be stored in the requests log table
-            string IPADDR = Request.RequestUri.AbsoluteUri;//.UserHostAddress;    //localhost will have ::1. Other internal clients will have 10.*
+            string IPADDR = GetIpAddress(); // Request.RequestUri.AbsoluteUri;// //localhost will have ::1. Other internal clients will have 10.*
             string Headers = Request.Headers.ToString(); // this can be stored in the requests log table
 
             // populate actual values if the request is not from the localhost
@@ -857,8 +870,6 @@ namespace eCAPDDApi.Controllers
                 return "***-**-" + ssn.Substring(ssn.Trim().Length - 4, 4);
             }
         }
-
-
         public DataTable createLocationDataTable(DAL.Models.DAL_M_VendorDD vendordetails)
         {
             if (vendordetails.LocationAddressDescList.Count <= 0)
@@ -918,6 +929,64 @@ namespace eCAPDDApi.Controllers
             //};
             //var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             //return response;
+        }
+
+
+        [HttpPost]
+        public HttpResponseMessage GetLinkedApplicationByConfirmationNum([FromBody] DAL.Models.DAL_M_VendorDD dal_M_VendorDD)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetLinkedApplicationByConfirmationNum(dal_M_VendorDD);
+            var data = new
+            {
+                linkedApplication = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetAvailableApplicationLinkByConfirmationNum([FromBody] DAL.Models.DAL_M_VendorDD dal_M_VendorDD)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetAvailableApplicationLinkByConfirmationNum(dal_M_VendorDD);
+            var data = new
+            {
+                Available_ApplicationLinks = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage UpdateLink_UnLink_ApplicationByConfirmationNum([FromBody] DAL.Models.DAL_M_LinkApplication dal_M_LinkApplication)
+        {
+
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateLink_UnLink_ApplicationByConfirmationNum(dal_M_LinkApplication);
+            var data = new
+            {
+                link_unlink = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetArchieveDocumentsByConfirmationNUmber([FromBody] DAL.Models.DAL_M_AttachmentData dal_M_AttachmentData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetArchieveDocumentsByConfirmationNUmber(dal_M_AttachmentData.ConfirmationNum);
+            var data = new
+            {
+                archieveDocuments = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
         }
 
     }

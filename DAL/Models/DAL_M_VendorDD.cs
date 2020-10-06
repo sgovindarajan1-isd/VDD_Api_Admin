@@ -32,7 +32,8 @@ namespace DAL.Models
         public string Vendorname { get; set; }
         public string Payeename { get; set; }
         public string Ssn { get; set; }
-
+        public string Application { get; set; }  // concadination of conf num and request type
+        public string Linked_ConfirmationNum { get; set; }
         public int AccountType { get; set; }
         public string BankAccountNumber { get; set; }
         public string BankRoutingNo { get; set; }
@@ -98,5 +99,14 @@ namespace DAL.Models
         public int DocumentAttachmentTypeId { get; set; }
         public string DocumentAttachmentTypeName { get; set; }
         public string ReturnErrorSuccessMsg { get; set; }
+    }
+
+    public class DAL_M_LinkApplication
+    {
+        public string ConfirmationNum { get; set; }
+        public string Link_ConfirmationNum { get; set; }
+        public string Action { get; set; }
+        public string LastUpdatedUser { get; set; }
+        public string LastUpdateDateTime { get; set; }
     }
 }

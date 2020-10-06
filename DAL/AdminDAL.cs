@@ -843,5 +843,148 @@ namespace DAL
             }
             return checkListNotes;
         }
+
+        public List<DAL_M_VendorDD> GetLinkedApplicationByConfirmationNum(DAL.Models.DAL_M_VendorDD dal_M_VendorDD)
+        {
+            List<DAL_M_VendorDD> linkedApplicationList = new List<DAL_M_VendorDD>();
+            try
+            {
+                DataSet ds = new DataSet("LinkedApplication");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetLinkedApplicationByConfirmationNum", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", dal_M_VendorDD.Confirmation);
+                    
+                    //sqlComm.Parameters.AddWithValue("@VendorCode", dal_M_VendorDD.VendorNumber);
+                    //sqlComm.Parameters.AddWithValue("@PayeeName", dal_M_VendorDD.Payeename);
+                    //sqlComm.Parameters.AddWithValue("@AccountNumber", dal_M_VendorDD.BankAccountNumber);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_VendorDD linkApp = new DAL_M_VendorDD();
+                        linkApp.Application = ds.Tables[0].Rows[i]["Application"].ToString();
+                        linkApp.Confirmation = ds.Tables[0].Rows[i]["ConfirmationNum"].ToString();
+                        linkApp.Linked_ConfirmationNum = ds.Tables[0].Rows[i]["Linked_ConfirmationNum"].ToString();
+                       
+                        linkApp.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
+                        linkApp.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString();
+                        linkApp.Payeename = ds.Tables[0].Rows[i]["VendorName"].ToString();
+                        linkApp.BankAccountNumber = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
+                        linkedApplicationList.Add(linkApp);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in GetLinkedApplicationByVendorCode.  Message: " + ex.Message);
+            }
+            return linkedApplicationList;
+        }
+
+        public List<DAL_M_VendorDD> GetAvailableApplicationLinkByConfirmationNum(DAL.Models.DAL_M_VendorDD dal_M_VendorDD)
+        {
+            List<DAL_M_VendorDD> linkedApplicationList = new List<DAL_M_VendorDD>();
+            try
+            {
+                DataSet ds = new DataSet("UnLinkedApplication");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetAvailableApplicationLinkByConfirmationNum", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", dal_M_VendorDD.Confirmation);
+                    sqlComm.Parameters.AddWithValue("@VendorCode", dal_M_VendorDD.VendorNumber);
+                    //sqlComm.Parameters.AddWithValue("@PayeeName", dal_M_VendorDD.Payeename);
+                    sqlComm.Parameters.AddWithValue("@AccountNumber", dal_M_VendorDD.BankAccountNumber);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_VendorDD linkApp = new DAL_M_VendorDD();
+                        linkApp.Application = ds.Tables[0].Rows[i]["Application"].ToString();
+                        linkApp.Confirmation = ds.Tables[0].Rows[i]["ConfirmationNum"].ToString();
+                        linkApp.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
+                        linkApp.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString();
+                        linkApp.Payeename = ds.Tables[0].Rows[i]["VendorName"].ToString();
+                        linkApp.BankAccountNumber = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
+
+                        linkedApplicationList.Add(linkApp);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in GetLinkedApplicationByVendorCode.  Message: " + ex.Message);
+            }
+            return linkedApplicationList;
+        }
+
+        public string UpdateLink_UnLink_ApplicationByConfirmationNum(DAL.Models.DAL_M_LinkApplication dal_M_LinkApplication)
+        {
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("UpdateLink_UnLink_ApplicationByConfirmationNum", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNum", dal_M_LinkApplication.ConfirmationNum);
+                    sqlComm.Parameters.AddWithValue("@Link_ConfirmationNum", dal_M_LinkApplication.Link_ConfirmationNum);
+                    sqlComm.Parameters.AddWithValue("@Action", dal_M_LinkApplication.Action);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUser", dal_M_LinkApplication.LastUpdatedUser);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Linking UnLinking Application.  Message: " + ex.Message);
+                return "ERROR";
+            }
+            return "SUCCESS";
+        }
+
+        
+        public List<DAL_M_AttachmentData> GetArchieveDocumentsByConfirmationNUmber(string confirmationNumber)
+        {
+            List<DAL_M_AttachmentData> lst_DAL_M_AttachmentData = new List<DAL_M_AttachmentData>();
+            try
+            {
+                DataSet ds = new DataSet("ArchieveDocuments");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetArchieveDocumentsByConfirmationNUmber", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", confirmationNumber);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_AttachmentData v = new DAL_M_AttachmentData();
+                        v.ConfirmationNum = ds.Tables[0].Rows[i]["confirmationNum"].ToString();
+                        v.AttachmentFileName = ds.Tables[0].Rows[i]["AttachmentFileName"].ToString();
+                        v.DisplayName = ds.Tables[0].Rows[i]["DisplayName"].ToString();
+                        v.UploadedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
+                        lst_DAL_M_AttachmentData.Add(v);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in GetAttachmentsData.  Message: " + ex.Message);
+            }
+            return lst_DAL_M_AttachmentData;
+        }
     }
 }
