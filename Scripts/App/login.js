@@ -86,6 +86,13 @@
                 $("#lbl_userName").text(data.data.userProfile_2.displayNameField); //id_userName
 
                 //var userHasonlyDataEntryRole =  UserHasonlyDataEntryRole(data.data.List_userRoles, GlobalRoles.DataEntryRole);
+                debugger;
+
+                // testing ip
+                sessionStorage.setItem('SourceIP', data.data.SourceIP);
+                sessionStorage.setItem('ipInfo', data.data.IPInfo);
+                
+                //testing ip end
 
                 if (data.data.IsValidUser == true) {
 

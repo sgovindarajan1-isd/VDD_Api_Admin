@@ -13,6 +13,8 @@ namespace eCAPDDApi.Models
         public string UserName { get; set; }
         public string ValidateToken  { get; set; }
         public int PayeeId { get; set; }
+        public string SourceIP { get; set; }
+        public string Source_Device { get; set; }
     }
 
     public class VM_Vendor

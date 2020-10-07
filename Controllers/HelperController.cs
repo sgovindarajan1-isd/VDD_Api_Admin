@@ -51,7 +51,7 @@ namespace eCAPDDApi.Controllers
                         }
 
                         Uploadpath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
-                        fname = Path.Combine(Server.MapPath("~/" + Uploadpath + "/ "), fname);
+                        fname = Path.Combine(Server.MapPath("~/" + Uploadpath + "/"), fname);
                         file.SaveAs(fname);
                     }
                     // Returns message that successfully uploaded  

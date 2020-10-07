@@ -451,11 +451,14 @@
                 sessionStorage.setItem('submittedDate', data.data.SubmitDateTime);
                 vendorDetails.Confirmation = data.data.Confirmation;
                 vendorDetails.SubmitDateTime = data.data.SubmitDateTime;
-                // generate the report and store in the upload folder
+                sessionStorage.setItem('VendorReportFileName', data.data.VendorReportFileName);
+                window.location.href = '/draft/_partialConfirmation';
 
-                var uniqueDatetime = getUniqueFileNameusingCurrentTime();
-                vendorDetails.VendorReportFileName = "VCM_" + vendorDetails.Confirmation + "_" + uniqueDatetime + ".pdf";
-                createReportandGettheFielName(vendorDetails);
+
+                // generate the report and store in the upload folder
+                //var uniqueDatetime = getUniqueFileNameusingCurrentTime();
+                //vendorDetails.VendorReportFileName = "VCM_" + vendorDetails.Confirmation + "_" + uniqueDatetime + ".pdf";
+                //createReportandGettheFielName(vendorDetails);
             }
             , complete: function (jqXHR) {
             }

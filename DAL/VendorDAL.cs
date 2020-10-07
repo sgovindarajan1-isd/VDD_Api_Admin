@@ -421,7 +421,7 @@ namespace DAL
             catch (Exception ex)
             {
                 LogManager.log.Error("Error in InsertVendorReportFileName.  Message: " + ex.Message);
-                return null;
+                return new Tuple<string, string>("error --"+ex.Message, "false");
             }
             return new Tuple<string, string>("SUCCESS", "true");
         }

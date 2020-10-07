@@ -15,7 +15,11 @@ using System.Data;
 using System.IO;
 
 using Newtonsoft.Json;
-using Microsoft.Reporting.Map.WebForms.BingMaps;
+using eCAPDDApi.infrastrure;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
+
+//using Microsoft.Reporting.Map.WebForms.BingMaps;
 
 namespace eCAPDDApi.Controllers
 {
@@ -36,8 +40,12 @@ namespace eCAPDDApi.Controllers
     [BasicAuthentication]
     public class ValuesController : ApiController
     {
+
+        LogWriter logw = new LogWriter("ValuesController entry");
+
         [HttpPost]
-        public HttpResponseMessage LoginUser([FromBody] IdTextClass idtext){
+        public HttpResponseMessage LoginUser([FromBody] IdTextClass idtext)
+        {
             List<VM_login> data = new List<VM_login>();
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
@@ -127,7 +135,7 @@ namespace eCAPDDApi.Controllers
 
             return "Success";
         }
-      
+
 
         [HttpPost]
         public HttpResponseMessage SubmitVendorDD([FromBody]DAL.Models.DAL_M_VendorDD vmvendorDD)
@@ -143,30 +151,43 @@ namespace eCAPDDApi.Controllers
             var uniqueDatetime = DateTime.Now.ToString("ddMMyyyyhhmmss");
             vmvendorDD.VendorReportFileName = "VCM_" + confirmNumber + "_" + uniqueDatetime + ".pdf";
 
-
             vmvendorDD.Confirmation = confirmNumber;
             vmvendorDD.SubmitDateTime = updateDate;
-
+            logw.LogWrite("before SubmitVendor call");
             Tuple<string, string> result = clsdal.SubmitVendor(vmvendorDD);
-
-            string str = ShowReport(vmvendorDD);
-
-            if (result != null)
+            logw.LogWrite("after SubmitVendor call and result" + result);
+            logw.LogWrite("after SubmitVendor call" + result.Item1);
+            if (result.Item1 == "SUCCESS")
             {
+                logw.LogWrite("before ShowReport call");
+                string str = generateVCMPDFReport(vmvendorDD);
+                //var str = GetPDFReport(vmvendorDD);
+
+
+                logw.LogWrite("after generateVCM2  call");
+
+
+                logw.LogWrite("before SubmitAttachmentFile call");
 
                 Tuple<string, string> resultAttach = clsdal.SubmitAttachmentFile(vmvendorDD);
+                logw.LogWrite("after SubmitAttachmentFile call");
                 string resultRequestLog = clsdal.InsertRequestLog(vmvendorDD);
+
+                logw.LogWrite("after InsertRequestLog call");
+
+
                 if ((resultAttach != null) && (resultRequestLog != string.Empty))
                 {
                     vmvendorDD.Confirmation = confirmNumber;
                     vmvendorDD.SubmitDateTime = updateDate;
-
                     vmvendorDD.ReturnErrorSuccessMsg = SendEmail(vmvendorDD.Payeename, confirmNumber, vmvendorDD.DDNotifyEmail);
+                    logw.LogWrite("after SendEmail sucess");
                 }
                 else
                 {
+
+                    logw.LogWrite("before Error -in attachment");
                     vmvendorDD.VendorReportFileName = "Error-in attachment";
-                    //vmvendorreturn.
                     vmvendorDD.Confirmation = "ERROR-in attachment";
                     vmvendorDD.ReturnErrorSuccessMsg = "Error in submitting Attachment file/Request Log";
                 }
@@ -175,8 +196,10 @@ namespace eCAPDDApi.Controllers
             else
             {
                 vmvendorDD.Confirmation = "ERROR-submit vendor confirmation";
-            }
 
+                logw.LogWrite("after vmvendorDD.Confirmation ERROR - submit vendor confirmation");
+            }
+            logw.LogWrite("before  response  end of messages");
             return response;
         }
 
@@ -206,7 +229,7 @@ namespace eCAPDDApi.Controllers
             }
 
             return response;
-        }      
+        }
 
         /// --------------------------
 
@@ -217,7 +240,6 @@ namespace eCAPDDApi.Controllers
 
             VendorDAL clsdal = new VendorDAL();
             List<VM_R_Vend_User> data = new List<VM_R_Vend_User>();
-
             VM_R_Vend_User vm_LoginData = new VM_R_Vend_User();
 
             Tuple<string, bool> result = clsdal.ValidateUserbyuid_pwd(vmuser.UserId, vmuser.Tin);
@@ -226,6 +248,9 @@ namespace eCAPDDApi.Controllers
                 vm_LoginData.UserName = result.Item1;
                 vm_LoginData.IsValidUser = result.Item2;
                 vm_LoginData.ValidateToken = Thread.CurrentPrincipal.Identity.Name;
+                vm_LoginData.SourceIP = GetIpAddress();
+                vm_LoginData.Source_Device = getOSInfo();
+
                 data.Add(vm_LoginData);
 
                 response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
@@ -276,6 +301,8 @@ namespace eCAPDDApi.Controllers
         [HttpPost]
         public HttpResponseMessage LoginAdminUser([FromBody] VM_AdminUser vm_AdminUser) //(   [FromBody] VM_r_vend_user vmuser
         {
+            //logw.LogWrite("test");
+
             gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
             // just to go for demo
             //////bool bool_isAuthenicated = false;
@@ -302,6 +329,41 @@ namespace eCAPDDApi.Controllers
                 var v3 = loginServs.GetUserProfile(vm_AdminUser.UserId);
 
 
+
+                ////-- testing
+
+                //string GEOLOCATION;
+                //string ServerName = Request.RequestUri.GetLeftPart(UriPartial.Authority); 
+                //string IPADDR = GetIpAddress(); 
+                //VM_SourceIPInfo ipInfo = new VM_SourceIPInfo();
+                //ipInfo.SourceServerName = ServerName;
+                //ipInfo.Source_Device = getOSInfo();
+
+                //if (!ServerName.Contains("localhost")){
+                //    try{
+                //        string info = new WebClient().DownloadString("http://api.db-ip.com/v2/free/" + IPADDR);
+                //        ipInfo = JsonConvert.DeserializeObject<VM_SourceIPInfo>(info);
+                //        ipInfo.Source_IP = IPADDR;
+                //        ipInfo.Source_Location = ipInfo.City + ", " + ipInfo.StateProvCode + " (" + ipInfo.CountryCode + ")";
+                //    }
+                //    catch (Exception ){
+                //    }
+                //}
+                //else
+                //{
+                //    //Initialize with user friendly values representing localhost
+                //    ServerName = "LOCALHOST";
+                //    IPADDR = "127.0.0.1";
+                //    GEOLOCATION = "VDD APPLICATION SERVER";
+                //    //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + GEOLOCATION;
+
+                //    ipInfo.SourceServerName = ServerName;
+                //    ipInfo.Source_IP = IPADDR;
+                //    ipInfo.Source_Location = GEOLOCATION;
+                //}
+                ////--testing
+
+
                 var data = new
                 {
                     userProfile = v1,
@@ -309,7 +371,9 @@ namespace eCAPDDApi.Controllers
                     List_userRoles = result.Item1,
                     IsValidUser = result.Item2,
                     //SourceIP = GetIp()
-            };
+                    //SourceIP = GetIpAddress(),
+                    //IPInfo = ipInfo
+                };
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             }
@@ -605,7 +669,7 @@ namespace eCAPDDApi.Controllers
         [HttpPost]
         public HttpResponseMessage InsertUpdateChecklistNotes([FromBody] DAL.Models.DAL_M_Notes vm_checklistNotes)
         {
-            
+
             AdminDAL adminDAL = new AdminDAL();
 
             var dt = adminDAL.InsertUpdateChecklistNotes(vm_checklistNotes);
@@ -615,7 +679,7 @@ namespace eCAPDDApi.Controllers
             };
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
-        }        
+        }
 
         [HttpPost]
         public HttpResponseMessage GetChecklistNotesByChecklistIDandNotesID([FromBody] DAL.Models.DAL_M_Checklist dal_M_Checklist)
@@ -632,29 +696,29 @@ namespace eCAPDDApi.Controllers
         }
 
         //  get source info
-        private string GetIpAddress()
-        {
-            string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (string.IsNullOrEmpty(ip))
-            {
-                ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-            }
-            return ip;
-        }
-
         //private string GetIpAddress()
         //{
-        //    return System.Web.HttpContext.Current.Request.UserHostAddress;
-        //    //if (Request.System.Web.HttpContext.Current.UserHostAddress != null)
-        //    //{
-        //    //    Int64 macinfo = new Int64();
-        //    //    string macSrc = macinfo.ToString("X");
-        //    //    if (macSrc == "0")
-        //    //    {
-        //    //        return  userip;
-        //    //    }
-        //    //}
+        //    string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+        //    if (string.IsNullOrEmpty(ip))
+        //    {
+        //        ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+        //    }
+        //    return ip;
         //}
+
+        private string GetIpAddress()
+        {
+            return System.Web.HttpContext.Current.Request.UserHostAddress;
+            //if (Request.System.Web.HttpContext.Current.UserHostAddress != null)
+            //{
+            //    Int64 macinfo = new Int64();
+            //    string macSrc = macinfo.ToString("X");
+            //    if (macSrc == "0")
+            //    {
+            //        return userip;
+            //    }
+            //}
+        }
 
         [HttpPost]
         public HttpResponseMessage RetrieveSourceIPInfo([FromBody] VM_SourceIPInfo dal_M_Checklist)
@@ -666,7 +730,7 @@ namespace eCAPDDApi.Controllers
 
             // populate actual values if the request is not from the localhost
             VM_SourceIPInfo ipInfo = new VM_SourceIPInfo();
-            ipInfo.Source_Host_Headers= Headers;
+            ipInfo.Source_Host_Headers = Headers;
             ipInfo.SourceServerName = ServerName;
             ipInfo.Source_Device = getOSInfo();
 
@@ -679,8 +743,11 @@ namespace eCAPDDApi.Controllers
 
                     // any IP that starts with 10. or 192. will be internal to LA County network but may show the city name differently because of the location of the edge router
                     //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + ipInfo.City + Environment.NewLine + ipInfo.StateProv;
+                    ipInfo.Source_Host_Headers = Headers;
+                    ipInfo.SourceServerName = ServerName;
                     ipInfo.Source_IP = IPADDR;
                     ipInfo.Source_Location = ipInfo.City + ", " + ipInfo.StateProvCode + " (" + ipInfo.CountryCode + ")";
+                    ipInfo.Source_Device = getOSInfo();
                 }
                 catch (Exception)
                 {
@@ -893,44 +960,110 @@ namespace eCAPDDApi.Controllers
             return dt;
         }
 
-        public string ShowReport(DAL.Models.DAL_M_VendorDD vendordetails)
+        private string generateVCM(DAL.Models.DAL_M_VendorDD vendordetails)
         {
+            logw.LogWrite("entering into show report imp");
+            try
+            {
+                string localPath = AppDomain.CurrentDomain.BaseDirectory;
+                string uploadPath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];  //  here is the path where  vendorreport file will be saved
 
-            string localPath = AppDomain.CurrentDomain.BaseDirectory;
-            string uploadPath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];  //  here is the path where  vendorreport file will be saved
-            //string uploadFileName = Path.Combine(Server.MapPath("~/" + uploadPath + "/ "), vendordetails.VendorReportFileName);
+                string uploadFileName = localPath + uploadPath + "\\" + vendordetails.VendorReportFileName;
 
-            string uploadFileName = localPath + uploadPath + "\\"+ vendordetails.VendorReportFileName;
+                ReportViewer viewer = new ReportViewer();
+                viewer.ProcessingMode = ProcessingMode.Local;
+                viewer.SizeToReportContent = true;
+                viewer.SizeToReportContent = true;
+                viewer.AsyncRendering = true;
+                viewer.LocalReport.ReportPath = "VendorAuthorizationForm.rdlc";
 
-            ReportViewer viewer = new ReportViewer();
-            viewer.ProcessingMode = ProcessingMode.Local;
-            viewer.SizeToReportContent = true;
-            viewer.SizeToReportContent = true;
-            viewer.AsyncRendering = true;
-            viewer.LocalReport.ReportPath = "VendorAuthorizationForm.rdlc";
+                DataTable vdt = createVendorDataTable(vendordetails);
+                ReportDataSource rds = new ReportDataSource("VendorDataSet", vdt);
 
-            DataTable vdt = createVendorDataTable(vendordetails);
-            ReportDataSource rds = new ReportDataSource("VendorDataSet", vdt);
+                // location ds
+                DataTable ldt = createLocationDataTable(vendordetails);
+                ReportDataSource lds = new ReportDataSource("VendorDataLocDataSet", ldt);
 
-            // location ds
-            DataTable ldt = createLocationDataTable(vendordetails);
-            ReportDataSource lds = new ReportDataSource("VendorDataLocDataSet", ldt);
+                viewer.LocalReport.DataSources.Clear();
+                viewer.LocalReport.DataSources.Add(rds);
+                viewer.LocalReport.DataSources.Add(lds);
 
-            viewer.LocalReport.DataSources.Clear();
-            viewer.LocalReport.DataSources.Add(rds);
-            viewer.LocalReport.DataSources.Add(lds);
-
-            string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
-            return retFileName; //Json(retFileName);
-
-            //var data = new
-            //{
-            //    FileNameFromReportViewer = retFileName,
-            //};
-            //var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-            //return response;
+                string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
+                logw.LogWrite("inside generate vcm sucess file name- " + retFileName);
+                return retFileName; //Json(retFileName);
+            }
+            catch (Exception ex)
+            {
+                logw.LogWrite("inside generate vcm exception- " + ex.Message);
+                return "ERROR - " + ex.Message;
+            }
         }
 
+        [HttpGet]  // HttpResponseMessage  user thto return
+        //public  string GetPDFReport(DAL.Models.DAL_M_VendorDD vendordetails)
+        //{
+        //    logw.LogWrite("inside GetPDFReport" );
+        //    string localPath = AppDomain.CurrentDomain.BaseDirectory;
+        //    string uploadPath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
+        //    logw.LogWrite("inside GetPDFReport11");
+        //    string filePath = localPath + uploadPath + "\\" + vendordetails.VendorReportFileName;
+
+
+        //    ReportController report = new ReportController();
+        //    logw.LogWrite("inside GetPDFReport12c ");
+        //    report.ShowReport(vendordetails);
+        //    logw.LogWrite("inside GetPDFReport123 ");
+        //    return vendordetails.VendorReportFileName;
+
+        //    //HttpResponseMessage result = null;
+        //    //result = Request.CreateResponse(HttpStatusCode.OK);
+        //    //result.Content = new StreamContent(new FileStream(filePath, FileMode.Open));
+        //    //result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+        //    //result.Content.Headers.ContentDisposition.FileName = filePath;
+
+        //    //return result;
+        //}
+
+        private string generateVCMPDFReport(DAL.Models.DAL_M_VendorDD vendordetails)
+        {
+            logw.LogWrite("entering into show report imp");
+            try
+            {
+                string localPath = AppDomain.CurrentDomain.BaseDirectory;
+                string uploadPath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
+                //  here is the path where  vendorreport file will be saved
+                //string uploadFileName = Path.Combine(Server.MapPath("~/" + uploadPath + "/ "), vendordetails.VendorReportFileName);
+
+                string uploadFileName = localPath + uploadPath + "\\" + vendordetails.VendorReportFileName;
+
+                ReportViewer viewer = new ReportViewer();
+                viewer.ProcessingMode = ProcessingMode.Local;
+                viewer.SizeToReportContent = true;
+                viewer.SizeToReportContent = true;
+                viewer.AsyncRendering = true;
+                viewer.LocalReport.ReportPath = "VendorAuthorizationForm.rdlc";
+
+                DataTable vdt = createVendorDataTable(vendordetails);
+                ReportDataSource rds = new ReportDataSource("VendorDataSet", vdt);
+
+                // location ds
+                DataTable ldt = createLocationDataTable(vendordetails);
+                ReportDataSource lds = new ReportDataSource("VendorDataLocDataSet", ldt);
+
+                viewer.LocalReport.DataSources.Clear();
+                viewer.LocalReport.DataSources.Add(rds);
+                viewer.LocalReport.DataSources.Add(lds);
+
+                string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
+                logw.LogWrite("inside generate vcm sucess file name- " + retFileName);
+                return retFileName; //Json(retFileName);
+            }
+            catch (Exception ex)
+            {
+                logw.LogWrite("inside generate vcm exception- " + ex.Message);
+                return "ERROR - " + ex.Message;
+            }
+        }
 
         [HttpPost]
         public HttpResponseMessage GetLinkedApplicationByConfirmationNum([FromBody] DAL.Models.DAL_M_VendorDD dal_M_VendorDD)
@@ -989,7 +1122,131 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
+        [HttpPost]
+        public HttpResponseMessage UploadAttachmentFile()
+        {
+            HttpResponseMessage result = null;
+            var httpRequest = System.Web.HttpContext.Current.Request;
+
+            string uploadpath = string.Empty;
+
+            if (httpRequest.Files.Count > 0)
+            {
+                string modifiedFilename = System.Web.HttpContext.Current.Request.Form["modifiedFilename"];
+                if (modifiedFilename == null)
+                {
+                    modifiedFilename = System.Web.HttpContext.Current.Request.Form["modifiedFilename_ddwetform"];
+                }
+
+                var docfiles = new List<string>();
+                foreach (string file in httpRequest.Files)
+                {
+                    string fname = string.Empty;
+                    var postedFile = httpRequest.Files[file];
+                    //var filePath = System.Web.HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
+
+                    if (System.Web.HttpContext.Current.Request.Browser.Browser.ToUpper() == "IE" || System.Web.HttpContext.Current.Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                    {  //To-do later
+                        fname = modifiedFilename;
+                        // string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                        //fname = testfiles[testfiles.Length - 1];
+                    }
+                    else
+                    {
+                        fname = modifiedFilename;
+                    }
+                    string localPath = AppDomain.CurrentDomain.BaseDirectory;
+                    uploadpath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
+                    fname = localPath + uploadpath + "\\" + fname;
+                    //fname = Path.Combine(Server.MapPath("~/" + Uploadpath + "/"), fname);
+
+
+                    postedFile.SaveAs(fname);
+                    docfiles.Add(fname);
+                }
+                result = Request.CreateResponse(HttpStatusCode.Created, modifiedFilename);
+            }
+            else
+            {
+                result = Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            return result;
+        }
+
+
+        // [HttpPost]
+        //public HttpResponseMessage UploadAttachmentFile_old()
+        //{
+        //    string fname = string.Empty;
+        //    string Uploadpath = string.Empty;
+        //    // Checking no of files injected in Request object  
+        //    if (System.Web.HttpContext.Current.Request.Files.Count > 0)
+        //    {
+        //        string modifiedFilename = System.Web.HttpContext.Current.Request.Form["modifiedFilename"];
+        //        if (modifiedFilename == null)
+        //        {
+        //            modifiedFilename = System.Web.HttpContext.Current.Request.Form["modifiedFilename_ddwetform"];
+        //        }
+        //        try
+        //        {
+        //            //  Get all files from Request object  
+        //            System.Web.HttpFileCollectionBase files = System.Web.HttpContext.Current.Request.Files;
+        //            for (int i = 0; i < files.Count; i++)
+        //            {
+        //                HttpPostedFileBase file = files[i];
+
+        //                // Checking for Internet Explorer  
+        //                if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+        //                {
+        //                    string[] testfiles = file.FileName.Split(new char[] { '\\' });
+        //                    fname = testfiles[testfiles.Length - 1];
+        //                }
+        //                else
+        //                {
+        //                    fname = modifiedFilename;
+        //                }
+
+        //                Uploadpath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
+        //                fname = Path.Combine(Server.MapPath("~/" + Uploadpath + "/"), fname);
+        //                file.SaveAs(fname);
+        //            }
+        //            // Returns message that successfully uploaded  
+        //            return Json(modifiedFilename);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return Json("Error");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return Json("No files selected.");
+        //    }
+        //}
+
+        //}
     }
 }
 
 
+
+
+//HttpResponseMessage result = null;
+//var httpRequest = HttpContext.Current.Request;  
+//           if (httpRequest.Files.Count > 0)  
+//            {  
+//                var docfiles = new List<string>();  
+//                foreach (string file in httpRequest.Files)  
+//                {  
+//                    var postedFile = httpRequest.Files[file];
+//var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
+//postedFile.SaveAs(filePath);  
+//                    docfiles.Add(filePath);  
+//                }  
+//                result = Request.CreateResponse(HttpStatusCode.Created, docfiles);  
+//            }  
+//            else  
+//            {  
+//                result = Request.CreateResponse(HttpStatusCode.BadRequest);  
+//            }  
+//             return result;  
