@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using eCAPDDApi.infrastrure;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using Microsoft.Ajax.Utilities;
 
 //using Microsoft.Reporting.Map.WebForms.BingMaps;
 
@@ -143,8 +144,6 @@ namespace eCAPDDApi.Controllers
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
             VendorDAL clsdal = new VendorDAL();
 
-            //VM_vendorDD vmvendorreturn = new VM_vendorDD();
-
             string confirmNumber = GenerateConfirmationNumber(6);
             DateTime updateDate = DateTime.Now;
 
@@ -153,40 +152,24 @@ namespace eCAPDDApi.Controllers
 
             vmvendorDD.Confirmation = confirmNumber;
             vmvendorDD.SubmitDateTime = updateDate;
-            logw.LogWrite("before SubmitVendor call");
             Tuple<string, string> result = clsdal.SubmitVendor(vmvendorDD);
-            logw.LogWrite("after SubmitVendor call and result" + result);
-            logw.LogWrite("after SubmitVendor call" + result.Item1);
+
             if (result.Item1 == "SUCCESS")
             {
-                logw.LogWrite("before ShowReport call");
                 string str = generateVCMPDFReport(vmvendorDD);
-                //var str = GetPDFReport(vmvendorDD);
-
-
-                logw.LogWrite("after generateVCM2  call");
-
-
-                logw.LogWrite("before SubmitAttachmentFile call");
+                DAL.Models.DAL_M_SourceIPInfo ipInfo = RetrieveSourceIPInfo();
 
                 Tuple<string, string> resultAttach = clsdal.SubmitAttachmentFile(vmvendorDD);
-                logw.LogWrite("after SubmitAttachmentFile call");
-                string resultRequestLog = clsdal.InsertRequestLog(vmvendorDD);
-
-                logw.LogWrite("after InsertRequestLog call");
-
+                string resultRequestLog = clsdal.InsertRequestLog(vmvendorDD, ipInfo);
 
                 if ((resultAttach != null) && (resultRequestLog != string.Empty))
                 {
                     vmvendorDD.Confirmation = confirmNumber;
                     vmvendorDD.SubmitDateTime = updateDate;
                     vmvendorDD.ReturnErrorSuccessMsg = SendEmail(vmvendorDD.Payeename, confirmNumber, vmvendorDD.DDNotifyEmail);
-                    logw.LogWrite("after SendEmail sucess");
                 }
                 else
                 {
-
-                    logw.LogWrite("before Error -in attachment");
                     vmvendorDD.VendorReportFileName = "Error-in attachment";
                     vmvendorDD.Confirmation = "ERROR-in attachment";
                     vmvendorDD.ReturnErrorSuccessMsg = "Error in submitting Attachment file/Request Log";
@@ -196,10 +179,7 @@ namespace eCAPDDApi.Controllers
             else
             {
                 vmvendorDD.Confirmation = "ERROR-submit vendor confirmation";
-
-                logw.LogWrite("after vmvendorDD.Confirmation ERROR - submit vendor confirmation");
             }
-            logw.LogWrite("before  response  end of messages");
             return response;
         }
 
@@ -328,51 +308,12 @@ namespace eCAPDDApi.Controllers
                 var v1 = loginServs.UserSearch(vm_AdminUser.UserId);
                 var v3 = loginServs.GetUserProfile(vm_AdminUser.UserId);
 
-
-
-                ////-- testing
-
-                //string GEOLOCATION;
-                //string ServerName = Request.RequestUri.GetLeftPart(UriPartial.Authority); 
-                //string IPADDR = GetIpAddress(); 
-                //VM_SourceIPInfo ipInfo = new VM_SourceIPInfo();
-                //ipInfo.SourceServerName = ServerName;
-                //ipInfo.Source_Device = getOSInfo();
-
-                //if (!ServerName.Contains("localhost")){
-                //    try{
-                //        string info = new WebClient().DownloadString("http://api.db-ip.com/v2/free/" + IPADDR);
-                //        ipInfo = JsonConvert.DeserializeObject<VM_SourceIPInfo>(info);
-                //        ipInfo.Source_IP = IPADDR;
-                //        ipInfo.Source_Location = ipInfo.City + ", " + ipInfo.StateProvCode + " (" + ipInfo.CountryCode + ")";
-                //    }
-                //    catch (Exception ){
-                //    }
-                //}
-                //else
-                //{
-                //    //Initialize with user friendly values representing localhost
-                //    ServerName = "LOCALHOST";
-                //    IPADDR = "127.0.0.1";
-                //    GEOLOCATION = "VDD APPLICATION SERVER";
-                //    //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + GEOLOCATION;
-
-                //    ipInfo.SourceServerName = ServerName;
-                //    ipInfo.Source_IP = IPADDR;
-                //    ipInfo.Source_Location = GEOLOCATION;
-                //}
-                ////--testing
-
-
                 var data = new
                 {
                     userProfile = v1,
                     userProfile_2 = v3,
                     List_userRoles = result.Item1,
                     IsValidUser = result.Item2,
-                    //SourceIP = GetIp()
-                    //SourceIP = GetIpAddress(),
-                    //IPInfo = ipInfo
                 };
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
@@ -709,27 +650,18 @@ namespace eCAPDDApi.Controllers
         private string GetIpAddress()
         {
             return System.Web.HttpContext.Current.Request.UserHostAddress;
-            //if (Request.System.Web.HttpContext.Current.UserHostAddress != null)
-            //{
-            //    Int64 macinfo = new Int64();
-            //    string macSrc = macinfo.ToString("X");
-            //    if (macSrc == "0")
-            //    {
-            //        return userip;
-            //    }
-            //}
         }
 
         [HttpPost]
-        public HttpResponseMessage RetrieveSourceIPInfo([FromBody] VM_SourceIPInfo dal_M_Checklist)
+        private DAL.Models.DAL_M_SourceIPInfo RetrieveSourceIPInfo()
         {
             string GEOLOCATION;
             string ServerName = Request.RequestUri.GetLeftPart(UriPartial.Authority); // this can be stored in the requests log table
-            string IPADDR = GetIpAddress(); // Request.RequestUri.AbsoluteUri;// //localhost will have ::1. Other internal clients will have 10.*
+            string IPADDR = GetIpAddress().Trim(); // Request.RequestUri.AbsoluteUri;// //localhost will have ::1. Other internal clients will have 10.*
             string Headers = Request.Headers.ToString(); // this can be stored in the requests log table
 
             // populate actual values if the request is not from the localhost
-            VM_SourceIPInfo ipInfo = new VM_SourceIPInfo();
+            DAL.Models.DAL_M_SourceIPInfo ipInfo = new DAL.Models.DAL_M_SourceIPInfo();
             ipInfo.Source_Host_Headers = Headers;
             ipInfo.SourceServerName = ServerName;
             ipInfo.Source_Device = getOSInfo();
@@ -739,14 +671,21 @@ namespace eCAPDDApi.Controllers
                 try
                 {
                     string info = new WebClient().DownloadString("http://api.db-ip.com/v2/free/" + IPADDR);
-                    ipInfo = JsonConvert.DeserializeObject<VM_SourceIPInfo>(info);
+                    ipInfo = JsonConvert.DeserializeObject<DAL.Models.DAL_M_SourceIPInfo>(info);
 
                     // any IP that starts with 10. or 192. will be internal to LA County network but may show the city name differently because of the location of the edge router
                     //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + ipInfo.City + Environment.NewLine + ipInfo.StateProv;
                     ipInfo.Source_Host_Headers = Headers;
                     ipInfo.SourceServerName = ServerName;
                     ipInfo.Source_IP = IPADDR;
-                    ipInfo.Source_Location = ipInfo.City + ", " + ipInfo.StateProvCode + " (" + ipInfo.CountryCode + ")";
+                    if ((IPADDR.IndexOf("10.") > 0) || (IPADDR.IndexOf("192.") > 0) || (ipInfo.City.IsNullOrWhiteSpace()) || (ipInfo.StateProvCode.IsNullOrWhiteSpace()))
+                    {
+                        ipInfo.Source_Location = "LA County Internal";
+                    }
+                    else
+                    {
+                        ipInfo.Source_Location = ipInfo.City + ", " + ipInfo.StateProvCode + " (" + ipInfo.CountryCode + ")";
+                    }
                     ipInfo.Source_Device = getOSInfo();
                 }
                 catch (Exception)
@@ -759,16 +698,69 @@ namespace eCAPDDApi.Controllers
                 ServerName = "LOCALHOST";
                 IPADDR = "127.0.0.1";
                 GEOLOCATION = "VDD APPLICATION SERVER";
-                //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + GEOLOCATION;
 
                 ipInfo.SourceServerName = ServerName;
                 ipInfo.Source_IP = IPADDR;
                 ipInfo.Source_Location = GEOLOCATION;
             }
 
-            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = ipInfo });
-            return response;
+            return ipInfo;
         }
+
+        //[HttpPost]
+        //public HttpResponseMessage RetrieveSourceIPInfo_old([FromBody] VM_SourceIPInfo dal_M_Checklist)
+        //{
+        //    string GEOLOCATION;
+        //    string ServerName = Request.RequestUri.GetLeftPart(UriPartial.Authority); // this can be stored in the requests log table
+        //    string IPADDR = GetIpAddress().Trim(); // Request.RequestUri.AbsoluteUri;// //localhost will have ::1. Other internal clients will have 10.*
+        //    string Headers = Request.Headers.ToString(); // this can be stored in the requests log table
+
+        //    // populate actual values if the request is not from the localhost
+        //    VM_SourceIPInfo ipInfo = new VM_SourceIPInfo();
+        //    ipInfo.Source_Host_Headers = Headers;
+        //    ipInfo.SourceServerName = ServerName;
+        //    ipInfo.Source_Device = getOSInfo();
+
+        //    if (!ServerName.Contains("localhost"))
+        //    {
+        //        try
+        //        {
+        //            string info = new WebClient().DownloadString("http://api.db-ip.com/v2/free/" + IPADDR);
+        //            ipInfo = JsonConvert.DeserializeObject<VM_SourceIPInfo>(info);
+
+        //            // any IP that starts with 10. or 192. will be internal to LA County network but may show the city name differently because of the location of the edge router
+        //            //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + ipInfo.City + Environment.NewLine + ipInfo.StateProv;
+        //            ipInfo.Source_Host_Headers = Headers;
+        //            ipInfo.SourceServerName = ServerName;
+        //            ipInfo.Source_IP = IPADDR;
+        //            if ((IPADDR.IndexOf("10.") > 0) || (IPADDR.IndexOf("192.") > 0) || (ipInfo.City.IsNullOrWhiteSpace()) || (ipInfo.StateProvCode.IsNullOrWhiteSpace() )) {
+        //                ipInfo.Source_Location = "LA County Internal";
+        //            }
+        //            else {
+        //                ipInfo.Source_Location = ipInfo.City + ", " + ipInfo.StateProvCode + " (" + ipInfo.CountryCode + ")";
+        //            }
+        //            ipInfo.Source_Device = getOSInfo();
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //Initialize with user friendly values representing localhost
+        //        ServerName = "LOCALHOST";
+        //        IPADDR = "127.0.0.1";
+        //        GEOLOCATION = "VDD APPLICATION SERVER";
+        //        //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + GEOLOCATION;
+
+        //        ipInfo.SourceServerName = ServerName;
+        //        ipInfo.Source_IP = IPADDR;
+        //        ipInfo.Source_Location = GEOLOCATION;
+        //    }
+
+        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = ipInfo });
+        //    return response;
+        //}
 
         public String GetMobileVersion(string userAgent, string device)
         {

@@ -382,17 +382,16 @@
         //var uniqueFileName = getUniqueFileNameusingCurrentTime();
         //vendorDetails.VendorReportFileName = uniqueFileName + "_" + vendorNumber + "_VendorReport.pdf";
 
-
         vendorDetails.LocationAddressList = LocationAddressList;
         vendorDetails.locationIDs = bankDetails;
-        vendorDetails.locationAddressDescList = locationList;
+        vendorDetails.locationAddressDescList = locationList;        
 
-        
+        //vendorDetails.Source_ip = "Source_ip";//getSourceip();
+        //vendorDetails.Source_device = "Source_device";
+        //vendorDetails.User_agent = navigator.userAgent;
+        //vendorDetails.Host_headers = "Host_headers";
 
-        vendorDetails.Source_ip = "Source_ip";//getSourceip();
-        vendorDetails.Source_device = "Source_device";
-        vendorDetails.User_agent = navigator.userAgent;
-        vendorDetails.Host_headers = "Host_headers";
+        vendorDetails.User_agent = sessionStorage.getItem('userName');
     }
 
     function getSourceip() {

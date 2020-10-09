@@ -265,17 +265,12 @@ namespace DAL
                         reqDetails.Rows.Add(vmvendorDD.Confirmation, vmvendorDD.Vendorname, loc.LocationID, 1, loc.Address1, loc.Address2, loc.City, loc.State, loc.ZipCode);
                     }
                 }
-                // foreach (string locid in vmvendorDD.LocationIDs)
-                //reqDetails.Rows.Add(vmvendorDD.Confirmation, vmvendorDD.Vendorname, locid, 1, vmvendorDD);
-
                 DataSet ds = new DataSet("Vendor");
                 using (SqlConnection con = DBconnection.Open())
                 {
-                    //foreach (string locid in vmvendorDD.LocationIDs)
                     {
                         SqlCommand sqlComm = new SqlCommand("SubmitVendorDetails", con);
                         sqlComm.Parameters.AddWithValue("@VEND_CUST_CD", vmvendorDD.Vendorname);
-                        //sqlComm.Parameters.AddWithValue("@AD_ID", locid);
                         sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);//vmvendorDD.Confirmation)
                         sqlComm.Parameters.AddWithValue("@RequestDate", vmvendorDD.SubmitDateTime);
 
@@ -426,7 +421,7 @@ namespace DAL
             return new Tuple<string, string>("SUCCESS", "true");
         }
 
-        public string InsertRequestLog(DAL_M_VendorDD vmvendorDD)
+        public string InsertRequestLog(DAL_M_VendorDD vmvendorDD, DAL.Models.DAL_M_SourceIPInfo ipInfo)
         {
             try
             {
@@ -435,11 +430,11 @@ namespace DAL
                     SqlCommand sqlComm = new SqlCommand("InsertRequestLog", con);
                     sqlComm.Parameters.AddWithValue("@VEND_CUST_CD", vmvendorDD.Vendorname);
                     sqlComm.Parameters.AddWithValue("@ConfirmationNum", vmvendorDD.Confirmation);
-                    sqlComm.Parameters.AddWithValue("@Source_ip", vmvendorDD.Source_IP); 
-                    sqlComm.Parameters.AddWithValue("@Source_device", vmvendorDD.Source_Device);
-                    sqlComm.Parameters.AddWithValue("@User_agent", vmvendorDD.User_agent);
-                    sqlComm.Parameters.AddWithValue("@Host_headers", vmvendorDD.Source_Host_Headers);
-                    sqlComm.Parameters.AddWithValue("@Source_Location", vmvendorDD.Source_Location);
+                    sqlComm.Parameters.AddWithValue("@Source_ip", ipInfo.Source_IP); 
+                    sqlComm.Parameters.AddWithValue("@Source_device", ipInfo.Source_Device);
+                    sqlComm.Parameters.AddWithValue("@User_agent", vmvendorDD.User_agent);  //  this is used for entered by
+                    sqlComm.Parameters.AddWithValue("@Host_headers", ipInfo.Source_Host_Headers);
+                    sqlComm.Parameters.AddWithValue("@Source_Location", ipInfo.Source_Location);
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.ExecuteNonQuery();
                     con.Close();

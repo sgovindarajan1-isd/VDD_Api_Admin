@@ -1116,7 +1116,9 @@
             success: function (data) {
                 debugger;
                 for (var item in data.data.ChecklistItems) {
-                    $('input[value=' + data.data.ChecklistItems[item].CheckListID + ']').attr('checked', 'checked')
+                    if (data.data.ChecklistItems[item].Active == 1) {
+                        $('input[value=' + data.data.ChecklistItems[item].CheckListID + ']').attr('checked', 'checked');
+                    }
                     $('a[value=' + data.data.ChecklistItems[item].CheckListID + ']').text(data.data.ChecklistItems[item].LastUpdateDateTime);
                 }
             },

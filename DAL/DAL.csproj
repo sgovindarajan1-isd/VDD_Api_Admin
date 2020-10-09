@@ -78,6 +78,7 @@
     <Compile Include="Models\DAL_M_AttachmentData.cs" />
     <Compile Include="Models\DAL_M_Notes.cs" />
     <Compile Include="Models\DAL_M_TransportDataGeneric.cs" />
+    <Compile Include="Models\DAL_M_SourceIPInfo.cs" />
     <Compile Include="VendorDAL.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Models\DAL_M_IdTextClass.cs" />

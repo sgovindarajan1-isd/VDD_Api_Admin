@@ -130,27 +130,25 @@
                     '</div>' +
 
                     '<div>' +
-                    '<p>' + notes +
+                    '<p value=' + data.data.ModifiedNoteId + '>' + notes +
                     '</div>'+
                 '</li>'
 
-                if (modifyOrnewNoteId == 0) {  //For new update or update.
+                if (modifyOrnewNoteId == 0) {  //For new insert or update.
                     $("#noteList_cl").append(a);
                     $('a[value=' + checklistItemNumber + ']').text(tdate);
                 }
                 else {
-                    //update the text box
-                    //glabaleditedNotesItemtoUpdate.update(notes);//.attr('data-value', notes);
-                    //glabaleditedNotesItemtoUpdate.innerHTML = notes;
+                    //Update the text box
 
-                    //$(glabaleditedNotesItemtoUpdate + ' p:first').html(notes);
-                    var test = glabaleditedNotesItemtoUpdate.find('p:first').html();
-                    glabaleditedNotesItemtoUpdate.find('p:first').html(notes);
+                    $('p[value=' + modifyOrnewNoteId + ']').html(notes);
                 }
-                globalSelected_NotesIdforEdit = 0;  // resetting for add edit
-               // $('#addchecklistModal').modal('hide');
+                //$("#txt_checklist_comment").val('');
+                //globalSelected_NotesIdforEdit = 0;  // resetting for add edit
             }
             , complete: function (jqXHR) {
+                $("#txt_checklist_comment").val('');
+                globalSelected_NotesIdforEdit = 0;  // resetting for add edit
             }
             , error: function (jqXHR, textStatus, errorThrown) {
                 if (textStatus == 'error') {
@@ -197,7 +195,7 @@
                         '</div>' +
 
                         '<div>' +
-                        '<p>' + data.data.ChecklistNotes[item].Notes +
+                        '<p value=' + data.data.ChecklistNotes[item].NotesId + '>' + data.data.ChecklistNotes[item].Notes +
                         '</div>' +
                         '</li>'
 
