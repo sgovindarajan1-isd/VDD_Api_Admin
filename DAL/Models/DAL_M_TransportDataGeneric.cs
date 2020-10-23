@@ -10,5 +10,6 @@ namespace DAL.Models
         public DateTime TimeLineDate { get; set; }
         public DateTime TimeLineTime { get; set; }
         public string Status { get; set; }
+        public string TimeLineMessage { get; set; }
     }
 }

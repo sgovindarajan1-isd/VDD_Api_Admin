@@ -1,0 +1,1141 @@
+﻿/*	--------------------------------------------------
+	Typography
+	-------------------------------------------------- */
+html, body
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+}
+legend
+{
+    font-weight: bold;
+}
+
+/*  For use with the fieldset/legend div alternative only;
+    Don't use with the HTML controls */
+.legend
+{
+    background: url('Images/legend_fix.png');
+    font-size: 1em;
+    font-weight: bold;
+}
+/*  End usage*/
+p
+{
+    font-size: 11pt;
+}
+
+input[type="text"], 
+input[type="password"], 
+textarea
+{
+    font-size: 1em;
+}
+table span
+{
+    font-size: 1em;
+}
+a:link, a:active, a:visited
+{
+    text-decoration: underline;
+}
+a:hover
+{
+    text-decoration: none;
+}
+textarea
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+td.buttons
+{
+    text-align: left;
+}
+span
+{
+    font-size: 1em;
+}
+span.title
+{
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+span.fieldName
+{
+    font-weight: bold;
+}
+a.linkButton:link, 
+a.linkButton:active, 
+a.linkButton:visited
+{
+    text-decoration: underline;
+}
+a.linkButton:hover
+{
+    text-decoration: none;
+}
+.titleCell, 
+.titleCellEdit
+{
+    text-align: right;
+    vertical-align: middle;   
+}
+.button
+{
+    font: bold 11px/1 Helvetica, Verdana, sans-serif;
+    text-align: center;
+}
+
+.gvGridView
+{
+    font-size: 1em;
+}
+.gvGridView a, 
+.dvDetailView a
+{
+    text-align: center;
+}
+.dvDetailView td
+{
+    vertical-align: middle;
+}
+
+.gvPagerStyle a:link, 
+.gvPagerStyle a:active, 
+.gvPagerStyle a:visited, 
+.gvPagerStyle a:hover, 
+.dvPagerStyle a:link, 
+.dvPagerStyle a:active, 
+.dvPagerStyle a:visited, 
+.dvPagerStyle a:hover
+{
+    text-decoration: underline;
+}
+.gvPagerStyle a:hover, 
+.dvPagerStyle a:hover
+{
+    text-decoration: none;
+}
+.dvHeaderStyle
+{
+    font-size: 9pt;
+    text-align: left;    
+}
+
+/* DataList Styles */
+/*
+.dlDataList
+{
+    font-size: 1em;
+}
+.dlTitleCellItem,
+.dlTitleCellEdit
+{
+    text-align: right;
+}
+.dlDateCell
+{
+    text-align: center;
+}
+*/
+.dlTitleCellEdit
+{
+    text-align: right;
+}
+/* End DataList Styles */
+
+/* Begin ListView Styles */
+.lvListView
+{
+    font-size: 1em;
+}
+.lvPagerStyle a:link, 
+.lvPagerStyle a:active, 
+.lvPagerStyle a:visited, 
+.lvPagerStyle a:hover
+{
+    text-decoration: underline;
+}
+.lvHeaderStyle
+{
+    font-size: 9pt;
+    text-align: left;    
+}
+/* End ListView Styles */
+
+/* ERROR STUFF */
+/*
+.errorText
+{
+    font-size: larger;
+}
+*/
+.errorText
+{
+    font-size: 9pt;
+}
+.redText
+{
+    font-size: 11px;
+}
+/* END ERROR STUFF */
+
+div.row span.label
+{
+    font-size: smaller;
+    font-weight: bold;
+}
+.horizontal-list
+{
+    font: normal 13pt Helvetica, sans-serif;
+    list-style-type: none;
+    list-style-position: outside;
+}
+.horizontal-list a:link, 
+.horizontal-list a:active, 
+.horizontal-list a:visited
+{
+    text-align: left;
+    text-decoration: underline;
+}
+.horizontal-list a:hover
+{
+    text-decoration: none;
+}
+
+.break-word
+{
+    word-wrap: break-word;   
+}
+.left
+{
+    text-align: left;
+}
+.right
+{
+    text-align: right;
+}
+.center
+{
+    text-align:center;
+}
+
+/*	--------------------------------------------------
+	Layout
+	-------------------------------------------------- */
+html, body
+{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+fieldset
+{
+    margin: 2px;
+    padding: 0 5px 5px;
+    border-radius: 4px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    
+    /* Taken from .fieldset 
+    margin: 20px 10px 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;*/
+}
+legend
+{
+    margin-bottom: 8px;
+    padding: 2px 2px;
+}
+/*  For use with the fieldset/legend div alternative only;
+    Don't use with input controls */
+.fieldset
+{
+    border-radius: 4px;
+    clear: both;
+    float:left;
+    margin: 20px 10px 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 1200px;
+}
+.legend
+{
+    border-bottom: none;
+    float: left;
+    font-weight: bold;
+    margin-top: -18px;
+    margin-left: 8px;
+    margin-right: 2px;
+}
+.legend img
+{
+	border: none;
+	margin-left: 5px;
+}
+/* End usage */
+
+input[type="text"], 
+input[type="password"], 
+textarea
+{
+    padding: 4px;
+}
+table
+{
+    border-collapse: collapse;
+}
+table.checkBoxList td
+{
+    padding: 5px 9px 5px 2px;
+}
+table.radioButtonList td
+{
+    padding: 5px 9px 5px 2px;
+}
+td.buttons
+{
+    margin: 5px;
+    padding: 5px;
+}
+span.title
+{
+    padding: 20px 0;
+}
+select.listBox
+{
+    width: 150px;
+}
+.titleCell, 
+.titleCellEdit
+{
+    padding: 7px;
+    width: 125px;
+}
+.clear
+{
+    clear: both;
+}
+.block-display
+{
+    display: block;
+}
+.text-center
+{
+    text-align: center;
+}
+/*
+.gridListCount
+{
+    clear: both;
+    float: right;
+    font-size: 9pt;
+    margin-top: 5px;
+}
+*/
+/*
+div.row
+{
+    clear: both;
+    padding-top: 3px;
+    width: 100%;
+}*/
+div.row
+{
+    clear: both;
+    display: inline-table;
+    padding-top: 3px;
+    width: 100%;
+}
+div.row span.label
+{
+    float: left;
+    padding-top: 6px;
+    text-align: left;
+    width: 120px;
+}
+div.row span.form
+{
+    float: left;
+    width: 220px;
+    text-align: left;
+}
+div.row span.button
+{
+    float: right;
+    margin-right: 16px;
+}
+
+.dvDetailView
+{
+    margin-top: 10px;
+}
+
+.gvGridView th, 
+.gvGridView td
+{
+    line-height: 20px;
+}
+.dvDetailView td
+{
+    line-height: 30px;   
+}
+.gvGridView th
+{
+    padding: 5px 15px;
+}
+
+.gvGridView td
+{
+    padding: 0 5px;
+}
+
+.gvGridView a
+{
+    display: block;
+}
+
+.dvDetailView a
+{
+    width: 15%;
+}
+.dvHeaderStyle
+{
+    padding-right: 5px;
+    vertical-align: middle;
+}
+.dvItemStyle
+{
+    padding-left: 5px;
+    vertical-align: middle;
+}
+.dvRowStyle td, 
+.dvAlternatingRowStyle td,
+.dvItemStyle td,
+.dvEditStyle td,
+.dvPagerStyle td
+{
+    padding-left: 5px;
+    
+}
+.dvPagerStyle a
+{
+    padding: 5px 20px;
+    
+}
+
+.dvHeaderStyle
+{
+    vertical-align: top;
+    width: 115px;
+}
+
+.dlThreeColumn, 
+.dlFourColumn
+{
+    border-spacing: 3px;
+}
+
+.dlThreeColumn
+{
+    border-collapse: separate;
+    max-width: 720px;
+    width: 720px;
+}
+
+/* DataList TEST */
+/*.dlTitleCell, 
+.dlTitleCellEdit, 
+.dlTitleCellItem
+{
+    vertical-align: middle;
+    max-width: 125px;
+    width: 125px;
+}
+.dlThreeColumn .dlColumn2
+{
+    max-width: 480px;
+    width: 480px;
+}
+.dlThreeColumn .dlColumn3
+{
+    max-width: 115px;
+    width: 115px;   
+}
+
+.dlFourColumn
+{
+    border-collapse: separate;
+    max-width: 960px;
+    width: 960px;
+}
+.dlFourColumn .dlColumn2, 
+.dlFourColumn .dlColumn4 
+{
+    max-width: 115px;
+    width: 115px;
+}
+.dlFourColumn .dlColumn3
+{
+    max-width: 605px;
+    width: 605px; 
+}*/
+/* End DataList TEST */
+
+/* DataList Styles */
+/*
+.dlDataList
+{
+    border-collapse: collapse;
+    width: 960px;
+}
+
+.dlTitleCellEdit, 
+.dlTitleCellItem
+{
+    vertical-align: middle;
+    max-width: 125px;
+    width: 125px;
+}
+
+.dlFooterStyle
+{
+    border-collapse: separate;
+    border-spacing: 3px;
+    
+}
+
+.dlFooterStyle table
+{
+    border-collapse: separate;
+    border-spacing: 3px;
+}
+*/
+.dlTitleCellEdit
+{
+    vertical-align: middle;
+    max-width: 125px;
+    width: 125px;
+}
+/* End DataList Styles */
+
+/* Begin ListView Layout Styles */
+.lvListView th, 
+.lvListView td
+{
+    line-height: 20px;
+}
+
+.lvListView th
+{
+    padding: 5px 15px;
+}
+
+.lvListView td
+{
+    padding: 0 5px;
+}
+
+.lvListView a
+{
+    display: block;
+}
+/* End ListView Layout Styles */
+
+.horizontal-list
+{
+    margin: 0;
+    padding: 0;
+    line-height: 1.7em;
+}
+.horizontal-list a:link, 
+.horizontal-list a:active, 
+.horizontal-list a:visited
+{
+    display: block;
+    padding: 0px 5px;
+    vertical-align: top;
+}
+.horizontal-list li
+{
+    float: left;
+    position: relative;
+    padding: 5px 10px;
+}
+.dateText
+{
+    width: 100px;
+}
+.longText
+{
+    width: 275px;
+}
+.button
+{
+    padding: 8px;
+    /*width: 75px;*/
+    width: auto;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+.linkButton
+{
+    float: right;
+    height: 16px;
+    padding: 0px 8px;
+}
+.calImg
+{
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+}
+.section
+{
+    margin: 10px auto;
+    padding: 2px 10px;
+}
+/* =REMOVE */
+/* .modalPopup { padding: 10px 3px; width: 550px; } */
+/* =ENDREMOVE */
+
+.fieldOneCol
+{
+    width: 340px;
+}
+.fieldThreeCol
+{
+    width: 680px;
+}
+
+/* THIS SECTION NEEDS TO BE REMOVED ONCE REAL CONTROL IS USED IN REFERRALS TAB */
+
+/* .dateCell { text-align: center; vertical-align: middle; } */
+/* .dlItemButtons { text-align:center; } */
+
+/* END REMOVAL SECTION*/
+
+/* For use with all fieldset separated sections */
+.container
+{
+    clear: both;
+    float: left;
+    /*margin: 20px 0px 5px 20px;*/
+    margin: 5px 0px 5px 14px;
+    min-width: 480px; /* half the max width of 960px */
+    width: 960px;
+}
+.none
+{
+    display: none;
+}
+
+.progress-bar
+{
+    bottom: 0%;
+    left: 0px;
+    position: fixed;
+    height: 30px;
+    width: 100%;
+}
+
+/*	--------------------------------------------------
+	Colors
+	-------------------------------------------------- */
+/* =REMOVE */
+/* .redText { color: #ff0; } */
+/* .gridListCount { color: #800000; } */
+/* .section { border: solid 1px; background-color: #ffffc4; } */
+/* .modalBackground { background: rgb(25, 25, 25); filter: alpha(opacity=70); opacity: 0.7; } */
+/* .modalTitle { cursor: move; background-color: #c0ddea; border: solid 1px Gray; color: Black; margin-bottom: 10px; } */
+/* .modalPopup { background-color: #fff; border: 3px solid gray; text-align: center; } */
+/* .whiteText { color: #fff; } */
+/* =ENDREMOVE */
+fieldset
+{
+    border: 1px solid #bcbcbc;
+}
+legend
+{
+    color: #339;
+}
+/*  For use with the fieldset/legend div alternative only;
+    Don't use with the HTML controls */
+.legend
+{
+    color: #333399;
+}
+.fieldset
+{
+    background: #fff;
+    /*border: .2em solid #bcbcbc;*/
+    border: 1px solid #bcbcbc;
+}
+/* End usage */
+span
+{
+    color: #000;
+}
+img
+{
+    border: none;
+}
+input[type="text"], 
+input[type="password"], 
+textarea
+{
+    border: 1px solid #507cd1;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,.1);
+}
+input[type="text"]:focus, 
+input[type="password"]:focus, 
+textarea:focus
+{
+    background: lightyellow;
+    border: 1px solid #507cd1;
+}
+input[type="text"].disabled, 
+input[type="password"].disabled, 
+textarea.disabled
+{
+    border: 1px solid #ccc;
+    background: rgb(240,240,234);
+}
+table.checkBoxList
+{
+    border: 1px solid #507cd1;
+    color: #000;
+}
+table.radioButtonList
+{
+    border: 1px solid #507cd1;
+    color: #000;
+}
+select
+{
+    border-color: #507cd1;
+    color: #000;
+}
+select.listBox
+{
+    border-color: #507cd1;
+    color: #000;
+}
+a.linkButton:link, 
+a.linkButton:active, 
+a.linkButton:hover, 
+a.linkButton:visited
+{
+    color: #000;
+}
+input[type="checkbox"]:hover + label, 
+input[type="checkbox"]:focus + label,
+input[type="checkbox"] + label:hover
+{
+    border: #507cd1;
+    color: #339;
+}
+input[type="radio"]:hover + label, 
+input[type="radio"]:focus + label, 
+input[type="radio"] + label:hover
+{
+    color: #339;
+}
+/* =Error Color Styles */
+.errorText
+{
+    color: #fb3015;
+}
+
+/* =Gridview =DetailsView Color Styles*/
+.gvGridView, 
+.dvDetailView
+{
+    border: 1px solid #000;
+    
+    -webkit-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+    -moz-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+    box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+}
+.gvGridView a:link, 
+.gvGridView a:active, 
+.gvGridView a:visited, 
+.gvGridView a:hover, 
+.dvDetailView a:link, 
+.dvDetailView a:active, 
+.dvDetailView a:visited, 
+.dvDetailView a:hover
+{
+    color: #000;
+}
+.dvDetailView a:hover
+{
+    background: #def;
+}
+.gvHeaderStyle
+{
+    border: 1px solid black;
+    background: rgb(63, 76, 107);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.07, rgba(117, 130, 161, 1)), color-stop(0.54, rgba(63, 76, 107, .5)));
+    background-image: -moz-linear-gradient(center top, rgba(117, 130, 161, 1) 7%, rgba(63, 76, 107, .5) 54%);
+    background-image: -o-linear-gradient(rgba(117, 130, 161, 1), rgba(63, 76, 107, 0.5));
+}
+.gvHeaderStyle th
+{
+    color: #fff;
+}
+.gvGridView tr.gvRowStyle:hover, 
+.gvGridView tr.gvAlternatingRowStyle:hover
+{
+    background: #dde;
+}
+.gvHeaderStyle a:link, 
+.gvHeaderStyle a:active, 
+.gvHeaderStyle a:visited, 
+.gvHeaderStyle a:hover
+{
+    color: #fff;
+}
+.gvPagerStyle, 
+.gvPagerStyle tr:hover, 
+.dvPagerStyle, 
+.dvPagerStyle tr:hover
+{
+    background: rgb(63, 76, 107);
+}
+.gvPagerStyle tr, 
+.gvPagerStyle td, 
+.dvPagerStyle tr, 
+.dvPagerStyle td
+{
+    border: none;
+}
+.gvPagerStyle span, 
+.dvPagerStyle span
+{
+    color: #fff;
+}
+.gvPagerStyle a:link, 
+.gvPagerStyle a:active, 
+.gvPagerStyle a:visited, 
+.gvPagerStyle a:hover, 
+.dvPagerStyle a:link, 
+.dvPagerStyle a:active, 
+.dvPagerStyle a:visited, 
+.dvPagerStyle a:hover
+{
+    color: #fff;
+}
+.gvPagerStyle a:hover, 
+.dvPagerStyle a:hover
+{
+    color: #000;
+}
+.gvAlternatingRowStyle, 
+.dvAlternatingRowStyle
+{
+    background-color: #f7f7ff;
+}
+
+.dvEditStyle,
+.dlEditItemStyle
+{
+    background-color: #fff298;
+}
+
+.gvRowStyle td, 
+.gvAlternatingRowStyle td, 
+.dvRowStyle td, 
+.dvAlternatingRowStyle td
+{
+    border: 1px solid #38393A;
+}
+
+/* =ListView Color Styles */
+.lvListView
+{
+    border: 1px solid #000;
+    
+    -webkit-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+    -moz-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+    box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+}
+.lvListView a:link, 
+.lvListView a:active, 
+.lvListView a:visited, 
+.lvListView a:hover
+{
+    color: #000;
+}
+.lvHeaderStyle
+{
+    border: 1px solid black;
+    background: rgb(63, 76, 107);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.07, rgba(117, 130, 161, 1)), color-stop(0.54, rgba(63, 76, 107, .5)));
+    background-image: -moz-linear-gradient(center top, rgba(117, 130, 161, 1) 7%, rgba(63, 76, 107, .5) 54%);
+    background-image: -o-linear-gradient(rgba(117, 130, 161, 1), rgba(63, 76, 107, 0.5));
+}
+.lvHeaderStyle th
+{
+    color: #fff;
+}
+.lvListView tr.lvRowStyle:hover, 
+.lvListView tr.lvAlternatingRowStyle:hover
+{
+    background: #dde;
+}
+.lvHeaderStyle a:link, 
+.lvHeaderStyle a:active, 
+.lvHeaderStyle a:visited, 
+.lvHeaderStyle a:hover
+{
+    color: #fff;
+}
+.lvPagerStyle, 
+.lvPagerStyle tr:hover
+{
+    background: rgb(63, 76, 107);
+}
+.lvPagerStyle tr, 
+.lvPagerStyle td
+{
+    border: none;
+}
+.lvPagerStyle span
+{
+    color: #fff;
+}
+.lvPagerStyle a:link, 
+.lvPagerStyle a:active, 
+.lvPagerStyle a:visited, 
+.lvPagerStyle a:hover
+{
+    color: #fff;
+}
+.lvPagerStyle a:hover
+{
+    color: #000;
+}
+.lvAlternatingRowStyle
+{
+    background-color: #f7f7ff;
+}
+.lvRowStyle td, 
+.lvAlternatingRowStyle td
+{
+    border: 1px solid #38393A;
+}
+
+/* =DataList Color Styles */
+/*.dlDataList
+{
+    border: 1px solid #000;
+    
+    -webkit-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+    -moz-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+    box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+}
+
+.dlDataList a:link, 
+.dlDataList a:active, 
+.dlDataList a:visited, 
+.dlDataList a:hover
+{
+    color: #000;
+}
+.dlHeaderStyle
+{
+    border: 1px solid black;
+    background: rgb(63, 76, 107);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.07, rgba(117, 130, 161, 1)), color-stop(0.54, rgba(63, 76, 107, .5)));
+    background-image: -moz-linear-gradient(center top, rgba(117, 130, 161, 1) 7%, rgba(63, 76, 107, .5) 54%);
+    background-image: -o-linear-gradient(rgba(117, 130, 161, 1), rgba(63, 76, 107, 0.5));
+}
+.dlHeaderStyle th
+{
+    color: #fff;
+}
+
+.dlItemStyle
+{
+    border: 1px solid #222;
+}
+
+.dlAlternatingItemStyle
+{
+    background-color: #f7f7ff;
+    border: 1px solid #222;
+}
+.dlDataList tr.dlAlternatingItemStyle:hover
+{
+    background: #dde;
+}
+
+.dlTitleCellItem
+{
+    background: #dae1e7;
+}
+.dlTitleCellEdit
+{
+    background: #fff298;
+}*/
+.dlTitleCellEdit { background: #fff298; }
+
+/* =Horizontal-List Color Styles */
+.horizontal-list a:link, 
+.horizontal-list a:active, 
+.horizontal-list a:visited
+{
+    color: #000;
+}
+.horizontal-list a:hover
+{
+    color: #000;
+}
+
+/* =Button Color Styles */
+.linkButton
+{
+    color: #fff;
+    background-color: #7f8733;
+    border: #acb9aa 1px solid;
+}
+.button
+{
+    background-image: -webkit-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -moz-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background: #e3e3e3;
+    border: 1px solid #aaa;
+    -webkit-box-shadow: 1px 1px 2px rgba(46, 50, 50, 0.72);
+    -moz-box-shadow: 1px 1px 2px rgba(46, 50, 50, 0.72);
+    box-shadow: 1px 1px 2px rgba(46, 50, 50, 0.72);
+    color: #333;
+}
+.button:hover
+{
+    border-color: #333;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,0.2);
+}
+.button:active
+{
+    background: #f5f5f5;
+    border-color: #333;
+    color: #3c3b37;    
+}
+
+.save
+{
+    background-image: -webkit-gradient(top, #24ae24, #f1f1f1);
+    background-image: -moz-linear-gradient(top, #24ae24, #f1f1f1);
+    background-image: -o-linear-gradient(top, #24ae24, #f1f1f1);
+    background: #24ae24;
+    border: 1px solid #36a536;
+    color: #fff;
+}
+.save:hover
+{
+    border-color: #008100;
+}
+.save:active
+{
+    background: #24c024;
+    border-color: #008100;
+    color: #fff;    
+}
+.delete
+{
+    background-image: -webkit-gradient(top, #a8333c, #f1f1f1);
+    background-image: -moz-linear-gradient(top, #a8333c, #f1f1f1);
+    background-image: -o-linear-gradient(top, #a8333c, #f1f1f1);
+    background: #a8333c;
+    border: 1px solid #c93636;
+    color: #fff;
+}
+.delete:hover
+{
+    border-color: #810000;
+}
+.delete:active
+{
+    background: #cc5760;
+    border-color: #810000;
+    color: #fff;    
+}
+.print
+{
+    background-image: -webkit-gradient(top, #356aa0, #f1f1f1);
+    background-image: -moz-linear-gradient(top, #356aa0, #f1f1f1);
+    background-image: -o-linear-gradient(top, #356aa0, #f1f1f1);
+    background: #356aa0;
+    border: 1px solid #23587c;
+    color: #fff;
+}
+.print:hover
+{
+    border-color: #000081;
+}
+.print:active
+{
+    background: #6ba0d6;
+    border-color: #000081;
+    color: #fff;    
+}
+/* =End Buttons */
+
+.titleCell
+{
+    background-color: #dae1e7;
+}
+.titleCellEdit
+{
+    background-color: #fff298;
+}
+
+.watermarkText
+{
+    color: rgb(170,170,170);
+}
+
+/* AJAX UpdateProgress */
+.progress-bar
+{
+    background-color: #587592;
+}
+
+.progress-bar span
+{
+    color: #fff;
+}
+
+
+/* These styles are ONLY used by the Case Appeals tab for the demo field entry portions. */
+/* -----------------------------
+    Generic Table Stuff
+-------------------------------- */
+.tblTwoColumn,
+.tblThreeColumn,
+.tblFourColumn
+{
+    border-collapse: separate;
+    border-spacing: 3px;
+}
+
+
+/* -----------------------------
+    Two Column Table
+-------------------------------- */
+.tblTwoColumn
+{
+    width: 480px;
+}
+
+.tblTwoColumn .col2
+{
+    vertical-align: middle;
+    width: 355px;
+}

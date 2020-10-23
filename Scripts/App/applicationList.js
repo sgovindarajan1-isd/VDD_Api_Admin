@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
-    debugger;
-    $("#id_userName").text(sessionStorage.getItem('UserName'));
-
+    $("#lbl_userName").text(sessionStorage.getItem('userName'));  //id_userName
+    
     var pendingAssignList = [];
     var pendingMyApprovalList = [];
     var userId = sessionStorage.getItem('UserId');
@@ -12,7 +11,7 @@
 
     // Default view for Supervisor
     if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-        getApplicationDetails(userId, '5', '21,22,23');  //  supervisor will see all the pending  status
+        getApplicationDetails(12, userId, '5', '21,22,23');  //  supervisor will see all the pending  status
     }
 
     // Default view For Processor
@@ -24,52 +23,48 @@
         $("#sidemenu_PendingMyApproval").addClass('leftNavItemActive');
         $("#sidemenu_PendingAssignment").removeClass('leftNavItemActive');
 
-        getApplicationDetails(userId, '2', '21,22,23');  //  Processor will see only  My pending approval  ( not the application pending assignment)
+        getApplicationDetails(11, userId, '2', '');  //  Processor will see only  My pending approval  ( not the application pending assignment)
     }
 
 
     $("#sidemenu_PendingAssignment").click(function () {
         $("#sidemenu_PendingMyApproval").removeClass('leftNavItemActive');
         $("#sidemenu_PendingAssignment").addClass('leftNavItemActive');
-        debugger;
         setData(pendingAssignList);
     });
 
     $("#sidemenu_PendingMyApproval").click(function () {
         $("#sidemenu_PendingMyApproval").addClass('leftNavItemActive');
         $("#sidemenu_PendingAssignment").removeClass('leftNavItemActive');
-        debugger;
         setData(pendingMyApprovalList);
     });    
 
     $("#btn_customizeFilter").click(function () {
-        debugger
+        debugger;
         var filterApptype = $("#filterApplicationType  option:selected").text();
         var filterUser = $("#filterUser  option:selected").text();
         var filterStatus = $("#filterStatus  option:selected").text();
-        var age = $("#filerAge  option:selected").text();
-
+        var age = $("#filerAge  option:selected").val();
+        
        // Default view for Supervisor
        if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-            getApplicationDetails(userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
+            getApplicationDetails(12, userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
        }
 
        // Default view For Processor
        if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
-            getApplicationDetails(userId, '2', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)
-       }
+            getApplicationDetails(11, userId, '2', '', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)
+        }
+
+        $("#customizeFilterModal").modal('hide');
 
     });
    
     $("#btn_0_15_days").click(function () {
-        debugger;
-        //table.columns([column_no]).search( $( '#txtSearch' ).val() ).draw();
-        //https://jsfiddle.net/07rnpgs1/
-       // table.columns([4]).search(15).draw();
         getApplicationListFilteredByAge(15);
     });
 
-    $("#btn_31_60_days").click(function () {
+    $("#btn_16_30_days").click(function () {
         getApplicationListFilteredByAge(30);
     });
 
@@ -78,18 +73,19 @@
     });
     
     $("#btn_60_plus_days").click(function () {
+        debugger;
         getApplicationListFilteredByAge(61);
     });
-
-function getApplicationListFilteredByAge(age) {
+    
+    function getApplicationListFilteredByAge(age) {
         // Default view for Supervisor
         if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-            getApplicationDetails(userId, '5', '21,22,23', age,'','','');  //  supervisor will see all the pending  status
+            getApplicationDetails(12, userId, '5', '21,22,23', age,'','','');  //  supervisor will see all the pending  status
         }
 
         // Default view For Processor
         if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
-            getApplicationDetails(userId, '2', '21,22,23', age,'','','');  //  Processor will see only  My pending approval  ( not the application pending assignment)
+            getApplicationDetails(11, userId, '2', '', age,'','','');  //  Processor will see only  My pending approval  ( not the application pending assignment)
         }
     };
 
@@ -99,7 +95,6 @@ function getApplicationListFilteredByAge(age) {
     });
 
     function setData(data) {
-        //debugger;
         $('#ddGrid').DataTable().destroy();
         ////table.DataTable().destroy();
         $('#ddGrid').empty();
@@ -117,7 +112,6 @@ function getApplicationListFilteredByAge(age) {
                 {
                     "data": "ConfirmationNum",
                     "render": function (data, type, row, meta) {
-                        debugger;
                         if (type === 'display') {
                             //sessionStorage.setItem('selectedConfirmationNumber', data);
                             //sessionStorage.setItem('selectedRequestType', row.RequestType);
@@ -126,23 +120,19 @@ function getApplicationListFilteredByAge(age) {
 
                         return data;
                     },
-                    "title": "Confirmation #"
+                    "title": "Confirmation #", "width": '52px' 
                 },
                 { 'data': 'VendorName', "title": "Payee Name" },
                 { 'data': 'ReceivedDate', "title": "Received Dt"},
                 { 'data': 'AssignedDate', "title": "Assignment Dt"},
                 { 'data': 'ApplicationAge', "title": "Application Age"},
-                { 'data': 'StatusDesc', "width": '140px', "title": "Status"}
+                { 'data': 'StatusDesc', "title": "Status"}
             ],
 
             columnDefs: [
-                //{
-                //    "render": function (data, type, row) {
-                //        return data + ' - ssss';
-                //    },
-                //    "targets": 0
-                //},
-
+                { "width": "30%", "targets": [0,1] },
+                { "width": "10%", "targets": [2,3,4] },
+                { "width": "5%", "targets": [5] },
                 {
                     searching: false,
                     data: null,
@@ -156,31 +146,37 @@ function getApplicationListFilteredByAge(age) {
         });
     };
 
-    function getApplicationDetails(userID, pendingAssignmentStatus, myapprovalStatus, filterAge, filterApptype, filterUser, filterStatus ) {
+    function getApplicationDetails(roleId, userID, pendingAssignmentStatus, myapprovalStatus, filterAge, filterApptype, filterUser, filterStatus) {
+        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
             dataType: 'json',
             data: JSON.stringify({
-                'UserId': userID, 'PendingAssignmentStatus': pendingAssignmentStatus, 'MyapprovalStatus': myapprovalStatus, 'FilterAge': filterAge, 'FilterApptype': filterApptype, 'FilterUser': filterUser, 'FilterStatus': filterStatus
+                'RoleId': roleId, 'UserId': userID, 'PendingAssignmentStatus': pendingAssignmentStatus, 'MyapprovalStatus': myapprovalStatus, 'FilterAge': filterAge, 'FilterApptype': filterApptype, 'FilterUser': filterUser, 'FilterStatus': filterStatus
             }),
             headers: {
                 'Authorization': 'Basic ' + btoa('admin')
             },
             url: "/api/values/GetApplicationListAssigned/",
             success: function (data) {
-                debugger;
-                $("#span_countPendingAssignment").text(sessionStorage.getItem("totalApplicationPendingCount"));
+                $("#span_countPendingAssignment").text(data.data.pendingAssignmentList.length); //sessionStorage.getItem("totalApplicationPendingCount"));
                 $("#span_appPendingOver60Days").text(sessionStorage.getItem("totalPendingMyApprovalCountOver60"));
-                $("#span_countPendingMyApproval").text(sessionStorage.getItem("totalPendingMyApprovalCount"));
+                $("#span_countPendingMyApproval").text(data.data.pendingMyApprovalList.length);//sessionStorage.getItem("totalPendingMyApprovalCount"));
 
                 pendingAssignList = data.data.pendingAssignmentList;
                 pendingMyApprovalList = data.data.pendingMyApprovalList;
-                setData(pendingAssignList);  // default
-
-                //testing only
-                //setData(pendingMyApprovalList);
-                debugger;
+                if (roleId == 12) {  //  supervisor view
+                    if ($("#sidemenu_PendingMyApproval").hasClass("leftNavItemActive")) {
+                        setData(pendingMyApprovalList);
+                    }
+                    else {
+                        setData(pendingAssignList);  // default
+                    }
+                }
+                else { // processor list
+                    setData(pendingMyApprovalList);
+                }
             },
             error: function (_XMLHttpRequest, textStatus, errorThrown) {
                 if (_XMLHttpRequest.status == '401') {
@@ -201,14 +197,12 @@ function getApplicationListFilteredByAge(age) {
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                debugger;
                 applicationTypeList = data.data.applicationTypeList;
                 userList = data.data.userList;  
                 statusList = data.data.statusList;
 
                 var filterUserList = $('#filterUser');
                 $.each(userList, function (key, value) {
-                    debugger;
                     filterUserList.append(
                         $('<option></option>').val(value.Text).html(value.IdText)
                     );
@@ -216,7 +210,6 @@ function getApplicationListFilteredByAge(age) {
 
                 var filterApplicationTypeList = $('#filterApplicationType');
                 $.each(applicationTypeList, function (key, value) {
-                    debugger;
                     filterApplicationTypeList.append(
                         $('<option></option>').val(value.Text).html(value.IdText)
                     );
@@ -224,7 +217,6 @@ function getApplicationListFilteredByAge(age) {
 
                 var filterStatusList = $('#filterStatus');
                 $.each(statusList, function (key, value) {
-                    debugger;
                     filterStatusList.append(
                         $('<option></option>').val(value.Id).html(value.Text)
                     );
@@ -233,7 +225,6 @@ function getApplicationListFilteredByAge(age) {
             , complete: function (jqXHR) {
             }
             , error: function (jqXHR, textStatus, errorThrown) {
-                debugger;
                 if (textStatus == 'error') {
                     toastr.options.positionClass = "toast-bottom-right";
                     toastr.warning("Error in Getting Application Type List , Please check!");

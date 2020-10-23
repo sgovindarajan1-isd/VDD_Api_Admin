@@ -1,0 +1,350 @@
+﻿    .pageTitle h2
+    {
+        color: rgb(88, 117, 146);
+        font-size: 1.8em;
+        font-weight: bold;
+        line-height: 2em;
+        text-align: center;
+    }
+    
+    /* ----------------------
+		    Button Bar Styles Gray color 02032015
+	    ------------------------*/
+    #buttonBar
+    {
+        /*background-color: #dadac8;*/
+        background-color: #D3D3D3;
+        -webkit-box-shadow: 0px 2px 3px rgba(46, 50, 50, 0.92);
+        -moz-box-shadow: 0px 2px 3px rgba(46, 50, 50, 0.92);
+        box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.92);
+        clear: both;
+        float: left;
+        min-width: 1000px;
+        width: 100%;
+        z-index: 1;
+    }
+    #buttonBar ol
+    {
+        list-style-type: none;
+        float: left;
+        margin: 10px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #buttonBar li
+    {
+        float: left;
+        margin: 0 5px;
+        position: relative;
+    }
+    #buttonBar span
+    {
+        line-height: 33px;
+    }
+    
+    #buttonBar p.loggedInUser
+    {
+        float:left; 
+        font-weight: normal;
+        font-size: 10pt;
+        /*line-height:30px;*/
+        line-height:20px;
+        padding:0px;
+    }
+
+     body 
+    {
+   /*background-color: rgb(247,247,247);
+         margin: 0 auto;
+          width:1200px;
+          height:1200px;
+   */
+   /*background-image: url('Images/blurry-cityscape-smaller.jpg');
+     -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+          width:1200px;
+           height:1200px;
+               margin: 0 auto;*/
+   overflow-x:hidden;
+   overflow-y:scroll;
+
+       
+   
+    
+      }
+
+    #titleimage 
+    {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/DD01192016.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 120px;
+
+
+      }
+
+        /*#footer {
+  position: relative;
+ margin-top: 50px; 
+  height: 140px;
+  clear:both;
+    background-color: #364C71;
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 110px;
+}*/
+ #header { font-size:14px;line-height:25px; margin:0px 0 0 auto; height: 115px; box-sizing:border-box; filter:none; display:block; clear:none; box-sizing:border-box; top:0;content:normal;margin-left:-150px;margin-right:-150px; width:100%}
+
+ #footer_container { background-color: #0E1A2B; border:0px solid #364C71; bottom:0; height:100px; left:0; position: relative; width:100%; z-index:9999; background-image:none;
+                      background-position-x:0%;background-position-y:0%;line-height:30px;background-clip:border-box;display:block;background-origin:padding-box;background-repeat:repeat;
+                      background-size:auto;box-sizing:border-box; font-weight:400;background-attachment:scroll;line-height:22.5px;
+  }
+ #footer { font-size:14px;line-height:22.5px; margin:50px 0 0 auto; height: 95px; box-sizing:border-box; filter:none; display:block; clear:none; box-sizing:border-box; bottom:0;content:normal;margin-left:260px;margin-right:260px; width:100%}
+ #footbot {
+     clear:both;float:left;list-style-image:none;list-style-position:outside;list-style-type:none;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;
+
+ }
+  #footbot2 {
+     float:right;list-style-image:none;list-style-position:outside;list-style-type:none;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;
+
+ }
+
+        html, body {
+	   	     height: 100%;
+           overflow-x:hidden;
+            /*background: url('Images/blurry-cityscape-smaller.jpg') no-repeat center center fixed;
+       -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;*/
+
+}
+           .wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -100px; 
+}
+.footer, .push {
+	height: 100px; 
+  
+}
+
+
+
+
+.left {float:left}
+.right {float:right}
+.clear {clear:both}
+        li {
+    display: inline-block;
+    color: white;
+    float:none;
+   
+    
+    
+}
+      
+li a { color: white; }
+
+     #Subtitleimage 
+    {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/Vendor.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 39px;
+
+
+      }
+
+
+
+      #tableAlignCenter
+       {
+          margin-left: auto;
+          margin-right: auto;
+          border-color: #444444;
+          border-collapse:collapse;
+          margin: 0 auto;
+          width:1200px;
+
+                        }
+
+
+
+
+  html {
+    /*background: url('Images/logincover12082014.gif') no-repeat center center fixed;*/
+    /*background-color: rgb(188, 209, 226);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+
+       /*background-image: url('Images/blurry-cityscape-smaller.jpg');
+       -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;*/
+          /*width:1200px;
+         height: 1500px;*/ 
+                  background: url('Images/blurry-cityscape-smaller.jpg')no-repeat center center fixed; 
+       -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+               margin: 0 auto;
+}     
+      .containerbox
+  {
+       background-color: rgb(247,247,247);     
+       width: 1125px;
+    top:15%;
+     /*margin: 10px 0 0 50px;*/
+    border-width:1px;
+       border:1px solid black !important;
+       margin-left:0px;
+       margin-right:0px;
+       padding-left:15px;
+       padding-right:15px;
+
+
+   }
+
+  #container {
+    /*width: 1185px;
+    position: absolute;
+    left: 30%;
+    top:35%;
+    margin: -130px 0 0 -210px;*/
+
+    /*background-color: rgb(247,247,247);
+    width: 1125px;
+    width:60%;
+       left: 30%;
+    top:15%;
+     margin: 10px 0 0 350px;
+    border-width:1px;
+       border:1px solid black !important;*/
+  
+       background-color: rgb(247,247,247);     
+       width: 1125px;
+    /*top:15%;*/
+     /*margin: 10px 0 0 50px;*/
+    border-width:1px;
+       border:1px solid black !important;
+       /*margin-left:0px;
+       margin-right:0px;
+       padding-left:15px;
+       padding-right:15px;*/
+    
+   margin: auto;
+  /*position: absolute;*/
+  top: 0; left: 0; bottom: 0; right: 0;
+     
+        
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    
+           
+
+}
+  .LoginWrapper{
+    width:100% !important;   
+    margin-left:0px !important;
+    margin-right:0px !important;
+    vertical-align:middle !important;
+}
+.wrapperTitle{
+    width:270px;
+   margin-left:auto;
+    margin-right:auto;
+    float: left!important; 
+    position:relative;
+   
+}
+.eCAPDDTitle{
+    font-style:normal;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:18px;
+    text-align:left;
+    color: black;
+    /*color:#005cad;*/
+    /*line-height:1em;*/   
+    /*text-shadow: 1px 1px 1px #000, 3px 3px 6px #403d3e;*/
+}
+.eCAPDDSubTitle{
+    font-style:normal;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:18px;
+    /*text-shadow: 1px 1px 1px #000, 3px 3px 6px #403d3e;*/
+    color:#403d3e;
+    text-align:left;
+}
+.LoginBox{
+    /*width:10px;
+    float: right!important; 
+    position:relative;
+     margin-left:auto;
+    margin-right:auto;*/
+  width:0px;
+    float: left!important; 
+    position:relative;
+     margin-left:auto;
+    margin-right:auto;
+}
+
+
+
+div.row
+{
+    clear: both;
+    /*padding-top: 3px;*/
+    width: 100%;
+}
+
+
+div.row span.label,
+div.row span.input
+{
+    clear: both;
+    float: left;
+    margin: 0 25%;
+}
+div.row span.label
+{
+    width: 40%;
+}
+div.row span.input
+{
+    width: 24%;    
+}
+div.row span.buttonCell
+{
+    padding: 0 0 15px;
+}
+div.row span.password
+{
+    margin-bottom: 6%;   
+}
+ /*Show images for resolution greated than 1024*/
+   /*@media only screen and (min-width: 799px) {        
+    img{ 
+        display:block;
+  
+    }         
+    }*/
+    /*hide images for resolution lesser than 1024*/
+    /*@media only screen and (max-width: 799px) {        
+    img{
+        display:none;
+       
+    }        
+    }*/

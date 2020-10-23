@@ -1,0 +1,136 @@
+﻿html, body
+{
+    margin: 0;
+    padding: 0;
+}
+body
+{
+    background: url(Images/title_bg_short.jpg) repeat-x top;
+    font-family: Verdana;
+    font-size: 10pt;
+}
+#body
+{
+    background: url(Images/title_bg.gif) repeat-x top;
+}
+#container
+{
+    background-color: #fff;
+}
+
+#maintable
+{
+    max-width: 90%;
+    background-color: #fff;
+}
+
+.titleCell
+{
+    padding: 0 7px;
+    background-color: #dae1e7;
+    text-align: right;
+}
+.section
+{
+    padding: 0 10px;
+    border: solid 1px;
+    background-color: #ffffc4;
+}
+.dateText
+{
+    width: 100px;
+}
+.longText
+{
+    width: 275px;
+}
+
+.modalBackground
+{
+    background-color: Gray;
+    filter: alpha(opacity=70);
+    opacity: 0.7;
+}
+.modalTitle
+{
+    cursor: move;
+    background-color: #c0ddea;
+    border: solid 1px Gray;
+    color: Black;
+    margin-bottom: 10px;
+}
+.modalPopup
+{
+    background-color: #fff;
+    border-width: 3px;
+    border-style: solid;
+    border-color: Gray;
+    padding: 10px 3px;
+    width: 550px;
+    text-align: center;
+}
+
+.regButton
+{
+    width: 80px;
+}
+.standOut
+{
+    color: #fff;
+    font-weight: bold;
+    padding: 0 10px;
+    border: solid 1px;
+    background-image: url(Images/section_bg.jpg);
+    height: 18px;
+}
+.linkButton
+{
+    color: #fff;
+    border: #acb9aa 1px solid;
+    float: right;
+    height: 16px;
+    padding: 0px 8px;
+    background-color: #7f8733;
+    text-decoration: none;
+}
+.linkButton a:link, a:active, a:hover, a:visited
+{
+    text-decoration: none;
+}
+.linkButton:hover
+{
+    background-color: #a53532;
+}
+.errorText
+{
+    color: #cc0000;
+    font-size: 9pt;
+}
+.redText
+{
+    font-size: 11px;
+    color: #ff0; /* For whatever reason, this is yellow instead of red? */
+}
+.redErrorPanel
+{
+    font-size: 12px;
+    color: #ff0;
+    font-weight: bold;
+}
+
+/* Search Page */
+#searchCriteria
+{
+    padding: 9px;
+    background: #dadac8;
+    color: #000;
+    font-family: Tahoma,Verdana,Helvetica,Helvetica-Narrow,sans-serif;
+    position: relative;
+}
+#searchResult
+{
+    padding: 20px 10px 10px 10px;
+    background: #fff;
+    color: #666666;
+    font-family: Tahoma,Verdana,Helvetica,Helvetica-Narrow,sans-serif;
+}

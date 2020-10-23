@@ -1,19 +1,8 @@
-﻿<link href="~/Content/dashboard.css" rel="stylesheet" />
-@*<link href="~/Content/main2.css" rel="stylesheet" />*@
-
-<link href="//cdn.datatables.net/responsive/2.2.3/css/dataTables.responsive.css" />
-@*<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />*@
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
-
-@*<script src="~/Scripts/App/dashboard.js"></script>*@
-<script src="~/Scripts/App/applicationList.js"></script>
-<script src="//cdn.daatables.net/responsive/2.2.3/js/dataTables.responsive.js"></script>
-
-@*<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https: //cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>*@
-
+﻿@section Scripts
+{
+    <script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/App/applicationList.js"></script>
+}
 
 <div class="modal" id="customizeFilterModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -26,9 +15,7 @@
                     <label class="firstLabelLong" for="selectProcessorsList" style="text-align:left;">Application Type:</label>
                     <div class="chosen-wrapper" style="text-align:left; width:350px; vertical-align:middle;">
                         <select class="" id="filterApplicationType" style="text-align:left; width:100%; vertical-align:middle;">
-                            @*<option value="">DDOL</option>
-                            <option value="">ACTV</option>
-                            <option value="">ACTC</option>*@
+                            <option value=""></option>
                         </select>
                     </div>
                     <br><br>
@@ -38,9 +25,7 @@
                     <label class="firstLabelLong" for="selectProcessorsList" style="text-align:left;">Assigned User:</label>
                     <div class="chosen-wrapper" style="text-align:left; width:350px; vertical-align:middle;">
                         <select class="" id="filterUser" style="text-align:left; width:100%; vertical-align:middle;">
-                            @*<option value="">Srini</option>
-                            <option value="">Nate</option>
-                            <option value="">Bethony</option>*@
+                            <option value=""></option>
                         </select>
                     </div>
                     <br><br>
@@ -50,8 +35,7 @@
                     <label class="firstLabelLong" for="selectProcessorsList" style="text-align:left;">Status:</label>
                     <div class="chosen-wrapper" style="text-align:left; width:350px; vertical-align:middle;">
                         <select class="" id="filterStatus" style="text-align:left; width:100%; vertical-align:middle;">
-                            @*<option value="">Pending</option>
-                            <option value="">Assigned</option>*@
+                            <option value=""></option>
                         </select>
                     </div>
                     <br><br>
@@ -61,10 +45,11 @@
                     <label class="firstLabelLong" for="selectProcessorsList" style="text-align:left;">Application Age:</label>
                     <div class="chosen-wrapper" style="text-align:left; width:350px; vertical-align:middle;">
                         <select class="" id="filerAge" style="text-align:left; width:100%; vertical-align:middle;">
-                            <option value="91">90+</option>
-                            <option value="60">60</option>
-                            <option value="30">30</option>
-                            <option value="15">15</option>
+                            <option value=""></option>
+                            <option value="61">60+</option>
+                            <option value="60">31-60</option>
+                            <option value="30">16-30</option>
+                            <option value="15">0-15</option>
                         </select>
                     </div>
                     <br><br>
@@ -156,7 +141,7 @@
                     </div>
 
 
-                    <table id="ddGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="border-collapse:collapse; border: 1px solid black; width:100%">
+                    <table id="ddGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
                         <thead>
                             <tr class="button-header-color">
                                 @*<th></th>*@

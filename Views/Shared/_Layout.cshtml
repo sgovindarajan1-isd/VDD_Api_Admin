@@ -27,44 +27,14 @@
     @*vdd move this down*@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.mask.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 </head>
 <body>
     <div id="wp_header_removedtheBackheader" class="menu-align-left">
-        <div id="info-bar" class="content-font row-wrapper">
-            <div>
-                @*this is to bring loginout logo and lacounty text to bring together*@
-                <a target="_blank" href="https://lacounty.gov" style=" color:rgba(41,213,236,1); font-family: Arial, Helvetica, sans-serif; font-size:medium;font-weight:bold">lacounty.gov</a>
-                @*<div style="float:right">
-                        <div>
-                            <div data-toggle="modal" class="dropdown" style="z-index: 2000; cursor: pointer">
-                                <span id="img_username" class="fa fa-user-circle" style="color:rgba(41,213,236,1)">
-                                    <label id="lbl_userName" aria-label="Close" data-toggle="modal" data-target="#logoutModal" style="color:rgba(41,213,236,1); font-family: Arial, Helvetica, sans-serif;  cursor: pointer; font-size:medium;font-weight:initial" />
-                                </span>
-                            </div>
-                        </div>
-                    </div>*@
-            </div>
-
-
-            @*<div id="info-bar1" class="content-font row-wrapper" style="background-color: red; height: 100px">
-                    <a id="lnkHome" class="navLink homeIcon" alt="Home" href="./Dashboard.html" aria-label="Home">
-                        <span class="fa fa-home homeImage" aria-hidden="true"></span>
-                    </a>
-                </div>*@
-        </div>
         <header>
             <nav id="top-menu1">
-                @*<div class="logo-bar-wrapper">
-                        <div class="logo">
-                            <div id="logo"><img id="logo-default" src="/Content/Images/ac.logo3_.png" alt=""></div>
-                            <a id="lnkCaseList" text="Case List" class="navLink" href="./ApplicationList_PendingAssignment.html">APPLICATION LIST</a>
-                            <a class="navLink" href="./Admin_Users.html">ADMIN</a>
-                            <a id="lnkReports" text="Case List" class="navLink" href="./Reports.html">REPORTS</a>
-                        </div>
-                    </div>*@
-
                 <div class="primary-menu-bar-wrapper1 row-wrapper1" id="menu_TopPanel">
                     <div>
                         <div class="menu-button1"></div>
@@ -75,10 +45,14 @@
                                 </a>
 
                                 <a id="menu_applicatoinList" text="Application List" class="navLink">APPLICATION LIST</a>
-                                <a class="navLink" href="./Admin_Users.html">ADMIN</a>
-                                <a id="lnkReports" text="Case List" class="navLink" href="./Reports.html">REPORTS</a>
+                                <a id="menu_enterApplication" text="Enter Application" class="navLink">ENTER APPLICATION</a>
+                                <a id="menu_admin" class="navLink" href="">ADMIN</a>
+                                <a id="menu_reports" text="Case List" class="navLink" href="./Reports.html">REPORTS</a>
 
-                                <div class="search">
+                                <div id="div_menuUsername" class="search">
+                                    <span id="menu_userName" class="fa fa-expeditedssl fa-right" style="float: right; font-size: 22px;"></span> @*id_userName*@
+                                </div>
+                                <div id="div_advanceSearch" class="search">
                                     <a id="lnkAdvSearch" text="Adv. Search" class="navLink" href="./AdvancedSearch.html">ADV SEARCH</a>
                                     <div class="input-group" style="margin-top:4px;">
                                         <input id="caseNumber" name="caseNumber" style="font-size:.9em; width:135px !important;" type="search" placeholder="Application Number" class="form-control" aria-label="Claim Number">
@@ -99,18 +73,104 @@
     </div>
 
     <div id="wp_content">
-        <div id="liNavigation" class="row-wrapper row  row-home-gray">
 
-        </div>
+
+
 
         <div id="grey-info-bar" class="content-font row-wrapper">
             <div class="logo-bar-wrapper1">
                 <div class="col-xs-12">
+
+                    @*Navigation round button start *@
+
+                    <div id="liNavigation" class="row-wrapper row  row-home-gray">
+                        <div class="row-inner ">
+                            <div class="col-xs-12">
+                                <div class="wizard">
+                                    <div class="wizard-inner">
+                                        <div class="connecting-line"></div>
+                                        <ul class="nav nav-tabs" role="tablist" id="ul">
+
+                                            <li role="presentation" id="li_vendorstep" class="liselect" style="text-align:center" value="1">
+                                                <span title="Vendor Information" class="wizard-step" style="text-align:center">
+                                                    <span class="round-tab">
+                                                        <img id="img_vendor_step" src="/Content/Images/user_step_on.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+
+                                            <li role="presentation" id="li_infostep" class="liselect" style="text-align:center" value="2">
+                                                <span title="Payment Information" class="wizard-step" style="text-align:center">
+                                                    <span class="round-tab">
+                                                        <img id="img_info_step" src="/Content/Images/info_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_bankstep" class="liselect" value="3">
+                                                <span title="Enter Banking Information" class="wizard-step">
+                                                    <span id="span_bankstep" class="round-tab disabled ">
+                                                        <img id="img_bank_step" src="/Content/Images/bank_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+
+                                            </li>
+
+                                            <li role="presentation" id="li_attachmentstep" class="liselect" value="4">
+                                                <span title="Add Attachment" class="wizard-step">
+                                                    <span id="span_attachmentstep" class="round-tab disabled ">
+                                                        <img id="img_bank_attachment_step" src="/Content/Images/attachment_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_verify_step" class="liselect" value="5">
+                                                <span title="Verify Banking Information" class="wizard-step">
+                                                    <span id="span_verify_step" class="round-tab disabled ">
+                                                        <img id="img_bank_verify_step" src="/Content/Images/verify_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_certify_step" class="liselect" value="6">
+                                                <span title="Certify" class="wizard-step">
+                                                    <span id="span_certify_step" class="round-tab disabled ">
+                                                        <img id="img_certify_step" src="/Content/Images/certify_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_submit_step" class="liselect" value="7">
+                                                <span title="Submit" class="wizard-step">
+                                                    <span class="round-tab disabled ">
+                                                        <img id="img_submit_step" src="/Content/Images/submit_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_confirmation_step" class="liselect" value="8">
+                                                <span title="Confirmation" class="wizard-step">
+                                                    <span class="round-tab disabled ">
+                                                        <img id="img_confirmation_step" src="/Content/Images/confirmation_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @*Navigation round button end *@
+
                     <h3 id="lbl_header">
                         Direct Deposit Management System
                         <span id="btn_loginLock" class="fa fa-expeditedssl fa-right" style="font-size: 22px;"></span>
 
-                        <span id="id_userName" class="fa fa-expeditedssl fa-right" style="float: right; font-size: 22px;"></span>
+                        <span id="lbl_userName" class="fa fa-expeditedssl fa-right" style="float: right; font-size: 22px;"></span> @*id_userName*@
                     </h3>
 
                     <div class="header-line header-line-purple"><span></span></div>
@@ -158,56 +218,15 @@
         <hr class="row-wrapper">
         <footer>
             <div id="pnlfooter" style="text-align:center; display:inline-block; width:100%">
-                <div>
-                    <a href="./User Account_UserProfile.html">Profile</a>&nbsp;|&nbsp;
-                    <a href="./Login.html">Logout</a>&nbsp;|&nbsp;
-                    <a href="./Help.html">Help</a>
+                <div id="pnl_login_footer">
+                    <a href="/Home/Index">Profile</a>&nbsp;|&nbsp;
+                    <a id="btn_logout" href="/Home/Index">Logout</a>&nbsp;|&nbsp;
+                    <a href="/Home/Index">Help</a>
                 </div>
                 <div>County of Los Angeles Department of Auditor Controller</div>
             </div>
         </footer>
-
-        @*<div id="wp_footer-wrapper" class="row-wrapper">
-                <div id="wp_footer-widget-bar" class="widget" style="display:flow-root">
-                    <div class="wp_container">
-                        <section class="widget-area">
-                            <div class="widget">
-                                <div class="textwidget"><img style="PADDING-LEFT: 10px; PADDING-TOP: 0px" src="/Content/Images/LACountySeal.png" alt="County Seal"><br><p style="PADDING-LEFT: 10px; padding-top:10px;"><b>Enriching Lives . . .</b></p></div>
-                            </div>
-                        </section>
-                        <section class="widget-area">
-                            <div class="widget">
-                                <div class="menu-do-you-need-help-container">
-                                    <ul id="menu-do-you-need-help" class="menu">
-                                        <li id="menu-item-2431" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2431"><a target="_blank" href="">Profile<span class="s"></span></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="widget-area">
-                            <div class="widget">
-                                <div class="menu-about-us-container">
-                                    <ul id="menu-about-us" class="menu">
-                                        <li id="menu-item-3043" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3043"><a href="">Logout</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="widget-area">
-                            <div class="widget">
-                                <div class="menu-site-info-container">
-                                    <ul id="menu-site-info" class="menu">
-                                        <li id="menu-item-2659" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2659"><a href="">Help</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>*@
         <!--new footer  -->
-
-
     </div>  @*wp_content*@
 
     @Scripts.Render("~/jsbundles/jquery")
@@ -228,76 +247,3 @@
 
 </body>
 </html>
-
-
-@*<!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>@ViewBag.Title</title>
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-    </head>
-    <body>
-        <div id="container" style="background-color: antiquewhite">
-            <div class="titleimage stikyHeader"> </div>
-
-            <div class="navbar navbar-inverse stikyHeader">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle header" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-
-            <div style="background-color: Grey; color: orange">
-                @RenderSection("SriniStatus", false)
-            </div>
-
-            <div class="bodycls content">
-                @RenderBody()
-            </div>
-
-            <footer class="footer navbar-fixed-bottom">
-
-                <div class="row">
-                    <div class="img-countySeal" style="background:grey;"></div>
-                    <div class="col-md-8">
-                        <div id="link_bar">
-                            <a href="#">Contact Us</a>  |
-                            <a href="#">General Information</a>
-                        </div>
-
-                        <div id="link_bar">
-                            <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/privacy/">Privacy Policy</a>  |
-                            <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/user/">Terms of Use</a>  |
-                            <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/accessibility/">Accessibility</a>  |
-                            <a target="_blank" title="" href="http://www.lacounty.gov/wps/portal/lac/disclaimer/">Disclaimer</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
-
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
-    </body>
-    </html>*@

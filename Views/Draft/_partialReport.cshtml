@@ -1,0 +1,20 @@
+﻿@using ReportViewerForMvc;
+@{
+    ViewBag.Title = "ReportEmployee";
+}
+
+@Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer)
+
+
+@section Scripts
+{
+    <script src="~/Scripts/App/bankdetails.js"></script>
+    <link href="~/Content/main2.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <div style="padding-top :10pt; text-align: center" class="row-wrapper">
+        <button style="float: left" class="btn btn-back" id="btn_Report"> Report </button>
+
+    </div>
+</div>

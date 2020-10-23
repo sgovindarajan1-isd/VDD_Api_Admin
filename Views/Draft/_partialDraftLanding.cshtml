@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container">
+    <div class="centerColumn1">
+        <div class="content clearfix">
+            <input id="skipUnSavedChanges" type="hidden" value="0">
+            <hr>
+            <div style="font-size: 20px; font-weight:bold  "><font color="purple">Vendor Direct Deposit Request</font></div><br>
+            <p>
+                Welcome to the County of Los Angeles (County) official secure website for entry of your direct deposit information. Available 24/7, your company and banking information can be securely submitted with confirmation and print capability. The lock in your browser address bar shows that the site is secure.
+            </p>
+            <p>
+                To request for direct deposit on behalf of a vendor, please checkmark that you have the following information:
+            </p>
+
+            <input type="checkbox" id="chk_wetSign">
+            <label for="vdd1"> Original direct deposit request form with wet signature</label><br>
+            <input type="checkbox" id="chk_accountno">
+            <label for="vdd2"> Banking information (Bank Account Number and Bank Routing Number)</label><br>
+            <br>
+            <p id="text1" style="display:none">
+                Please click on Start to begin the request.
+
+                <br><br>
+                <button class="btn btn-success pull-left" type="submit" value="Start" onClick="window.location.href='_partialVendor';">
+                    Start<span class="fa fa-arrow-right fa-right"></span>
+                </button>
+            </p>
+            <br>
+            <hr class="smallTopMargin">
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/App/login.js"></script>
+}
+

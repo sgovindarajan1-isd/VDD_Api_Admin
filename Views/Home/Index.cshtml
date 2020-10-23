@@ -9,14 +9,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-
-
 <script src="~/Scripts/App/login.js"></script>
 
-
 <div class="container">
-
     <div class="centerColumn">
         <div class="content clearfix">
             <div style="text-align: center">
@@ -48,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="mainContent">
+            <div class="mainContent" style="margin-right: 50px !important">
                 <div class="mainBox">
                     <h3>Welcome to Los Angeles County Direct Deposit Management System</h3>
 
@@ -64,102 +59,6 @@
             </div>
         </div>
     </div>
-
-    @*<div class="chartcontainer">
-        <div class="chart1">
-            <canvas id="DDOLchartContainer" width="300" height="300"></canvas>
-        </div>
-        <div class="chart2">
-            <canvas id="ACCSchartContainer" width="300" height="300"></canvas>
-        </div>
-
-        <div class="chart2">
-            <canvas id="ACCHchartContainer" width="300" height="300"></canvas>
-        </div>
-    </div>*@
-
 </div>
 
 
-
-
-@*@model IEnumerable<eCAPDDApi.Models.VM_login>
-
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/login.css" rel="stylesheet" />
-    <link href="~/Content/dashboard.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
-
-
-    <script src="~/Scripts/App/dashboard.js"></script>
-
-    <div class="container">
-
-        <div class="centerColumn">
-            <div class="content clearfix">
-                <input id="skipUnSavedChanges" type="hidden" value="0">
-                <div class="leftContent">
-                    <div class="leftBox allPadding">
-                        <h2 class="left divSeparator">Login</h2>
-                        <div class="loginWrapper">
-                            <form action="#" method="post" novalidate="novalidate">
-                                <input name="__RequestVerificationToken" type="hidden" value="Jwq7Pa6SdmTj3Ww8Q_lX_zmVaXII5z5XJPOITYYjTyWWGDkmSldLFVd3nSu9Ws8I6Vx3zZ5iK1INu58UaA3aqgRPvKJHnnFDhfCghNeYc_k1">                <div>
-                                    <label for="userName">User Name</label>
-                                    <input autocomplete="off" data-val="true" data-val-required="User Name is required." id="userName" name="userName" type="text" value="" aria-required="true" aria-describedby="userName-error" class="valid" aria-invalid="false">
-                                    <span class="error block field-validation-valid" data-valmsg-for="userName" data-valmsg-replace="true"></span>
-                                </div>
-                                <div>
-                                    <label for="password">Password</label>
-                                    <input autocomplete="off" data-val="true" data-val-length="Password must be at least 6 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="Password is required." id="password" name="password" type="password" value="" aria-required="true" aria-describedby="password-error" class="valid" aria-invalid="false">
-                                    <span class="error block field-validation-valid" data-valmsg-for="password" data-valmsg-replace="true"></span>
-                                </div>
-                                <div>
-                                    <button type="submit" class="btn btn-primary" onclick="window.location.href='./Dashboard.html'">Sign in</button>
-                                    <span class="field-validation-valid error block" data-valmsg-for="loginValidation" data-valmsg-replace="true"></span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mainContent">
-                    <div class="mainBox">
-                        <h3>Welcome to Los Angeles County Direct Deposit Management System</h3>
-
-                        <h3>Password and Account Help</h3>
-                        <p>If you need to change your password or unlock your account please use <a href="https://webadminisd.lacounty.gov/WebAdminISD/MyAccount/Default.aspx" target="_blank">ISD's Self Service site</a>.</p>
-
-                        <h3>Learn More About Direct Deposit Management System</h3>
-                        <p>An <a href="#">online guide</a> to the Direct Deposit Management System is available that highlights the major features of the system and how the case process works.</p>
-
-                        <h3>What's New</h3>
-                        <p>We're frequently making improvements to the system. <a href="#">See what's new and changing.</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="chartcontainer">
-            <div class="chart1">
-                <canvas id="DDOLchartContainer" width="300" height="300"></canvas>
-            </div>
-            <div class="chart2">
-                <canvas id="ACCSchartContainer" width="300" height="300"></canvas>
-            </div>
-
-            <div class="chart2">
-                <canvas id="ACCHchartContainer" width="300" height="300"></canvas>
-            </div>
-        </div>
-
-        <hr>
-        <footer>
-            <div class="footer">
-                <p>County of Los Angeles Department of Auditor Controller</p>
-            </div>
-        </footer>
-    </div>*@

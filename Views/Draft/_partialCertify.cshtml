@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Certify";
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/App/draft/certifyconfirm.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <link href="~/Content/main2.css" rel="stylesheet" />
+}
+<div class="container" style="padding-top: 20px;">
+    <div class="row-wrapper row1 row-home-gra1y">
+        <div class="row-inner1">
+            <div class="col-xs-121">
+                <div class="wizard1">
+                    <div class="wizard-inner1">
+                        <blockquote>
+
+                            <div class="col-sm-12" style="text-align: center">
+
+                                <div id="lbl_disp_proxysigninfoHeader" class="form-group padding-bottom-div">
+                                    <label class="col-sm-6 certify-text-spacing " style="padding-right: 15px">
+                                        Proxied Signer's Information:
+                                    </label>
+                                </div>
+
+
+                                <div class="form-group padding-bottom-div">
+                                    <label for="Signer Name"  id="lbl_signerName" class="col-sm-6 certify-text-spacing" style="padding-right: 15px">
+                                        Authorized Signer’s Name:
+                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="If you are the payee, enter your name. If the payee is an organization, enter the authorized representative’s name." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <div style="float:left">
+                                            <input type="text" class="form-control" id="txtSignerName" maxlength="50" placeholder="Authorized Signer’s Name" value="" required>
+                                            <span id="signerName" class="errmessage" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group padding-bottom-div">
+                                    <label for="Signer Title"   id="lbl_signerTitle" class="col-sm-6 certify-text-spacing" style="padding-right: 15px;">
+                                        Authorized Signer’s Title:
+                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="If you are the payee, enter your title. If the payee is an organization, enter the authorized representative’s title." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <div style="float:left">
+                                            <input type="text" class="form-control" id="txtSignerTitle" maxlength="50" placeholder="Authorized Signer’s Title" value="" required>
+                                            <span id="signerTitle" class="errmessage" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group padding-bottom-div">
+                                    <label for="Signer Phone" id="lbl_signerPhone" class="col-sm-6 certify-text-spacing" style="padding-right: 15px;">
+                                        Authorized Signer’s Phone #:
+                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Enter authorized signer’s phone number." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <div style="float:left">
+                                            <input type="text" class="form-control item" id="txtSignerPhone" maxlength="15" placeholder="(___)___-____" required>
+                                            <span id="signerPhone" class="errmessage" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group padding-bottom-div">
+                                    <label for="Signer Email" id="lbl_signerEmail" class="col-sm-6 certify-text-spacing" style="padding-right: 15px;">
+                                        Authorized Signer’s Email:
+                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Enter authorized signer’s email address." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <div style="float:left">
+                                            <input type="text" class="form-control" id="txtSignerEmail" maxlength="100" placeholder=" Authorized Signer’s Email" @*value="a@a.com*@ required>
+                                            <span id="signerEmail" class="errmessage" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </br>
+                                </br>
+
+                                <div class="form-group padding-bottom-div">
+                                    <label for="Department Name" class="col-sm-6 certify-text-spacing" style="padding-right: 15px">
+                                        Department Name:
+                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Enter Department Name." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <div style="float:left">
+                                            <input type="text" class="form-control" id="txtDeptName" maxlength="50" placeholder="Department Name" value="" required>
+                                            <span id="spanDeptName" class="errmessage" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group padding-bottom-div">
+                                    <label for="Department Contact Person Name" class="col-sm-6 certify-text-spacing" style="padding-right: 15px;">
+                                        Department Contact Person Name:
+                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Enter the Department Contact Person Name." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <div style="float:left">
+                                            <input type="text" class="form-control" id="txtDeptPerson" maxlength="50" placeholder="Department Contact Person Name" value="" required>
+                                            <span id="spanDeptPerson" class="errmessage" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group padding-bottom-div">
+                                    <label for="Department Email Address" class="col-sm-6 certify-text-spacing" style="padding-right: 15px;">
+                                        Department Email Address:
+                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Enter Department email address." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <div style="float:left">
+                                            <input type="text" class="form-control" id="txtDeptEmail" maxlength="100" placeholder="Department Email Address" @*value="a@a.com*@ required>
+                                            <span id="spanDeptEmail" class="errmessage" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group padding-bottom-div">
+                                    <label for="Department Contact Number" class="col-sm-6 certify-text-spacing" style="padding-right: 15px;">
+                                        Department Contact Number:
+                                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Enter Department Contact Number." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <div style="float:left">
+                                            <input type="text" class="form-control item" id="txtDeptPhone" maxlength="15" placeholder="(___)___-____" required>
+                                            <span id="spanDeptPhone" class="errmessage" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="padding-top :10pt; text-align: center" class="row-wrapper">
+                                    <button style="float: left" class="btn btn-back" id="btn_certify_back"> Back </button>
+                                    <button style="float: right" class="btn btn-continue" id="btn_certify_next"> Continue </button>
+                                </div>
+
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
