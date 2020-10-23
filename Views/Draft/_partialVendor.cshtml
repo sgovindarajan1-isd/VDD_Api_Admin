@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "Bank Details";
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/App/Draft/vendordetails.js"></script>
+    <link href="~/Content/main2.css" rel="stylesheet" />
+}
+<div class="container">
+    <div class="row rowtwo" style="padding: 30px 5px 10px 5px">
+        <div class="col-sm-7 columnTwo" style="padding:20px 1px 10px 1px">
+
+            <!------------------------------------------------------ -->
+
+            <div class="form-group padding-bottom-div" style="width:100%;">
+                <label for="Type Of Account" class="col-sm-4">Type of Application</label>
+                <div class="col-sm-5">
+                    <select id="txtApplicationType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT ">
+                        <option value="-1" selected="">SELECT TYPE OF APPLICATION</option>
+                        <option value="1">ACCS</option>
+                        <option value="2">ACCH</option>
+                        <option value="3">ACWC</option>
+                        <option value="4">ACOT</option>
+                    </select>
+                    <span id="span_applicationType" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="" class="col-sm-4">
+                    Vendor Code
+                    <span>
+                        <img data-toggle="popover" data-placement="top" data-content="Provide Vendor Code to identify the Payee Name." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;" data-original-title="" title="">
+                    </span>
+                </label>
+
+                <div class="col-sm-5">
+                    <div class="input-group" style="width:100%;">
+                        <input type="text" class="form-control" maxlength="15" id="txtVendorCode" placeholder="Vendor Code" value="" required="">
+                    </div>
+                    <span id="span_vendorCode" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Payee Name" class="col-sm-4">Payee Name</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtPayeeName" placeholder="Payee Name" readonly="" disabled="">
+                    <span id="span_payeeName" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="First Name" class="col-sm-4">
+                    First Name
+                    <span>
+                        <img data-toggle="popover" data-placement="top" data-content="First Name." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;" data-original-title="" title="">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtFirstName" maxlength="15" placeholder="First Name" value="" required="">
+                    <span id="span_firstName" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Middle Name" class="col-sm-4">
+                    Middle Name
+                    <span>
+                        <img data-toggle="popover" data-placement="top" data-content="Middle Name." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;" data-original-title="" title="">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtMiddleName" maxlength="15" placeholder="Middle Name" value="" required="">
+                    <span id="span_middleName" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Last Name" class="col-sm-4">
+                    Last Name
+                    <span>
+                        <img data-toggle="popover" data-placement="top" data-content="Last Name." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;" data-original-title="" title="">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtLastName" maxlength="15" placeholder="Last Name" value="" required="">
+                    <span id="span_lastName" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Company Name" class="col-sm-4">
+                    Company Name
+                    <span>
+                        <img data-toggle="popover" data-placement="top" data-content="Company Name." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;" data-original-title="" title="">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtCompanyName" maxlength="15" placeholder="Company Name" value="" required="">
+                    <span id="span_companyName" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Alias/DBA Name" class="col-sm-4">
+                    Alias/DBA Name
+                    <span>
+                        <img data-toggle="popover" data-placement="top" data-content="Alias/DBA Name." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;" data-original-title="" title="">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtAliasDBAName" maxlength="15" placeholder="Alias/DBA Name" value="" required="">
+                    <span id="span_aliasDBAName" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Taxpayer ID Number" class="col-sm-4">
+                    Taxpayer ID Number
+                    <span>
+                        <img data-toggle="popover" data-placement="top" data-content="Taxpayer ID Number" id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;" data-original-title="" title="">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtTIN" maxlength="15" placeholder="Taxpayer ID Number" value="" required="">
+                    <span id="span_tin" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Case No" class="col-sm-4">
+                    Case No.
+                    <span>
+                        <img data-toggle="popover" data-placement="top" data-content="Case No" id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;" data-original-title="" title="">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtCaseNo" maxlength="15" placeholder="Case No." value="" required="">
+                    <span id="span_CaseNo" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group padding-bottom-div">
+                <label for="Phone Number" class="col-sm-4">
+                    Phone Number
+                    <span>
+                        <img data-toggle="popover" data-placement="top" data-content="Phone Number" id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;" data-original-title="" title="">
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="txtPhoneNumber" maxlength="15" placeholder="(___)___-____" placeholder="Phone Number" value="" required="">
+                    <span id="span_PhoneNumber" class="errmessage">
+                    </span>
+                </div>
+            </div>
+
+            <!------------------------------------------------------ -->
+        </div>
+    </div>
+
+    <div style="padding-top :10pt; text-align: center" class="row-wrapper">
+        @*        <button style="float: left" class="btn btn-back" id="btn_bank_back"> Back </button>*@
+        <button style="float: right" class="btn btn-continue" id="btn_vendor_next"> Continue </button>
+    </div>
+</div>
+

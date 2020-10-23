@@ -1,4 +1,39 @@
-﻿hr {
+﻿/* Moved from Vendor app site.css,  Create two equal columns */
+@media screen and (min-width: 992px) {
+    .padding-bottom-div {
+        padding-bottom: 30px;
+    }
+}
+
+.fontBold {
+    font-weight: bold;
+}
+
+
+#ddGrid_filter label input {
+    /*border-width: 1px;*/
+    border: 1px solid #ccc !important;
+}
+
+.responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+.rowtwo {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.columnTwo {
+    flex: 50%;
+    padding: 20px;
+    /*margin: auto;*/
+}
+/* Create two equal columns */
+
+
+hr {
     margin-top: 20px;
     margin-bottom: 20px;
     border: 0;

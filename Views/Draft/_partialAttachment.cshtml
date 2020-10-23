@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Attachment Details";
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/App/draft/bankdetails.js"></script>
+    <script src="~/Scripts/App/jquery.json.js"></script>
+    <link href="~/Content/main2.css" rel="stylesheet" />
+}
+<div class="container">
+    <div class="row-inner1" style="padding-left:15px;">
+        <p><font color="red">*</font> indicates a required field</p><br>
+    </div>
+
+    <div class="row-inner1" style="padding-left:15px;">
+        <h4> Original Direct Deposit Request Form<font color="red"> *</font></h4>
+    </div>
+    <p class="text-bold attachment-header">Upload your form with wet signature authorizing this transaction: </p>
+    <div class="container" style="text-align: center; padding-left:0px; padding-top:10px;    margin-left: -25px;" id="pnlAttachment_ddwetform" visible="false">
+        <label for="attachment">
+            Attachment
+            <span>
+                <img data-toggle="popover" data-placement="top" data-content="You may only attach one file.
+												The maximum allowed file size is 10 MB.
+												The file you attach must either be .PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, or .PNG. No other file types are allowed." id="Image3" border="0" hspace="0" vspace="0" align="bottom" src="./Content/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+            </span>
+        </label>
+
+        <div style="text-align: center" class="custom-file-input" visible="false">
+
+            <input id="input_attachment_ddwetform" type="file" accept="image/*,.PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, .PNG">
+            <input type="text" id="txtattachment_ddwetform">
+            <input type="button" style="width: 150px" class="btn-primary btn button-header-color" value="Upload Attachment">
+            <div>
+                <span id="fileError_or_Info_ddwetform" style="text-align: center" class="errmessage" />
+            </div>
+        </div>
+
+        <div id="divmodifiedFileName_ddwetform" style="text-align: center; padding : 20pt 3pt;">
+            <img src="~/Content/images/attachment_step.png" visible="false" />
+
+            <span id="modifiedFileName_ddwetform" class="text-bold attachment-header">
+            </span>
+            <button type="button" id="btn_FileAttachmentDelete_ddwetform" style="width : auto" class="btn-primary btn button-header-color"> Delete</button>
+        </div>
+    </div>
+   
+    <br><hr>
+
+
+    <div class="row padding-bottom-div" style="text-align:center;">
+        <p class="text-bold attachment-header"> Select attachment(s) you are providing: </p>
+        <div id="div_voidedCheck" class="col-sm-3 form-group div-attachmentbuttons">
+            <button class="btn-primary btn  buttonBig" id="btn_voidCheck"> Voided Check </button>
+        </div>
+        <div class="col-sm-3 form-group div-attachmentbuttons">
+            <button class="btn-primary btn  buttonBig" id="btn_Statement"> First page of Bank Statement </button>
+        </div>
+        <div class="col-sm-3 form-group div-attachmentbuttons">
+            <button class="btn-primary btn buttonBig" id="btn_verifyLetter"> Bank Verification Letter </button>
+        </div>
+        <div class="col-sm-3 form-group div-attachmentbuttons" id="div_otherAttachment">
+            <button class="btn-primary btn buttonBig" id="btn_otherAttachment"> OtherAttachment </button>
+        </div>
+    </div>
+
+    <div class="container" style="text-align: center;vertical-align:central" id="pnlAttachment" visible="false">
+        <label for="attachment">
+            Attachment
+            <span>
+                <img data-toggle="popover" data-popover="true" data-placement="top" data-content="You may only attach one file.
+                    The maximum allowed file size is 10 MB.
+                    The file you attach must either be .PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, or .PNG. No other file types are allowed." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+            </span>
+        </label>
+
+        <div style="text-align: center" class="custom-file-input" visible="false">
+
+            <input id="input_attachment" type="file" accept="image/*,.PDF, .DOC, .DOCX, .JPG, .JPEG, .GIF, .PNG">
+            <input type="text" id="txtattachment">
+            <input type="button" style="width: 150px" class="btn-primary btn button-header-color" value="Upload Attachment">
+            <div>
+                <span id="fileError_or_Info" style="text-align: center" class="errmessage" />
+            </div>
+        </div>
+    </div>
+
+    <div id="divmodifiedFileName" style="text-align: center; padding : 20pt 3pt;">
+        <img src="~/Content/images/attachment_step.png" visible="false" />
+
+        <span id="modifiedFileName" class="text-bold attachment-header">
+        </span>
+        <button type="button" id="btn_FileAttachmentDelete" style="width : auto" class="btn-primary btn button-header-color"> Delete</button>
+    </div>
+
+    <p class="text-bold attachment-header"> The maximum file size allowed is 10 mb.</p>
+
+    <div style="padding : 50pt 3pt; text-align: center" class="row-wrapper">
+        <button style="float: left" class="btn btn-back" id="btn_attach_back"> Back </button>
+        <button style="float: right" class="btn btn-continue" id="btn_attach_next"> Continue </button>
+    </div>
+</div>
+

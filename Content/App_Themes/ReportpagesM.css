@@ -1,0 +1,127 @@
+﻿    .pageTitle h2
+    {
+        color: rgb(88, 117, 146);
+        font-size: 1.8em;
+        font-weight: bold;
+        line-height: 2em;
+        text-align: center;
+    }
+    
+    /* ----------------------
+		    Button Bar Styles Gray color 02032015
+	    ------------------------*/
+    #buttonBar
+    {
+        /*background-color: #dadac8;*/
+        background-color: #D3D3D3;
+        -webkit-box-shadow: 0px 2px 3px rgba(46, 50, 50, 0.92);
+        -moz-box-shadow: 0px 2px 3px rgba(46, 50, 50, 0.92);
+        box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.92);
+        clear: both;
+        float: left;
+        min-width: 1000px;
+        width: 100%;
+        z-index: 1;
+    }
+    #buttonBar ol
+    {
+        list-style-type: none;
+        float: left;
+        margin: 10px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #buttonBar li
+    {
+        float: left;
+        margin: 0 5px;
+        position: relative;
+    }
+    #buttonBar span
+    {
+        line-height: 33px;
+    }
+    
+    #buttonBar p.loggedInUser
+    {
+        float:left; 
+        font-weight: normal;
+        font-size: 10pt;
+        /*line-height:30px;*/
+        line-height:20px;
+        padding:0px;
+    }
+
+     body 
+    {
+   background-color: rgb(247,247,247);
+         margin: 0 auto;
+          width:1200px;
+          height:1500px;
+   
+    
+      }
+
+    #titleimage 
+    {
+     /*background-color: rgb(133,124,124);*/
+     /*background-image: url('Images/eCAPDD08282014image.jpg');*/
+     background-image: url('Images/eCAPDDBanner4.jpg');
+     background-size: 100%  100%;
+     background-repeat: no-repeat;
+      line-height: 120px;
+
+
+      }
+
+
+
+      #tableAlignCenter
+       {
+          margin-left: auto;
+          margin-right: auto;
+          border-color: #444444;
+          border-collapse:collapse;
+          margin: 0 auto;
+          width:1200px;
+
+                        }
+
+
+
+
+  html {
+    background: url('Images/logincover12082014.gif') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}     
+
+  img[title$='MyOfficeChart']
+{
+    height:auto !important;
+    width:auto !important;
+    min-width:0 !important;
+}
+  
+ 
+
+    /*
+    #searchCriteria
+    {
+        background: #dadac8;
+        color: #000;
+        font-family: Tahoma, Verdana, Helvetica, Helvetica-Narrow, sans-serif;
+        padding: 9px;
+        position: relative;
+        
+    }
+    #searchResult
+    {
+        background: #fff;
+        color: #666;
+        font-family: Tahoma, Verdana, Helvetica, Helvetica-Narrow, sans-serif;
+        padding: 20px 10px 10px 10px;
+    }
+    */

@@ -1,0 +1,1300 @@
+﻿
+
+       /* ----------------------
+              General Styles
+       ------------------------*/
+              html, body
+              {
+                     font-family: Arial, Helvetica, sans-serif;
+                     font-size: 9pt;
+                     margin: 0;
+                     padding: 0;
+                     height: 100%;
+                     width: 100%;
+              }
+              fieldset
+              {
+                     border: 1px solid #bcbcbc;
+                     margin: 2px;
+                     padding: 0 5px 5px;
+                     border-radius: 4px;
+                     -moz-border-radius: 6px;
+                     -webkit-border-radius: 6px;
+              }
+              legend
+              {
+                     font-weight: bold;
+                     font-size: 9pt;
+                     margin-bottom: 8px;
+                     padding: 2px 2px;
+                     color: #339;
+              }
+              legend span 
+              {
+                  color: #339;
+              }
+              legend a
+              {
+                  font: normal bold 9pt Arial, Helvetica, sans-serif;
+              }
+              p  { font-size: 11pt; /*margin: 5px 0px;*/ line-height: 20px;}
+              span { color: #000; }
+              img { border-style: none;
+    border-color: inherit;
+    border-width: medium;
+    height: 20px;
+    width: 26px;
+    margin-top: 142px;
+}
+              select  
+              {
+                  border-color: #507cd1; 
+                  color: #000; 
+              }
+              
+              hr { width: 99%; }
+              
+       /* ----------------------
+              Custom Fieldset/Legend Styles
+       ------------------------*/
+              /*  For use with the fieldset/legend div alternative only;
+                     Don't use with the HTML controls */
+              .fieldset
+              {
+                     border-radius: 4px;
+                     clear: both;
+                     float:left;
+                     margin: 20px 10px 10px;
+                     padding-top: 10px;
+                     padding-bottom: 10px;
+                     width: 1200px;
+                     background: #fff;
+                     border: 1px solid #bcbcbc;
+              }
+              .legend
+              {
+                     background: url('Images/legend_fix.png');
+                     font-size: 1em;
+                     font-weight: bold;
+                     border-bottom: none;
+                     float: left;
+                     font-weight: bold;
+                     margin-top: -18px;
+                     margin-left: 8px;
+                     margin-right: 2px;
+                     color: #333399;
+              }
+              .legend img
+              {
+                     border: none;
+                     margin-left: 5px;
+              }
+
+       /* ----------------------
+              Table Styles
+       ------------------------*/
+              table { border-collapse: collapse; }
+              td { vertical-align: middle; }
+              table span { font-size: 1em; }
+              
+              .titleCell, 
+              .titleCellEdit
+              {
+                  font-family: Arial, Helvetica, sans-serif;
+                     text-align: right;
+                     vertical-align: middle;
+                     padding: 7px;
+                     width: 125px;
+              }
+              .titleCell { background-color: #dae1e7; }
+              .titleCellEdit { background-color: #fff298; }
+              
+              /* These styles are ONLY used by the Case Appeals tab for the demo field entry portions. */
+        /* -----------------------------
+            Generic Table Stuff
+        -------------------------------- */
+        .tbl,
+        .tblEdit
+        {
+            border-collapse: separate;
+            border-spacing: 3px;
+        }
+        .tblEdit { background-color: #fff298; }
+        .tblWidth-480 
+        {
+            max-width: 480px;
+            width: 480px;
+        }
+        .tblWidth-640 
+        {
+            max-width: 640px;
+            width: 640px;
+        }
+        .tblWidth-960 
+        {
+            max-width: 960px;
+            width: 960px;
+        }
+              
+       /* ----------------------
+              Links
+       ------------------------*/
+              a:link, a:active, a:visited { text-decoration: underline; }
+              a:hover { text-decoration: none; }
+              
+       /* ----------------------
+              TextBox / Input Controls
+       ------------------------*/
+              textarea { font-family: Arial, Helvetica, sans-serif; }
+              
+              input[type="text"], 
+              input[type="password"], 
+              input[type="file"],
+              textarea
+              {
+                     font-size: 1em;
+                     padding: 4px;
+                     border: 1px solid #507cd1;
+                     box-shadow: inset 0 2px 3px rgba(0,0,0,.1);
+              }
+              
+              input[type="text"]:focus, 
+              input[type="password"]:focus, 
+              input[type="file"]:focus,
+              textarea:focus
+              {
+                     background: lightyellow;
+                     border: 1px solid #507cd1;
+              }
+              
+              input[type="text"].disabled, 
+              input[type="password"].disabled, 
+              input[type="file"]:disabled,
+              textarea.disabled
+              {
+                     border: 1px solid #ccc;
+                     background: rgb(240,240,234);
+              }
+              
+              input[type="checkbox"]:hover + label, 
+              input[type="checkbox"]:focus + label,
+              input[type="checkbox"] + label:hover
+              {
+                     border: #507cd1;
+                     color: #339;
+              }
+              input[type="radio"]:hover + label, 
+              input[type="radio"]:focus + label, 
+              input[type="radio"] + label:hover
+              {
+                     color: #339;
+              }
+
+       /* ----------------------
+              Labels
+       ------------------------*/
+              span  { font-size: 1em; }
+              span.title 
+              {
+                     font-weight: bold;
+                     font-size: 18px;
+                     text-align: center;
+                     padding: 20px 0;
+              }
+              span.fieldName { font-weight: bold; }
+
+       /* ----------------------
+              Link Buttons
+       ------------------------*/
+              a.linkButton:link, a.linkButton:active, a.linkButton:visited { text-decoration: underline; }
+              a.linkButton:hover { text-decoration: none; }
+              a.linkButton:link, a.linkButton:active, a.linkButton:hover, a.linkButton:visited  { color: #000; }
+                           
+       /* ----------------------
+              Buttons
+       ------------------------*/
+              .button
+              {
+                  /*font: bold 11px/1 Helvetica, Verdana, sans-serif;*/
+                   font:  11px/1 Helvetica, Verdana, sans-serif;
+                     text-align: center;
+                     padding: 8px;
+                     width: auto;
+                     -webkit-border-radius: 3px;
+                     -moz-border-radius: 3px;
+                     /*-o-border-radius: 3px;
+                     border-radius: 3px;*/
+              }
+              .button
+              {
+                     background-image: -webkit-gradient(top, #f8f8f8, #f1f1f1);
+                     background-image: -moz-linear-gradient(top, #f8f8f8, #f1f1f1);
+                     background-image: -o-linear-gradient(top, #f8f8f8, #f1f1f1);
+                     background: #e3e3e3;
+                     border: 1px solid #aaa;
+                     -webkit-box-shadow: 1px 1px 2px rgba(46, 50, 50, 0.72);
+                     -moz-box-shadow: 1px 1px 2px rgba(46, 50, 50, 0.72);
+                     box-shadow: 1px 1px 2px rgba(46, 50, 50, 0.72);
+                     color: #333;
+              }
+              .button:hover
+              {
+                     border-color: #333;
+                     box-shadow: 0 0 1px 1px rgba(0,0,0,0.2);
+              }
+              .button:active
+              {
+                     background: #f5f5f5;
+                     border-color: #333;
+                     color: #3c3b37;    
+              }
+              
+              .save
+              {
+                     background-image: -webkit-gradient(top, #24ae24, #f1f1f1);
+                     background-image: -moz-linear-gradient(top, #24ae24, #f1f1f1);
+                     background-image: -o-linear-gradient(top, #24ae24, #f1f1f1);
+                     background: #24ae24;
+                     border: 1px solid #36a536;
+                     color: #fff;
+              }
+              .save:hover
+              {
+                     border-color: #008100;
+              }
+              .save:active
+              {
+                     background: #24c024;
+                     border-color: #008100;
+                     color: #fff;    
+              }
+              .delete
+              {
+                     background-image: -webkit-gradient(top, #a8333c, #f1f1f1);
+                     background-image: -moz-linear-gradient(top, #a8333c, #f1f1f1);
+                     background-image: -o-linear-gradient(top, #a8333c, #f1f1f1);
+                     background: #a8333c;
+                     border: 1px solid #c93636;
+                     color: #fff;
+              }
+              .delete:hover
+              {
+                     border-color: #810000;
+              }
+              .delete:active
+              {
+                     background: #cc5760;
+                     border-color: #810000;
+                     color: #fff;    
+              }
+              .print
+              {
+                     background-image: -webkit-gradient(top, #356aa0, #f1f1f1);
+                     background-image: -moz-linear-gradient(top, #356aa0, #f1f1f1);
+                     background-image: -o-linear-gradient(top, #356aa0, #f1f1f1);
+                     background: #356aa0;
+                     border: 1px solid #23587c;
+                     color: #fff;
+                     font-size:large;
+              }
+              .print:hover
+              {
+                     border-color: #000081;
+              }
+              .print:active
+              {
+                     background: #6ba0d6;
+                     border-color: #000081;
+                     color: #fff;    
+              }
+
+       /* ----------------------
+              GridViews
+       ------------------------*/
+              .gvGridView 
+              { 
+                     border: 1px solid #000;
+                     -webkit-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+                     -moz-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+                     box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+                     font-size: 1em;      
+                     table-layout: fixed;
+                     margin-top: 5px;
+                     margin-bottom: 5px;
+                     width:880px; 
+              }
+              .gvGridView a  { display: block; }
+              .gvGridView a:link, .gvGridView a:active, .gvGridView a:visited, .gvGridView a:hover { color: #000; }
+              .gvGridView th
+              {
+                     color: #fff;
+                     padding: 2px 2px;
+              }
+              .gvGridView th  
+              {
+                  line-height: 20px; 
+              }
+              .gvGridView td  
+              {
+                  border: 1px solid #38393A; 
+                  line-height: 20px; 
+                  padding: 0 5px;
+                  vertical-align: middle; 
+              }
+       
+              /* HeaderStyle */
+              .gvHeaderStyle
+              {
+                     border: 1px solid black;
+                  /*background: rgb(63, 76, 107);*/
+            /*background: rgb(22,85,140);*/
+            background: #0066b2;
+
+            /*background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.07, rgba(117, 130, 161, 1)), color-stop(0.54, rgba(63, 76, 107, .5)));
+                     background-image: -moz-linear-gradient(center top, rgba(117, 130, 161, 1) 7%, rgba(63, 76, 107, .5) 54%);
+                     background-image: -o-linear-gradient(rgba(117, 130, 161, 1), rgba(63, 76, 107, 0.5));*/
+              }
+
+        .print
+              {
+                     background-image: -webkit-gradient(top, #0066b2, #f1f1f1);
+                     background-image: -moz-linear-gradient(top, #0066b2, #f1f1f1);
+                     background-image: -o-linear-gradient(top, #0066b2, #f1f1f1);
+                     background: #0066b2;
+                     border: 1px solid #23587c;
+                     color: #fff;
+              }
+
+
+              .gvHeaderStyle a:link, .gvHeaderStyle a:active, .gvHeaderStyle a:visited, .gvHeaderStyle a:hover { color: #fff; }
+              
+              /* RowStyle */
+              .gvRowStyle td { border: 1px solid #38393A; }
+              
+              /* AlternatingRowStyle */
+              .gvAlternatingRowStyle { background-color: #f7f7ff;    }
+              .gvAlternatingRowStyle td { border: 1px solid #38393A; }
+              
+              /* PagerStyle */
+              .gvPagerStyle a:link, .gvPagerStyle a:active, .gvPagerStyle a:visited, .gvPagerStyle a:hover { text-decoration: underline; color: #fff; }
+        /*.gvPagerStyle, .gvPagerStyle tr:hover {      background: rgb(63, 76, 107); }*/
+        /*.gvPagerStyle, .gvPagerStyle tr:hover { background: rgb(22,85,140); }*/
+        .gvPagerStyle, .gvPagerStyle tr:hover { background:#0066b2; }
+              .gvPagerStyle tr, .gvPagerStyle td { border: none; }
+              .gvPagerStyle span { color: #fff; }
+              
+              /* Extra */          
+              .gvGridView tr.gvRowStyle:hover, 
+              .gvGridView tr.gvAlternatingRowStyle:hover
+              {
+                     background: #dde;
+              }
+              
+              /* Column Styles */
+              td.gvComments
+              {
+                  /* Fix overflowing comment issue */
+                  overflow: hidden;
+                  white-space: nowrap;
+                  /*word-wrap: normal;*/
+                                
+                  /* CSS3 styling for browsers that support it */
+                  o-text-overflow: ellipsis;
+                  text-overflow: ellipsis;
+              }
+              
+       /* ----------------------
+              DetailViews
+       ------------------------*/
+              .dvDetailView
+              {
+                     margin-top: 10px;
+                     border: 1px solid #000;
+                     -webkit-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+                     -moz-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+                     box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+              }
+              .dvDetailView td { line-height: 30px; vertical-align: middle; }
+
+              .dvRowStyle td, 
+              .dvAlternatingRowStyle td, 
+              .dvItemStyle td, 
+              .dvEditStyle td, 
+              .dvPagerStyle td 
+              { 
+                     padding-left: 5px; 
+              }
+              .dvDetailView a  { text-align: center; width: 15%; }
+              .dvDetailView a:link, .dvDetailView a:active, .dvDetailView a:visited, .dvDetailView a:hover { color: #000; }
+              .dvDetailView a:hover { background: #def; }
+              
+              /* HeaderStyle */
+              .dvHeaderStyle 
+              { 
+                     font-size: 9pt; 
+                     /*text-align: left;*/
+                     text-align: right;
+                     padding-right: 5px; 
+                     vertical-align: middle;
+                     width: 115px; 
+              }
+              
+              /* RowStyle: Same as ItemStyle? */
+              .dvRowStyle td { border: 1px solid #38393A; }
+              
+              /* ItemStyle */
+              .dvItemStyle { padding-left: 5px; vertical-align: middle; }
+              
+              /* PagerStyle */
+              .dvPagerStyle a { padding: 5px 20px; }
+              .dvPagerStyle a:link, .dvPagerStyle a:active, .dvPagerStyle a:visited, .dvPagerStyle a:hover  { color: #fff; text-decoration: underline; }
+              .dvPagerStyle a:hover{ text-decoration: none; color: #000; }
+              /*.dvPagerStyle, .dvPagerStyle tr:hover { background: rgb(63, 76, 107); }*/
+        .dvPagerStyle, .dvPagerStyle tr:hover {background: rgb(22,85,140); }
+              .dvPagerStyle tr, .dvPagerStyle td { border: none; }
+              .dvPagerStyle span { color: #fff; }             
+              
+              /* AlternatingRow Style */
+              .dvAlternatingRowStyle { background-color: #f7f7ff; }
+              .dvAlternatingRowStyle td { border: 1px solid #38393A; }
+
+              /* EditStyle */
+              .dvEditStyle { background-color: #fff298; }
+              
+              /* Extra */
+              .dvLinkButton { display: inline; }
+       
+       /* ----------------------
+              DEPRECATED DATALIST STYLES
+       ------------------------*/
+              .dlTitleCellEdit /* Settlement still uses this */
+              {
+                     background: #fff298;
+                     text-align: right;
+                     vertical-align: middle;
+                     max-width: 125px;
+                     width: 125px;
+              }
+              .dlEditItemStyle { background-color: #fff298; } /* Settlement still uses this */
+       
+       /* ----------------------
+              ListViews
+       ------------------------*/
+              .lvListView
+              {
+                     font-size: 1em;
+                     border: 1px solid #000;
+                     -webkit-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+                     -moz-box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+                     box-shadow: 0px 1px 2px rgba(46, 50, 50, 0.72);
+                     width: 100%;
+              }
+              .lvListView td  { line-height: 20px; padding: 0 5px; }
+              
+              /* General Links */
+              .lvListView a { display: block; }
+              .lvListView a:link, .lvListView a:active, .lvListView a:visited, .lvListView a:hover  { color: #000; }
+              
+              /* Header */
+              .lvHeaderStyle
+              {
+                     border: 1px solid black;
+                     /* background: rgb(63, 76, 107);*/
+            background: rgb(22,85,140);
+                     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.07, rgba(117, 130, 161, 1)), color-stop(0.54, rgba(63, 76, 107, .5)));
+                     background-image: -moz-linear-gradient(center top, rgba(117, 130, 161, 1) 7%, rgba(63, 76, 107, .5) 54%);
+                     background-image: -o-linear-gradient(rgba(117, 130, 161, 1), rgba(63, 76, 107, 0.5));
+                     font-size: 9pt; 
+                     text-align: center;
+                     /* text-align: left; } */
+              }
+              .lvListView th 
+              { 
+                     color: #fff;
+                     line-height: 20px;
+                     padding: 5px 15px; 
+              }
+              .lvHeaderStyle a:link, .lvHeaderStyle a:active, .lvHeaderStyle a:visited, .lvHeaderStyle a:hover { color: #fff; }
+
+              /* RowStyle */
+              .lvItemStyle td { border: 1px solid #38393A; }
+                                         
+              /* Alternating Style */
+              .lvAlternatingItemStyle { background-color: #f7f7ff; }
+              .lvAlternatingItemStyle td { border: 1px solid #38393A; }
+              
+              /* EditStyle */
+              .lvEditItemStyle { background-color: #fff298; }
+              
+              /* Pager Style*/
+              .lvPagerStyle a:link, .lvPagerStyle a:active, .lvPagerStyle a:visited, .lvPagerStyle a:hover { color: #fff; text-decoration: underline; }
+              /*.lvPagerStyle, .lvPagerStyle tr:hover { background: rgb(63, 76, 107); }*/
+        .lvPagerStyle, .lvPagerStyle tr:hover {background: rgb(22,85,140); }
+              .lvPagerStyle tr, .lvPagerStyle td { border: none; }
+              .lvPagerStyle span { color: #fff; }
+              
+              /* Empty Style */
+              .lvListView tr.EmptyStyle { background: #fff; }        
+              
+              /* Extra */          
+              .lvListView tr.lvRowStyle:hover, 
+              .lvListView tr.lvAlternatingRowStyle:hover
+              {
+                     background: #dde;
+              }
+              
+              a.lvLinkButton { display: inline; }
+                           
+              /* Column Styles */
+              td.lvComments
+              {
+                  /* Fix overflowing comment issue */
+                  overflow: hidden;
+                  white-space: nowrap;
+                  /* CSS3 styling for browsers that support it */
+                  o-text-overflow: ellipsis;
+                  text-overflow: ellipsis;
+              }
+              
+       /* ----------------------
+              CheckBoxList / RadioButtonList / ListBox
+       ------------------------*/
+              table.chkBoxList td { padding: 5px 9px 5px 2px; border: 1px solid #507cd1; color: #000; }
+              table.rdoButtonList td { padding: 5px 9px 5px 2px; border: 1px solid #507cd1; color: #000; }
+              select.lstBox { width: 150px; border-color: #507cd1; color: #000; }        
+              
+       /* ----------------------
+              Error / Message Styles
+       ------------------------*/
+              .errorText { font-size: 12pt; color: #fb3015; }
+              .redText { font-size: 11px; }
+              .errorTextRed { font-size: 12pt; color: red; }
+
+       /* ----------------------
+              Misc. Styles
+       ------------------------*/
+              .horizontal-list 
+              { 
+                     font: normal 13pt Helvetica, sans-serif; 
+                     list-style-type: none; 
+                     list-style-position: outside; 
+                     margin: 0;
+                     padding: 0;
+                     line-height: 1.7em;
+              }
+              .horizontal-list li
+              {
+                     float: left;
+                     position: relative;
+                     padding: 5px 10px;
+              }
+              .horizontal-list a:link, 
+              .horizontal-list a:active, 
+              .horizontal-list a:visited  
+              {
+                     color: #000;
+                     text-align: left; 
+                     text-decoration: underline; 
+                     display: block;
+                     padding: 0px 5px;
+                     vertical-align: top;
+              }
+              .horizontal-list a:hover 
+              { 
+                     text-decoration: none; 
+                     color: #000;
+              }
+              .break-word { word-wrap: break-word; }
+              .left { text-align: left; }
+              .right { text-align: right; }
+              .center { text-align:center; }
+              .clear { clear: both; }
+              .block-display { display: block; }
+              .text-center { text-align: center; }
+              .dateText { width: 100px; }
+              .longText { width: 275px; }
+              .calImg
+              {
+                     height: 16px;
+                     vertical-align: middle;
+                     width: 16px;
+              }
+              .section
+              {
+                     margin: 10px auto;
+                     padding: 2px 10px;
+              }
+              .watermarkText { color: rgb(170,170,170); }
+              .fieldOneCol { width: 340px; } /* Used in CaseInfo and CaseSearch for */
+              .fieldThreeCol { width: 680px; } /* Used in CaseInfo for Nature of Case */
+              /* Not Used */
+              /*
+              .dlFourColumn { border-spacing: 3px; }
+              .dlThreeColumn 
+              {
+                     border-spacing: 3px;
+                     border-collapse: separate;
+                     max-width: 720px;
+                     width: 720px;
+              }
+        */
+              /* For use with all fieldset separated sections */
+              .container
+              {
+                     clear: both;
+                     float: left;
+                     
+                     margin: 0px 0px 0px 0px;
+                     min-width: 480px;
+                     max-width: 960px;
+                     width: 960px;
+
+                     /*margin: 5px 0px 5px 14px;*/
+           
+              }
+
+                   /* For use with all fieldset separated sections */
+              .containerprint
+              {
+                     clear: both;
+                     float: left;
+                     margin: 15px 0px 5px 20px;
+                     min-width: 480px; /* half the max width of 960px */
+                     max-width: 960px;
+                     width: 960px;
+                    
+              }
+              
+              /* 
+            For use when you need a container that is a fixed height but want 
+            additional controls to scroll down if the total height is more
+            than what you want to allow
+        */           
+              .container-fixedHeight
+              {
+                  border: 1px solid #aaa; 
+                  min-height:165px; 
+                  max-height:342px; 
+                  overflow-y: auto;
+              }             
+              .none { display: none; }
+              
+              .date { vertical-align: middle; }
+              .middle { text-align:center; vertical-align: middle; }
+        .StatusStyle 
+        {
+            border:0;
+            /*hspace:0;
+            vspace:0;*/
+            margin-top: 0px;
+            float: right;
+           
+        }
+              
+       /* ----------------------
+              Div Table
+       ------------------------*/
+/*div {
+    word-wrap: break-word;
+
+}*/
+              div.row
+              {
+                     clear: both;
+                     display: inline-table;
+                     padding-top: 3px;
+                     padding-bottom: 5px;
+                     width: 100%;
+              }
+              div.row span.label,
+              div.row span.form
+              {
+                  float: left;
+                  margin: 5px 0px 0px 5px;
+                  text-align: left;
+              }
+              
+              div.row span.label
+              {
+                     float: left;
+                     padding-top: 6px;
+                     width: 120px;
+              }
+              div.row span.form
+              {
+                     width: 220px;              
+              }
+              div.row span.button
+              {
+                     float: right;
+                     margin-right: 16px;
+              }
+              
+              div.row span.labelCell,
+              div.row span.labelCellEdit
+              {
+                  padding: 7px;
+                  text-align: right;
+                  vertical-align: middle;
+                     width: 125px;
+              }
+              /*
+        div.row span.titleCell { background-color: #dae1e7; }
+              div.row span.titleCellEdit { background-color: #fff298; }
+        */
+
+       /* ----------------------
+              Ajax Progress Bar
+       ------------------------*/
+              .progress-bar
+              {
+                     background-color: #587592;
+                     bottom: 0%;
+                     left: 0px;
+                     position: fixed;
+                     height: 30px;
+                     width: 100%;
+              }
+              .progress-bar span { color: #fff; }
+ .modal
+                {
+
+                    position: fixed;
+                    z-index: 999;
+                    height: 100%;
+                    width: 100%;
+                    top: 0;
+                    background-color: White;
+                    filter: alpha(opacity=60);
+                    opacity: 0.6;
+                    -moz-opacity: 0.8;
+
+                }
+
+                .center
+                {
+                    z-index: 500;
+                    margin: 0px 250px;
+                    padding: 10px;
+                    width: 130px;
+                    background-color: White;
+                    border-radius: 10px;
+                    filter: alpha(opacity=100);
+                    opacity: 1;
+                    -moz-opacity: 1; 
+                }
+
+                .center img
+                {
+                    height: 228px;
+                    width: 228px;
+                }
+       /* ----------------------
+              DO NOT USE THESE DEPRECATED STYLES.
+       ------------------------*/
+        /*
+        td.buttons
+        {
+               text-align: left;
+               margin: 5px;
+               padding: 5px;
+        }
+        
+        .linkButton
+        {
+               color: #fff;
+               background-color: #7f8733;
+               border: #acb9aa 1px solid;
+               float: right;
+            height: 16px;
+            padding: 0px 8px;
+        }
+        
+        .empInfo, 
+        .referrals
+        {
+            border-collapse: separate;
+            border-spacing: 3px;
+            max-width: 960px;
+            width: 960px;   
+        }
+        */
+
+        /* DataLists 
+        .dlButtons
+        {
+            text-align:center;
+        }
+        .dlThreeColumn
+        {
+            border-collapse: separate;
+            max-width: 720px;
+            width: 720px;
+        }
+        .dlThreeColumn .dlColumn2
+        {
+            width: 480px;
+        }
+        .dlThreeColumn .dlColumn3
+        {
+            width: 115px;   
+        }*/
+        .dlEditStyle, /* Not Used */
+        .dlEdit /* Used in Settlement still */
+        {
+            background-color: #fff298;
+        }
+        /* -----------------------------
+            DEPRECATED TABLE STYLES
+        -------------------------------- */
+        .tblTwoColumn, /* Used in Settlement still */
+        .tblThreeColumn, /* Not Used */
+        .tblFourColumn /* Not Used */
+        {
+            border-collapse: separate;
+            border-spacing: 3px;
+        }
+
+            /* -----------------------------
+                Two Column Table
+            -------------------------------- */
+            .tblTwoColumn /* Used in Settlement still */
+            {
+                width: 480px;
+            }
+
+            .tblTwoColumn .col2 /* Used in Settlement still */
+            {
+                vertical-align: middle;
+                width: 355px;
+            }
+        /* -----------------------------
+            END DEPRECATED TABLE STYLES
+        -------------------------------- */
+
+.demo-container{
+       max-width: 1200px;
+}
+/* peek template appearance */
+/*.peekTemplateClass
+{
+       width: 140px;
+       height: 70px;
+       padding: 10px;
+       font-size: 13px;
+       line-height: 20px;
+}*/
+
+/* group heading tile appearance */
+.groupHeadingTitle
+{
+       height: 70px;
+       width: 140px;
+       position: absolute;
+    
+}
+
+.innerTitle
+{
+       width: 100px;
+       height: 60px;
+       top: 50%;
+       margin-top: -20px;
+       position: absolute;
+       font-size: 17px;
+       line-height: 60px;
+       padding-left: 10px;
+}
+
+div.noHover.RadTile
+{
+       border-color: transparent;
+    width: 140px;
+       height: 70px;
+}
+
+/* change tile texts to better fit long names and show over the images */
+.RadTile div.rtileBottomContent
+{
+       font-weight: bold;
+       width: auto;
+       max-width: 150px;
+       color: Black;
+       /* semi-transparent background like this will work in CSS3 compatible browsers */
+       /*background-color: rgba(255,255,255,0.5);*/
+    background-color: rgb(240,240,234);
+       height: 20px;
+       line-height: 20px;
+       padding: 0 10px;
+       bottom: 10px;
+}
+
+/* banner */
+.directoryHeader {
+    height: 140px;
+    /*background-image: url('../App_Themes/booth.jpg');*/
+    background-color: rgb(240,240,234);
+    margin-bottom: 10px;
+    font-size: 24pt;
+    border: 1px solid #bcbcbc;
+}
+
+.qsf-black .directoryHeader,
+.qsf-office-black .directoryHeader,
+.qsf-glow .directoryHeader,
+.qsf-black-metro .directoryHeader
+{
+       /*background-image: url('../App_Themes/booth.jpg');*/
+    background-color: rgb(240,240,234);
+    font-size: 24pt;
+    border: 1px solid #bcbcbc;
+    
+}
+
+view-option {
+    display:block;
+
+}
+/*Conference Room*/
+.RadScheduler .rsAptSubject {
+    text-align: left;
+    padding: 4px 0 1px;
+    margin: 0 0 3px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #369;
+    height: 17px;
+    border-bottom: 1px solid #99DEFD;
+    width: 100%;
+}
+
+.RadScheduler .rsAdvancedEdit .RadColorPicker label {
+    text-align: left;
+    display: block;
+    padding: 0;
+}
+
+.demo-container .RadScheduler_MetroTouch .rsAdvancedEdit label,
+.demo-container .RadScheduler_BlackMetroTouch .rsAdvancedEdit label {
+    width: 79px;
+}
+#ConfiguratorPanel1 ul 
+{ 
+    list-style: none; 
+    padding: 7px 0; 
+    margin:0 auto; 
+    width: 600px; 
+    height: 20px; 
+} 
+  
+#ConfiguratorPanel1 ul li 
+{ 
+    line-height: 20px; 
+    float:left; 
+    border-left: solid 1px #b1d8eb; 
+    padding-left: 11px; 
+    margin-left: 10px; 
+    height: 20px; 
+    display:inline-block;
+       /*display:list-item;
+    text-align:left;
+    float:none;*/
+} 
+
+/*#li
+{
+    display:inline-block;
+    text-align:left;
+    float:none;
+}*/
+  
+*+html #ConfiguratorPanel1 ul li input { top: 1px; } 
+* html #ConfiguratorPanel1 ul li input { top: 1px; } 
+  
+ .demo-container .RadButton { 
+    color: #000; 
+} 
+  
+ .demo-container .RadButton.cr1 
+{ 
+    /*yellow*/
+      border: solid 1px #acdb93;  
+    background: #FFFAC5 url('images/cr1q.png') repeat-x !important; 
+    margin-bottom:5px; 
+} 
+
+.demo-container .RadButton.cr2 
+{ 
+    /*orange*/
+    /*border: solid 1px #deb68b;  
+    background: #F2DEC4 url('images/cr2.png') repeat-x !important; 
+    margin-bottom:5px;*/ 
+     /*red*/
+     border: solid 1px #93c2db;  
+    background: #ECBBBB url('images/cr2q.png') repeat-x !important;
+    margin-bottom:5px;     
+} 
+ .demo-container .RadButton.cr3 
+{ 
+ /*blue*/
+     border: solid 1px #93c2db;  
+    background: #C3DDEB url('images/cr3q.png') repeat-x !important;
+    margin-bottom:5px; 
+} 
+ .demo-container .RadButton.cr4 
+{ 
+  
+     /*pink*/
+    border: solid 1px #acdb93;  
+    background: #E0B0FF url('images/cr4.png') repeat-x !important; 
+    margin-bottom:5px; 
+} 
+.demo-container .RadButton.cr5 
+{ 
+      /*green*/
+      border: solid 1px #acdb93;  
+    background: #D1EBC3 url('images/cr5.png') repeat-x !important; 
+    margin-bottom:5px; 
+} 
+ .demo-container .RadButton.cr6 
+{ 
+    border: solid 1px #acdb93;  
+    background: #D1D0CE url('images/cr6.png') repeat-x !important; 
+    margin-bottom:5px; 
+} 
+ .demo-container .RadButton.cr7
+{ 
+    border: solid 1px #acdb93;  
+    background: #FAAFBA url('images/cr7.png') repeat-x !important; 
+    margin-bottom:5px; 
+} 
+ /*.rsAllDayRow .rsApt, .rsAllDayRow .rsAptOut
+  
+    {
+  
+        height: 45px !important;
+  
+    }
+  
+    .rsAllDayRow
+  
+    {
+  
+        height: 100px !important;
+  
+    }*/
+
+.rsAllDayWrapper  
+    {  
+        visibility:hidden !important;  
+    }
+.rsHeaderTimeline  
+    {  
+        visibility:hidden !important;  
+    }
+/*.rsHeaderMonth
+  {  
+        visibility:hidden !important;  
+    }*/
+.modalBackground
+    {
+        background-color: #666699;
+        filter: alpha(opacity=50);
+        opacity: 0.2;
+    }
+    .modalPopup
+    {
+background-color: #FFFFFF;
+        width: 300px;
+        border: 3px solid #0DA9D0;
+        border-radius: 12px;
+        padding:0
+       
+
+    }
+    .modalPopup .header
+    {
+        background-color: #2FBDF1;
+        height: 30px;
+        color: White;
+        line-height: 30px;
+        text-align: center;
+        font-weight: bold;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+    }
+     .modalPopup .body
+    {
+        min-height: 50px;
+        line-height: 30px;
+        text-align: center;
+        font-weight: bold;
+
+    }
+    .modalPopup .footer
+    {
+        padding: 3px;
+
+    }
+       .modalPopup .yes
+    {
+        background-color: #2FBDF1;
+        border: 1px solid #0DA9D0;
+    }
+    .modalPopup .no
+    {
+        background-color: #9F9F9F;
+        border: 1px solid #5C5C5C;
+    }
+
+   
+   
+
+/*Connie 06192015 START - Center all controls in Search Staff admin pages*/
+   
+.AdminFormWrapper{
+       margin-left:auto;
+       margin-right:auto;
+        vertical-align:middle !important;
+        width: 960px;
+   }
+
+
+
+.fieldsetContainer{
+        margin-left:auto;
+       margin-right:auto;
+        vertical-align:middle !important;
+        width: 650px;
+        
+   }
+
+
+.fieldsetStaffSearchContainer{
+       margin-left:auto;
+       margin-right:auto;
+       vertical-align:middle !important;
+       width: 960px;
+        
+   }
+
+.staffSearchResultGrid{
+    margin-left:auto;
+       margin-right:auto;
+        vertical-align:middle !important;
+        width: 850px;
+}
+
+
+.fieldsetUnitContainer{
+        margin-left:auto;
+       margin-right:auto;
+        vertical-align:middle !important;
+        width: 800px;
+        
+   }
+
+.UnitGridView{
+     margin-left:auto;
+       margin-right:auto;
+        vertical-align:middle !important;
+        width: 700px;
+}
+
+.legendAdmin{
+       margin-top:20px;
+       font-size:14px;
+   }
+
+#AdminStaffSearchButtonContainer{
+     margin-left:auto !important;
+     margin-right:auto !important;    
+     width: 500px;
+}
+
+
+
+#AdminUnitButtonContainer{
+     margin-left:auto;
+     margin-right:auto;
+     width: 600px;
+}
+
+.UpdateRoleGridView{
+     padding: 1px 1px 1px 1px; 
+     margin: 1px 1px 1px 1px; 
+     height:600px; 
+     overflow:scroll; 
+     overflow-x:hidden;
+     width: 650px; 
+     vertical-align: middle;              
+     text-indent: 10px; 
+     margin-left:auto; 
+     margin-right:auto;                                      
+     table-layout: auto; 
+     border-collapse: separate; 
+     border-spacing: 1px;
+}
+
+/*UpdateSupvUnitToStaff*/
+.UpdateSupvUnitToStaffGridView{
+     padding: 1px 1px 1px 1px; 
+     margin: 1px 1px 1px 1px; 
+     height:600px; 
+     overflow:scroll; 
+     overflow-x:hidden;
+     width: 950px; 
+     vertical-align: middle;              
+     text-indent: 10px; 
+     margin-left:auto; 
+     margin-right:auto;                                      
+     table-layout: auto; 
+     border-collapse: separate; 
+     border-spacing: 1px;
+}
+
+.fieldsetUpdateSupvUnitToStaffContainer{
+        margin-left:auto;
+       margin-right:auto;
+        vertical-align:middle !important;
+        width: 950px;
+        
+   }
+
+
+#AdminUpdateSupvUnitToStaffButtonContainer{
+     margin-left:auto;
+     margin-right:auto;
+     width: 400px;
+}
+
+/*06262015 ----------------------
+              Conference Room Message Styles
+       ------------------------*/
+.ConferenceRoomMessageText {    
+    position: relative;
+    top: 8px;
+    font-size: 10pt; 
+    color: #fb3015;
+}
+
+/*06302015 ----------------------
+        Assign case worker, Staff look up
+       ------------------------*/
+
+#StaffSearchButtonContainer{
+     margin-left:auto !important;
+     margin-right:auto !important;    
+     width: 250px;
+}
+
+/*Connie 06192015 END - Center all controls in Search Staff admin pages*/
+
+a label {
+    cursor: pointer;
+}
+
+
+
+

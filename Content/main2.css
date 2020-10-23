@@ -1,3 +1,7 @@
+.payment-status-color {
+    color: crimson;
+}
+
 .homePageButtonWrapper {
     position: absolute;
     bottom: 0;
@@ -16095,7 +16099,7 @@ span.round-tab:hover {
 }
 
 .wizard .nav-tabs > li {
-    width: 14%
+    width: 12%
 }
 
 .wizard li:after {

@@ -4691,9 +4691,13 @@ html{
 	line-height: 1.5em;
 	float: left;
 	display: inline}.doubleInLine{
-	width: 50%}.form-control{
+	width: 50%}
+.form-control {
 	width: auto;
-	width: initial!important}.modal-body{
+	/*width: initial !important    VDD  to make the vendor details all text in full width*/ 
+					}
+			   
+    .modal-body{
 	text-align: left;
 	padding: 15px 30px}video{
 	max-width: 100%;
@@ -4703,11 +4707,15 @@ html{
 	font-family: 'Source Sans Pro',sans-serif}.centerColumn{
 	margin: 0 auto;
 	padding: 0;
-	width: 72em;
+	width: 78em;  /*vdd it was 72em  to make the summary content size wider*/
 	text-align: left;
-	background-color: #fff}.footer{
+	background-color: #fff
+}.footer{
 	text-align: center}.banner{
-	margin: .5em 0 0 0}.content{
+	margin: .5em 0 0 0}
+.content {
+	/*vdd*/
+	padding-bottom:10px;
 	clear: both}.block{
 	display: block}.inline{
 	float: none}.right{
@@ -4932,9 +4940,10 @@ html{
 	margin-bottom: 0}.mainContent{
 	float: right;
 	border: 1px solid #ccc;
-	width: 50em;
+	width: 55em;  /**vdd-  it was 50**/
 	margin-top: .5em;
-	position: relative}.wideContent{
+	position: relative;
+}.wideContent{
 	float: left;
 	width: 100%;
 	border: 1px solid #ccc;
@@ -4957,7 +4966,7 @@ html{
 	padding-top: 0}.readOnlySection{
 	padding-top: .5em;
 	padding-left: 0}.displayLabel{
-	width: 10em;
+	width: 15em;
 	text-align: right;
 	margin-right: 8px;
 	display: inline-block;

@@ -1,18 +1,9 @@
 ﻿<link href="~/Content/applicationsummary.css" rel="stylesheet" />
-@*<link href="~/Content/main2.css" rel="stylesheet" />*@
-@*<link href="~/Content/dashboard.css" rel="stylesheet" />*@
-
-<link href="//cdn.datatables.net/responsive/2.2.3/css/dataTables.responsive.css" />
-<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
-
-
-@*<script src="~/Scripts/App/dashboard.js"></script>*@
+<link href="~/Content/button.css" rel="stylesheet" />
+<script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>
 <script src="~/Scripts/App/AdminMain.js"></script>
 <script src="~/Scripts/App/applicationSummary.js"></script>
-<script src="//cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.js"></script>
-
+<script src="~/Scripts/App/checklist.js"></script>
 <script>
     $(function () {
         $("#tabs").tabs();
@@ -26,16 +17,10 @@
                 <h5 class="modal-title">Application Reject</h5>
             </div>
             <div class="modal-body" style="text-align:left">
-                @*<select id="txtAccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT ">
-                        <option value="1" selected>Reason:</option>
-                        <option value="1">Reason 1</option>
-                        <option value="2">Reason 2</option>
-                    </select>*@
-
                 <div class="form-group subSection">
                     <label class="firstLabelLong" for="rejectReason">Reason:</label>
                     <div class="chosen-wrapper">
-                        <select class="form-control cancel chosen-select" id="select_rejectReason" name="rejectReason" style="display: true;">
+                        <select class="form-control cancel chosen-select" id="select_rejectReason" name="rejectReason" style="display: true">
                             <option value=""></option>
                             <option value="1">Requested by Vendor</option>
                             <option value="2">No EWS and Lexis/Nexis Vendor Verification</option>
@@ -53,10 +38,82 @@
             </div>
 
             <div class="modal-footer">
-                @*<button id="btn_SubmitReject" type="button" class="btn btn-primary btn-lg">Submit</button>
-                    <button type="button" style="text-align:center" class="btn btn-default  btn-lg" data-dismiss="modal">Cancel</button>*@
                 <input id="btn_SubmitReject" class="btn btn-sm btn-primary" type="submit" value="Submit">
                 <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="addNotesModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">AddNotes</h5>
+            </div>
+            <div class="modal-body" style="text-align:left">
+                <div class="form-group subSection">
+                    <label for="comment">Note:</label>
+
+                    <textarea class="form-control" rows="5" id="txt_Notes_comment"></textarea>
+                </div>
+                <span id="accountType">0 / 256 characters</span>
+            </div>
+
+            <div class="modal-footer">
+                <input id="btn_SubmitNotes" class="btn btn-sm btn-primary" type="submit" value="Add">
+                <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="addchecklistModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="header_checklistpopup">Item #1</h4>
+            </div>
+            <div class="mainContents" style="width:100%;">
+                <div class="mainBox">
+                    <div>
+
+                        <div class="modal-body" style="text-align:left">
+                            <div class="form-group subSection">
+                                <label for="comment">Note:</label>
+                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                    <a class="pull-right btn btn-success" id="btn_checklistAdd" data-additionalprocess="ckeditor">
+                                        <span class="glyphicon glyphicon-plus smallRightMargin"></span>
+                                        Add
+                                    </a>
+                                </div>
+                                <br>
+                                <textarea class="form-control" rows="5" id="txt_checklist_comment"></textarea>
+                            </div>
+                            <span id="accountType">0 / 256 characters</span>
+
+                            <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                <a class="btn btn-success" id="btn_checklistSubmit" data-additionalprocess="ckeditor">
+                                    Submit
+                                </a>
+                            </div>
+                        </div>
+
+
+
+                        <ul class="nav nav-tabs bottomMargin" role="tablist">
+                            <li role="presentation" class="active"><a href="javascript:void(0);" class="tabs leftMargin" aria-controls="Notes" role="tab">Comments</a></li>
+                        </ul>
+
+                        <div id="searchResults_cl" class="divSeparator" style="width:100%px;">
+                            <div id="divNotesTable_cl" class="resultsLocator" style="width:100%px;">
+                                <ul id="noteList_cl" class="list-group" style="padding:0 0 0 0;">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -107,18 +164,12 @@
             </div>
 
             <div class="modal-footer">
-                @*<button id="btn_SubmitReject" type="button" class="btn btn-primary btn-lg">Submit</button>
-                    <button type="button" style="text-align:center" class="btn btn-default  btn-lg" data-dismiss="modal">Cancel</button>*@
-
                 <input id="btn_SubmitAssign" class="btn btn-sm btn-primary" type="submit" value="Submit">
                 <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
-
-
             </div>
         </div>
     </div>
 </div>
-
 
 <div class="modal" id="vendorDetailsModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -128,108 +179,95 @@
             </div>
             <div class="modal-body" style="text-align:left">
 
-                <div class="modal-body form-horizontal ">
-                    <div class="subSection" style="text-align:left;">
-                        <div class="form-group padding-bottom-div">
-                            <label for="Vendor Code">
-                                Vendor Code:
-                            </label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_VendorCode" maxlength="15" placeholder="Vendor Code" value="" required>
-                                <span id="vendorcode" class="errmessage" />
+
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Vendor Code: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_VendorCode" maxlength="15" placeholder="Vendor Code" value="" required>
+                                    <span id="vendorcode" class="errmessage" />
+                                </span>
+
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">First Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_FirstName" placeholder="First Name" value="" required>
+                                    <span id="firstName" class="errmessage" />
+                                </span>
+
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Middle Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_MiddleName" placeholder="Middle Name">
+                                    <span id="middleName" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Last Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_LastName" placeholder="Last Name">
+                                    <span id="lastName" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Phone Number: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_PhoneNumber" placeholder="Phone Number">
+                                    <span id="phoneNumber" class="errmessage" />
+                                </span>
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Cell Phone: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_CellPhone" placeholder="Cell Phone">
+                                    <span id="cellPhone" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Payee Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_PayeeName" placeholder="Payee Name" readonly disabled>
+                                    <span id="payeeName" class="errmessage" />
+                                </span>
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Company Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_CompanyName" placeholder="Company Name">
+                                    <span id="companyName" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Alias/DBA: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_AliasDBA" placeholder="Alias/DBA">
+                                    <span id="aliasDBA" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Taxpayer ID Number: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_Tin" placeholder="Taxpayer Id Number">
+                                    <span id="tin" class="errmessage" />
+                                </span>
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Direct Deposit Notification Email: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_DDNotify" placeholder="Direct Deposit Notification Email">
+                                    <span id="ddNotify" class="errmessage" />
+                                </span>
                             </div>
                         </div>
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="First Name">
-                                First Name:
-                            </label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_FirstName"  placeholder="First Name" value="" required>
-                                <span id="firstName" class="errmessage" />
-                            </div>
-                        </div>
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Middle Name"> Middle Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_MiddleName" placeholder="Middle Name">
-                                <span id="middleName" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Last Name">Last Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_LastName" placeholder="Last Name">
-                                <span id="lastName" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Phone Number">Phone Number:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_PhoneNumber" placeholder="Phone Number">
-                                <span id="phoneNumber" class="errmessage" />
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Cell Phone">Cell Phone:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_CellPhone" placeholder="Cell Phone">
-                                <span id="cellPhone" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Last Name">Payee Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_PayeeName" placeholder="Payee Name" readonly disabled>
-                                <span id="payeeName" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Company Name">Company Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_CompanyName" placeholder="Company Name">
-                                <span id="companyName" class="errmessage" />
-                            </div>
-                        </div>
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Alias/DBA">Alias/DBA:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_AliasDBA" placeholder="Alias/DBA">
-                                <span id="aliasDBA" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Taxpayer Id Number">Taxpayer Id Number:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_Tin" placeholder="Taxpayer Id Number">
-                                <span id="tin" class="errmessage" />
-                            </div>
-                        </div>
-
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Direct Deposit Notification Email">Direct Deposit Notification Email:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_DDNotify" placeholder="Direct Deposit Notification Email">
-                                <span id="ddNotify" class="errmessage" />
-                            </div>
-                        </div>
-                        <br><br>
                     </div>
                 </div>
             </div>
@@ -250,48 +288,48 @@
             </div>
             <div class="modal-body" style="text-align:left">
 
-                <div class="modal-body form-horizontal ">
-                    <div class="subSection" style="text-align:left;">
-                        <div class="form-group padding-bottom-div">
-                            <label for="Type Of Account">Type of Account:</label>
-                            <div class="">
-                                <select id="txt_pop_AccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT ">
-                                    <option value="1" selected>SELECT TYPE OF ACCOUNT</option>
-                                    <option value="1">Checking</option>
-                                    <option value="2">Savings</option>
-                                </select>
-                                <span id="accountType" class="errmessage" />
-                            </div>
-                        </div>
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Bank Account Number">
-                                Bank Account #:
-                            </label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_BankAcNo" maxlength="15" placeholder="Bank Account Number" value="" required>
-                                <span id="bankAcNo" class="errmessage" />
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Type of Account: </span>
+                                <span class="displayValue ">
+                                    <select id="txt_pop_AccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT ">
+                                        <option value="1" selected>SELECT TYPE OF ACCOUNT</option>
+                                        <option value="1">Checking</option>
+                                        <option value="2">Savings</option>
+                                    </select>
+                                    <span id="accountType" class="errmessage" />
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Bank Routing Number">
-                                Bank Routing #:
-                            </label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_RoutingNo" maxlength="15" placeholder="Bank Routing Number" value="" required>
-                                <span id="bankAcNo" class="errmessage" />
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Bank Account #: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_BankAcNo" maxlength="15" placeholder="Bank Account Number" value="" required>
+                                    <span id="bankAcNo" class="errmessage" />
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Type Of Account">Financial Institution Name:</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="txt_pop_FinancialIns" placeholder="Financial Institution Name">
-                                <span id="financialIns" class="errmessage" />
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Bank Routing #: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_RoutingNo" maxlength="15" placeholder="Bank Routing Number" value="" required>
+                                    <span id="bankAcNo" class="errmessage" />
+                                </span>
                             </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Financial Institution Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_FinancialIns" placeholder="Financial Institution Name">
+                                    <span id="financialIns" class="errmessage" />
+                                </span>
+                            </div>
+
+
                         </div>
-                        <br><br>
                     </div>
                 </div>
             </div>
@@ -312,73 +350,52 @@
             </div>
             <div class="modal-body" style="text-align:left">
 
-                <div class="modal-body form-horizontal ">
-                    <div class="subSection" style="text-align:left;">
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Name" class="certify-text-spacing">
-                                Authorized Signer’s Name
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Authorized Signer’s Name: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control" id="txt_pop_SignerName" maxlength="50" placeholder="Authorized Signer’s Name" value="" required>
                                     <span id="signerName" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Title" class="certify-text-spacing" ">
-                                Authorized Signer’s Title
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Authorized Signer’s Title: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control" id="txt_pop_SignerTitle" maxlength="50" placeholder="Authorized Signer’s Title" value="" required>
                                     <span id="signerTitle" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Phone" class="certify-text-spacing" style="padding-right: 15px;">
-                                Authorized Signer’s Phone #
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Authorized Signer’s Phone #: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control item" id="txt_pop_SignerPhone" maxlength="15" placeholder="(___)___-____" required>
                                     <span id="signerPhone" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Email" class="certify-text-spacing" style="padding-right: 15px;">
-                                Authorized Signer’s Email
-                            </label>
-
-                            <div class="">
-                                <div style="float:left">
-                                    <input type="text" class="form-control" id="txt_pop_SignerEmail" maxlength="100" placeholder=" Authorized Signer’s Email" @*value="a@a.com*@ required>
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Authorized Signer’s Email: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_SignerEmail" maxlength="100" placeholder=" Authorized Signer’s Email" required>
                                     <span id="signerEmail" class="errmessage" />
-                                </div>
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Confirmation #: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_Certification" maxlength="100" placeholder="Confirmation" readonly disabled>
+                                    <span id="confirmation" class="errmessage" />
+                                </span>
                             </div>
                         </div>
-
-                        <div class="form-group padding-bottom-div">
-                            <label for="Certification" class="certify-text-spacing" style="padding-right: 15px;">
-                                Certification #:
-                            </label>
-
-                            <div class="">
-                                <div style="float:left">
-                                    <input type="text" class="form-control" id="txt_pop_Certification" maxlength="100" placeholder="Certification" @*value="a@a.com*@ readonly disabled>
-                                    <span id="certification" class="errmessage" />
-                                </div>
-                            </div>
-                        </div>
-                        <br><br>
                     </div>
                 </div>
-
             </div>
 
             <div class="modal-footer">
@@ -397,60 +414,44 @@
             </div>
             <div class="modal-body" style="text-align:left">
 
-                <div class="modal-body form-horizontal ">
-                    <div class="subSection" style="text-align:left;">
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Name" class="certify-text-spacing">
-                                Dept. Name:
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Dept. Name: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control" id="txt_pop_DeptName" maxlength="50" placeholder=" Dept. Name" value="" required>
                                     <span id="deptName" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="Signer Title" class="certify-text-spacing" ">
-                                Dept. Contact Person Name:
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Dept. Contact Person Name:</span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control" id="txt_pop_DeptcontactName" maxlength="50" placeholder="Dept. Contact Person Name" value="" required>
                                     <span id="deptcontactName" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="dept Email" class="certify-text-spacing" style="padding-right: 15px;">
-                                Dept. Email Address:
-                            </label>
-
-                            <div class="">
-                                <div style="float:left">
-                                    <input type="text" class="form-control" id="txt_pop_DeptEmailAddress" maxlength="100" placeholder="Dept. Email Address" @*value="a@a.com*@ required>
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Dept. Email Address: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_DeptEmailAddress" maxlength="100" placeholder="Dept. Email Address" required>
                                     <span id="deptEmail" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
-                        </div>
 
-                        <div class="form-group padding-bottom-div">
-                            <label for="dept Contact" class="certify-text-spacing" style="padding-right: 15px;">
-                                Dept. Contact #:
-                            </label>
-                            <div class="">
-                                <div style="float:left">
+                            <div class="readOnlySection">
+                                <span class="displayLabel"> Dept. Contact #: </span>
+                                <span class="displayValue ">
                                     <input type="text" class="form-control item" id="txt_pop_DeptContact" maxlength="15" placeholder="(___)___-____" required>
                                     <span id="deptPhone" class="errmessage" />
-                                </div>
+                                </span>
                             </div>
                         </div>
-                        <br><br>
                     </div>
                 </div>
-
             </div>
 
             <div class="modal-footer">
@@ -461,6 +462,30 @@
     </div>
 </div>
 
+<div id="div_action " class="pull-right btn-group">
+    <span class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+    <ul class="dropdown-menu context-menu-left-showOnLeft">
+        <li>
+            <a title="Download Document" href="#">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                <span>Download top top </span>
+            </a>
+        </li>
+
+        <li>
+            <a title="Rename File" href="#" onclick="return ShowModal(this);" action-target="#">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Rename
+            </a>
+        </li>
+        <li>
+            <a title="Retire File" href="javascript:void(0);" class="confirmModal" data-action-target="#" data-rowclass="documentRow">
+                <span class="fa fa-trash-o"></span>
+                Retire
+            </a>
+        </li>
+    </ul>
+</div>
 
 <div class="container row-wrapper">
     <h1 id="heading_appsummaryHeader"></h1>
@@ -469,28 +494,28 @@
             <input id="skipUnSavedChanges" type="hidden" value="0">
 
             <div class="leftContent">
-                <div class="leftBox leftBoxMenu">
+                <div class="leftBox leftBoxMenu bhoechie-tab-container">
                     <h2 id="head_confirmationNum" style="color:purple;"></h2>
                     <span><h4 style="color:#000000;">&nbsp;Status: <font style="font-size:14px; font-weight:bold;"> <span id="header_status"> </span> </font></h4></span>
 
-                    <div class="menu claimMenu" role="tablist">
-                        <a class="leftNavItem  leftNavItemActive" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
-                           aria-selected="true"><span class="fa fa-fw fa-sitemap"></span>Summary</a>
-                        <a class="leftNavItem " id="tab_Notes" href="#div_notes_tab" role="tab" aria-controls="div_notes_tab"
-                           aria-selected="false"><span class="fa fa-fw fa-pencil"></span>Notes</a>
-                        <a class="leftNavItem " href="./Documents_0261.html">
-                            <span class="fa fa-fw fa-file-text"></span>
-                            Documents
-                            <span id="menuDocCount" class="badge pull-right UpdateMenuDocumentCount" data-updatemode="replaceContents" data-updatetargetid="menuDocCount" data-method="get" data-url="./Documents_0261.html">6</span>
-                        </a>
-                        <a class="leftNavItem " href="./CheckList_0261.html"><span class="fa fa-fw fa-folder-open"></span>Check List</a>
-                        <!--<a class="leftNavItem " href="./Checks_0261.html"><span class="fa fa-fw fa-dollar"></span>Checks</a>-->
-                        <a class="leftNavItem " href="./LinkedApplications_0261.html"><span class="fa fa-fw fa-link"></span>Linked Applications<span class="badge pull-right">0</span></a>
-                        <a class="leftNavItem " href="./ApplicationArchive_0261.html"><span class="fa fa-fw fa-archive"></span>Application Archive</a>
-                        <!--<a class="leftNavItem " href="./SplitClaim_0261.html"><span class="fa fa-fw fa-share-alt-square"></span>Split Claim</a>-->
-                        @*<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                            aria-selected="false">Profile</a>*@
+                    <div class="menu claimMenu bhoechie-tab-menu" role="tablist">
+                        <div class="list-group">
+                            <a class="leftNavItem active" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
+                               aria-selected="true"><span class="fa fa-fw fa-sitemap"></span>Summary</a>
+                            <a class="leftNavItem " id="tab_Notes" href="#div_notes_tab" role="tab" aria-controls="div_notes_tab"
+                               aria-selected="false"><span class="fa fa-fw fa-pencil"></span>Notes</a>
 
+                            <a class="leftNavItem " href="#div_attachment_tab" aria-controls="div_attachment_tab" role="tab">
+                                <span class="fa fa-fw fa-file-text"></span>Documents
+                                <span id="menuDocCount" class="badge pull-right UpdateMenuDocumentCount">0</span>
+                            </a>
+                            <a class="leftNavItem " href="#div_checklist_tab" aria-controls="div_checklist_tab"><span class="fa fa-fw fa-folder-open"></span>Check List</a>
+                            <a class="leftNavItem " id="menu_linkApplication" href="">
+                                <span class="fa fa-fw fa-link"></span>Linked Applications
+                                <span id="menuLinkAppCount" class="badge pull-right">0</span>
+                            </a>
+                            <a class="leftNavItem " id="menu_archieveApplication" href="#div_ArchieveApplication_tab"  aria-controls="div_ArchieveApplication_tab"><span class="fa fa-fw fa-archive"></span>Application Archive</a>
+                        </div>
                     </div>
                 </div>
 
@@ -521,346 +546,571 @@
                 </div>
             </div>
 
-            <div id="div_summaryContent" class="mainContent">
-                <div id="div_summary_tab" class="mainBox tab-pane show " role="tabpanel" aria-labelledby="summary-tab">
-                    <div class="pull-right">
-                        <a id="btn_Reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger btn-xs">
-                            Reject Application
-                        </a>
-                    </div>
-                    <h2 class="bottomMargin">Application Summary</h2>
-
-                    <div class="well well-sm">
-                        <div id="div_assignApplication" class="btn-group btn-group-xs pull-right">
-                            <a id="btn_Assign" data-toggle="modal" data-target="#assignApplicationModal" class="btn btn-info">
-                                Assign
+            <div class="bhoechie-tab">
+                <div id="div_summaryContent" class="mainBox tab-pane mainContent bhoechie-tab-content active">
+                    @*<center1>*@
+                    <div id="div_summary_tab" class="mainBox tab-pane show " role="tabpanel" aria-labelledby="summary-tab">
+                        <div class="pull-right">
+                            <a id="btn_Reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger btn-xs">
+                                Reject Application
                             </a>
                         </div>
+                        <h2 class="bottomMargin">Application Summary</h2>
 
-                        <div class="flex">
-                            <div class="flex-column-1">
-                                <div class="readOnlySection"><span class="displayLabel">Received Date: </span><span id="ReceivedDate" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">Assign Date: </span><span id="AssignDate" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">Assigned Processor: </span><span id="AssignedProcessor" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">Assigned By: </span><span id="AssignedBy" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">Closed Date: </span><span id="ClosedDate" class="displayValue "></span></div>
+                        <div class="well well-sm">
+                            <div id="div_assignApplication" class="btn-group btn-group-xs pull-right">
+                                <a id="btn_Assign" data-toggle="modal" data-target="#assignApplicationModal" class="btn btn-info">
+                                    Assign
+                                </a>
                             </div>
-                            <div class="flex-column-1">
-                                <div class="readOnlySection"><span class="displayLabel">Entered By: </span><span id="EnteredBy" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">IP Address: </span><span id="IPAddress" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">IP Device: </span><span id="IPDevice" class="displayValue "></span></div>
-                                <div class="readOnlySection"><span class="displayLabel">IP Location: </span><span id="IPLocation" class="displayValue "></span></div>
+
+                            <div class="flex">
+                                <div class="flex-column-1">
+                                    <div class="readOnlySection"><span class="displayLabel">Received Date: </span><span id="ReceivedDate" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">Assign Date: </span><span id="AssignDate" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">Assigned Processor: </span><span id="AssignedProcessor" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">Assigned By: </span><span id="AssignedBy" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">Closed Date: </span><span id="ClosedDate" class="displayValue "></span></div>
+                                </div>
+                                <div class="flex-column-1">
+                                    <div class="readOnlySection"><span class="displayLabel">Entered By: </span><span id="EnteredBy" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">IP Address: </span><span id="IPAddress" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">IP Device: </span><span id="IPDevice" class="displayValue "></span></div>
+                                    <div class="readOnlySection"><span class="displayLabel">IP Location: </span><span id="IPLocation" class="displayValue "></span></div>
+                                </div>
                             </div>
+
+                            @*Vendor information begin*@
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                        <a id="btn_vendorDetails" data-toggle="modal" data-target="#vendorDetailsModal" class="btn btn-info" data-additionalprocess="chosen">
+                                            <span class="fa fa-edit smallRightMargin"></span>
+                                            Edit
+                                        </a>
+                                    </div>
+                                    Vendor Information
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="flex">
+                                        <div class="flex-column-2">
+                                            <div class="readOnlySection"><span class="displayLabel">Vendor Code: </span><span id="VI_VendorCode" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Alias/DBA: </span><span id="Alias_DBA" class="displayValue "> </span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">First Name: </span><span id="FirstName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Middle Name: </span><span id="MiddleName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Last Name: </span><span id="LastName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Phone Number: </span><span id="PhoneNumber" class="displayValue "></span></div>
+                                        </div>
+                                        <div class="flex-column-2">
+                                            <div class="readOnlySection"><span class="displayLabel">Payee Name: </span><span id="VI_PayeeName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Company Name: </span><span id="CompanyName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Taxpayer ID Number: </span><span id="TaxpayerID" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Direct Deposit Notification Email: </span><span id="DirectDepositNotificationEmail" class="displayValue "></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*Vendor information end*@
+
+                            @*//Banking Information begin *@
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                        <a id="btn_BankDetails" data-toggle="modal" data-target="#bankDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
+                                            <span class="fa fa-edit smallRightMargin"></span>
+                                            Edit
+                                        </a>
+                                    </div>
+                                    Banking Information
+                                </div>
+                                <div class="panel-body">
+                                    <div class="" style="margin-bottom:0;">
+                                        <div id="claimInfoWrapper">
+                                            <div class="flex">
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel">Type of Account: </span><span id="TypeofAccount" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel">Bank Account #: </span><span id="BankAccountNumber" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel">Bank Routing #: </span><span id="BankRoutingNumber" class="displayValue "></span></div>
+                                                </div>
+
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel">Financial Institution Name: </span><span id="FinancialInstitutionName" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel">Attachment Type: </span><span id="AttachmentType" class="displayValue "></span></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*//Authorized Information end *@
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                        <a id="btn_certificationDetails" data-toggle="modal" data-target="#certificationDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
+                                            <span class="fa fa-edit smallRightMargin"></span>
+                                            Edit
+                                        </a>
+                                    </div>
+                                    Certification Information
+                                </div>
+                                <div class="panel-body">
+                                    <div class="" style="margin-bottom:0;">
+                                        <div id="claimInfoWrapper">
+                                            <div class="flex">
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Name: </span><span id="AuthorizedSignerName" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Title: </span><span id="AuthorizedSignerTitle" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Phone: </span><span id="AuthorizedSignerPhone" class="displayValue "></span></div>
+                                                </div>
+
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Email: </span><span id="AuthorizedSignerEmail" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Confirmation #: </span><span id="CI_ConfirmationNumber" class="displayValue "></span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Certification Information end *@
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                        <a id="btn_deptDetails" data-toggle="modal" data-target="#departmentDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
+                                            <span class="fa fa-edit smallRightMargin"></span>
+                                            Edit
+                                        </a>
+                                    </div>
+                                    Department Information
+                                </div>
+                                <div class="panel-body">
+                                    <div class="" style="margin-bottom:0;">
+                                        <div id="claimInfoWrapper">
+                                            <div class="flex">
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Name: </span><span id="DeptName" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Contact Person Name: </span><span id="DeptContactPersonName" class="displayValue "></span></div>
+                                                </div>
+
+                                                <div class="flex-column-1">
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Email Address: </span><span id="DeptEmailAddress" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Contact #: </span><span id="DeptContactNumber" class="displayValue "></span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*Department Information *@
+
+                            @*Direct Deposit Payment Option Selected begin*@
+
+                            @*<div class="panel panel-default panel-sm">
+                                    <div class="panel-heading">
+                                        Direct Deposit Payment Option Selected
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="" style="margin-bottom:0;">
+                                            <div id="claimInfoWrapper">
+                                                <div id="div_ddPaymentOptionSelected" class="flex">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-heading">
+                                    Direct Deposit Payment Option Selected
+                                </div>
+                                <ul id="ul_ddoptionList" class="list-group list-group-sm"> </ul>
+                            </div>
+
+                            @*Direct Deposit Payment Option Selected *@
+                        </div>
+                    </div>
+
+                    <div id="div_supervisor_review_panel" class="panel panel-default panel-sm">
+                        <div class="panel-heading">
+                            Review
                         </div>
 
-                        @*Vendor information begin*@
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                    <a   id="btn_vendorDetails" data-toggle="modal" data-target="#vendorDetailsModal" class="btn btn-info" data-additionalprocess="chosen">
-                                        <span class="fa fa-edit smallRightMargin"></span>
-                                        Edit
-                                    </a>
-                                </div>
-                                Vendor Information
-                            </div>
-
-                            <div class="panel-body">
+                        <ul class="list-group list-group-sm">
+                            <li id="div_processor_review" class="list-group-item list-group-item-sm">
                                 <div class="flex">
-                                    <div class="flex-column-2">
-                                        <div class="readOnlySection"><span class="displayLabel">Vendor Code: </span><span id="VI_VendorCode" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Alias/DBA: </span><span id="Alias_DBA" class="displayValue "> </span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">First Name: </span><span id="FirstName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Middle Name: </span><span id="MiddleName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Last Name: </span><span id="LastName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Phone Number: </span><span id="PhoneNumber" class="displayValue "></span></div>
+                                    <div class="flex-column-1">
+                                        Processor:
                                     </div>
-                                    <div class="flex-column-2">
-                                        <div class="readOnlySection"><span class="displayLabel">Payee Name: </span><span id="VI_PayeeName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Company Name: </span><span id="CompanyName" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Taxpayer ID Number: </span><span id="TaxpayerID" class="displayValue "></span></div>
-                                        <div class="readOnlySection"><span class="displayLabel">Direct Deposit Notification Email: </span><span id="DirectDepositNotificationEmail" class="displayValue "></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @*Vendor information end*@
-
-                        @*//Banking Information begin *@
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                    <a id="btn_BankDetails" data-toggle="modal" data-target="#bankDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                        <span class="fa fa-edit smallRightMargin"></span>
-                                        Edit
-                                    </a>
-                                </div>
-                                Banking Information
-                            </div>
-                            <div class="panel-body">
-                                <div class="" style="margin-bottom:0;">
-                                    <div id="claimInfoWrapper">
-                                        <div class="flex">
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel">Type of Account: </span><span id="TypeofAccount" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel">Bank Account #: </span><span id="BankAccountNumber" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel">Bank Routing #: </span><span id="BankRoutingNumber" class="displayValue "></span></div>
-                                            </div>
-
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel">Financial Institution Name: </span><span id="FinancialInstitutionName" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel">Attachment Type: </span><span id="AttachmentType" class="displayValue "></span></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        @*//Authorized Information end *@
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                    <a id="btn_certificationDetails" data-toggle="modal" data-target="#certificationDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                        <span class="fa fa-edit smallRightMargin"></span>
-                                        Edit
-                                    </a>
-                                </div>
-                                Certification Information
-                            </div>
-                            <div class="panel-body">
-                                <div class="" style="margin-bottom:0;">
-                                    <div id="claimInfoWrapper">
-                                        <div class="flex">
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Name: </span><span id="AuthorizedSignerName" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Title: </span><span id="AuthorizedSignerTitle" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Phone: </span><span id="AuthorizedSignerPhone" class="displayValue "></span></div>
-                                            </div>
-
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Authorized Signer Email: </span><span id="AuthorizedSignerEmail" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Confirmation #: </span><span id="CI_ConfirmationNumber" class="displayValue "></span></div>
+                                    <div class="flex-column-3">
+                                        @*(Assigned To Processor)*@
+                                        <span id="span_processoreview_status"></span>
+                                        <div class="pull-right">
+                                            <div class="btn-group btn-group-xs">
+                                                <a id="btn_proce_approve" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
+                                                <a data-toggle="modal" style="margin:5px;" data-target="#printApplicationModal" class="btn btn-danger">&nbsp;print&nbsp;</a>
+                                                <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        @*Certification Information end *@
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                    <a id="btn_deptDetails" data-toggle="modal" data-target="#departmentDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                        <span class="fa fa-edit smallRightMargin"></span>
-                                        Edit
-                                    </a>
-                                </div>
-                                Department Information
-                            </div>
-                            <div class="panel-body">
-                                <div class="" style="margin-bottom:0;">
-                                    <div id="claimInfoWrapper">
-                                        <div class="flex">
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Name: </span><span id="DeptName" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Contact Person Name: </span><span id="DeptContactPersonName" class="displayValue "></span></div>
-                                            </div>
-
-                                            <div class="flex-column-1">
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Email Address: </span><span id="DeptEmailAddress" class="displayValue "></span></div>
-                                                <div class="readOnlySection"><span class="displayLabel displayLabelLong">Dept. Contact #: </span><span id="DeptContactNumber" class="displayValue "></span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @*Department Information *@
-
-                        @*Direct Deposit Payment Option Selected begin*@
-
-                        <div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-                                Direct Deposit Payment Option Selected
-                            </div>
-                            <div class="panel-body">
-                                <div class="" style="margin-bottom:0;">
-                                    <div id="claimInfoWrapper">
-                                        <div id="div_ddPaymentOptionSelected" class="flex">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @*Direct Deposit Payment Option Selected *@
-                    </div>
-                </div>
-
-                <h1> test here  </h1>
-
-                <ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-                           aria-selected="true">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-                           aria-selected="false">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#contact-just" role="tab" aria-controls="contact-just"
-                           aria-selected="false">Contact</a>
-                    </li>
-                </ul>
-                <div class="tab-content card pt-5" id="myTabContentJust">
-                    <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-                        <p>
-                            Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro
-                            synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher
-                            retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip
-                            placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.
-                        </p>
-                    </div>
-                    <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-                        <p>
-                            Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1
-                            labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft
-                            beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad
-                            vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
-                            helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
-                            anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party
-                            scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
-                        </p>
-                    </div>
-                    <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
-                        <p>
-                            Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro
-                            fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
-                            skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings
-                            gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork
-                            biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl
-                            craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.
-                        </p>
-                    </div>
-                </div>
-
-
-
-                <div id="div_notes_tab" class="mainBox tab-pane show" role="tabpanel" aria-labelledby="notes-tab">
-                    <ul class="nav nav-tabs bottomMargin" role="tablist">
-                        <li role="presentation" class="active">
-                            <a class="tabs leftMargin tablinks" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline">Timeline</a>
-                        </li>
-                        <li role="presentation" class="">
-                            @*<a href="#div_notescontent_tab" class="tabs" aria-controls="Notes" role="tab">Notes</a>*@
-                            <a class="tabs nav-link tablinks" id="nts-tab" data-toggle="tab" href="#nts" role="tab" aria-controls="nts"
-                               aria-selected="false">notes</a>
-                        </li>
-                    </ul>
-
-                    @*<ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item active">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="System Charts"
-                                   aria-selected="true">System Charts</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                                   aria-selected="false">User charts</a>
+
+                            <li id="div_supervisor_proce_review" class="list-group-item list-group-item-sm">
+                                <div class="flex">
+                                    <div class="flex-column-1">
+                                        Processor:
+                                    </div>
+                                    <div class="flex-column-3">
+                                        <span id="span_review_processor_Approval_msg"></span>  @*Approved by Monique Tsoi on 4/27/2020*@
+                                        <div>
+                                            Note: <span id="span_review_processor_notes">test srini forward application to Supervisor</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li id="div_supervisor_review" class="list-group-item list-group-item-sm">
+                                <div class="flex">
+                                    <div class="flex-column-1">
+                                        Supervisor:
+                                    </div>
+                                    <div id="div_suervisorreview_status" class="flex-column-3">
+                                        <span id="span_suervisorreview_status"></span>
+                                        <div class="pull-right">
+                                            <div class="btn-group btn-group-xs">
+                                                <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
+                                                <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
+                                                <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
+                                                <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="div_notes_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="notes-tab">
+                    <center>
+                        <ul class="nav nav-tabs bottomMargin" role="tablist">
+                            <li role="presentation" class="timelineLi active">
+                                <a class="tabs leftMargin tablinks" id="timeline-tab" data-toggle="tab" href="#timeline" role="tabpanel" aria-controls="timeline">Timeline</a>
+                            </li>
+                            <li role="presentation" class="timelineLi">
+                                <a class="tabs nav-link tablinks" id="nts-tab" data-toggle="tab" href="#notes" role="tabpanel" aria-controls="nts"
+                                   aria-selected="true">Notes</a>
+                            </li>
+                        </ul>
+                    </center>
+                    <div class="tab-content  tgroup container" id="myTabContent" style="width: 100% !important;  margin: 10px auto !important;position: relative !important;">
+
+                        <div class="tab-pane fade show active in" id="timeline" role="tabpanel" aria-labelledby="timeline-tab"></div>
+
+                        <div class="tab-pane fade active" id="notes" role="tabpanel" aria-labelledby="nts-tab">
+                            <div class="pull-right">
+                                <a id="btn_addNotes" class="btn btn-success" data-toggle="modal" data-target="#addNotesModal">
+                                    <span class="glyphicon glyphicon-plus smallRightMargin"></span>
+                                    Add
+                                </a>
+
+                            </div>
+
+                            <br>
+                            </br>
+
+                            <div id="searchResults" class="divSeparator">
+                                <div id="divNotesTable" class="resultsLocator">
+                                    <ul id="noteList" class="list-group">
+                                        <li class="list-group-item list-group-item-warning emptyResultMessage">Notes list is empty.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="div_attachment_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_attachment_tab">
+                    <div class="tab-content  tgroup container" id="myTabContent1" style="width: 100% !important;  margin: 10px auto !important;position: relative !important;">
+
+                        <div class="pull-left">
+                            <h2 class="bottomMargin">Documents</h2>
+                        </div>
+
+                        <div class="pull-right">
+                            <a id="btn_addUploadMore" class="btn btn-success">
+                                <span class="glyphicon glyphicon-plus smallRightMargin"></span>
+                                Upload More
+                            </a>
+                            <input type="file" id="file-input" style="display:none" />
+                        </div>
+
+                        <br>
+                        </br>
+
+                        <div id="div_documentAttachment" class="divSeparator">
+                            <table id="attachmentGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="border-collapse:collapse; border: 1px solid black; width:100%">
+                                <thead>
+                                    <tr class="button-header-color">
+                                        @*<th></th>*@
+                                        <th>AttachmentFileName</th>
+                                        <th>Description</th>
+                                        <th>UploadedDate</th>
+                                        <th>Command</th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="div_checklist_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_checklist_tab">
+                    <div class="tab-content  tgroup container" id="myTabContent1" style="width: 100% !important;  margin: 10px auto !important;position: relative !important;">
+
+                        <div class="row">
+                            <div class="col-lg-12 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <div id="completedClaimsTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                                                <table class="table table-striped table-bordered display responsive no-wrap dataTable" id="completedClaimsTable" width="100%" cellspacing="0" role="grid" aria-describedby="completedClaimsTable_info" style="width: 100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting" tabindex="0" aria-controls="completedClaimsTable" rowspan="1" colspan="1" style="width: 0px;" aria-label=": activate to sort column ascending"></th>
+                                                            <th class="sorting_desc" tabindex="0" aria-controls="completedClaimsTable" rowspan="1" colspan="1" style="width: 100%px;" aria-label="Claim #: activate to sort column ascending">Item</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="completedClaimsTable" rowspan="1" colspan="1" style="width: 100%px; text-align:center;" aria-label="Claimant Name: activate to sort column ascending">Yes / No</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="completedClaimsTable" rowspan="1" colspan="1" style="width: 83px;" aria-label="Assigned Date: activate to sort column ascending">Comments</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr role="row" class="odd">
+                                                            <td>1</td>
+                                                            <td class="sorting_2"> Is there another vendor code in eCAPS for this applicant?</td>
+                                                            <td>
+                                                                <label class="switch switch-yes-no">
+                                                                    <input id="input1" value="1" class="switch-input" type="checkbox" />
+                                                                    <span id="span1" value="1" class="switch-button" data-on="Yes" data-off="No">
+                                                                    </span><span class="switch-handle"></span>
+                                                                </label>
+                                                            </td>
+                                                            @*<td><a value ="1" data-toggle="modal" data-target="#addNotesModal" >04/24/2020</a></td>*@
+                                                            <td>
+                                                                <a value="1" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe">
+                                                                    <span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;">
+                                                                    </span>Add
+                                                                </a>
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>2</td>
+                                                            <td class="sorting_2"> Is the vendor already on direct deposit with the same bank information?</td>
+                                                            <td>
+                                                                <label class="switch switch-yes-no">
+                                                                    <input id="input2" value="2" class="switch-input" type="checkbox" />
+                                                                    <span id="span2" value="2" class="switch-button" data-on="Yes" data-off="No">
+                                                                    </span><span class="switch-handle"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td><a value="2" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td>3</td>
+                                                            <td class="sorting_2"> Does the email domain on the application match with eCAPS?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="3" class="switch-input" type="checkbox" /><span id="span3" value="3" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="3" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>4</td>
+                                                            <td class="sorting_2"> Did the vendor provide a voided check?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="4" class="switch-input" type="checkbox" /><span id="span4" value="4" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="4" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        <tr role="row" class="odd">
+                                                            <td>5</td>
+                                                            <td class="sorting_2"> Did the vendor provide the first page of a bank statement?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="5" class="switch-input" type="checkbox" /><span id="span5" value="5" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="5" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>6</td>
+                                                            <td class="sorting_2"> Did the vendor provide a bank verification letter?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="6" class="switch-input" type="checkbox" /><span id="span6" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="6" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td>7</td>
+                                                            <td class="sorting_2"> Did eCAPS Legal Name match with the voided check, bank statement or bank letter?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="7" class="switch-input" type="checkbox" /><span id="span7" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="7" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>8</td>
+                                                            <td class="sorting_2"> Does the bank account number and routing number on the application match with the attachment provided by the vendor?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="8" class="switch-input" type="checkbox" /><span id="span8" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="8" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        <tr role="row" class="odd">
+                                                            <td>9</td>
+                                                            <td class="sorting_2"> If there is a DBA in eCAPS, is it registered within the County it's doing business in?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="9" class="switch-input" type="checkbox" /><span id="span9" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="9" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>10</td>
+                                                            <td class="sorting_2"> Does the application's banking information match Early Warning?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="10" class="switch-input" type="checkbox" /><span id="span10" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="10" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>11</td>
+                                                            <td class="sorting_2"> Does the paid check image's banking information match with the application?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="11" class="switch-input" type="checkbox" /><span id="span11" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="11" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>12</td>
+                                                            <td class="sorting_2"> Does authorized signer name match on Lexis Advance?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="12" class="switch-input" type="checkbox" /><span id="span12" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="12" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>13</td>
+                                                            <td class="sorting_2"> Is there a need to send the confirmation letter?</td>
+                                                            <td><label class="switch switch-yes-no"><input value="13" class="switch-input" type="checkbox" /><span id="span13" class="switch-button" data-on="Yes" data-off="No"></span><span class="switch-handle"></span></label></td>
+                                                            <td><a value="13" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td>14</td>
+                                                            <td class="sorting_2"> Were there any W payments in J1099? If Yes, the interfaced VCM must change the Remittance Advice Format from RA2 to RA1.</td>
+                                                            <td>
+                                                                <label class="switch switch-yes-no">
+                                                                    <input value="14" class="switch-input" type="checkbox" />
+                                                                    <span id="span14" value="14" class="switch-button" data-on="Yes" data-off="No"></span>
+                                                                    <span class="switch-handle"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td><a value="14" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe" data-additionalprocess="ckeditor"><span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;"></span>Add</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="div_linkApplication_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_linkApplication_tab">
+
+                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                        <a class="btn btn-info" href="#">
+                            <span class="glyphicon glyphicon-search smallRightMargin"></span>
+                            Find New Links
+                        </a>
+                    </div>*@
+
+                    <h2 class="smallBottomMargin">Linked Applications</h2>
+
+                    <table id="ddAlreadyLinkedGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+                        <thead>
+                            <tr class="button-header-color">
+                                <th>Linked_ConfirmationNum</th>
+                                <th>VendorNumber</th>
+                                <th>Payeename</th>
+                                @*<th>BankAccountNumber</th>*@
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <h2 class="smallBottomMargin">Matched Applications</h2>
+                    <table id="ddAvailableLinkGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+                        <thead>
+                            <tr class="button-header-color">
+                                <th>ConfirmationNum</th>
+                                <th>VendorNumber</th>
+                                <th>VendorName</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    @*<ul class="list-group list-group-sm">
+                            <li class="list-group-item list-group-item-warning emptyItem" aria-hidden="true">Matched Applications list is empty.</li>
+
+                            <li class="list-group-item matchedClaimRow">
+                                <div class="pull-right btn-group btn-group-xs">
+                                    <a href="javascript:void(0);" data-method="post" data-url="#" class="btn btn-primary nonFormSubmit">
+                                        <span class="fa fa-link"></span>
+                                        Link
+                                    </a>
+                                    <a href="javascript:void(0);" data-action-target="#" class="btn btn-danger confirmModal">
+                                        <span class="fa fa-trash"></span>
+                                        Dismiss
+                                    </a>
+                                </div>
+
+                                <div class="flex">
+                                    <div class="flex-column-4">
+                                        <span>Application: </span>
+                                        <a href="#" class="bold">
+                                            DDOL-AXKUTG
+                                        </a>
+                                    </div>
+                                    <div class="flex-column-4">
+                                        <span>Vendor CD: </span>
+                                        <span>014473</span>
+                                    </div>
+                                    <div class="flex-column-4">
+                                        <span>Vendor NM: </span>
+                                        <span>COASTAL LAW FIRM</span>
+                                    </div>
+                                </div>
                             </li>
                         </ul>*@
 
+                </div>
+                <div id="div_ArchieveApplication_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_ArchieveApplication_tab">
+                    <h2 class="bottomMargin">Application Trash</h2>
 
+                    @*<div class="panel panel-default panel-sm">
+                            <div class="panel-heading">
 
-                    <div class="tab-pane fade active tabcontent" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
-                        <div class="listGroup">
-                            <h3>4/24/2020</h3>
-                            <div class="list-group notificationList">
-                                <div class="list-group-item">
-                                    <span>1:23 PM</span> -
-                                    <span>Application was submitted.</span>
-                                    <span class="pull-right"></span>
-                                </div>
+                                Suggested Documents
                             </div>
+                            <ul id="suggestedDocumentList" class="list-group list-group-hover">
+                                <li class="list-group-item list-group-item-warning emptyItem">Suggested Documents list is empty.</li>
+                            </ul>
+                        </div>*@
+
+                    <div class="panel panel-default panel-sm">
+                        <div class="panel-heading">
+                            Documents
                         </div>
-                    </div>
-
-                    @*<div id="div_notescontent_tab" class="mainBox tab-pane show fade " role="tabpanel" aria-labelledby="div_notescontent_tab">*@
-                    @*<a class="leftNavItem  leftNavItemActive" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
-                        aria-selected="true"><span class="fa fa-fw fa-sitemap"></span>Summary</a>*@
-                    @* </div>*@
-
-                    <div class="tab-pane fade active tabcontent" id="nts" role="tabpanel" aria-labelledby="nts-tab">
-                        <h1> contents here44 </h1>
+                        <table id="ddArchieveGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+                            <thead>
+                                <tr class="button-header-color">
+                                    <th>AttachmentFileName</th>
+                                    @*<th>Description</th>*@
+                                    <th>UploadedDate</th>
+                                    <th>Command</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
-
-                <div id="div_supervisor_review_panel" class="panel panel-default panel-sm">
-                    <div class="panel-heading">
-                        Review
-                    </div>
-
-                    <ul class="list-group list-group-sm">
-                        <li id="div_processor_review" class="list-group-item list-group-item-sm">
-                            <div class="flex">
-                                <div class="flex-column-1">
-                                    Processor:
-                                </div>
-                                <div class="flex-column-3">
-                                    @*(Assigned To Processor)*@
-                                    <span id="span_processoreview_status"></span>
-                                    <div class="pull-right">
-                                        <div class="btn-group btn-group-xs">
-                                            <a id="btn_proce_approve" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
-                                            <a data-toggle="modal" data-target="#printApplicationModal" class="btn btn-danger">&nbsp;print&nbsp;</a>
-                                            <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li id="div_supervisor_proce_review" class="list-group-item list-group-item-sm">
-                            <div class="flex">
-                                <div class="flex-column-1">
-                                    Processor:
-                                </div>
-                                <div class="flex-column-3">
-                                    <span id="span_review_processor_Approval_msg"></span>  @*Approved by Monique Tsoi on 4/27/2020*@
-                                    <div>
-                                        Note: <span id="span_review_processor_notes">test srini forward application to Supervisor</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li id="div_supervisor_review" class="list-group-item list-group-item-sm">
-                            <div class="flex">
-                                <div class="flex-column-1">
-                                    Supervisor:
-                                </div>
-                                <div id="div_suervisorreview_status" class="flex-column-3">
-                                    <span id="span_suervisorreview_status"></span>
-                                    <div class="pull-right">
-                                        <div class="btn-group btn-group-xs">
-                                            <a id="btn_reviewApprove"data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
-                                            <a id="btn_reviewReturn" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
-                                            <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-                                            <a id="btn_reviewPrint"  class="btn btn-danger" style="background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                    </ul>
-                </div>
-
-
             </div>
         </div>
     </div>
-
 </div>
+
+<script src="~/Scripts/App/linkApplication.js"></script>
+<script src="~/Scripts/App/archieve.js"></script>

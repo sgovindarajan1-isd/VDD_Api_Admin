@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container">
+    @*<div class="row-wrapper row1 row-home-gray">
+            <div class="row-inner">
+                <div class="col-xs-12">
+                    <div class="wizard1">
+                        <div class="wizard-inner1">
+                            <div class="form-group1">
+                                <p class="para">This website allows Los Angeles vendors and payees to submit their Direct Deposit Authorization Form Online.</p>
+                                <p class="para">To get started, enter your County Vendor Number (Code) and Social Security Number or TaxPayer Identification Number.</p>
+                            </div>
+                            <div>
+                                <span id="fileError_or_Info" style="text-align: center" class="errmessage" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    <div class="login_container" style="padding-top: 30px">
+
+        <div style="text-align: center">
+            <span id="fileError_or_Info" style="text-align: center" class="errmessage" />
+        </div>
+
+
+        <div class="container-login100">
+            <div class="wrap-login100">
+
+
+                <div class="form-group">
+                    <label class="active" for="txt_employee_id:">Vendor Number (Code)</label>
+                    <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Unique identification number assigned to you by the County. If you do not have this, you may inquire with the department you are doing business with." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                    <input value="" id="txt_employee_id" type="password" class="form-control form-control123 validate" placeholder="Enter your Vendor Number" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label class="active" for="txt_Password_id:">SSN or TIN</label>
+                    <img data-toggle="popover" data-placement="top" data-popover=true data-content="Enter your social security number or taxpayer identification number. Do not enter any dashes." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px  ; vertical-align: middle;">
+                    <input value="" onkeypress="return isNumberKey(event)" id="txt_Password_id" type="password" class="form-control validate" placeholder="Enter your SSN or TIN" maxlength="9">
+                    <span id="errmsg" style="color: red"></span>
+                </div>
+
+                <div class="form-group">
+                    <label id="lbl_invaliduserentry" style="font-size:medium; color: red; font-weight:bold" aria-label="Close" data-toggle="modal" data-target="#modalLogout" />
+                </div>
+
+                <div class="input-group-btn1">
+                    <div class="form-group">
+                        <button id="btn_login" type="submit" name="action" class="btn btn-primary all-button" style="height: 50px !important">Sign In</button>
+                    </div>
+
+                    <div id="loaderDiv" class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+
+
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/App/login.js"></script>
+    <script src="~/Scripts/App/AdminMain.js"></script>
+}
+

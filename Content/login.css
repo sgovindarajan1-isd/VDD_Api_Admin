@@ -54,6 +54,7 @@
 .leftBox {
     padding: 1em;
     margin-top: .5em;
+    margin-left: .6em;  /* vdd*/
     border: 1px solid #ccc;
 }
 
@@ -73,11 +74,12 @@
 }
 
 .mainContent {
-    float: right;
+    /*float: right;
     border: 1px solid #ccc;
     width: 50em;
     margin-top: .5em;
-    position: relative;
+    position: relative;*/
+         
 }
 
 .mainBox {

@@ -13,6 +13,8 @@ namespace eCAPDDApi.Models
         public string UserName { get; set; }
         public string ValidateToken  { get; set; }
         public int PayeeId { get; set; }
+        public string SourceIP { get; set; }
+        public string Source_Device { get; set; }
     }
 
     public class VM_Vendor
@@ -32,6 +34,7 @@ namespace eCAPDDApi.Models
 
     public class VM_AdminUser
     {
+        public int RoleId { get; set; }
         public string UserId { get; set; }
         public string Password { get; set; }
         public string Status { get; set; }
@@ -84,4 +87,6 @@ namespace eCAPDDApi.Models
 
 
     }
+
+
 }
