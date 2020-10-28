@@ -334,6 +334,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\ApplicationListController.cs" />
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
@@ -389,6 +390,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Content\administration.css" />
     <Content Include="Content\applicationsummary.css" />
     <Content Include="Content\App_Themes\ConferenceRoomScheduler.css" />
     <Content Include="Content\App_Themes\demo-container-bg.jpg" />
@@ -579,7 +581,9 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\App\administation.js" />
     <Content Include="Scripts\App\AdminMain.js" />
+    <Content Include="Scripts\App\advanceSearchList.js" />
     <Content Include="Scripts\App\archieve.js" />
     <Content Include="Scripts\App\linkApplication.js" />
     <Content Include="Scripts\App\applicationList.js" />
@@ -692,6 +696,8 @@
       <DependentUpon>VendorAPILocationDataSet.xsd</DependentUpon>
     </Content>
     <Content Include="Views\Draft\_partialDraftLanding.cshtml" />
+    <Content Include="Views\Administration\_partialAdministration.cshtml" />
+    <Content Include="Views\ApplicationList\advanceSearchList.cshtml" />
     <None Include="Web References\gov.lacounty.webadminisd\service.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

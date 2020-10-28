@@ -109,55 +109,7 @@ namespace DAL
             return ret;
         }
 
-        public Tuple<List<DAL_M_UserProfile>, bool> ValidateAdminUser(string user_id)
-        {
-            List<DAL_M_UserProfile> lst_DAL_M_UserProfile = new List<DAL_M_UserProfile>();
-
-            Tuple<List<DAL_M_UserProfile>, bool> ret = null;
-            try
-            {
-                DataSet ds = new DataSet("Admin");
-                using (SqlConnection con = DBconnection.Open())
-                {
-                    SqlCommand sqlComm = new SqlCommand("GetRolesAndPermissionsByUserID", con);
-                    sqlComm.Parameters.AddWithValue("@UserId", user_id);
-                    sqlComm.CommandType = CommandType.StoredProcedure;
-                    SqlDataAdapter da = new SqlDataAdapter();
-                    da.SelectCommand = sqlComm;
-                    da.Fill(ds);
-
-                    if (ds.Tables[0].Rows.Count > 0)
-                    {
-                        for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
-                        {
-                            DAL_M_UserProfile u = new DAL_M_UserProfile();
-                            u.UserID = ds.Tables[0].Rows[i]["UserID"].ToString();
-                            u.UserName = ds.Tables[0].Rows[i]["UserName"].ToString();
-                            u.Department = ds.Tables[0].Rows[i]["Department"].ToString();
-                            u.RoleId = ds.Tables[0].Rows[i]["RoleId"].ToString();
-                            u.RoleName = ds.Tables[0].Rows[i]["RoleName"].ToString();
-                            u.RoleDescription = ds.Tables[0].Rows[i]["RoleDescription"].ToString();
-                            u.PermissionId = ds.Tables[0].Rows[i]["PermissionId"].ToString();
-                            u.PermissionName = ds.Tables[0].Rows[i]["PermissionName"].ToString();
-                            u.UserStatus = ds.Tables[0].Rows[i]["UserStatus"].ToString();
-                            lst_DAL_M_UserProfile.Add(u);
-                        }
-
-                        if (lst_DAL_M_UserProfile.Count() > 0)
-                        {
-                            ret = new Tuple<List<DAL_M_UserProfile>, bool>(lst_DAL_M_UserProfile, true);
-                        }
-                    }
-                    con.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogManager.log.Error(ex.Message);
-            }
-            return ret;
-        }
-
+ 
         public string  GetApplicationStatus(string  confirmationNumber)
         {
             string ret = "Status not Found!";

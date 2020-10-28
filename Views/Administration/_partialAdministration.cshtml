@@ -1,0 +1,372 @@
+﻿
+<link href="~/Content/applicationsummary.css" rel="stylesheet" />
+
+<link href="~/Content/administration.css" rel="stylesheet" />
+<link href="~/Content/button.css" rel="stylesheet" />
+<script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/App/AdminMain.js"></script>
+<script src="~/Scripts/App/administation.js"></script>
+<script>
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+
+
+
+<div class="modal" id="userDetailsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit User Information</h5>
+            </div>
+            <div class="modal-body" style="text-align:left">
+
+
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+                            <div class="readOnlySection">
+                                <span class="displayLabel">* UserId: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_UserId" placeholder="User Id" value="" required>
+                                    <span id="spanUserId" class="errmessage" />
+                                </span>
+
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">* First Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_FirstName" placeholder="First Name" value="" readonly disabled>
+                                    <span id="spanFirstName" class="errmessage" />
+                                </span>
+
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">* Last Name: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_LastName" placeholder="Last Name" readonly disabled>
+                                    <span id="spanLastName" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Phone Number: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_PhoneNumber" placeholder="Phone Number" readonly disabled>
+                                    <span id="spanPhoneNumber" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">* Email: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_Email" placeholder="Email" readonly disabled>
+                                    <span id="spanEmail" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">Disbursement Category: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_DisbursementCategory" placeholder="Disbursement Category" readonly disabled>
+                                    <span id="spandisbursementCategory" class="errmessage" />
+                                </span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="fontBold" id="lbl_pop_isActive" style="text-decoration: underline; padding-top :10pt; text-align: center">
+                                    <input id="chk_pop_isActive" type="checkbox" style="height: 20px; width: 20px;" />Is Active
+                                </label>
+                            </div>
+
+
+                            <h5>Rights</h5>
+                            <div class="subSection btn-group" data-toggle="buttons">
+                                <label class="smallTopMargin btn btn-sm btn-default" id="lbl_admin">
+                                    <input type="checkbox" name="selectedRights" id="chk_admin" value="1" class="hidden1">
+                                    <span class="glyphicon glyphicon-unchecked"></span>
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    Admin
+                                </label>
+                                <label class="smallTopMargin btn btn-sm btn-default" id="lbl_supervisor">
+                                    <input type="checkbox" name="selectedRights" id="chk_supervisor" value="2" class="hidden">
+                                    <span class="glyphicon glyphicon-unchecked"></span>
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    Supervisor
+                                </label>
+
+                                <label class="smallTopMargin btn btn-sm btn-default" id="lbl_processor">
+                                    <input type="checkbox" name="selectedRights" id="chk_processor" value="4" class="">
+                                    <span class="glyphicon glyphicon-unchecked"></span>
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    Processor
+                                </label>
+
+                                <label class="smallTopMargin btn btn-sm btn-default" id="lbl_DataEntry">
+                                    <input type="checkbox" name="selectedRights" id="chk_DataEntry" value="8" class="hidden">
+                                    <span class="glyphicon glyphicon-unchecked"></span>
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    Data Entry
+                                </label>
+
+                                <span id="spanRole" class="errmessage" />
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input id="btn_AddEditUser" class="btn btn-sm btn-primary" type="submit" value="Submit">
+                <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="contactUsEditModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">General Content Contact Us Information</h5>
+            </div>
+            <div class="modal-body" style="text-align:left">
+
+
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+                            <div class="readOnlySection">
+                                <span class="displayLabel">* Email: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_gcEmail" placeholder="Email" required>
+                                    <span id="spangcEmail" class="errmessage" />
+                                </span>
+
+                            </div>
+                            <div class="readOnlySection">
+                                <span class="displayLabel">* Mailing Address: </span>
+                                <span class="displayValue ">
+                                    @*<input type="text" class="form-control" id="txt_pop_MailingAddress" placeholder="Mailing Address">*@
+
+                                    <textarea class="form-control" rows="5" id="txt_pop_MailingAddress" placeholder="Mailing Address"></textarea>
+                                    <span id="spanMailingAddress" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">* Office Hours: </span>
+                                <span class="displayValue ">
+                                    @*<input type="text" class="form-control" id="txt_pop_OfficeHours" placeholder="Office Hours">*@
+                                    <textarea class="form-control" rows="2" id="txt_pop_OfficeHours" placeholder="Office Hours"></textarea>
+                                    <span id="spanOfficeHours" class="errmessage" />
+                                </span>
+                            </div>
+
+                            <div class="readOnlySection">
+                                <span class="displayLabel">* Phone Number: </span>
+                                <span class="displayValue ">
+                                    <input type="text" class="form-control" id="txt_pop_gcPhoneNumber" placeholder="Phone Number">
+                                    <span id="spangcPhoneNumber" class="errmessage" />
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input id="btn_AddEditContactUs" class="btn btn-sm btn-primary" type="submit" value="Submit">
+                <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="denialReasonEditModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Denial Reason</h5>
+            </div>
+            <div class="modal-body" style="text-align:left">
+                
+
+                <div class="form-group subSection">
+                    <label for="comment">Denial Reason:</label>
+                    <textarea class="form-control" rows="5" id="txt_DenialReason"></textarea>
+                </div>
+                <span id="accountType">0 / 300 characters</span>
+            </div>
+
+            <div class="modal-footer">
+                <input id="btn_SubmitDenialReason" class="btn btn-sm btn-primary" type="submit" value="Submit">
+                <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container row-wrapper">
+    <h1 id="heading_ApplicationHeader"></h1>
+    <div class="centerColumn">
+        <div class="content clearfix">
+            <div class="leftContent">
+                <div class="leftBox leftBoxMenu bottomMargin">
+                    <h2>Administration</h2>
+                    <div class="menu claimMenu bhoechie-tab-menu" role="tablist">
+                        <div class="list-group">
+                            <a class="leftNavItem active" href="#div_AdminUserContent" aria-controls="div_AdminUserContent" role="tab" aria-selected="true" id="tab_AdminUserContent">
+                                <span class="fa fa-fw fa-users"></span>Users
+                            </a>
+                            <a class="leftNavItem" href="#div_PublicInfoContent" aria-controls="div_PublicInfoContent" role="tab" aria-selected="false" id="tab_PublicInfoContent">
+                                <span class="fa fa-fw fa-globe"></span>Public Content
+                            </a>
+                            <a class="leftNavItem" href="#div_DenialReason" aria-controls="div_DenialReason" role="tab" aria-selected="false" id="tab_DenialReason">
+                                <span class="fa fa-fw fa-gavel"></span>Application Denial Reason
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="leftBox leftBoxMenu">
+                    <h2>Other</h2>
+                    <div class="menu">
+                        <a class="leftNavItem" href="#">
+                            <span class="fa fa-fw fa-search"></span>EWS Batch
+                        </a>
+                        <a class="leftNavItem" href="#">
+                            <span class="fa fa-fw fa-university"></span>Banks (Lyons Data)
+                        </a>
+                        @*<a class="leftNavItem" href="#div_DenialReason" aria-controls="div_DenialReason" role="tab" aria-selected="false" id="tab_DenialReason">
+                            <span class="fa fa-fw fa-gavel"></span>Application Denial Reason
+                        </a>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="bhoechie-tab">
+
+                <div id="div_AdminUserContent" class="mainBox tab-pane mainContent bhoechie-tab-content active" role="tabpanel" aria-labelledby="div_AdminUserContent">
+                    <div @*class="mainBox tab-content  tgroup container" id="myTabContent1" style="width: 100% !important;  margin: 10px auto !important;position: relative !important;"*@>
+                        <div>
+                            <div class="pull-right">
+                                @*<form id="userSearchForm" class="submitForm inlineBlock rightMargin" method="get" action="#" data-updatetargetid="searchResults" data-updatemode="replaceContents" data-pushstate="true" novalidate="novalidate">
+                                     <div class="form-inline">
+                                    <input class="clearable form-control" id="Filter" name="Filter" type="search" value="">
+                                    <button id="submitSearch" class="btn btn-xs btn-primary" type="submit">Filter</button>
+                                     </div>
+                                     </form>*@
+
+                                <a id="btn_addUser" class="btn btn-xs btn-success addeditUser" data-toggle="modal" data-target="#userDetailsModal" data-additionalprocess="chosen">
+                                    <span class="fa fa-plus"></span>Add User
+                                </a>
+                            </div>
+
+                            <h2 class="smallBottomMargin">Users</h2>
+
+                            <div id="searchResults">
+                                <div id="divUserTable" class="resultsLocator">
+                                    <table id="ddUserGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+                                        <thead>
+                                            <tr class="button-header-color">
+                                                <th>FirstName</th>
+                                                <th>LastName</th>
+                                                <th>EmployeeNumber</th>
+                                                <th>IsActive</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+
+                                    <div class="pagingWrapper">
+                                        <div class="currentPage btn-xs">
+                                            <span class="hidden">Page</span> 1 of 1
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="div_PublicInfoContent" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_PublicInfoContent">
+                    <div @*class="mainBox tab-content  tgroup container" id="myTabContent2" style="width: 100% !important;  margin: 10px auto !important;position: relative !important;"*@>
+                        <div class="pull-right">
+
+                            <label class="control-label" for="groupID">Content Group: </label>
+                            <div class="chosen-container chosen-container-single chosen-container-single-nosearch" style="width: 300px;" title="" id="groupID_chosen">
+                                <a class="chosen-single" tabindex="-1">
+                                    <span>Page Information</span>
+                                    <div><b></b></div>
+                                </a>
+                                <div class="chosen-drop">
+                                    <div class="chosen-search"><input autocomplete="off" readonly="readonly" type="text"></div>
+                                    <ul class="chosen-results">
+                                        <li class="active-result result-selected" data-option-array-index="1" style="">Claim Process</li>
+                                        <li class="active-result" data-option-array-index="2" style="">Document Information</li>
+                                        <li class="active-result" data-option-array-index="3" style="">Page Information</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <h2>Public Content</h2>
+                        <div id="publicContentList" class="resultsLocator list-group list-group-hover clearfix topMargin">
+                            <li id="userRow_26" class="publicContentRow list-group-item">
+                                <div class="pull-right">
+                                    <a id="btn_editContactUs" class="btn btn-xs btn-info"
+                                       data-toggle="modal" data-target="#contactUsEditModal" data-additionalprocess="ckeditor">
+                                        <span class="fa fa-edit"></span>Edit
+                                    </a>
+                                </div>
+                                <div> <strong>Contact Us - Page Description</strong> </div>
+                                <div>Text directly on the Contact Us page</div>
+                            </li>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div id="div_DenialReason" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_DenialReason">
+                    <div>
+                        <h2>Denial Reason</h2>
+                        <div class="pull-right">
+                            <a id="btn_addDenialReason" class="btn btn-success"  data-toggle="modal" data-target="#denialReasonEditModal">
+                                <span class="glyphicon glyphicon-plus smallRightMargin"></span>
+                                Add
+                            </a>
+                        </div>
+
+                        <div id="DenialReasonList" class="resultsLocator list-group list-group-hover clearfix topMargin">
+
+                            <div id="div_documentAttachment" class="divSeparator">
+
+
+                                <table id="denialReasonGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="border-collapse:collapse; border: 1px solid black; width:100%">
+                                    <thead>
+                                        <tr class="button-header-color">
+                                            <th>Denial Reason</th>
+                                            <th>Command</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

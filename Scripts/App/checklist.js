@@ -18,9 +18,6 @@
     function InsertUpdateDocumentCheckList(checkListID, confirmationNum, yes_no) {
         debugger;
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
-        var notes = "test"
-        var notesType = "Checklist";
-
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
