@@ -59,8 +59,35 @@
     GetAttachmentDocuments(confirmationNum);
     GetDocumentCheckList(confirmationNum);
     GetAlreadyLinkedApplicationByConfirmationNum(confirmationNum);  // for count display
-    
 
+    function RetrieveDenialReasonList() {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            url: "/api/values/RetrieveDenialReasonList/",
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            success: function (data) {
+                debugger;
+                rrList = data.data.denialReasonList;
+
+                var rejectReasonList = $('#select_rejectReason');
+                $.each(rrList, function (key, value) {
+                    rejectReasonList.append(
+                        $('<option></option>').val(value.DenialReasonId).html(value.DenialReasonText)
+                    );
+                });
+            }
+        });
+    };   
+
+    $('#rejectApplicationModal').on('shown.bs.modal', function (e) {
+        debugger;
+        RetrieveDenialReasonList();
+    });
+    
     function getReviewPanelInformation(summaryData) {
         var status = summaryData.Status;
         var statusDesc = summaryData.StatusDesc;

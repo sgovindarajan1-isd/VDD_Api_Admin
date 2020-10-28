@@ -18,5 +18,18 @@ namespace DAL.Models
         public string RequestType { get; set; }
         public string Age { get; set; }
         public string AgeCount { get; set; }
+
+
+        // userd for filtering
+        public string VendorNumber { get; set; }  // vendor code
+        public string PayeeName { get; set; }
+        public string Age1 { get; set; }
+        public string Age2 { get; set; }
+        public string Age3 { get; set; }
+        //Filter params for Application list
+        public int FilterAge { get; set; }
+        public string FilterApptype { get; set; }
+        public string FilterUser { get; set; }
+        public string FilterStatus { get; set; }
     }
 }

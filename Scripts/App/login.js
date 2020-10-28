@@ -42,6 +42,7 @@
     //}
 
     function loginUser(userId, password) {
+        debugger;
         //testing values
         if ($(location).attr('href').indexOf("local") > -1) {
             ////  To do :  test values for easy access,  remove later
@@ -67,6 +68,8 @@
                 'Authorization': 'Basic ' + btoa('admin')  // This method can be called before login,  so there wont be any security token created,  hense this by pass
             },
             success: function (data) {
+                debugger;
+
                 if (data.data.List_userRoles.length > 0) {
                     sessionStorage.setItem('RoleId', data.data.List_userRoles[0].RoleId);
                 }
@@ -85,7 +88,13 @@
                 sessionStorage.setItem('UserRoles', data.data.List_userRoles);  // example  data.data.List_userRoles[0].UserID UserName UserStatus RoleId RoleName PermissionName
                 $("#lbl_userName").text(data.data.userProfile_2.displayNameField); //id_userName
 
-                //var userHasonlyDataEntryRole =  UserHasonlyDataEntryRole(data.data.List_userRoles, GlobalRoles.DataEntryRole);
+                var userRoles = [];
+                debugger;
+                for (var i = 0; i < data.data.List_userRoles.length; i++) {
+                    var RoleId = data.data.List_userRoles[i].RoleId;
+                    userRoles.push({ RoleId });
+                }
+                sessionStorage.setItem('UserRolesListJson', JSON.stringify(userRoles));
                 debugger;
 
                 // testing ip
@@ -105,12 +114,19 @@
                     //deptuser landing page and dataentry role
                     //else if  //Dispersement user and dataentry role
                     //vendor code entry page
-                    if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+                    debugger;
+                    
+                   // if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+                    if (GlobalUserHasRoles.DataEntryRole) {
                         window.location.href = '/draft/_partialDraftLanding';//'/draft/_partialVendor';
                     }
-                    else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+                    else {
                         window.location.href = '/home/dashboard';
                     }
+                    //else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+                    //    window.location.href = '/home/dashboard';
+                    //}
+                    
                     //vdd.GlobalVariables.UserName = data.data.UserId;
                     $("#loaderDiv").hide();
                 }

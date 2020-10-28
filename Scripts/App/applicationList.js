@@ -1,16 +1,59 @@
 ﻿$(document).ready(function () {
     $("#lbl_userName").text(sessionStorage.getItem('userName'));  //id_userName
-    
+    debugger;
     var pendingAssignList = [];
     var pendingMyApprovalList = [];
     var userId = sessionStorage.getItem('UserId');
     $("#ddGrid_filter").hide();
+
+    if (window.location.href.indexOf('?') > 0) {
+        $("#pnl_advanceSearch").show();
+        $("#pnl_applicationInfo").hide();
+        $("#pnl_applicationAgeInfo").hide();
+        $("#pnl_ManageUserInfo").hide();
+    }
+
+    $("#btn_Advsearch").click(function () {
+        var confNumber = $("#search_confirmationNumber").val();
+        var venNumber = $("#search_VendorNumber").val();
+        var payeeName = $("#search_PayeeName").val();
+        var receivedDate = $("#search_ReceivedDate").val();
+        var statusDate = $("#search_StatusDate").val();
+        var appStatus = $("#advanceSearch_StatusList  option:selected").val();
+        var appType = $("#advanceSearch_ApplicationTypeList  option:selected").val();
+
+        debugger;
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            dataType: 'json',
+            data: JSON.stringify({
+                'ConfirmationNum': confNumber, 'VendorNumber': venNumber, 'PayeeName': payeeName,
+                'ReceivedDate': receivedDate, 'AssignedDate': statusDate, 'StatusCode': appStatus,
+                'FilterApptype': appType, 'FilterAge': 0
+            }),
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            url: "/api/values/GetApplicationAdvancedSearch/",
+            success: function (data) {
+                setData(data.data.lst_AppSearchList);
+            },
+            error: function (_XMLHttpRequest, textStatus, errorThrown) {
+                if (_XMLHttpRequest.status == '401') {
+                    window.location.href = "/Home/UnAuthorized";
+                }
+            }
+        });
+    });
+
+
     GetApplicationCustomFilterList();
 
     //var table = $('#ddGrid').DataTable();
 
     // Default view for Supervisor
-    if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
+    if (sessionStorage.getItem('RoleId') == "12" || sessionStorage.getItem('RoleId') == "4" ) { //        12	- Supervisor
         getApplicationDetails(12, userId, '5', '21,22,23');  //  supervisor will see all the pending  status
     }
 
@@ -73,7 +116,6 @@
     });
     
     $("#btn_60_plus_days").click(function () {
-        debugger;
         getApplicationListFilteredByAge(61);
     });
     
@@ -209,15 +251,25 @@
                 });
 
                 var filterApplicationTypeList = $('#filterApplicationType');
+                var advanceSearch_ApplicationTypeList = $('#advanceSearch_ApplicationTypeList');
+                
                 $.each(applicationTypeList, function (key, value) {
                     filterApplicationTypeList.append(
+                        $('<option></option>').val(value.Text).html(value.IdText)
+                    );
+                    advanceSearch_ApplicationTypeList.append(
                         $('<option></option>').val(value.Text).html(value.IdText)
                     );
                 });
 
                 var filterStatusList = $('#filterStatus');
+                var advanceSearch_StatusList = $('#advanceSearch_StatusList');
                 $.each(statusList, function (key, value) {
                     filterStatusList.append(
+                        $('<option></option>').val(value.Id).html(value.Text)
+                    );
+
+                    advanceSearch_StatusList.append(
                         $('<option></option>').val(value.Id).html(value.Text)
                     );
                 });

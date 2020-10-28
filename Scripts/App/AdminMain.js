@@ -5,6 +5,12 @@
     AdminRole: 4
 };
 
+var GlobalUserHasRoles = {
+	DataEntryRole: false,
+	ProcessorRole: false,
+	SupervisorRole: false,
+	AdminRole: false
+};
 
 //  Pop over on question mark on mouse hover - starting
 var originalLeave = $.fn.popover.Constructor.prototype.leave;
@@ -31,23 +37,126 @@ $('body').popover({ selector: '[data-popover]', trigger: 'hover', placement: 'au
 //  Popover on question mark on mouse hover  - Ending
 
 $(document).ready(function () {
-	
 
-	if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+	// ***********  Menu Building  ******************
+
+	var userRoleObj = JSON.parse(sessionStorage.getItem("UserRolesListJson"));
+	userHasDataEntryRole(userRoleObj);
+
+
+	function userHasDataEntryRole(userRoleObj) {
+		for (var i = 0; i < userRoleObj.length; i++) {
+			if (userRoleObj[i].RoleId == GlobalRoles.DataEntryRole) {
+				GlobalUserHasRoles.DataEntryRole = true;
+			}
+			if (userRoleObj[i].RoleId == GlobalRoles.ProcessorRole) {
+				GlobalUserHasRoles.ProcessorRole = true;
+			}
+			if (userRoleObj[i].RoleId == GlobalRoles.SupervisorRole) {
+				GlobalUserHasRoles.SupervisorRole = true;
+			}
+			if (userRoleObj[i].RoleId == GlobalRoles.AdminRole) {
+				GlobalUserHasRoles.AdminRole = true;
+			}
+
+		}
+	}
+	debugger;
+	if (GlobalUserHasRoles.DataEntryRole) {
+		//if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
 		$('#menu_userName').text(sessionStorage.getItem('userName'));
 		$('#div_advanceSearch').hide();
 		$('#menu_applicatoinList').hide();
-		$('#menu_enterApplication').hide();
+		$('#menu_enterApplication').show();
 		$('#menu_admin').hide();
 		$('#menu_reports').hide();
 	}
-	else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+	if (GlobalUserHasRoles.ProcessorRole) {
 		$('#menu_userName').hide();
+		$('#div_advanceSearch').show();
+		$('#menu_applicatoinList').show();
+		$('#menu_enterApplication').show();
+		$('#menu_admin').hide();
+		$('#menu_reports').show();
 	}
+	if (GlobalUserHasRoles.SupervisorRole) {
+		$('#menu_userName').hide();
+		$('#div_advanceSearch').show();
+		$('#menu_applicatoinList').show();
+		$('#menu_enterApplication').show();
+		$('#menu_admin').hide();
+		$('#menu_reports').show();
+	}
+	if (GlobalUserHasRoles.AdminRole) {
+		$('#menu_userName').hide();
+		$('#div_advanceSearch').show();
+		$('#menu_applicatoinList').show();
+		$('#menu_enterApplication').show();
+		$('#menu_admin').show();
+		$('#menu_reports').show();
+	}
+	if ((GlobalUserHasRoles.DataEntryRole) && (!GlobalUserHasRoles.ProcessorRole) && (!GlobalUserHasRoles.SupervisorRole) && (!GlobalUserHasRoles.AdminRole)){
+		$('#menu_enterApplication').hide();  //  if user has only Dataentry role
+	}
+
+
+
+
+
+
+
+	//     old code
+	//if (GlobalRoles.DataEntryRole) {
+	//    //if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+	//	$('#menu_userName').text(sessionStorage.getItem('userName'));
+	//	$('#div_advanceSearch').hide();
+	//	$('#menu_applicatoinList').hide();
+	//	$('#menu_enterApplication').hide();
+	//	$('#menu_admin').hide();
+	//	$('#menu_reports').hide();
+	//}
+	//else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+	//	$('#menu_userName').hide();
+	//}
+
+	// ***********  Menu Building  ******************
+
+
 
     $("#menu_applicatoinList").click(function () {
         window.location.href = '/applicationList/applicationList';
-    });
+	});
+
+
+	
+
+	$("#lnkAdvSearch").click(function () {
+		debugger;
+		sessionStorage.setItem('selectedConfirmationNumber', $("#txt_appSearchNumber").val());
+		window.location.href = '/applicationList/applicationSummary';
+	});
+
+	$("#txt_appSearchNumber").focusout(function () {
+		debugger;
+		sessionStorage.setItem('selectedConfirmationNumber', $("#txt_appSearchNumber").val());
+		window.location.href = '/applicationList/applicationSummary';
+
+	}).click(function (e) {
+		e.stopPropagation();
+		return true;
+	});
+
+	
+	$("#btnAdvanceSearch").click(function () {
+		window.location.href = '/applicationList/advanceSearchList?type=adv';
+	});
+
+	
+	$("#menu_admin").click(function () {
+		debugger;
+		window.location.href = '/Administration/_partialAdministration';
+	});
+
 
     $("#menu_enterApplication").click(function () {
         window.location.href = '/draft/_partialVendor';
