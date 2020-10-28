@@ -240,6 +240,81 @@ namespace eCAPDDApi.Controllers
         }
 
         [HttpPost]
+        public HttpResponseMessage LoginAdminUser([FromBody] VM_AdminUser vm_AdminUser) //(   [FromBody] VM_r_vend_user vmuser
+        {
+            //logw.LogWrite("test");
+
+            gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
+            // just to go for demo
+            //////bool bool_isAuthenicated = false;
+            //////if (vm_AdminUser.UserId != string.Empty)
+            //////{
+            //////    //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
+            //////    bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
+
+            //////}
+
+            //////if (!bool_isAuthenicated)
+            //////{
+            //////    return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: User Id and Password not found!" });
+            //////}
+            ///
+            // just to go for demo  -  end GlobalRoles.DataEntryRole
+
+            AdminDAL clsdal = new AdminDAL();
+            Tuple<List<DAL.Models.DAL_M_UserProfile>, bool> result = clsdal.ValidateAdminUser(vm_AdminUser.UserId);
+
+            if (result != null)
+            {
+                var v1 = loginServs.UserSearch(vm_AdminUser.UserId);
+                var v3 = loginServs.GetUserProfile(vm_AdminUser.UserId);
+
+                var data = new
+                {
+                    userProfile = v1,
+                    userProfile_2 = v3,
+                    List_userRoles = result.Item1,
+                    IsValidUser = result.Item2,
+                };
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: Invalid Login." });
+        }
+
+        public HttpResponseMessage RetrieveUserDetails([FromBody] VM_AdminUser vm_AdminUser)
+        {
+            try
+            {
+                AdminDAL clsdal = new AdminDAL();
+                Tuple<List<DAL.Models.DAL_M_UserProfile>, bool> result = clsdal.ValidateAdminUser(vm_AdminUser.UserId);
+
+                List<DAL.Models.DAL_M_UserProfile> userRoles = new List<DAL.Models.DAL_M_UserProfile>();
+
+                if (result != null)
+                {
+                    userRoles = result.Item1;
+                }
+
+                gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
+
+                var data = new
+                {
+                    userProfile = loginServs.GetUserProfile(vm_AdminUser.UserId),
+                    list_userRoles = userRoles //result.Item1
+                };
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "User not found!." });
+            }
+
+
+        }
+
+        [HttpPost]
         public HttpResponseMessage GetVendorNameByVendorCode([FromBody] VM_R_Vend_User vmuser)
         {
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "Vendor not found");
@@ -278,48 +353,6 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
-        [HttpPost]
-        public HttpResponseMessage LoginAdminUser([FromBody] VM_AdminUser vm_AdminUser) //(   [FromBody] VM_r_vend_user vmuser
-        {
-            //logw.LogWrite("test");
-
-            gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
-            // just to go for demo
-            //////bool bool_isAuthenicated = false;
-            //////if (vm_AdminUser.UserId != string.Empty)
-            //////{
-            //////    //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
-            //////    bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
-
-            //////}
-
-            //////if (!bool_isAuthenicated)
-            //////{
-            //////    return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: User Id and Password not found!" });
-            //////}
-            ///
-            // just to go for demo  -  end
-
-            VendorDAL clsdal = new VendorDAL();
-            Tuple<List<DAL.Models.DAL_M_UserProfile>, bool> result = clsdal.ValidateAdminUser(vm_AdminUser.UserId);
-
-            if (result != null)
-            {
-                var v1 = loginServs.UserSearch(vm_AdminUser.UserId);
-                var v3 = loginServs.GetUserProfile(vm_AdminUser.UserId);
-
-                var data = new
-                {
-                    userProfile = v1,
-                    userProfile_2 = v3,
-                    List_userRoles = result.Item1,
-                    IsValidUser = result.Item2,
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
-            }
-            return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: Invalid Login." });
-        }
 
         [HttpPost]
         public HttpResponseMessage GetApplicationListAssigned([FromBody] VM_AdminUser VM_adminUser)
@@ -592,7 +625,6 @@ namespace eCAPDDApi.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, new { data = data });
         }
-
         [HttpPost]
         public HttpResponseMessage GetDocumentCheckList([FromBody] DAL.Models.DAL_M_Checklist dal_M_Checklist)
         {
@@ -635,17 +667,6 @@ namespace eCAPDDApi.Controllers
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
         }
-
-        //  get source info
-        //private string GetIpAddress()
-        //{
-        //    string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-        //    if (string.IsNullOrEmpty(ip))
-        //    {
-        //        ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-        //    }
-        //    return ip;
-        //}
 
         private string GetIpAddress()
         {
@@ -706,61 +727,6 @@ namespace eCAPDDApi.Controllers
 
             return ipInfo;
         }
-
-        //[HttpPost]
-        //public HttpResponseMessage RetrieveSourceIPInfo_old([FromBody] VM_SourceIPInfo dal_M_Checklist)
-        //{
-        //    string GEOLOCATION;
-        //    string ServerName = Request.RequestUri.GetLeftPart(UriPartial.Authority); // this can be stored in the requests log table
-        //    string IPADDR = GetIpAddress().Trim(); // Request.RequestUri.AbsoluteUri;// //localhost will have ::1. Other internal clients will have 10.*
-        //    string Headers = Request.Headers.ToString(); // this can be stored in the requests log table
-
-        //    // populate actual values if the request is not from the localhost
-        //    VM_SourceIPInfo ipInfo = new VM_SourceIPInfo();
-        //    ipInfo.Source_Host_Headers = Headers;
-        //    ipInfo.SourceServerName = ServerName;
-        //    ipInfo.Source_Device = getOSInfo();
-
-        //    if (!ServerName.Contains("localhost"))
-        //    {
-        //        try
-        //        {
-        //            string info = new WebClient().DownloadString("http://api.db-ip.com/v2/free/" + IPADDR);
-        //            ipInfo = JsonConvert.DeserializeObject<VM_SourceIPInfo>(info);
-
-        //            // any IP that starts with 10. or 192. will be internal to LA County network but may show the city name differently because of the location of the edge router
-        //            //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + ipInfo.City + Environment.NewLine + ipInfo.StateProv;
-        //            ipInfo.Source_Host_Headers = Headers;
-        //            ipInfo.SourceServerName = ServerName;
-        //            ipInfo.Source_IP = IPADDR;
-        //            if ((IPADDR.IndexOf("10.") > 0) || (IPADDR.IndexOf("192.") > 0) || (ipInfo.City.IsNullOrWhiteSpace()) || (ipInfo.StateProvCode.IsNullOrWhiteSpace() )) {
-        //                ipInfo.Source_Location = "LA County Internal";
-        //            }
-        //            else {
-        //                ipInfo.Source_Location = ipInfo.City + ", " + ipInfo.StateProvCode + " (" + ipInfo.CountryCode + ")";
-        //            }
-        //            ipInfo.Source_Device = getOSInfo();
-        //        }
-        //        catch (Exception)
-        //        {
-        //        }
-        //    }
-        //    else
-        //    {
-        //        //Initialize with user friendly values representing localhost
-        //        ServerName = "LOCALHOST";
-        //        IPADDR = "127.0.0.1";
-        //        GEOLOCATION = "VDD APPLICATION SERVER";
-        //        //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + GEOLOCATION;
-
-        //        ipInfo.SourceServerName = ServerName;
-        //        ipInfo.Source_IP = IPADDR;
-        //        ipInfo.Source_Location = GEOLOCATION;
-        //    }
-
-        //    var response = Request.CreateResponse(HttpStatusCode.OK, new { data = ipInfo });
-        //    return response;
-        //}
 
         public String GetMobileVersion(string userAgent, string device)
         {
@@ -911,7 +877,7 @@ namespace eCAPDDApi.Controllers
             dr["Signertitle"] = vendordetails.Signertitle;
             dr["VendorAttachmentFileName"] = vendordetails.VendorAttachmentFileName;
 
-            dr["TotalAttachment"] = "Total: 2";
+            dr["TotalAttachment"] = "Total: 1";
             dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString();
             dr["ConfirmationNumber"] = vendordetails.Confirmation;
             dt.Rows.Add(dr);
@@ -990,31 +956,6 @@ namespace eCAPDDApi.Controllers
                 return "ERROR - " + ex.Message;
             }
         }
-
-        [HttpGet]  // HttpResponseMessage  user thto return
-        //public  string GetPDFReport(DAL.Models.DAL_M_VendorDD vendordetails)
-        //{
-        //    logw.LogWrite("inside GetPDFReport" );
-        //    string localPath = AppDomain.CurrentDomain.BaseDirectory;
-        //    string uploadPath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
-        //    logw.LogWrite("inside GetPDFReport11");
-        //    string filePath = localPath + uploadPath + "\\" + vendordetails.VendorReportFileName;
-
-
-        //    ReportController report = new ReportController();
-        //    logw.LogWrite("inside GetPDFReport12c ");
-        //    report.ShowReport(vendordetails);
-        //    logw.LogWrite("inside GetPDFReport123 ");
-        //    return vendordetails.VendorReportFileName;
-
-        //    //HttpResponseMessage result = null;
-        //    //result = Request.CreateResponse(HttpStatusCode.OK);
-        //    //result.Content = new StreamContent(new FileStream(filePath, FileMode.Open));
-        //    //result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-        //    //result.Content.Headers.ContentDisposition.FileName = filePath;
-
-        //    //return result;
-        //}
 
         private string generateVCMPDFReport(DAL.Models.DAL_M_VendorDD vendordetails)
         {
@@ -1135,13 +1076,10 @@ namespace eCAPDDApi.Controllers
                 {
                     string fname = string.Empty;
                     var postedFile = httpRequest.Files[file];
-                    //var filePath = System.Web.HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
 
                     if (System.Web.HttpContext.Current.Request.Browser.Browser.ToUpper() == "IE" || System.Web.HttpContext.Current.Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
                     {  //To-do later
                         fname = modifiedFilename;
-                        // string[] testfiles = file.FileName.Split(new char[] { '\\' });
-                        //fname = testfiles[testfiles.Length - 1];
                     }
                     else
                     {
@@ -1150,8 +1088,6 @@ namespace eCAPDDApi.Controllers
                     string localPath = AppDomain.CurrentDomain.BaseDirectory;
                     uploadpath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
                     fname = localPath + uploadpath + "\\" + fname;
-                    //fname = Path.Combine(Server.MapPath("~/" + Uploadpath + "/"), fname);
-
 
                     postedFile.SaveAs(fname);
                     docfiles.Add(fname);
@@ -1165,80 +1101,129 @@ namespace eCAPDDApi.Controllers
             return result;
         }
 
+        [HttpPost]
+        public HttpResponseMessage getUsersListByUserId([FromBody] DAL.Models.DAL_M_UsersData dal_M_UsersData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "User not found");
 
-        // [HttpPost]
-        //public HttpResponseMessage UploadAttachmentFile_old()
-        //{
-        //    string fname = string.Empty;
-        //    string Uploadpath = string.Empty;
-        //    // Checking no of files injected in Request object  
-        //    if (System.Web.HttpContext.Current.Request.Files.Count > 0)
-        //    {
-        //        string modifiedFilename = System.Web.HttpContext.Current.Request.Form["modifiedFilename"];
-        //        if (modifiedFilename == null)
-        //        {
-        //            modifiedFilename = System.Web.HttpContext.Current.Request.Form["modifiedFilename_ddwetform"];
-        //        }
-        //        try
-        //        {
-        //            //  Get all files from Request object  
-        //            System.Web.HttpFileCollectionBase files = System.Web.HttpContext.Current.Request.Files;
-        //            for (int i = 0; i < files.Count; i++)
-        //            {
-        //                HttpPostedFileBase file = files[i];
+            if (dal_M_UsersData.UserId.ToLower() != "all")
+            {
 
-        //                // Checking for Internet Explorer  
-        //                if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-        //                {
-        //                    string[] testfiles = file.FileName.Split(new char[] { '\\' });
-        //                    fname = testfiles[testfiles.Length - 1];
-        //                }
-        //                else
-        //                {
-        //                    fname = modifiedFilename;
-        //                }
+                AdminDAL clsdal = new AdminDAL();
+                Tuple<List<DAL.Models.DAL_M_UserProfile>, bool> result = clsdal.ValidateAdminUser(dal_M_UsersData.UserId);
+                List<DAL.Models.DAL_M_UserProfile> roles = null;
 
-        //                Uploadpath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
-        //                fname = Path.Combine(Server.MapPath("~/" + Uploadpath + "/"), fname);
-        //                file.SaveAs(fname);
-        //            }
-        //            // Returns message that successfully uploaded  
-        //            return Json(modifiedFilename);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return Json("Error");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return Json("No files selected.");
-        //    }
-        //}
+                if (result != null)
+                {
+                    roles = result.Item1;
+                }
 
-        //}
+                var dt = adminDAL.getUsersListByUserId(dal_M_UsersData);
+                var data = new
+                {
+                    usersList = dt,
+                    list_userRoles = roles
+                };
+                response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            }
+            else
+            {
+                var dt = adminDAL.getUsersListByUserId(dal_M_UsersData);
+                var data = new
+                {
+                    usersList = dt
+                };
+                response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            }
+            return response;
+        }
+
+
+        [HttpPost]
+        public HttpResponseMessage InsertUpdateGeneralContent_ContactUs([FromBody] DAL.Models.DAL_M_GeneralContentContactUs vm_GeneralContentContactUs)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.InsertUpdateGeneralContent_ContactUs(vm_GeneralContentContactUs);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage RetrieveGeneralContent_ContactUs()
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetGeneralContent_ContactUs();
+            var data = new
+            {
+                generalContent_ContactUs = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage InsertUpdateDenialReason([FromBody] DAL.Models.DAL_M_DenialReason vm_DenialReason)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.InsertUpdateDenialReason(vm_DenialReason);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage RetrieveDenialReasonList()
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetDenialReasonList();
+            var data = new
+            {
+                denialReasonList = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+
+        [HttpPost]
+        public HttpResponseMessage UpdateUserDetails([FromBody] DAL.Models.DAL_M_UsersData vm_UsersData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateUserDetails(vm_UsersData);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetApplicationAdvancedSearch([FromBody] DAL.Models.DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetApplicationAdvancedSearch(dal_M_ApplicationList);
+            var data = new
+            {
+                lst_AppSearchList = dt
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
     }
 }
-
-
-
-
-//HttpResponseMessage result = null;
-//var httpRequest = HttpContext.Current.Request;  
-//           if (httpRequest.Files.Count > 0)  
-//            {  
-//                var docfiles = new List<string>();  
-//                foreach (string file in httpRequest.Files)  
-//                {  
-//                    var postedFile = httpRequest.Files[file];
-//var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
-//postedFile.SaveAs(filePath);  
-//                    docfiles.Add(filePath);  
-//                }  
-//                result = Request.CreateResponse(HttpStatusCode.Created, docfiles);  
-//            }  
-//            else  
-//            {  
-//                result = Request.CreateResponse(HttpStatusCode.BadRequest);  
-//            }  
-//             return result;  

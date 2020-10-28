@@ -10,6 +10,57 @@ namespace DAL
 {
     public class AdminDAL
     {
+
+        public Tuple<List<DAL_M_UserProfile>, bool> ValidateAdminUser(string user_id)
+        {
+            List<DAL_M_UserProfile> lst_DAL_M_UserProfile = new List<DAL_M_UserProfile>();
+
+            Tuple<List<DAL_M_UserProfile>, bool> ret = null;
+            try
+            {
+                DataSet ds = new DataSet("Admin");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetRolesAndPermissionsByUserID_test", con);
+                    sqlComm.Parameters.AddWithValue("@UserId", user_id);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                        {
+                            DAL_M_UserProfile u = new DAL_M_UserProfile();
+                            u.UserID = ds.Tables[0].Rows[i]["UserID"].ToString();
+                            u.UserName = ds.Tables[0].Rows[i]["UserName"].ToString();
+                            u.Department = ds.Tables[0].Rows[i]["Department"].ToString();
+                            u.RoleId = ds.Tables[0].Rows[i]["RoleId"].ToString();
+                            u.RoleName = ds.Tables[0].Rows[i]["RoleName"].ToString();
+                            u.RoleDescription = ds.Tables[0].Rows[i]["RoleDescription"].ToString();
+                            u.PermissionId = ds.Tables[0].Rows[i]["PermissionId"].ToString();
+                            u.PermissionName = ds.Tables[0].Rows[i]["PermissionName"].ToString();
+                            u.UserStatus = ds.Tables[0].Rows[i]["UserStatus"].ToString();
+                            lst_DAL_M_UserProfile.Add(u);
+                        }
+
+                        if (lst_DAL_M_UserProfile.Count() > 0)
+                        {
+                            ret = new Tuple<List<DAL_M_UserProfile>, bool>(lst_DAL_M_UserProfile, true);
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error(ex.Message);
+            }
+            return ret;
+        }
+
+
         public Tuple<List<DAL_M_ApplicationList>, List<DAL_M_ApplicationList>, int> GetApplicationListAssigned(int roleId, string userId, string pendingAssignmentStatus, string myapprovalStatus, int filterAge, string filterApptype, string filterUser, string filterStatus)
         {
             List<DAL_M_ApplicationList> lst_PendingAssignment = new List<DAL_M_ApplicationList>();  //  Supervisor view only
@@ -298,7 +349,7 @@ namespace DAL
                     reqM.DepartmentContactNo = ds.Tables[0].Rows[i]["DepartmentContactNo"].ToString();
                     reqM.ClosedDate = ds.Tables[0].Rows[i]["ClosedDate"].ToString();
 
-                    reqM.Source_IP= ds.Tables[0].Rows[i]["Source_ip"].ToString();
+                    reqM.Source_IP = ds.Tables[0].Rows[i]["Source_ip"].ToString();
                     reqM.Source_Device = ds.Tables[0].Rows[i]["Source_device"].ToString();
                     reqM.Source_Location = ds.Tables[0].Rows[i]["Source_Location"].ToString();
                     reqM.User_agent = ds.Tables[0].Rows[i]["User_agent"].ToString();
@@ -415,7 +466,7 @@ namespace DAL
         }
 
 
-        public string GetVendorNameByVendorCode(string user_id )
+        public string GetVendorNameByVendorCode(string user_id)
         {
             string ret = string.Empty;
             try
@@ -424,7 +475,7 @@ namespace DAL
                 using (SqlConnection con = DBconnection.Open())
                 {
                     SqlCommand sqlComm = new SqlCommand("GetVendorNameByVendorCode", con);
-                    sqlComm.Parameters.AddWithValue("@VendorCode", user_id);  
+                    sqlComm.Parameters.AddWithValue("@VendorCode", user_id);
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = sqlComm;
@@ -730,7 +781,7 @@ namespace DAL
             }
             return "SUCCESS";
         }
-        
+
         public List<DAL_M_Checklist> GetDocumentCheckList(string confirmationNumber)
         {
             List<DAL_M_Checklist> Checklist_list = new List<DAL_M_Checklist>();
@@ -755,7 +806,7 @@ namespace DAL
                         v.Active = int.Parse(ds.Tables[0].Rows[i]["Active"].ToString());
                         v.LastUpdateDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
                         v.LastUpdatedUser = ds.Tables[0].Rows[i]["LastUpdatedUser"].ToString();
-                        
+
                         Checklist_list.Add(v);
                     }
                     con.Close();
@@ -768,7 +819,7 @@ namespace DAL
             return Checklist_list;
         }
 
-        
+
         public int InsertUpdateChecklistNotes(DAL_M_Notes vm_Notes)
         {
             int returnNoteId = 0;
@@ -826,7 +877,7 @@ namespace DAL
                     {
                         DAL_M_Notes clNotes = new DAL_M_Notes();
                         clNotes.Notes = ds.Tables[0].Rows[i]["Note_Content"].ToString();
-                        clNotes.NotesId = int.Parse(ds.Tables[0].Rows[i]["Note_ID"].ToString());  
+                        clNotes.NotesId = int.Parse(ds.Tables[0].Rows[i]["Note_ID"].ToString());
                         clNotes.NotesType = ds.Tables[0].Rows[i]["Note_Type"].ToString();
                         clNotes.ChecklistId = int.Parse(ds.Tables[0].Rows[i]["ChecklistId"].ToString());
                         clNotes.LastUpdatedDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
@@ -854,7 +905,7 @@ namespace DAL
                 {
                     SqlCommand sqlComm = new SqlCommand("GetLinkedApplicationByConfirmationNum", con);
                     sqlComm.Parameters.AddWithValue("@ConfirmationNum", dal_M_VendorDD.Confirmation);
-                    
+
                     //sqlComm.Parameters.AddWithValue("@VendorCode", dal_M_VendorDD.VendorNumber);
                     //sqlComm.Parameters.AddWithValue("@PayeeName", dal_M_VendorDD.Payeename);
                     //sqlComm.Parameters.AddWithValue("@AccountNumber", dal_M_VendorDD.BankAccountNumber);
@@ -870,7 +921,7 @@ namespace DAL
                         linkApp.Application = ds.Tables[0].Rows[i]["Application"].ToString();
                         linkApp.Confirmation = ds.Tables[0].Rows[i]["ConfirmationNum"].ToString();
                         linkApp.Linked_ConfirmationNum = ds.Tables[0].Rows[i]["Linked_ConfirmationNum"].ToString();
-                       
+
                         linkApp.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
                         linkApp.VendorNumber = ds.Tables[0].Rows[i]["VendorNumber"].ToString();
                         linkApp.Payeename = ds.Tables[0].Rows[i]["VendorName"].ToString();
@@ -952,7 +1003,6 @@ namespace DAL
             return "SUCCESS";
         }
 
-        
         public List<DAL_M_AttachmentData> GetArchieveDocumentsByConfirmationNUmber(string confirmationNumber)
         {
             List<DAL_M_AttachmentData> lst_DAL_M_AttachmentData = new List<DAL_M_AttachmentData>();
@@ -986,5 +1036,298 @@ namespace DAL
             }
             return lst_DAL_M_AttachmentData;
         }
+
+        public List<DAL_M_UsersData> getUsersListByUserId(DAL_M_UsersData dal_M_UsersData)
+        {
+            List<DAL_M_UsersData> lst_DAL_M_UsersData = new List<DAL_M_UsersData>();
+            try
+            {
+                DataSet ds = new DataSet("Users");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("getUsersListByUserId", con);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.AddWithValue("@UserId", dal_M_UsersData.UserId);
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_UsersData v = new DAL_M_UsersData();
+                        v.UserId = ds.Tables[0].Rows[i]["UserId"].ToString();
+                        v.FirstName = ds.Tables[0].Rows[i]["FirstName"].ToString();
+                        v.LastName = ds.Tables[0].Rows[i]["LastName"].ToString();
+                        v.IsActive = Int32.Parse(ds.Tables[0].Rows[i]["Active"].ToString());
+                        v.IsActive_Yes_No = ds.Tables[0].Rows[i]["IsActive_Yes_No"].ToString();
+                        v.DisbursementCategory = ds.Tables[0].Rows[i]["Department"].ToString();
+                        v.PhoneNumber = ds.Tables[0].Rows[i]["PhoneNumber"].ToString();
+                        v.Email = ds.Tables[0].Rows[i]["Email"].ToString();
+                        v.LastUpdatedDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
+                        lst_DAL_M_UsersData.Add(v);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Getting Users List.  Message: " + ex.Message);
+            }
+            return lst_DAL_M_UsersData;
+        }
+
+        private DataTable CreateTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("UserId", typeof(string));
+            dt.Columns.Add("RoleId", typeof(int));
+            dt.Columns.Add("Active", typeof(int));
+
+            return dt;
+        }
+
+        public int UpdateUserDetails(DAL_M_UsersData vm_UsersData)
+        {
+            DataTable userRoleLinktbl = CreateTable();
+            userRoleLinktbl.Rows.Add(vm_UsersData.UserId, 4, vm_UsersData.IsAdmin);
+            userRoleLinktbl.Rows.Add(vm_UsersData.UserId, 12, vm_UsersData.IsSupervisor);
+            userRoleLinktbl.Rows.Add(vm_UsersData.UserId, 11, vm_UsersData.IsProcessor);
+            userRoleLinktbl.Rows.Add(vm_UsersData.UserId, 1, vm_UsersData.IsDataEntry);
+
+            int returnUserId = 0;
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("SecurityUpdateUser", con);
+                    sqlComm.Parameters.AddWithValue("@UserID", vm_UsersData.UserId);
+                    sqlComm.Parameters.AddWithValue("@Active", vm_UsersData.IsActive);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedBy", vm_UsersData.LastName);
+                    sqlComm.Parameters.AddWithValue("@FirstName", vm_UsersData.FirstName);
+                    sqlComm.Parameters.AddWithValue("@LastName", vm_UsersData.LastName);
+                    sqlComm.Parameters.AddWithValue("@Department", vm_UsersData.DisbursementCategory);
+                    sqlComm.Parameters.AddWithValue("@TableTypeRoles", userRoleLinktbl);
+
+
+                    //SqlParameter OutputDenialReasonId = new SqlParameter("@OutputDenialReasonId", SqlDbType.Int)
+                    //{
+                    //    Direction = ParameterDirection.Output
+                    //};
+                    //sqlComm.Parameters.Add(OutputDenialReasonId);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+
+                    //returnDenialReasonId = int.Parse(OutputDenialReasonId.Value.ToString());
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Insert / Update User Details.  Message: " + ex.Message);
+                return 0;
+            }
+            return returnUserId;
+        }
+
+
+
+        public DAL_M_GeneralContentContactUs GetGeneralContent_ContactUs()
+        {
+            DAL_M_GeneralContentContactUs v = new DAL_M_GeneralContentContactUs();
+
+            try
+            {
+                DataSet ds = new DataSet("Users");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetGeneralContent_ContactUS", con);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        v.ContentID = Int32.Parse(ds.Tables[0].Rows[0]["ContentID"].ToString());
+                        v.Email = ds.Tables[0].Rows[0]["Email"].ToString();
+                        v.MailingAddress = ds.Tables[0].Rows[0]["MailingAddress"].ToString();
+                        v.Active = Int32.Parse(ds.Tables[0].Rows[0]["Active"].ToString());
+                        v.OfficeHours = ds.Tables[0].Rows[0]["OfficeHours"].ToString();
+                        v.Phone = ds.Tables[0].Rows[0]["Phone"].ToString();
+                        v.LastUpdatedUser = ds.Tables[0].Rows[0]["LastUpdatedUser"].ToString();
+                        v.LastUpdatedDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[0]["LastUpdateDateTime"]);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Getting Users List.  Message: " + ex.Message);
+            }
+            return v;
+        }
+
+        public int InsertUpdateGeneralContent_ContactUs(DAL_M_GeneralContentContactUs vm_GeneralContentContactUs)
+        {
+            int returnContentId = 0;
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("InsertUpdateGeneralContent_ContactUS", con);
+                    //sqlComm.Parameters.AddWithValue("@ContentID", vm_GeneralContentContactUs.ContentID);
+                    //sqlComm.Parameters.AddWithValue("@Active", vm_GeneralContentContactUs.Active);
+                    sqlComm.Parameters.AddWithValue("@Email", vm_GeneralContentContactUs.Email);  // for update
+                    sqlComm.Parameters.AddWithValue("@MailingAddress", vm_GeneralContentContactUs.MailingAddress);
+                    sqlComm.Parameters.AddWithValue("@OfficeHours", vm_GeneralContentContactUs.OfficeHours);
+                    sqlComm.Parameters.AddWithValue("@Phone", vm_GeneralContentContactUs.Phone);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUser", vm_GeneralContentContactUs.LastUpdatedUser);
+                    SqlParameter OutputContentId = new SqlParameter("@OutputContactUsId", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    sqlComm.Parameters.Add(OutputContentId);
+
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+
+                    returnContentId = int.Parse(OutputContentId.Value.ToString());
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Insert / Update General Content ContactUS.  Message: " + ex.Message);
+                return 0;
+            }
+            return returnContentId;
+        }
+
+        public int InsertUpdateDenialReason(DAL_M_DenialReason vm_DenialReason)
+        {
+            int returnDenialReasonId = 0;
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("InsertUpdateDenialReason", con);
+                    sqlComm.Parameters.AddWithValue("@DenialReasonId", vm_DenialReason.DenialReasonId);
+                    sqlComm.Parameters.AddWithValue("@DenialReasonText", vm_DenialReason.DenialReasonText);
+                    sqlComm.Parameters.AddWithValue("@Active", vm_DenialReason.Active);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUser", vm_DenialReason.LastUpdatedUser);
+                    sqlComm.Parameters.AddWithValue("@Action", vm_DenialReason.Action);
+
+                    SqlParameter OutputDenialReasonId = new SqlParameter("@OutputDenialReasonId", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    sqlComm.Parameters.Add(OutputDenialReasonId);
+
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+
+                    returnDenialReasonId = int.Parse(OutputDenialReasonId.Value.ToString());
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Insert / Update Denial Reason.  Message: " + ex.Message);
+                return 0;
+            }
+            return returnDenialReasonId;
+        }
+
+        public List<DAL_M_DenialReason> GetDenialReasonList()
+        {
+            List<DAL_M_DenialReason> reasonlist = new List<DAL_M_DenialReason>();
+            try
+            {
+                DataSet ds = new DataSet("DenialReason");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetDenialReasonList", con);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_DenialReason v = new DAL_M_DenialReason();
+                        v.DenialReasonId = Int32.Parse(ds.Tables[0].Rows[i]["DenialReasonId"].ToString());
+                        v.DenialReasonText = ds.Tables[0].Rows[i]["DenialReasonText"].ToString();
+                        v.Active = int.Parse(ds.Tables[0].Rows[i]["Active"].ToString());
+                        v.LastUpdatedUser = ds.Tables[0].Rows[i]["LastUpdatedUser"].ToString();
+                        v.LastUpdatedDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
+                        reasonlist.Add(v);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Getting Denial Reason List.  Message: " + ex.Message);
+            }
+            return reasonlist;
+        }
+
+        public List<DAL_M_ApplicationList> GetApplicationAdvancedSearch(DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            List<DAL_M_ApplicationList> lst_AppSearchList = new List<DAL_M_ApplicationList>();
+
+            try
+            {
+                DataSet ds = new DataSet("ApplicationAdvancedSearchList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetApplicationAdvancedSearch", con);
+                    sqlComm.Parameters.AddWithValue("@ConfirmationNumber", dal_M_ApplicationList.ConfirmationNum);
+                    sqlComm.Parameters.AddWithValue("@VendorNumber", dal_M_ApplicationList.VendorNumber);
+                    sqlComm.Parameters.AddWithValue("@PayeeName", dal_M_ApplicationList.PayeeName);
+                    sqlComm.Parameters.AddWithValue("@ReceivedDate", dal_M_ApplicationList.ReceivedDate);
+
+                    sqlComm.Parameters.AddWithValue("@StatusDate", dal_M_ApplicationList.AssignedDate);
+                    sqlComm.Parameters.AddWithValue("@ApplicationStatus", dal_M_ApplicationList.StatusCode);
+                    sqlComm.Parameters.AddWithValue("@ApplicationType", dal_M_ApplicationList.FilterApptype);
+                    sqlComm.Parameters.AddWithValue("@FilterAge", dal_M_ApplicationList.FilterAge);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_ApplicationList v = new DAL_M_ApplicationList();
+                        v.VendorName = ds.Tables[0].Rows[i]["PayeeName"].ToString();
+                        v.ConfirmationNum = ds.Tables[0].Rows[i]["ConfirmationNum"].ToString();
+                        if (ds.Tables[0].Rows[i]["ReceivedDate"] != null)
+                        {
+                            v.ReceivedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["ReceivedDate"]);
+                        }
+                        if (ds.Tables[0].Rows[i]["AssignmentDate"] != null)
+                        {
+                            v.AssignedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["AssignmentDate"]);
+                        }
+                        v.ApplicationAge = ds.Tables[0].Rows[i]["ApplicationAge"].ToString();
+                        v.StatusCode = ds.Tables[0].Rows[i]["StatusCode"].ToString();
+                        v.StatusDesc = ds.Tables[0].Rows[i]["StatusDesc"].ToString();
+                        v.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
+                        lst_AppSearchList.Add(v);
+                    }
+
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Get Application Advanced Search.  Message: " + ex.Message);
+            }
+            return lst_AppSearchList;
+        }
     }
+
 }

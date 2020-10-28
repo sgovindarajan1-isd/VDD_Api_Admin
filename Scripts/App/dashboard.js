@@ -8,13 +8,15 @@
     var userId = sessionStorage.getItem('UserId');
     var days_pendingAssignmentList = [];
     var days_pendingMyApprovalList = [];
-    if (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole) { //        12	- Supervisor
+    //if (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole) { //        12	- Supervisor
+    if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
         getApplicationAge_AppPending_chartContainer(GlobalRoles.SupervisorRole,userId, '5');  //  supervisor will see all the pending  status
 
         getApplicationAge_AppPendingMyApproval_chartContainer(GlobalRoles.SupervisorRole, userId, '21,22,23');  // supervisor will see Rec_app 21,  rec_rej 22, ven confirm 23
     }
 
-    if (sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) { //        11	- Processor
+    //if (sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) { //        11	- Processor
+    if (GlobalUserHasRoles.ProcessorRole) {
         $("#div_application_PendingAssignment").remove();
         getApplicationAge_AppPendingMyApproval_chartContainer(GlobalRoles.ProcessorRole, userId, '2');  // supervisor will see Rec_app 21,  rec_rej 22, ven confirm 23
     }

@@ -91,7 +91,7 @@ namespace eCAPDDApi.Controllers
             dr["Signertitle"] = vendordetails.Signertitle;
             dr["VendorAttachmentFileName"] = vendordetails.VendorAttachmentFileName;
             
-            dr["TotalAttachment"] = "Total: 2";
+            dr["TotalAttachment"] = "Total: 1";
             dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString();
             dr["ConfirmationNumber"] = vendordetails.Confirmation;
             dt.Rows.Add(dr);
@@ -135,34 +135,26 @@ namespace eCAPDDApi.Controllers
         public ActionResult ShowReport(DAL.Models.DAL_M_VendorDD vendordetails)
         {
             LogWriter logw = new LogWriter("ValuesController entry");
-            logw.LogWrite("inside GetPDFReport12c1 ");
 
             string uploadPath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];  //  here is the path where  vendorreport file will be saved
             //string uploadFileName = Path.Combine(Server.MapPath("~/" + uploadPath + "/ "), vendordetails.VendorReportFileName);
             string uploadFileName = System.Web.HttpContext.Current.Server.MapPath("~/" + uploadPath + "/" + vendordetails.VendorReportFileName);
-            logw.LogWrite("inside GetPDFReport12c12 ");
             ReportViewer viewer = new ReportViewer();
-            logw.LogWrite("inside GetPDFReport12c122 ");
             viewer.ProcessingMode = ProcessingMode.Local;
             viewer.SizeToReportContent = true;
             viewer.SizeToReportContent = true;
             viewer.AsyncRendering = true;
             viewer.LocalReport.ReportPath = "VendorAuthorizationForm.rdlc";
-            logw.LogWrite("inside GetPDFReport12c123");
             DataTable vdt = createVendorDataTable(vendordetails);
             ReportDataSource rds = new ReportDataSource("VendorDataSet", vdt);
-            logw.LogWrite("inside GetPDFReport12c124");
             // location ds
             DataTable ldt = createLocationDataTable(vendordetails);
             ReportDataSource lds = new ReportDataSource("VendorDataLocDataSet", ldt);
-            logw.LogWrite("inside GetPDFReport12c125");
 
             viewer.LocalReport.DataSources.Clear();
             viewer.LocalReport.DataSources.Add(rds);
             viewer.LocalReport.DataSources.Add(lds);
-            logw.LogWrite("inside GetPDFReport12c126");
             string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
-            logw.LogWrite("inside GetPDFReport12c127");
             return Json(retFileName);
         }
     }

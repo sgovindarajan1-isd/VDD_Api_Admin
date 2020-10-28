@@ -19,6 +19,11 @@ namespace eCAPDDApi.Controllers
             return View();
         }
 
+        public ActionResult AdvanceSearchList()
+        {
+            return View();
+        }
+
         public ActionResult ApplicationSummary()
         {
             return View();

@@ -106,6 +106,6 @@ namespace eCAPDDApi.Controllers
             return bankName;
         }
 
-
+       
     }
 }
