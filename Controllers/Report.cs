@@ -11,7 +11,7 @@ using eCAPDDApi.infrastrure;
 
 namespace eCAPDDApi.Controllers
 {
-    public class ReportController : Controller
+    public class Report : Controller
     {
         public ActionResult _partialReport()
         {

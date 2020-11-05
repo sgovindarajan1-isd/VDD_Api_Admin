@@ -365,7 +365,7 @@
             },
             success: function (data) {
                 toastr.options.positionClass = "toast-bottom-right";
-                toastr.warning("Successfully User Details updated");
+                toastr.warning("Successfully user details updated.");
                 $('#userDetailsModal').modal('hide');
             }
             , complete: function (jqXHR) {
@@ -373,7 +373,7 @@
             , error: function (jqXHR, textStatus, errorThrown) {
                 if (textStatus == 'error') {
                     toastr.options.positionClass = "toast-bottom-right";
-                    toastr.warning("Error in updating  User Details , Please check!");
+                    toastr.warning("Error in updating  user details , Please check!");
                 }
                 else if (jqXHR.status == '401') {
                     window.location.href = "/Home/UnAuthorized";

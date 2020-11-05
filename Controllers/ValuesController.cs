@@ -1225,5 +1225,34 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
+        [HttpPost]
+        public HttpResponseMessage GetApplicationReport([FromBody] DAL.Models.DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetApplicationReport(dal_M_ApplicationList);
+            var data = new
+            {
+                lst_AppSearchList = dt.Item1,
+                lst_ApplicationCountList = dt.Item2
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetVCMReport([FromBody] DAL.Models.DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetVCMReport(dal_M_ApplicationList);
+            var data = new
+            {
+                lst_VCMList = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
     }
 }

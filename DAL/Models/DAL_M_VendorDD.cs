@@ -99,6 +99,7 @@ namespace DAL.Models
         public int DocumentAttachmentTypeId { get; set; }
         public string DocumentAttachmentTypeName { get; set; }
         public string ReturnErrorSuccessMsg { get; set; }
+        public int Active{ get; set; }
     }
 
     public class DAL_M_LinkApplication

@@ -1,0 +1,156 @@
+﻿<link href="~/Content/applicationsummary.css" rel="stylesheet" />
+<link href="~/Content/button.css" rel="stylesheet" />
+
+<script src="~/Scripts/App/AdminMain.js"></script>
+<script src="~/Scripts/App/help.js"></script>
+
+@*<script src="~/Scripts/App/checklist.js"></script>*@
+@*<script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>*@
+@*<script src="~/Scripts/App/applicationSummary.js"></script>*@
+
+<div class="centerColumn">
+    <div class="content clearfix">
+        <input id="skipUnSavedChanges" type="hidden" value="0">
+
+
+        <div class="leftContent">
+
+            <div class="leftBox leftBoxMenu">
+                <h2>
+                    Help
+                </h2>
+
+                <div class="menu claimMenu bhoechie-tab-menu" role="tablist">
+                    <div class="list-group">
+                        <a class="leftNavItem" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab">User Rights</a>
+
+                        <a class="leftNavItem " id="tab_Notes" href="#div_notes_tab" role="tab" aria-controls="div_notes_tab"
+                           aria-selected="false">Claim List Overview</a>
+
+                        <a class="leftNavItem " id="tab_AdvSearch" href="#div_notes_tab" role="tab" aria-controls="div_AdvSearch_tab"
+                           aria-selected="false">Advanced Search</a>
+
+                        <a class="leftNavItem " id="tab_whatNew" href="#div_notes_tab" role="tab" aria-controls="div_whatNew_tab"
+                           aria-selected="false">What's New</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bhoechie-tab">
+            <div id="div_summaryContent" class="mainBox tab-pane mainContent bhoechie-tab-content active">
+                <div id="div_summary_tab" class="mainBox tab-pane show " role="tabpanel" aria-labelledby="summary-tab">
+
+                    <h3>Disbursements Help</h3>
+                    <p>
+                        This help documentation is designed to offer detailed information and insights into various parts of the Auditor's Controller Disbursements application.
+                        The basic mechanics and operation of the application are easier to learn with hands on training, but some topics do need further explanation.
+                        If you have a question that isn't covered or feel something is missing then let us know.
+                    </p>
+                </div>
+            </div>
+
+            <div id="div_notes_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="notes-tab">
+
+
+
+                <h3>Application List</h3>
+
+                <p>
+                    The system provides you with a set of system defined lists that are based on your rights. You also have the ability to define your own application lists and filter them on a
+                    number of parameters. If you do not have any application lists defined you will be redirected to the Profile screen where you can create your own lists.
+                </p>
+
+                <h4>Adding and Editing Application Lists</h4>
+                <p>
+                    Here you will see a list of all your defined case lists. Clicking the "Add" button will display a pop up with the fields you can use to define an application list. The only
+                    required field on an application list is the name; without any other filtering it will display all applications. Once you are done setting up the application list press the "Submit"
+                    button and it will be added to the bottom of your set of application lists.
+                </p>
+                <p>
+                    To edit an existing application list you just click the name in the list that shows up as a link. This will show the edit popup window and allow you to modify its
+                    parameters. Press the "Submit" button once you are done making changes. To delete a list just click the Trashcan icon to the right of the row.
+                </p>
+
+                <h4>Ordering (Sorting) Application Lists</h4>
+                <p>
+                    The order in which the user defined application lists show up in the system can be arranged however you want. The application list at the top of the set will be displayed
+                    first when you log in. Ordering is done by dragging and dropping the lists. Click and hold the list you want to move and drag it up or down until it is in the
+                    desired position and release the left mouse button. The new position will be saved when you release the application list.
+                </p>
+
+                <h4>Customizing Application Lists</h4>
+                <p>
+                    When viewing an Application List there will be a "Customize Results" link in the top right corner. Clicking this will open a panel that allows you to quickly customize
+                    how applications are being filtered. Clicking the "Customize" button will perform the search with the selected filter customization. This new "Custom Application List" is temporary
+                    and will not be saved to your profile. To abandon the custom list click on one of the system lists or one of your saved lists on the left menu.
+                </p>
+
+
+
+            </div>
+
+
+            <div id="div_AdvSearch_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="advSearch-tab">
+                <h3>Advanced Search</h3>
+
+                <h4>Quick Application Number Search</h4>
+
+                <p>
+                    The quick search textbox at the top of the page is always visible and allows quick access to a search by Application Number. A partial search is performed,
+                    but be sure to include the hyphen if searching on a full Application number.
+                </p>
+
+                <h4>Advanced Search</h4>
+                <p>
+                    Click the Advanced Search item in the header to access a blank search page.
+                </p>
+
+                <h4>Application Number Search</h4>
+                <p>The Application Number search box will try to find a match on the Application Number</p>
+
+                <h4>Vendor Search</h4>
+                <p>The Vendor Info search box will try to find a match on the following fields:</p>
+                <ul>
+                    <li>Vendor Name</li>
+                    <li>Taxpayer ID Number</li>
+                </ul>
+
+                <h4>Search Formats</h4>
+                <p>
+                    Searches on different types of fields expect keywords in a certain format. A partial search is used on all fields.
+                </p><ul>
+                    <li><strong>Vendor's Name:</strong> First and Last names get concatenated and then searched on. "Jane Doe" will match a search for "jane" and "doe", but not "doe, jane". </li>
+                </ul>
+                <p></p>
+
+
+            </div>
+
+
+            <div id="div_whatNew_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="whatNew-tab">
+
+                <h3>What's New</h3>
+                <p>This section documents the different versions of the application and revisions made to it through its production life.</p>
+                <h4>To be Updated - November 02, 2020</h4>
+
+                @*<h4>Version 1.0.1 - June 10, 2020</h4>
+                    <ul>
+                        <li>Fixed error on Advanced Search box</li>
+                        <li>Fixed error when displaying Application List page</li>
+                    </ul>
+                    <h4>Version 1.0.0 - May 31, 2020</h4>
+                    <ul>
+                        <li>First Version of Application went live</li>
+                    </ul>*@
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

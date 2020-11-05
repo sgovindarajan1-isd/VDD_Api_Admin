@@ -720,6 +720,7 @@ namespace DAL
                     SqlCommand sqlComm = new SqlCommand("UpdateRetireAttachment", con);
                     sqlComm.Parameters.AddWithValue("@ConfirmationNumber", attachmentModel.Confirmation);
                     sqlComm.Parameters.AddWithValue("@AttachmentFileName", attachmentModel.VendorAttachmentFileName);
+                    sqlComm.Parameters.AddWithValue("@Active", attachmentModel.Active);
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.ExecuteNonQuery();
@@ -728,7 +729,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                LogManager.log.Error("Error in Retiring Attachment.  Message: " + ex.Message);
+                LogManager.log.Error("Error in Retiring / Restoring Attachment.  Message: " + ex.Message);
                 return "Error";
             }
             return "SUCCESS";
@@ -1328,6 +1329,119 @@ namespace DAL
             }
             return lst_AppSearchList;
         }
+
+        public Tuple<List<DAL_M_ApplicationList>, List<DAL_M_ApplicationList>> GetApplicationReport(DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            List<DAL_M_ApplicationList> lst_AppSearchList = new List<DAL_M_ApplicationList>();
+            List<DAL_M_ApplicationList> lst_AppCountList = new List<DAL_M_ApplicationList>();
+
+            try
+            {
+                DataSet ds = new DataSet("ApplicationReportList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetApplicationReport", con);
+                    sqlComm.Parameters.AddWithValue("@ApplicationType", dal_M_ApplicationList.FilterApptype);
+                    sqlComm.Parameters.AddWithValue("@ApplicationStatus", dal_M_ApplicationList.StatusCode);
+                    sqlComm.Parameters.AddWithValue("@UserId", dal_M_ApplicationList.UserId);
+                    sqlComm.Parameters.AddWithValue("@ReceivedDate", dal_M_ApplicationList.StartDate);
+                    sqlComm.Parameters.AddWithValue("@ClosedDate", dal_M_ApplicationList.EndDate);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_ApplicationList v = new DAL_M_ApplicationList();
+                        v.VendorName = ds.Tables[0].Rows[i]["PayeeName"].ToString();
+                        v.ConfirmationNum = ds.Tables[0].Rows[i]["ConfirmationNum"].ToString();
+                        if (ds.Tables[0].Rows[i]["ReceivedDate"] != null)
+                        {
+                            v.ReceivedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["ReceivedDate"]);
+                        }
+                        if (ds.Tables[0].Rows[i]["AssignmentDate"] != null)
+                        {
+                            v.AssignedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["AssignmentDate"]);
+                        }
+                        if (ds.Tables[0].Rows[i]["ClosedDate"] != null)
+                        {
+                            v.ClosedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["ClosedDate"]);
+                        }
+
+                        v.ApplicationAge = ds.Tables[0].Rows[i]["ApplicationAge"].ToString();
+                        v.StatusCode = ds.Tables[0].Rows[i]["StatusCode"].ToString();
+                        v.StatusDesc = ds.Tables[0].Rows[i]["StatusDesc"].ToString();
+                        v.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
+                        lst_AppSearchList.Add(v);
+                    }
+
+                    for (int i = 0; i <= ds.Tables[1].Rows.Count - 1; i++)
+                    {
+                        DAL_M_ApplicationList v = new DAL_M_ApplicationList();
+                        v.ApplicationCount = int.Parse(ds.Tables[1].Rows[i]["ApplicationCount"].ToString());
+                        v.StatusCode = ds.Tables[1].Rows[i]["Status"].ToString();
+                        v.StatusDesc = ds.Tables[1].Rows[i]["StatusDesc"].ToString();
+                        lst_AppCountList.Add(v);
+                    }
+
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Get Application Advanced Search.  Message: " + ex.Message);
+            }
+            return new Tuple<List<DAL_M_ApplicationList>, List<DAL_M_ApplicationList>>(lst_AppSearchList, lst_AppCountList);
+        }
+
+        public List<DAL_M_ApplicationList> GetVCMReport(DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            List<DAL_M_ApplicationList> lst_VCMList = new List<DAL_M_ApplicationList>();
+
+            try
+            {
+                DataSet ds = new DataSet("VCMReportList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetVCMReport", con);
+                    sqlComm.Parameters.AddWithValue("@ReceivedDate", dal_M_ApplicationList.StartDate);
+                    sqlComm.Parameters.AddWithValue("@ClosedDate", dal_M_ApplicationList.EndDate);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_ApplicationList v = new DAL_M_ApplicationList();
+                        v.VendorName = ds.Tables[0].Rows[i]["PayeeName"].ToString();
+                        v.ConfirmationNum = ds.Tables[0].Rows[i]["ConfirmationNum"].ToString();
+                        if (ds.Tables[0].Rows[i]["ReceivedDate"] != null)
+                        {
+                            v.ReceivedDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["ReceivedDate"]);
+                        }
+                        if (ds.Tables[0].Rows[i]["DocumentCreateDate"] != null)
+                        {
+                            v.DocumentCreateDate = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["DocumentCreateDate"]);
+                        }
+
+                        v.VendorNumber = ds.Tables[0].Rows[i]["VendorCode"].ToString();
+                        v.AttachmentCount = int.Parse(ds.Tables[0].Rows[i]["AttachmentCount"].ToString());
+                        v.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
+                        lst_VCMList.Add(v);
+                    }
+                   
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Get VCM Log Report.  Message: " + ex.Message);
+            }
+            return lst_VCMList;
+        }
+
     }
 
 }

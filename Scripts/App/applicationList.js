@@ -47,27 +47,38 @@
         });
     });
 
-
     GetApplicationCustomFilterList();
 
-    //var table = $('#ddGrid').DataTable();
-
-    // Default view for Supervisor
-    if (sessionStorage.getItem('RoleId') == "12" || sessionStorage.getItem('RoleId') == "4" ) { //        12	- Supervisor
-        getApplicationDetails(12, userId, '5', '21,22,23');  //  supervisor will see all the pending  status
+    if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+        //12 - Supervisor
+        getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23');  //  supervisor and adminwill see all the pending  status
     }
+    if (GlobalUserHasRoles.ProcessorRole) {
 
-    // Default view For Processor
-    if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
-        //$("#sidemenu_PendingAssignment").css('visibility', 'hidden');
+        $("#sidemenu_PendingAssignment").hide();
         $("#sidemenu_PendingAssignment").addClass('isDisabledApplicationListLink');
         $("#heading_applicationlist").text("Pending My Approval");
-
         $("#sidemenu_PendingMyApproval").addClass('leftNavItemActive');
         $("#sidemenu_PendingAssignment").removeClass('leftNavItemActive');
 
-        getApplicationDetails(11, userId, '2', '');  //  Processor will see only  My pending approval  ( not the application pending assignment)
+        getApplicationDetails(GlobalRoles.ProcessorRole, userId, '2', '');  //  Processor will see only  My pending approval  ( not the application pending assignment)
     }
+
+    //// Default view for Supervisor
+    //if (sessionStorage.getItem('RoleId') == "12" || sessionStorage.getItem('RoleId') == "4" ) { //        12	- Supervisor
+    //    getApplicationDetails(12, userId, '5', '21,22,23');  //  supervisor will see all the pending  status
+    //}
+
+    //// Default view For Processor
+    //if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
+    //    $("#sidemenu_PendingAssignment").addClass('isDisabledApplicationListLink');
+    //    $("#heading_applicationlist").text("Pending My Approval");
+
+    //    $("#sidemenu_PendingMyApproval").addClass('leftNavItemActive');
+    //    $("#sidemenu_PendingAssignment").removeClass('leftNavItemActive');
+
+    //    getApplicationDetails(11, userId, '2', ''); 
+    //}
 
 
     $("#sidemenu_PendingAssignment").click(function () {
@@ -85,29 +96,37 @@
     $("#btn_customizeFilter").click(function () {
         debugger;
         var filterApptype = $("#filterApplicationType  option:selected").text();
-        var filterUser = $("#filterUser  option:selected").text();
+        var filterUser = $("#filterUser  option:selected").val();
         var filterStatus = $("#filterStatus  option:selected").text();
         var age = $("#filerAge  option:selected").val();
         
        // Default view for Supervisor
-       if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-            getApplicationDetails(12, userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
-       }
+       //if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
+       //     getApplicationDetails(12, userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
+       //}
 
-       // Default view For Processor
-       if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
-            getApplicationDetails(11, userId, '2', '', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)
+       //// Default view For Processor
+       //if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
+       //     getApplicationDetails(11, userId, '2', '', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)
+       // }
+
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
+            getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
+        }
+        if (GlobalUserHasRoles.ProcessorRole) {
+            getApplicationDetails(GlobalRoles.ProcessorRole, userId, '2', '', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)
         }
 
         $("#customizeFilterModal").modal('hide');
-
     });
    
     $("#btn_0_15_days").click(function () {
+        debugger;
         getApplicationListFilteredByAge(15);
     });
 
     $("#btn_16_30_days").click(function () {
+        debugger;
         getApplicationListFilteredByAge(30);
     });
 
@@ -121,13 +140,22 @@
     
     function getApplicationListFilteredByAge(age) {
         // Default view for Supervisor
-        if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-            getApplicationDetails(12, userId, '5', '21,22,23', age,'','','');  //  supervisor will see all the pending  status
-        }
+        //if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
+        //    getApplicationDetails(12, userId, '5', '21,22,23', age,'','','');  //  supervisor will see all the pending  status
+        //}
 
-        // Default view For Processor
-        if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
-            getApplicationDetails(11, userId, '2', '', age,'','','');  //  Processor will see only  My pending approval  ( not the application pending assignment)
+        //// Default view For Processor
+        //if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
+        //    getApplicationDetails(11, userId, '2', '', age,'','','');  //  Processor will see only  My pending approval  ( not the application pending assignment)
+        //}
+
+
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
+            getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23', age, '', '', ''); 
+        }
+        if (GlobalUserHasRoles.ProcessorRole) {
+            $("#div_application_PendingAssignment").remove();
+            getApplicationDetails(GlobalRoles.ProcessorRole, userId, '2', '', age, '', '', '');
         }
     };
 
@@ -138,11 +166,7 @@
 
     function setData(data) {
         $('#ddGrid').DataTable().destroy();
-        ////table.DataTable().destroy();
         $('#ddGrid').empty();
-        //table = $('#ddGrid').dataTable({
-        ////table.empty();
-        //////table.dataTable({
         $('#ddGrid').dataTable({
             responsive: true,
             searching: false,
@@ -155,8 +179,6 @@
                     "data": "ConfirmationNum",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            //sessionStorage.setItem('selectedConfirmationNumber', data);
-                            //sessionStorage.setItem('selectedRequestType', row.RequestType);
                             data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType+' </a>';
                         }
 
@@ -246,7 +268,8 @@
                 var filterUserList = $('#filterUser');
                 $.each(userList, function (key, value) {
                     filterUserList.append(
-                        $('<option></option>').val(value.Text).html(value.IdText)
+                       // $('<option></option>').val(value.Text).html(value.IdText)
+                         $('<option></option>').html(value.Text).val(value.IdText)
                     );
                 });
 

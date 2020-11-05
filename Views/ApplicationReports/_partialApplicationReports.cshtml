@@ -1,0 +1,312 @@
+﻿<link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/reports.css" rel="stylesheet" />
+<link href="~/Content/button.css" rel="stylesheet" />
+<link href="~/Content/claims.css" rel="stylesheet" />
+
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+
+@*<script src="~/Scripts/App/ExportToexcel/dataTables.buttons.min.js"></script>
+<script src="~/Scripts/App/ExportToexcel/jquery.dataTables.min.js"></script>
+
+<script src="~/Scripts/App/ExportToexcel/buttons.flash.min.js"></script>
+<script src="~/Scripts/App/ExportToexcel/jszip.min.js"></script>
+<script src="~/Scripts/App/ExportToexcel/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="~/Scripts/App/ExportToexcel/vfs_fonts.js"></script>
+<script src="~/Scripts/App/ExportToexcel/buttons.html5.min.js"></script>
+<script src="~/Scripts/App/ExportToexcel/buttons.print.min.js"></script>*@
+
+<script src="~/Scripts/App/AdminMain.js"></script>
+<script src="~/Scripts/App/reports.js"></script>
+
+<div class="centerColumn">
+    <div class="content clearfix">
+        <div class="wideContent">
+            <div class="mainBox clearfix">
+                <div class="container">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <h6>Status Reports</h6>
+                            <div class="input-group">
+                                <select id="selClaimsType" class="select-form-control">
+                                    <option value="0">Select One</option>
+                                    <option value="1">Application</option>
+                                    <option value="2">VCM Activity</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                @*<div id="divClaimsSection">
+                    </div>
+                    <div id="divClaimsResults">
+                    </div>*@
+            </div>
+            @*   end  testing for reports details *@
+
+            <div id="panel_Application">
+                <h2>Application Type, Status, User ID and Date Report</h2>
+                <div class="card mb-3 mt-3">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <h6>Types of Applications</h6>
+                                    <div class="input-group w-100">
+                                        <select id="selectApplicationType" class="select-form-control">
+                                            <option value=""></option>
+                                            @*<option value="2" selected=""></option>
+                                                <option value="2">ACCHasdfasd</option>*@
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <h6>Status</h6>
+                                    <div class="input-group w-100">
+                                        <select id="selectStatus" class="select-form-control">
+                                            <option value=""></option>
+                                            @*<option value="2" selected=""></option>
+                                                <option value="2">Newadsfasdf</option>*@
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <h6>User ID</h6>
+                                    <div class="input-group w-100">
+                                        <select id="selectUser" class="select-form-control">
+                                            <option value=""></option>
+                                            @* <option value="2" selected=""></option>
+                                                <option value="2">Ellaine Mallariqwerwqerqw</option>*@
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Datepicker -->
+                        <div class="container">
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <h6>Start Date</h6>
+                                    <div class="input-group date" id="datetimepicker6">
+                                        <input type="text" class="datepicker-mod form-control datetimepicker-input" id="startDate" value="">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <h6>End Date</h6>
+                                    <div class="input-group date" id="datetimepicker7">
+                                        <input type="text" class="datepicker-mod form-control datetimepicker-input" id="endDate" value="">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="form-group" style="margin-top: 28px!important">
+                                    <input type="button" id="btn_runReport" class="btn btn-lg btn-primary" value="Run Report">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel_VCM">
+                <h2>VCM Actvity</h2>
+                <div class="card mb-3 mt-3">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Datepicker -->
+                        <div class="container">
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <h6>Start Date</h6>
+                                    <div class="input-group date" id="datetimepicker6">
+                                        <input type="text" class="datepicker-mod form-control datetimepicker-input" id="vcmStartDate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <h6>End Date</h6>
+                                    <div class="input-group date" id="datetimepicker7">
+                                        <input type="text" class="datepicker-mod form-control datetimepicker-input" id="vcmEndDate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="form-group" style="margin-top: 28px!important">
+                                    <input type="button" id="btnVCMRunReport" class="btn btn-lg btn-primary" value="Run Report">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Claims Summary Field-->
+    <div class="card mb-3 mt-3" id="ApplicationCountSection" style="display:none">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Applications</h6>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-md-center">
+                <div class="col-2 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-primary text-uppercase mb-1">New</div>
+                                    <div id="card_New" class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-success text-uppercase mb-1">Processor Review</div>
+                                    <div id="card_ProcessorReview" class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-info text-uppercase mb-1">Pending Vendor Confirmation</div>
+                                    <div id="card_PendingVendorConfirmation" class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-warning text-uppercase mb-1">Supervisor Review</div>
+                                    <div id="card_SupervisorReview" class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-2 mb-4">
+                    <div class="card border-left-orange shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-orange text-uppercase mb-1">Approved</div>
+                                    <div id="card_Approved" class="h5 mb-0 font-weight-bold text-gray-800 align-text-bottom"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-2 mb-4">
+                    <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-danger text-uppercase mb-1">Rejected</div>
+                                    <div id="card_Rejected" class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divClaimsResults">
+        <table id="ddGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+            <thead>
+                <tr class="button-header-color">
+                    <th>ConfirmationNum</th>
+                    <th>VendorName</th>
+                    <th>ReceivedDate</th>
+                    <th>AssignedDate</th>
+                    <th>Application Age</th>
+                    <th>StatusDesc</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+
+    <div id="divVCMResults">
+        <table id="ddVCMGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+            <thead>
+                <tr class="button-header-color">
+                    <th>ConfirmationNum</th>
+                    <th>VendorNumber</th>
+                    <th>VendorName</th>
+                    <th>ReceivedDate</th>
+                    <th>AttachmentCount</th>
+                    <th>DocumentCreateDate</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+</div>
+
+
+
