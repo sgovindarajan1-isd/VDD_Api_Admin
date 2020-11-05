@@ -36,19 +36,16 @@
             $("#text1").hide();
     });
 
-    //function UserHasonlyDataEntryRole(rolesList, role) {
-    //    foreach()
-    //    debugger;
-    //}
+    
 
     function loginUser(userId, password) {
         debugger;
         //testing values
         if ($(location).attr('href').indexOf("local") > -1) {
-            ////  To do :  test values for easy access,  remove later
-            var userId = 'e622505';   // data entry -- old supervisor
+            //  To do :  test values for easy access,  remove later
+            //  var userId = 'e622505';   // data entry -- old supervisor
             //  var userId = 'e631971';//'c197831';   //  processor
-            //var password = '';
+            //  var password = '';
         }
         //testing values
 
@@ -89,13 +86,38 @@
                 $("#lbl_userName").text(data.data.userProfile_2.displayNameField); //id_userName
 
                 var userRoles = [];
-                debugger;
                 for (var i = 0; i < data.data.List_userRoles.length; i++) {
                     var RoleId = data.data.List_userRoles[i].RoleId;
                     userRoles.push({ RoleId });
                 }
                 sessionStorage.setItem('UserRolesListJson', JSON.stringify(userRoles));
-                debugger;
+
+             
+                
+                // temp code
+                GlobalUserHasRoles.DataEntryRole = false;
+                GlobalUserHasRoles.ProcessorRole = false;
+                GlobalUserHasRoles.SupervisorRole = false;
+                GlobalUserHasRoles.AdminRole = false;
+                  userHasDataEntryRole(JSON.stringify(userRoles));
+
+                //var userRoleObj = sessionStorage.getItem('UserRolesListJson');
+                //for (var i = 0; i < userRoleObj.length-1; i++) {
+                //    if (userRoleObj[i].RoleId == GlobalRoles.DataEntryRole) {
+                //        GlobalUserHasRoles.DataEntryRole = true;
+                //    }
+                //    if (userRoleObj[i].RoleId == GlobalRoles.ProcessorRole) {
+                //        GlobalUserHasRoles.ProcessorRole = true;
+                //    }
+                //    if (userRoleObj[i].RoleId == GlobalRoles.SupervisorRole) {
+                //        GlobalUserHasRoles.SupervisorRole = true;
+                //    }
+                //    if (userRoleObj[i].RoleId == GlobalRoles.AdminRole) {
+                //        GlobalUserHasRoles.AdminRole = true;
+                //    }
+
+                //}
+                // temp  code 
 
                 // testing ip
                 sessionStorage.setItem('SourceIP', data.data.SourceIP);
@@ -114,10 +136,9 @@
                     //deptuser landing page and dataentry role
                     //else if  //Dispersement user and dataentry role
                     //vendor code entry page
-                    debugger;
                     
-                   // if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
-                    if (GlobalUserHasRoles.DataEntryRole) {
+                    if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+                   // if (GlobalUserHasRoles.DataEntryRole) {
                         window.location.href = '/draft/_partialDraftLanding';//'/draft/_partialVendor';
                     }
                     else {

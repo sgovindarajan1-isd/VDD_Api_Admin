@@ -36,31 +36,50 @@ $.fn.popover.Constructor.prototype.leave = function (obj) {
 $('body').popover({ selector: '[data-popover]', trigger: 'hover', placement: 'auto', delay: { show: 50, hide: 400 } });
 //  Popover on question mark on mouse hover  - Ending
 
-$(document).ready(function () {
 
+function userHasDataEntryRole(userRoleObj) {
+	for (var i = 0; i < userRoleObj.length; i++) {
+		if (userRoleObj[i].RoleId == GlobalRoles.DataEntryRole) {
+			GlobalUserHasRoles.DataEntryRole = true;
+		}
+		if (userRoleObj[i].RoleId == GlobalRoles.ProcessorRole) {
+			GlobalUserHasRoles.ProcessorRole = true;
+		}
+		if (userRoleObj[i].RoleId == GlobalRoles.SupervisorRole) {
+			GlobalUserHasRoles.SupervisorRole = true;
+		}
+		if (userRoleObj[i].RoleId == GlobalRoles.AdminRole) {
+			GlobalUserHasRoles.AdminRole = true;
+		}
+
+	}
+}
+
+$(document).ready(function () {
+	debugger;
 	// ***********  Menu Building  ******************
 
 	var userRoleObj = JSON.parse(sessionStorage.getItem("UserRolesListJson"));
 	userHasDataEntryRole(userRoleObj);
 
 
-	function userHasDataEntryRole(userRoleObj) {
-		for (var i = 0; i < userRoleObj.length; i++) {
-			if (userRoleObj[i].RoleId == GlobalRoles.DataEntryRole) {
-				GlobalUserHasRoles.DataEntryRole = true;
-			}
-			if (userRoleObj[i].RoleId == GlobalRoles.ProcessorRole) {
-				GlobalUserHasRoles.ProcessorRole = true;
-			}
-			if (userRoleObj[i].RoleId == GlobalRoles.SupervisorRole) {
-				GlobalUserHasRoles.SupervisorRole = true;
-			}
-			if (userRoleObj[i].RoleId == GlobalRoles.AdminRole) {
-				GlobalUserHasRoles.AdminRole = true;
-			}
+	//function userHasDataEntryRole(userRoleObj) {
+	//	for (var i = 0; i < userRoleObj.length; i++) {
+	//		if (userRoleObj[i].RoleId == GlobalRoles.DataEntryRole) {
+	//			GlobalUserHasRoles.DataEntryRole = true;
+	//		}
+	//		if (userRoleObj[i].RoleId == GlobalRoles.ProcessorRole) {
+	//			GlobalUserHasRoles.ProcessorRole = true;
+	//		}
+	//		if (userRoleObj[i].RoleId == GlobalRoles.SupervisorRole) {
+	//			GlobalUserHasRoles.SupervisorRole = true;
+	//		}
+	//		if (userRoleObj[i].RoleId == GlobalRoles.AdminRole) {
+	//			GlobalUserHasRoles.AdminRole = true;
+	//		}
 
-		}
-	}
+	//	}
+	//}
 	debugger;
 	if (GlobalUserHasRoles.DataEntryRole) {
 		//if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
@@ -153,8 +172,11 @@ $(document).ready(function () {
 
 	
 	$("#menu_admin").click(function () {
-		debugger;
 		window.location.href = '/Administration/_partialAdministration';
+	});
+
+	$("#menu_reports").click(function () {
+		window.location.href = '/ApplicationReports/_partialApplicationReports';
 	});
 
 
@@ -171,17 +193,50 @@ $(document).ready(function () {
 
     $("#lnkHome").click(function () {
         //window.location.href = '/home/dashboard';
-		if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
-			window.location.href = '/draft/_partialDraftLanding';//'/draft/_partialVendor';
+		//if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+		//	window.location.href = '/draft/_partialDraftLanding';//'/draft/_partialVendor';
+		//}
+		//else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+		//	window.location.href = '/home/dashboard';
+		//}
+
+		if (GlobalUserHasRoles.DataEntryRole) {
+			window.location.href = '/draft/_partialDraftLanding';
 		}
-		else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
+		else if ((GlobalUserHasRoles.ProcessorRole) || (GlobalUserHasRoles.SupervisorRole)) {
 			window.location.href = '/home/dashboard';
 		}
-    });
 
-    $("#btn_logout").click(function () {
-        //$('#logoutModal').modal('hide');
-        sessionStorage.clear();
+	});
+
+	//$("#btn_logout").on('click', function () {
+	//	$('#logoutModal').modal('hide');
+	//	sessionStorage.clear();
+	//	window.location.href = "/Home/Index";
+	//});
+
+	$("#btn_logoutModal").click(function () {
+		debugger;
+
+		$('#logoutModal').modal('hide');
+		sessionStorage.clear();
+		GlobalUserHasRoles.DataEntryRole = false;
+		GlobalUserHasRoles.ProcessorRole = false;
+		GlobalUserHasRoles.SupervisorRole = false;
+		GlobalUserHasRoles.AdminRole = false;
+
+		window.location.href = "/Home/Index";
+	});
+
+	$("#btn_logout").click(function () {
+		debugger;
+
+		sessionStorage.clear();
+		GlobalUserHasRoles.DataEntryRole = false;
+		GlobalUserHasRoles.ProcessorRole = false;
+		GlobalUserHasRoles.SupervisorRole = false;
+		GlobalUserHasRoles.AdminRole = false;
+
         window.location.href = "/Home/Index";
 	});
    
@@ -241,11 +296,7 @@ $('.liselect').on('click', function () {
 	}
 });
 
-$("#btn_logout").on('click', function () {
-	$('#logoutModal').modal('hide');
-	sessionStorage.clear();
-	window.location.href = "/Home/Index";
-});
+
 
 $("#btn_generalInfo").on('click', function () {
 	window.location.href = "/Home/UnAuthorized";
