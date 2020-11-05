@@ -109,8 +109,6 @@
     };
 
     function getApplicationDetails(confNumber, venNumber, payeeName, receivedDate, statusDate, appStatus, appType, filterAge) {
-        debugger;
-        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",

@@ -46,6 +46,42 @@
         download_file("/Uploads/" + data.AttachmentFileName, data.AttachmentFileName); //call function
 
     });
+
+    $('#ddArchieveGrid').on('click', '.clsRestoreArchieve', function (e) {
+        debugger;
+        var closestRow = $(this).closest('tr');
+        var data = $('#ddArchieveGrid').DataTable().row(closestRow).data();
+
+        var confirmationNumber = sessionStorage.getItem('selectedConfirmationNumber');
+        var fname = data.AttachmentFileName;
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            dataType: 'json',
+            data: JSON.stringify({ 'Confirmation': confirmationNumber, 'VendorAttachmentFileName': fname, 'Active': 1 }),
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            url: "/api/values/UpdateRetireAttachment/",
+            success: function (data) {
+                debugger;
+                // REMOVE THE LINE
+                // closestRow.remove();
+                toastr.options.positionClass = "toast-bottom-right";
+                toastr.warning("This attachment Restored from the archieve List!");
+
+                GetArchieveDocuments(confirmationNum);
+
+                $("#menuDocCount").text(data.data.length);
+            },
+            error: function (_XMLHttpRequest, textStatus, errorThrown) {
+                if (_XMLHttpRequest.status == '401') {
+                    window.location.href = "/Home/UnAuthorized";
+                }
+            }
+        });
+
+    });
     //
 
     function setAttachment(data) {
@@ -98,6 +134,14 @@
 
                             '<span class="glyphicon glyphicon-download-alt"></span>' +
                             '<span>Download</span>' +
+                            '</a>' +
+                            '</li>' +
+
+                            '<li>' +
+                            '<a class="clsRestoreArchieve" title="Restore Document" > ' +
+
+                            '<span class="glyphicon glyphicon-download-alt123"></span>' +
+                            '<span>Restore</span>' +
                             '</a>' +
                             '</li>' +
 

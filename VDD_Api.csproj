@@ -339,7 +339,8 @@
     <Compile Include="Controllers\DraftController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\Report.cs" />
+    <Compile Include="Controllers\ApplicationReportsController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -551,11 +552,15 @@
     <Content Include="Content\button-images\fa fa-envelope.png" />
     <Content Include="Content\button-images\fa fa-information.png" />
     <Content Include="Content\button.css" />
+    <Content Include="Content\claims.css" />
     <Content Include="Content\css.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\DataTable\dataTables.responsive.css" />
     <Content Include="Content\DataTable\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTable\jquery.dataTables.min-new.css" />
     <Content Include="Content\DataTable\select.dataTables.min.css" />
+    <Content Include="Content\ExportToexcel\buttons.dataTables.min.css" />
+    <Content Include="Content\ExportToexcel\jquery.dataTables.min.css" />
     <Content Include="Content\images\attachment_step.png" />
     <Content Include="Content\images\attachment_step_on.png" />
     <Content Include="Content\images\bank_step.png" />
@@ -578,6 +583,7 @@
     <Content Include="Content\login.css" />
     <Content Include="Content\main2.css" />
     <Content Include="Content\mainmenu.css" />
+    <Content Include="Content\reports.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -585,6 +591,15 @@
     <Content Include="Scripts\App\AdminMain.js" />
     <Content Include="Scripts\App\advanceSearchList.js" />
     <Content Include="Scripts\App\archieve.js" />
+    <Content Include="Scripts\App\DataTable\jquery.dataTables.min.js" />
+    <Content Include="Scripts\App\ExportToexcel\buttons.html5.min.js" />
+    <Content Include="Scripts\App\ExportToexcel\buttons.print.min.js" />
+    <Content Include="Scripts\App\ExportToexcel\dataTables.buttons.min.js" />
+    <Content Include="Scripts\App\ExportToexcel\jquery.dataTables.min.js" />
+    <Content Include="Scripts\App\ExportToexcel\jszip.min.js" />
+    <Content Include="Scripts\App\ExportToexcel\pdfmake.min.js" />
+    <Content Include="Scripts\App\ExportToexcel\vfs_fonts.js" />
+    <Content Include="Scripts\App\help.js" />
     <Content Include="Scripts\App\linkApplication.js" />
     <Content Include="Scripts\App\applicationList.js" />
     <Content Include="Scripts\App\applicationSummary.js" />
@@ -593,7 +608,7 @@
     <Content Include="Scripts\App\DataTable\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\App\DataTable\dataTables.responsive.js" />
     <Content Include="Scripts\App\DataTable\dataTables.select.min.js" />
-    <Content Include="Scripts\App\DataTable\jquery.dataTables.min.js" />
+    <Content Include="Scripts\App\DataTable\jquery.dataTables.min_test.js" />
     <Content Include="Scripts\App\draft\bankdetails.js" />
     <Content Include="Scripts\App\draft\certifyconfirm.js" />
     <Content Include="Scripts\App\draft\draftMain.js" />
@@ -601,6 +616,7 @@
     <Content Include="Scripts\App\draft\location.js" />
     <Content Include="Scripts\App\draft\vendordetails.js" />
     <Content Include="Scripts\App\login.js" />
+    <Content Include="Scripts\App\reports.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -633,6 +649,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Scripts\App\ExportToexcel\buttons.flash.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -698,6 +715,8 @@
     <Content Include="Views\Draft\_partialDraftLanding.cshtml" />
     <Content Include="Views\Administration\_partialAdministration.cshtml" />
     <Content Include="Views\ApplicationList\advanceSearchList.cshtml" />
+    <Content Include="Views\ApplicationReports\_partialApplicationReports.cshtml" />
+    <Content Include="Views\Home\help.cshtml" />
     <None Include="Web References\gov.lacounty.webadminisd\service.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

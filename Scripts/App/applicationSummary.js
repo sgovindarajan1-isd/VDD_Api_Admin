@@ -5,12 +5,16 @@
     var role = sessionStorage.getItem('RoleId');
     // to do later
 
-    //if ($("#approveApplicationModal").hasClass('processorapprove')) {
-    //}
-    //else if ($("#approveApplicationModal").hasClass('supervisorapprove')) {
-    //}
-    //else {
-    //}
+    // admin role
+    if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+        debugger;
+        $("#btn_vendorDetails").show();
+    }
+    else {
+        debugger;
+        $("#btn_vendorDetails").hide();
+    }
+
 
     $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
         e.preventDefault();
@@ -50,6 +54,11 @@
         $('#btn_proce_reject').click(function () {
             $('#approveApplicationModal').addClass('processorReject')
         });
+    });
+
+    $("#menu_Documents").click(function () {
+        debugger;
+        GetAttachmentDocuments(confirmationNum);
     });
 
     getApplicationSummary(confirmationNum);
@@ -109,8 +118,8 @@
             if (status == 5 || status == 21 || status == 22) {  //'pending'    // If Pending  no needed to show "Return" button
                 statusDesc = "(Application Pending)";
                 $("#btn_reviewReturn").hide();
-                $("#btn_reviewReject").hide();
-                $("#btn_reviewPrint").show();
+                //$("#btn_reviewReject").hide();
+                //$("#btn_reviewPrint").show();
             }
 
             if (status == 21 || status == 22) {
@@ -869,7 +878,7 @@
             contentType: 'application/json; charset=utf-8',
             type: "POST",
             dataType: 'json',
-            data: JSON.stringify({ 'Confirmation': confirmationNum, 'VendorAttachmentFileName': fname }),
+            data: JSON.stringify({ 'Confirmation': confirmationNum, 'VendorAttachmentFileName': fname, 'Active': 0 }),
             headers: {
                 'Authorization': 'Basic ' + btoa('admin')
             },

@@ -12,15 +12,21 @@ namespace DAL.Models
         public string VendorName { get; set; }
         public string ReceivedDate { get; set; }
         public string AssignedDate { get; set; }
+        public string ClosedDate { get; set; }
         public string ApplicationAge { get; set; }
         public string StatusCode { get; set; }
         public string StatusDesc { get; set; }
         public string RequestType { get; set; }
         public string Age { get; set; }
         public string AgeCount { get; set; }
+        public int ApplicationCount { get; set; }
+        public int AttachmentCount { get; set; }
+        public string DocumentCreateDate { get; set; }
 
 
         // userd for filtering
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public string VendorNumber { get; set; }  // vendor code
         public string PayeeName { get; set; }
         public string Age1 { get; set; }

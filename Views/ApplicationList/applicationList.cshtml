@@ -116,18 +116,18 @@
 
 
                     @*<div class="advSearchMenuSpacer">
-                        <label for="issueDate" style="margin-right: 4px; ">Application Type</label>
-                        <input class="clearable" id="search_ApplicationType" name="issueDate" type="search" value="" style="width:175px;">
-                        <div>
-                            <span class="field-validation-valid text-danger" data-valmsg-for="issueDate" data-valmsg-replace="true"></span>
-                        </div>
-                    </div>*@
+                            <label for="issueDate" style="margin-right: 4px; ">Application Type</label>
+                            <input class="clearable" id="search_ApplicationType" name="issueDate" type="search" value="" style="width:175px;">
+                            <div>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="issueDate" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>*@
 
                     <div class="advSearchMenuSpacer">
                         <label class="firstLabelLong" for="selectProcessorsList" style="text-align:left;">Application Type:</label>
-                            <select class="" id="advanceSearch_ApplicationTypeList" style="text-align:left; width:100%; vertical-align:middle;">
-                                <option value=""></option>
-                            </select>
+                        <select class="" id="advanceSearch_ApplicationTypeList" style="text-align:left; width:100%; vertical-align:middle;">
+                            <option value=""></option>
+                        </select>
                     </div>
 
                     <div>
@@ -156,7 +156,7 @@
                 <div id="pnl_applicationAgeInfo" class="leftBox leftBoxMenu">
                     <h5>User Lists</h5>
                     <div class="menu">
-                        <a class="leftNavItem ">
+                        <a @*class="leftNavItem ">*@ class="leftNavItem" id="sidemenu_AppOver60">
                             <span id="span_appPendingOver60Days" class="badge pull-right" style="margin-right:3px;"></span>
                             Applications Over 60 Days
                         </a>
@@ -164,7 +164,7 @@
                     </div>
                 </div>
 
-                <div  id="pnl_ManageUserInfo" class="topMargin">
+                <div id="pnl_ManageUserInfo" class="topMargin">
                     <a>
                         <span class="fa smallRightMargin fa-gear"></span><b>Manage User Lists</b>
                     </a>
@@ -172,63 +172,63 @@
 
             </div>
 
-                <!--------------------------------->
+            <!--------------------------------->
 
-                <div class="mainContent">
-                    <div class="mainBox">
-                        <div id="customizeResults">
+            <div class="mainContent">
+                <div class="mainBox">
+                    <div id="customizeResults">
 
-                            @*<a class="pull-right nonFormSubmit" href="#" data-url="#">*@
-                            <a id="btn_Assign" data-toggle="modal" data-target="#customizeFilterModal" class="pull-right nonFormSubmit">
-                                <strong>Customize Results</strong>
-                            </a>
-                            <h2 id="heading_applicationlist" class="smallBottomMargin">Application Pending Assignment</h2>
-                        </div>
-
-                        <div>
-                            <strong>Application Age: </strong>
-
-                            <div id="btn_0_15_days" class="well well-xxs smallRightMargin" style="display:inline-block; ">
-                                <span class="fa fa-fw fa-circle text-green" aria-hidden="true"> </span>
-                                <span class="">0 - 15 days </span>
-                            </div>
-                            <div id="btn_16_30_days" class="well well-xxs smallRightMargin" style="display:inline-block; ">
-                                <span class="fa fa-fw fa-circle text-blue" aria-hidden="true"> </span>
-                                <span class="">16-30 days </span>
-                            </div>
-                            <div id="btn_31_60_days" class="well well-xxs smallRightMargin" style="display:inline-block; ">
-                                <span class="fa fa-fw fa-circle text-orange" aria-hidden="true"> </span>
-                                <span class="">31-60 days </span>
-                            </div>
-                            <div id="btn_60_plus_days" class="well well-xxs smallRightMargin" style="display:inline-block; ">
-                                <span class="fa fa-fw fa-circle text-red" aria-hidden="true"> </span>
-                                <span class="">61+ days </span>
-                            </div>
-                        </div>
-
-
-                        <table id="ddGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
-                            <thead>
-                                <tr class="button-header-color">
-                                    @*<th></th>*@
-                                    <th>ConfirmationNum</th>
-                                    <th>VendorName</th>
-                                    <th>ReceivedDate</th>
-                                    <th>AssignedDate</th>
-                                    <th>Application Age</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                        </table>
-
-
+                        @*<a class="pull-right nonFormSubmit" href="#" data-url="#">*@
+                        <a id="btn_Assign" data-toggle="modal" data-target="#customizeFilterModal" class="pull-right nonFormSubmit">
+                            <strong>Customize Results</strong>
+                        </a>
+                        <h2 id="heading_applicationlist" class="smallBottomMargin">Application Pending Assignment</h2>
                     </div>
+
+                    <div>
+                        <strong>Application Age: </strong>
+
+                        <div id="btn_0_15_days" class="well well-xxs smallRightMargin" style="display:inline-block; ">
+                            <span class="fa fa-fw fa-circle text-green" aria-hidden="true"> </span>
+                            <span class="">0 - 15 days </span>
+                        </div>
+                        <div id="btn_16_30_days" class="well well-xxs smallRightMargin" style="display:inline-block; ">
+                            <span class="fa fa-fw fa-circle text-blue" aria-hidden="true"> </span>
+                            <span class="">16-30 days </span>
+                        </div>
+                        <div id="btn_31_60_days" class="well well-xxs smallRightMargin" style="display:inline-block; ">
+                            <span class="fa fa-fw fa-circle text-orange" aria-hidden="true"> </span>
+                            <span class="">31-60 days </span>
+                        </div>
+                        <div id="btn_60_plus_days" class="well well-xxs smallRightMargin" style="display:inline-block; ">
+                            <span class="fa fa-fw fa-circle text-red" aria-hidden="true"> </span>
+                            <span class="">61+ days </span>
+                        </div>
+                    </div>
+
+
+                    <table id="ddGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+                        <thead>
+                            <tr class="button-header-color">
+                                @*<th></th>*@
+                                <th>ConfirmationNum</th>
+                                <th>VendorName</th>
+                                <th>ReceivedDate</th>
+                                <th>AssignedDate</th>
+                                <th>Application Age</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+
                 </div>
+            </div>
 
 
 
 
-                <!--------------------------------->
+            <!--------------------------------->
         </div>
     </div>
 </div>

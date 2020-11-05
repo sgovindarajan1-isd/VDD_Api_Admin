@@ -49,7 +49,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">AddNotes</h5>
+                <h5 class="modal-title">Add Notes</h5>
             </div>
             <div class="modal-body" style="text-align:left">
                 <div class="form-group subSection">
@@ -505,7 +505,7 @@
                             <a class="leftNavItem " id="tab_Notes" href="#div_notes_tab" role="tab" aria-controls="div_notes_tab"
                                aria-selected="false"><span class="fa fa-fw fa-pencil"></span>Notes</a>
 
-                            <a class="leftNavItem " href="#div_attachment_tab" aria-controls="div_attachment_tab" role="tab">
+                            <a class="leftNavItem " id="menu_Documents"  href="#div_attachment_tab" aria-controls="div_attachment_tab" role="tab">
                                 <span class="fa fa-fw fa-file-text"></span>Documents
                                 <span id="menuDocCount" class="badge pull-right UpdateMenuDocumentCount">0</span>
                             </a>
@@ -550,11 +550,11 @@
                 <div id="div_summaryContent" class="mainBox tab-pane mainContent bhoechie-tab-content active">
                     @*<center1>*@
                     <div id="div_summary_tab" class="mainBox tab-pane show " role="tabpanel" aria-labelledby="summary-tab">
-                        <div class="pull-right">
+                        @*<div class="pull-right">
                             <a id="btn_Reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger btn-xs">
                                 Reject Application
                             </a>
-                        </div>
+                        </div>*@
                         <h2 class="bottomMargin">Application Summary</h2>
 
                         <div class="well well-sm">
@@ -616,12 +616,12 @@
                             @*//Banking Information begin *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
                                         <a id="btn_BankDetails" data-toggle="modal" data-target="#bankDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
                                             <span class="fa fa-edit smallRightMargin"></span>
                                             Edit
                                         </a>
-                                    </div>
+                                    </div>*@
                                     Banking Information
                                 </div>
                                 <div class="panel-body">
@@ -648,12 +648,12 @@
                             @*//Authorized Information end *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
                                         <a id="btn_certificationDetails" data-toggle="modal" data-target="#certificationDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
                                             <span class="fa fa-edit smallRightMargin"></span>
                                             Edit
                                         </a>
-                                    </div>
+                                    </div>*@
                                     Certification Information
                                 </div>
                                 <div class="panel-body">
@@ -679,12 +679,12 @@
                             @*Certification Information end *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
                                         <a id="btn_deptDetails" data-toggle="modal" data-target="#departmentDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
                                             <span class="fa fa-edit smallRightMargin"></span>
                                             Edit
                                         </a>
-                                    </div>
+                                    </div>*@
                                     Department Information
                                 </div>
                                 <div class="panel-body">
@@ -706,22 +706,6 @@
                                 </div>
                             </div>
                             @*Department Information *@
-
-                            @*Direct Deposit Payment Option Selected begin*@
-
-                            @*<div class="panel panel-default panel-sm">
-                                    <div class="panel-heading">
-                                        Direct Deposit Payment Option Selected
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="" style="margin-bottom:0;">
-                                            <div id="claimInfoWrapper">
-                                                <div id="div_ddPaymentOptionSelected" class="flex">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>*@
 
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
