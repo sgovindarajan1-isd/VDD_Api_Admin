@@ -22,10 +22,10 @@
                     <div class="chosen-wrapper">
                         <select class="form-control cancel chosen-select" id="select_rejectReason" name="rejectReason" style="display: true">
                             <option value=""></option>
-                            <option value="1">Requested by Vendor</option>
+                            @*<option value="1">Requested by Vendor</option>
                             <option value="2">No EWS and Lexis/Nexis Vendor Verification</option>
                             <option value="3">Invalid/Missing Documents</option>
-                            <option value="4">Other</option>
+                            <option value="4">Other</option>*@
                         </select>
                     </div>
                 </div>
@@ -33,9 +33,12 @@
                 <div class="form-group subSection">
                     <label for="comment">Note:</label>
                     <textarea class="form-control" rows="5" id="txt_reject_comment"></textarea>
+                    <span id="spanReasonType" class="errmessage" />
                 </div>
                 <span id="accountType">0 / 300 characters</span>
             </div>
+
+            
 
             <div class="modal-footer">
                 <input id="btn_SubmitReject" class="btn btn-sm btn-primary" type="submit" value="Submit">

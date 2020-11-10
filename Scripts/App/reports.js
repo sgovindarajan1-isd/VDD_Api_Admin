@@ -132,7 +132,8 @@
                     "data": "ConfirmationNum",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a href="../applicationList/applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            //data = '<a href="../applicationList/applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            data = '<a href="../applicationList/applicationSummary">' + row.RequestType + ' - ' + data + ' </a>';
                         }
 
                         return data;
@@ -212,7 +213,7 @@
 
                 for (var item in data.data.lst_ApplicationCountList) {
                     debugger;
-                    if ((data.data.lst_ApplicationCountList[item].StatusCode == 5) || (data.data.lst_ApplicationCountList[item].StatusCode == 3) ) {  //3	EFT ELIGIBLE
+                    if ((data.data.lst_ApplicationCountList[item].StatusCode == 5)  ) {  
                         newApp = newApp + data.data.lst_ApplicationCountList[item].ApplicationCount;
                         $("#card_New").html(newApp);
                     }
@@ -229,7 +230,7 @@
                         supervisorReview = supervisorReview + data.data.lst_ApplicationCountList[item].ApplicationCount;
                         $("#card_SupervisorReview").html(supervisorReview);
                     }
-                    if ((data.data.lst_ApplicationCountList[item].StatusCode == 4) || (data.data.lst_ApplicationCountList[item].StatusCode == 7)) {  // 7- Check,  4-Direct Deposit
+                    if (data.data.lst_ApplicationCountList[item].StatusCode == 4) {   //|| (data.data.lst_ApplicationCountList[item].StatusCode == 3) //3	EFT ELIGIBLE 4-Direct Deposit  (data.data.lst_ApplicationCountList[item].StatusCode == 7) // 7- Check, 
                         approve = approve + data.data.lst_ApplicationCountList[item].ApplicationCount;
                         $("#card_Approved").html(approve);
                     }
@@ -316,7 +317,8 @@
                     "data": "ConfirmationNum",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            //data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            data = '<a href="applicationSummary">' + row.RequestType + ' - ' + data  + ' </a>';
                         }
 
                         return data;

@@ -15,6 +15,10 @@
         $("#btn_vendorDetails").hide();
     }
 
+    if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
+        debugger;
+        $("#btn_reviewPrint").hide();
+    }
 
     $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
         e.preventDefault();
@@ -83,6 +87,7 @@
                 rrList = data.data.denialReasonList;
 
                 var rejectReasonList = $('#select_rejectReason');
+                rejectReasonList.empty();
                 $.each(rrList, function (key, value) {
                     rejectReasonList.append(
                         $('<option></option>').val(value.DenialReasonId).html(value.DenialReasonText)
@@ -90,13 +95,13 @@
                 });
             }
         });
-    };   
+    };
 
     $('#rejectApplicationModal').on('shown.bs.modal', function (e) {
         debugger;
         RetrieveDenialReasonList();
     });
-    
+
     function getReviewPanelInformation(summaryData) {
         var status = summaryData.Status;
         var statusDesc = summaryData.StatusDesc;
@@ -157,7 +162,7 @@
 
         $("#lbl_userName").text(userName); //id_userName
 
-        $("#head_confirmationNum").text(confirmationNum);
+        $("#head_confirmationNum").text(data.RequestType + " - " + confirmationNum);
         $("#header_status").text(data.StatusDesc);
 
         //side panel
@@ -373,6 +378,14 @@
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var status = 22;
+
+        if (reason_type.length <= 0) {
+            debugger;
+            $("#spanReasonType").html('Reason Type is required.');
+            return;
+        } else {
+            $("#spanReasonType").html('');
+        }
 
         if (role == 11)  // processor
             status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
@@ -804,6 +817,12 @@
 
     $('#vendorDetailsModal').on('shown.bs.modal', function (e) {
         $("#txt_pop_VendorCode").val($("#VI_VendorCode").text());
+
+        if ($("#txt_pop_VendorCode").val().length > 0) {
+            $("#txt_pop_VendorCode").prop("readonly", true);
+            $("#txt_pop_VendorCode").attr("disabled", "disabled");
+        }
+
         $("#txt_pop_FirstName").val($("#FirstName").text());
         $("#txt_pop_LastName").val($("#LastName").text());
         $("#txt_pop_MiddleName").val($("#MiddleName").text());
@@ -938,7 +957,7 @@
                     'data': 'UploadedDate', "title": "Uploaded Date"
                     , "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<span class="fa fa-calendar">'+ data + ' </span>';    
+                            data = '<span class="fa fa-calendar">' + data + ' </span>';
                         }
                         return data;
                     }
@@ -984,11 +1003,14 @@
                 selector: 'td:first-child'
             },
 
-            //"createdRow": function (row, data, dataIndex) {
-            //    $(row).find('td:eq(1)')
-            //        .addClass('fa fa-calendar');
-            //}
         });
+
+        if (GlobalUserHasRoles.AdminRole) {
+            $(".clsretire").show();
+        }
+        else {
+            $(".clsretire").hide();
+        }
     };
 
     function GetAttachmentDocuments(confirmationNum) {

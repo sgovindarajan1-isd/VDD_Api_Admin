@@ -179,7 +179,8 @@
                     "data": "ConfirmationNum",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType+' </a>';
+                            //data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType+' </a>';
+                            data = '<a href="applicationSummary">' + row.RequestType + ' - ' + data + ' </a>';
                         }
 
                         return data;

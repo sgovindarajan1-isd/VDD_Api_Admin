@@ -118,45 +118,30 @@ $(document).ready(function () {
 		$('#menu_enterApplication').hide();  //  if user has only Dataentry role
 	}
 
-
-
-
-
-
-
-	//     old code
-	//if (GlobalRoles.DataEntryRole) {
-	//    //if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
-	//	$('#menu_userName').text(sessionStorage.getItem('userName'));
-	//	$('#div_advanceSearch').hide();
-	//	$('#menu_applicatoinList').hide();
-	//	$('#menu_enterApplication').hide();
-	//	$('#menu_admin').hide();
-	//	$('#menu_reports').hide();
-	//}
-	//else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
-	//	$('#menu_userName').hide();
-	//}
-
 	// ***********  Menu Building  ******************
-
-
 
     $("#menu_applicatoinList").click(function () {
         window.location.href = '/applicationList/applicationList';
 	});
 
 
-	
-
-	$("#lnkAdvSearch").click(function () {
+	$("#lnkAdvSearch").click(function (e) {
 		debugger;
-		sessionStorage.setItem('selectedConfirmationNumber', $("#txt_appSearchNumber").val());
-		window.location.href = '/applicationList/applicationSummary';
+		if ($("#txt_appSearchNumber").val().length <= 0) {
+			//toastr.options.positionClass = "toast-bottom-right";
+			//toastr.warning("Enter Application to search!");
+			return;
+		} else {
+			sessionStorage.setItem('selectedConfirmationNumber', $("#txt_appSearchNumber").val());
+			window.location.href = '/applicationList/applicationSummary';
+		}
 	});
 
 	$("#txt_appSearchNumber").focusout(function () {
 		debugger;
+		if ($("#txt_appSearchNumber").val().length <= 0) {
+			return;
+		}
 		sessionStorage.setItem('selectedConfirmationNumber', $("#txt_appSearchNumber").val());
 		window.location.href = '/applicationList/applicationSummary';
 
@@ -209,15 +194,8 @@ $(document).ready(function () {
 
 	});
 
-	//$("#btn_logout").on('click', function () {
-	//	$('#logoutModal').modal('hide');
-	//	sessionStorage.clear();
-	//	window.location.href = "/Home/Index";
-	//});
-
+	
 	$("#btn_logoutModal").click(function () {
-		debugger;
-
 		$('#logoutModal').modal('hide');
 		sessionStorage.clear();
 		GlobalUserHasRoles.DataEntryRole = false;
@@ -229,8 +207,6 @@ $(document).ready(function () {
 	});
 
 	$("#btn_logout").click(function () {
-		debugger;
-
 		sessionStorage.clear();
 		GlobalUserHasRoles.DataEntryRole = false;
 		GlobalUserHasRoles.ProcessorRole = false;
