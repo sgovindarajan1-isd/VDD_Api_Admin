@@ -1254,5 +1254,115 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
+        [HttpPost]
+        public HttpResponseMessage InsertUpdateManageUserApplicationFilter([FromBody] DAL.Models.DAL_M_ApplicationList dal_m_ManageUserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt1 = adminDAL.InsertUpdateManageUserApplicationFilter(dal_m_ManageUserData);
+
+            dal_m_ManageUserData.ManageUserMenuId = 0;
+
+            var dt = adminDAL.GetManageUserMenuList(dal_m_ManageUserData);
+
+            var data = new
+            {
+                lst_ManageUserList = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+        
+        [HttpPost]
+        public HttpResponseMessage GetManageUserMenuList([FromBody] DAL.Models.DAL_M_ApplicationList dal_m_ManageUserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetManageUserMenuList(dal_m_ManageUserData);
+            var data = new
+            {
+                manageUserMenuList = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage DeleteManageUserApplicationList([FromBody] DAL.Models.DAL_M_ApplicationList dal_m_ManageUserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dtDte = adminDAL.DeleteManageUserApplicationList(dal_m_ManageUserData);
+
+            dal_m_ManageUserData.ManageUserMenuId = 0;
+
+            var dt = adminDAL.GetManageUserMenuList(dal_m_ManageUserData);
+            var data = new
+            {
+                manageUserApplicationList = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetApplicationListByManageUserMenuId([FromBody]DAL.Models.DAL_M_ApplicationList dal_m_ManageUserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetApplicationListByManageUserMenuId(dal_m_ManageUserData);
+            var data = new
+            {
+                manageUserApplicationList = dt  //  supervisor view only
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetUsersRoleList([FromBody]DAL.Models.DAL_M_Role dal_m_RoleData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetUsersRoleList(dal_m_RoleData);
+            var data = new
+            {
+                roleMenuList = dt  
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+        
+        [HttpPost]
+        public HttpResponseMessage GetUserProfileByUserId([FromBody]DAL.Models.DAL_M_UsersData dal_m_UserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetUserProfileByUserId(dal_m_UserData);
+            var data = new
+            {
+                userProfileList = dt
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        
+
+        [HttpPost]
+        public HttpResponseMessage UpdateUserProfile([FromBody] DAL.Models.DAL_M_UsersData dal_m_UserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateUserProfile(dal_m_UserData);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+
     }
 }

@@ -1131,8 +1131,6 @@ namespace DAL
             return returnUserId;
         }
 
-
-
         public DAL_M_GeneralContentContactUs GetGeneralContent_ContactUs()
         {
             DAL_M_GeneralContentContactUs v = new DAL_M_GeneralContentContactUs();
@@ -1429,9 +1427,9 @@ namespace DAL
                         v.VendorNumber = ds.Tables[0].Rows[i]["VendorCode"].ToString();
                         v.AttachmentCount = int.Parse(ds.Tables[0].Rows[i]["AttachmentCount"].ToString());
                         v.RequestType = ds.Tables[0].Rows[i]["RequestType"].ToString();
-                        lst_VCMList.Add(v);
+                        lst_VCMList.Add(v); 
                     }
-                   
+
                     con.Close();
                 }
             }
@@ -1440,6 +1438,239 @@ namespace DAL
                 LogManager.log.Error("Error in Get VCM Log Report.  Message: " + ex.Message);
             }
             return lst_VCMList;
+        }
+
+
+        public int InsertUpdateManageUserApplicationFilter(DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            DataTable manageUserTbl = CreateTable();
+
+            int returnUserId = 0;
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("InsertUpdateManageUserApplicationFilter", con);
+                    sqlComm.Parameters.AddWithValue("@MenuId", dal_M_ApplicationList.ManageUserMenuId);  //  for update only
+                    sqlComm.Parameters.AddWithValue("@MenuName", dal_M_ApplicationList.ManageUserMenuName);
+                    sqlComm.Parameters.AddWithValue("@UserId", dal_M_ApplicationList.UserId);
+                    sqlComm.Parameters.AddWithValue("@FilterApptype", dal_M_ApplicationList.FilterApptype);
+                    sqlComm.Parameters.AddWithValue("@FilterUser", dal_M_ApplicationList.FilterUser);
+                    sqlComm.Parameters.AddWithValue("@FilterStatus", dal_M_ApplicationList.FilterStatus);
+                    sqlComm.Parameters.AddWithValue("@FilterAge", dal_M_ApplicationList.FilterAge);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUser", dal_M_ApplicationList.LastUpdatedUser);
+
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Insert Manage User Details.  Message: " + ex.Message);
+                return 0;
+            }
+            return returnUserId;
+        }
+        public List<DAL_M_ApplicationList> GetManageUserMenuList(DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            List<DAL_M_ApplicationList> manageUserMenuList = new List<DAL_M_ApplicationList>();
+            try
+            {
+                DataSet ds = new DataSet("GetManageUserMenuList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetManageUserMenuList", con);
+                    sqlComm.Parameters.AddWithValue("@ManageUserApplicationFilterId", dal_M_ApplicationList.ManageUserMenuId);
+                    sqlComm.Parameters.AddWithValue("@UserId", dal_M_ApplicationList.UserId);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_ApplicationList mulist = new DAL_M_ApplicationList();
+                        mulist.ManageUserMenuId = int.Parse(ds.Tables[0].Rows[i]["ManageUserApplicationFilterId"].ToString());
+                        mulist.ManageUserMenuName = ds.Tables[0].Rows[i]["MenuName"].ToString();
+                        mulist.FilterApptype = ds.Tables[0].Rows[i]["FilterApptype"].ToString();
+                        mulist.FilterUser =  ds.Tables[0].Rows[i]["FilterUser"].ToString();
+                        mulist.FilterStatus =  ds.Tables[0].Rows[i]["FilterStatus"].ToString();
+                        mulist.FilterAge = int.Parse(ds.Tables[0].Rows[i]["FilterAge"].ToString());
+                        manageUserMenuList.Add(mulist);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Manage User Application List.  Message: " + ex.Message);
+            }
+            return manageUserMenuList;
+        }
+
+        public List<DAL_M_ApplicationList> GetApplicationListByManageUserMenuId(DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            List<DAL_M_ApplicationList> lst_MUApplicationList = new List<DAL_M_ApplicationList>();  //  Processor and supervisor view
+
+            try
+            {
+                DataSet ds = new DataSet("ManageUserApplicationList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetApplicationListByManageUserMenuId", con);
+                    sqlComm.Parameters.AddWithValue("@ManageUserMenuId", dal_M_ApplicationList.ManageUserMenuId);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    int tableNum = 0;  // for processor  only  one table  ( my pending approval table)
+
+                    for (int i = 0; i <= ds.Tables[tableNum].Rows.Count - 1; i++)
+                    {
+                        DAL_M_ApplicationList v = new DAL_M_ApplicationList();
+                        //v.UserId = userId;
+                        v.VendorName = ds.Tables[tableNum].Rows[i]["PayeeName"].ToString();
+                        v.ConfirmationNum = ds.Tables[tableNum].Rows[i]["ConfirmationNum"].ToString();
+                        if (ds.Tables[tableNum].Rows[i]["ReceivedDate"] != null)
+                        {
+                            v.ReceivedDate = String.Format("{0:M/d/yyyy}", ds.Tables[tableNum].Rows[i]["ReceivedDate"]);
+                        }
+                        if (ds.Tables[tableNum].Rows[i]["AssignmentDate"] != null)
+                        {
+                            v.AssignedDate = String.Format("{0:M/d/yyyy}", ds.Tables[tableNum].Rows[i]["AssignmentDate"]);
+                        }
+                        v.ApplicationAge = ds.Tables[tableNum].Rows[i]["ApplicationAge"].ToString();
+                        v.StatusCode = ds.Tables[tableNum].Rows[i]["StatusCode"].ToString();
+                        v.StatusDesc = ds.Tables[tableNum].Rows[i]["StatusDesc"].ToString();
+                        v.RequestType = ds.Tables[tableNum].Rows[i]["RequestType"].ToString();
+                        lst_MUApplicationList.Add(v);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in  getting applicationList by manageuserapplicationId,  Message: " + ex.Message);
+            }
+            return lst_MUApplicationList;
+        }
+
+        public string DeleteManageUserApplicationList(DAL_M_ApplicationList dal_M_ApplicationList)
+        {
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("DeleteManageUserApplicationList", con); 
+                    sqlComm.Parameters.AddWithValue("@ManageUserApplicationFilterId", dal_M_ApplicationList.ManageUserMenuId);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Delete ManageUser ApplicationList.  Message: " + ex.Message);
+                return "ERROR";
+            }
+            return "SUCCESS";
+        }
+
+        public List<DAL_M_Role> GetUsersRoleList(DAL_M_Role dal_M_Role)
+        {
+            List<DAL_M_Role> lst_dal_M_Role = new List<DAL_M_Role>();  //  Processor and supervisor view
+
+            try
+            {
+                DataSet ds = new DataSet("GetUsersRoleList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetUsersRoleListByUserId", con);
+                    sqlComm.Parameters.AddWithValue("@UserId", dal_M_Role.UserId);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_Role r = new DAL_M_Role();
+                        //v.UserId = userId;
+                        r.RoleName = ds.Tables[0].Rows[i]["RoleName"].ToString();
+
+                        lst_dal_M_Role.Add(r);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in  getting GetUsersRoleListByUserId,  Message: " + ex.Message);
+            }
+            return lst_dal_M_Role;
+        }
+
+        public DAL_M_UsersData GetUserProfileByUserId(DAL_M_UsersData dal_M_UsersData)
+        {
+            DAL_M_UsersData dal_udata = new DAL_M_UsersData(); 
+
+            try
+            {
+                DataSet ds = new DataSet("GetUsersRoleList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetUserProfileByUserId", con);
+                    sqlComm.Parameters.AddWithValue("@UserId", dal_M_UsersData.UserId);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        dal_udata.FirstName= ds.Tables[0].Rows[0]["FirstName"].ToString();
+                        dal_udata.LastName = ds.Tables[0].Rows[0]["LastName"].ToString();
+                        dal_udata.Email = ds.Tables[0].Rows[0]["Email"].ToString();
+                        dal_udata.PhoneNumber = ds.Tables[0].Rows[0]["PhoneNumber"].ToString();
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in  getting GetUsersRoleListByUserId,  Message: " + ex.Message);
+            }
+            return dal_udata;
+        }
+
+        public bool UpdateUserProfile(DAL_M_UsersData dal_M_UsersData)
+        {
+            try
+            {
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("UpdateUserProfile", con);
+                    sqlComm.Parameters.AddWithValue("@UserID", dal_M_UsersData.UserId);
+                    sqlComm.Parameters.AddWithValue("@PhoneNumber", dal_M_UsersData.PhoneNumber);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.ExecuteNonQuery();
+
+                    //returnDenialReasonId = int.Parse(OutputDenialReasonId.Value.ToString());
+                    con.Close();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in  Update User Profile Details.  Message: " + ex.Message);
+                return false;
+            }
         }
 
     }

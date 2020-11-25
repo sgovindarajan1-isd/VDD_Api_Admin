@@ -37,5 +37,8 @@ namespace DAL.Models
         public string FilterApptype { get; set; }
         public string FilterUser { get; set; }
         public string FilterStatus { get; set; }
+        public string ManageUserMenuName { get; set; }
+        public int ManageUserMenuId { get; set; }
+        public string LastUpdatedUser { get; set; }
     }
 }

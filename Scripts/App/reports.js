@@ -274,8 +274,15 @@
 
             url: "/api/values/GetVCMReport/",
             success: function (data) {
-                //setting defaults
-                setVCMData(data.data.lst_VCMList);
+                debugger;
+                if (data.data.lst_VCMList.length <= 0) {  //  jquery  >0  has issue  :)
+                    toastr.options.positionClass = "toast-bottom-right";
+                    toastr.warning("No Data Found!");
+                    return;
+                }else{
+                    //setting defaults
+                    setVCMData(data.data.lst_VCMList);
+                }
             },
             error: function (_XMLHttpRequest, textStatus, errorThrown) {
                 if (_XMLHttpRequest.status == '401') {

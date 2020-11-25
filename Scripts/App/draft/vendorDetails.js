@@ -58,6 +58,27 @@
 
     $('#id_userName').text(sessionStorage.getItem('userName')); //lbl_userName 
 
+    $("#txtFirstName").focusout(function (e) {
+        $("#txtCompanyName").val('');
+    });
+
+    $("#txtMiddleName").focusout(function (e) {
+        $("#txtCompanyName").val('');
+    });
+
+    $("#txtLastName").focusout(function (e) {
+        $("#txtCompanyName").val('');
+    });
+
+    $("#txtCompanyName").focusout(function (e) {
+        if ($("#txtCompanyName").val().length > 0) {
+            $("#txtFirstName").val('');
+            $("#txtMiddleName").val('');
+            $("#txtLastName").val('');
+        }
+    });
+
+
     $('#btn_vendor_next').on('click', function (e) {
         var txtApplicationType = $("#txtApplicationType").val();  //  to get selected text  $("#txtApplicationType option:selected").text();
         var txtVendorCode = $("#txtVendorCode").val();
@@ -94,60 +115,68 @@
         //} else {
         //    $("#span_payeeName").html('');
         //}
+        debugger;
+        var someNameAvailable = false;
+        if ((txtFirstName.length > 0) || (txtMiddleName.length > 0) || (txtLastName.length > 0)) {
+            someNameAvailable = true;
+        }
 
-        if (txtFirstName.length <= 0) {
+        if (((txtFirstName.length <= 0) && (txtCompanyName.length <= 0)) || ((txtFirstName.length <= 0) && ((txtMiddleName.length > 0) || (txtLastName.length >= 0)) ) ){
             $("#span_firstName").html('First Name is required.');
             bool = false;
         } else {
             $("#span_firstName").html('');
         }
 
-        if (txtMiddleName.length <= 0)  {
+        if ((txtMiddleName.length <= 0)  && (txtCompanyName.length <= 0))   {
             $("#span_middleName").html('Middle Name is required.');
             bool = false;
         } else {
             $("#span_middleName").html('');
         }
 
-        if (txtLastName.length <= 0) {
+        if  ((txtLastName.length <= 0) &&( (txtFirstName.length > 0) ||  (txtMiddleName.length > 0)) ) {
             $("#span_lastName").html('Last Name is required.');
             bool = false;
         } else {
             $("#span_lastName").html('');
         }
 
-        if (txtCompanyName.length <= 0) {
+        if ( (someNameAvailable == false )&& (txtCompanyName.length <= 0)) {
             $("#span_companyName").html('Company Name is required.');
             bool = false;
         } else {
             $("#span_companyName").html('');
         }
 
-        if (txtAliasDBAName .length <= 0) {
-            $("#span_aliasDBAName ").html('Alias / DBA Name  is required');
-            bool = false;
-        } else {
-            $("#span_aliasDBAName ").html('');
-        }
 
-        if (txtTIN .length <= 0) {
-            $("#span_tin").html('Tax Identification Number is required.');
-            bool = false;
-        } else {
-            $("#span_tin").html('');
-        }
 
-        if (txtCaseNo.length <= 0) {
-            $("#span_CaseNo").html('Case No is required.');
-            bool = false;
-        } else {
-            $("#span_CaseNo").html('');
-        }
+        //if (txtAliasDBAName .length <= 0) {
+        //    $("#span_aliasDBAName ").html('Alias / DBA Name  is required');
+        //    bool = false;
+        //} else {
+        //    $("#span_aliasDBAName ").html('');
+        //}
 
-        if (txtPhoneNumber.length <= 0) {
-            $("#span_PhoneNumber").html('Phone Number is required.');
-            bool = false;
-        } else if (!validatePhone(txtPhoneNumber)) {
+        //if (txtTIN .length <= 0) {
+        //    $("#span_tin").html('Tax Identification Number is required.');
+        //    bool = false;
+        //} else {
+        //    $("#span_tin").html('');
+        //}
+
+        //if (txtCaseNo.length <= 0) {
+        //    $("#span_CaseNo").html('Case No is required.');
+        //    bool = false;
+        //} else {
+        //    $("#span_CaseNo").html('');
+        //}
+
+        //if (txtPhoneNumber.length <= 0) {
+        //    $("#span_PhoneNumber").html('Phone Number is required.');
+        //    bool = false;
+        //} else
+        if (!validatePhone(txtPhoneNumber)) {
             $("#span_PhoneNumber").html('Valid Phone Number is required.');
             bool = false;
         } else {

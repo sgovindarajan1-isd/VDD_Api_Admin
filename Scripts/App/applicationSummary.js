@@ -3,22 +3,28 @@
     var userId = sessionStorage.getItem('UserId');
     var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
     var role = sessionStorage.getItem('RoleId');
+
+    // default
+    $("#btn_Reject").hide();
     // to do later
 
     // admin role
     if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
-        debugger;
         $("#btn_vendorDetails").show();
     }
     else {
-        debugger;
         $("#btn_vendorDetails").hide();
     }
 
-    if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
-        debugger;
-        $("#btn_reviewPrint").hide();
-    }
+    //if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
+    //    $("#btn_reviewPrint").hide();
+
+    //    if ()//(application is New or Pending  donot show the Approve or Print button)
+    //    {
+    //        $("#btn_reviewPrint").hide();
+    //        $("#btn_reviewApprove").hide();
+    //    }
+    //}
 
     $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
         e.preventDefault();
@@ -61,7 +67,6 @@
     });
 
     $("#menu_Documents").click(function () {
-        debugger;
         GetAttachmentDocuments(confirmationNum);
     });
 
@@ -83,7 +88,6 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                debugger;
                 rrList = data.data.denialReasonList;
 
                 var rejectReasonList = $('#select_rejectReason');
@@ -98,9 +102,10 @@
     };
 
     $('#rejectApplicationModal').on('shown.bs.modal', function (e) {
-        debugger;
         RetrieveDenialReasonList();
     });
+
+
 
     function getReviewPanelInformation(summaryData) {
         var status = summaryData.Status;
@@ -129,7 +134,7 @@
 
             if (status == 21 || status == 22) {
                 $("#div_supervisor_proce_review").show();
-                var msg = summaryData.StatusDesc + " by " + summaryData.ProcessorID + " on " + summaryData.AssignmentDate;
+                var msg = summaryData.StatusDesc + " by " + summaryData.AssignedBy + " on " + summaryData.AssignmentDate;
                 $("#span_review_processor_Approval_msg").text(msg);
                 $("#span_review_processor_notes").text(summaryData.Comment);
             }
@@ -145,8 +150,16 @@
             return;
         }
         if (data.Status == 5) {  // Pending =5
+            // for new  display the reject button at top too
+            $("#btn_Reject").show();
             $("#div_assignApplication").show();
             $("div_processor_review").hide();
+
+            if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
+                //(application is New or Pending  donot show the Approve or Print button)
+                    $("#btn_reviewPrint").hide();
+                    $("#btn_reviewApprove").hide();
+            }
         }
         else if (data.Status == 21 || data.Status == 22) {  // recommend approve =21 recomment reject 22
             $("#div_assignApplication").show();
@@ -231,7 +244,6 @@
 
         var j = 1;
         $.each(data.LocationAddressList, function (index, value) {
-            debugger;
 
             var _address = value.Street;  //"16000 south street";
             var _city = value.City;
@@ -358,7 +370,6 @@
         if (role == 11)  // processor
             status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
         else {
-            debugger;
             if ($("#VendorCode").text() == '') {
                 $('#approveApplicationModal').modal('hide');
                 toastr.options.positionClass = "toast-bottom-right";
@@ -379,8 +390,17 @@
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var status = 22;
 
+
+
+        if (reason_type.indexOf('Other') >= 0) {
+            $("#spanReasonType").html('Reason required.');
+            return;
+        }
+        else {
+            $("#spanReasonType").html('');
+        }
+
         if (reason_type.length <= 0) {
-            debugger;
             $("#spanReasonType").html('Reason Type is required.');
             return;
         } else {
@@ -879,7 +899,6 @@
     // 
 
     $('#attachmentGrid').on('click', '.clsdownload', function (e) {
-        debugger;
         var closestRow = $(this).closest('tr');
         var data = $('#attachmentGrid').DataTable().row(closestRow).data();
 
@@ -903,7 +922,6 @@
             },
             url: "/api/values/UpdateRetireAttachment/",
             success: function (data) {
-                debugger;
                 // REMOVE THE LINE
                 // closestRow.remove();
                 toastr.options.positionClass = "toast-bottom-right";
@@ -1074,7 +1092,6 @@
     });
 
     function uploadfile(filetoupload, modifiedFileName, ext) {
-        debugger;
         if (window.FormData !== undefined) {
 
             //var fileUpload = filetoupload;
@@ -1107,7 +1124,6 @@
     };
 
     function UploadDocumentAttachment(fileName) {
-        debugger;
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
         var attachmentFileName = fileName;
         var documentAttachmentTypeId = 4;	//Other Attachment in documenttype table
@@ -1125,7 +1141,6 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                debugger;
                 //var fullDate = new Date();
                 //var currentDate = fullDate.getDate() + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
 
@@ -1172,7 +1187,6 @@
             },
             url: "/api/values/GetDocumentCheckList/",
             success: function (data) {
-                debugger;
                 for (var item in data.data.ChecklistItems) {
                     if (data.data.ChecklistItems[item].Active == 1) {
                         $('input[value=' + data.data.ChecklistItems[item].CheckListID + ']').attr('checked', 'checked');
@@ -1189,7 +1203,6 @@
     }
 
     function GetAlreadyLinkedApplicationByConfirmationNum(confirmationNum) {  //  this is called here jest to get count display at the  side menu
-        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",

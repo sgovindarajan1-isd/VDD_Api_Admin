@@ -29,8 +29,10 @@ namespace eCAPDDApi.Controllers
             return View();
         }
 
-
-
+        public ActionResult ManageUserList()
+        {
+            return View();
+        }
     }
 
 

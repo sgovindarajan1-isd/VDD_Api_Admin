@@ -366,6 +366,7 @@
             success: function (data) {
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Successfully user details updated.");
+                getUsersList('ALL');
                 $('#userDetailsModal').modal('hide');
             }
             , complete: function (jqXHR) {

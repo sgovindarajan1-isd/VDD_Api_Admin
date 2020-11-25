@@ -26,8 +26,10 @@ namespace DAL.Models
     }
 
     public class DAL_M_Role
-    { 
+    {
+        public string UserId { get; set; }
         public int RoleId { get; set; }
+        public string RoleName { get; set; }
         public int Active { get; set; }
     }
 

@@ -32,6 +32,8 @@
         $("#span_attachmentstep").removeClass("disabled");
         $("#span_verify_step").removeClass("disabled");
 
+        getuserInfoForProxiedFields();
+
         ////testing values
 
         if ($(location).attr('href').indexOf("local") > -1) {
@@ -73,7 +75,7 @@
         $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_certify_step").attr('src', '/Content/Images/certify_step.png');
-        $("#img_submit_step").attr('src', '/Content/Images/confirmation_step_on.png');
+        $("#img_submit_step").attr('src', '/Content/Images/submit_step_on.png');
         $("#img_submit_step").addClass("active");
         $("#li_submit_step").addClass("active");
         $("#img_submit_step").parent().css("border-color", "#7030A0");
@@ -91,8 +93,9 @@
         $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_certify_step").attr('src', '/Content/Images/certify_step.png');
-        $("#img_submit_step").attr('src', '/Content/Images/confirmation_step.png');
+        $("#img_submit_step").attr('src', '/Content/Images/submit_step.png');
         $("#img_confirmation_step").attr('src', '/Content/Images/confirmation_step_on.png');
+
         $("#img_confirmation_step").addClass("active");
         $("#li_confirmation_step").addClass("active");
         $("#img_confirmation_step").parent().css("border-color", "#7030A0");
@@ -132,31 +135,31 @@
         var bool = true;
 
         if (signerName.length <= 0) {
-            $("#signerName").html('Authorized Signer’s Name is required.');
+            $("#signerName").html('Proxied Signer’s Name is required.');
             bool = false;
         } else {
             $("#signerName").html('');
         }
 
         if (signerTitle.length <= 0) {
-            $("#signerTitle").html('Authorized Signer’s Title is required.');
+            $("#signerTitle").html('Proxied Signer’s Title is required.');
             bool = false;
         } else {
             $("#signerTitle").html('');
         }
         debugger;
         if (signerPhone.length <= 0) {
-            $("#signerPhone").html('Authorized Signer’s Phone # is required.');
+            $("#signerPhone").html('Proxied Signer’s Phone # is required.');
             bool = false;
         } else if (!validatePhone(signerPhone)) {
-            $("#signerPhone").html('Valid Authorized Signer’s Phone # is required.');
+            $("#signerPhone").html('Valid Proxied Signer’s Phone # is required.');
             bool = false;
         } else {
             $("#signerPhone").html('');
         }
 
         if (signerEmail.length <= 0) {
-            $("#signerEmail").html('Authorized Signer’s Email is required.');
+            $("#signerEmail").html('Proxied Signer’s Email is required.');
             bool = false;
         }
         else if (!isEmail(signerEmail)) {
@@ -168,35 +171,37 @@
         }
 
 
-        if (deptName.length <= 0) {
-            $("#spanDeptName").html('Department Name is required.');
-            bool = false;
-        } else {
-            $("#spanDeptName").html('');
-        }
+        //if (deptName.length <= 0) {
+        //    $("#spanDeptName").html('Department Name is required.');
+        //    bool = false;
+        //} else {
+        //    $("#spanDeptName").html('');
+        //}
 
-        if (deptPerson.length <= 0) {
-            $("#spanDeptPerson").html('Department Contact Person Name is required.');
-            bool = false;
-        } else {
-            $("#spanDeptPerson").html('');
-        }
+        //if (deptPerson.length <= 0) {
+        //    $("#spanDeptPerson").html('Department Contact Person Name is required.');
+        //    bool = false;
+        //} else {
+        //    $("#spanDeptPerson").html('');
+        //}
         debugger;
-        if (deptPhone.length <= 0) {
-            $("#spanDeptPhone").html('Department Contact Number is required.');
-            bool = false;
-        } else if (!validatePhone(deptPhone)) {
+        //if (deptPhone.length <= 0) {
+        //    $("#spanDeptPhone").html('Department Contact Number is required.');
+        //    bool = false;
+        //} else
+        if ( (deptPhone.length > 0) && (!validatePhone(deptPhone))) {
             $("#spanDeptPhone").html('Valid Department Contact Number is required.');
             bool = false;
         } else {
             $("#spanDeptPhone").html('');
         }
 
-        if (deptEmail.length <= 0) {
-            $("#spanDeptEmail").html('Department Email Address is required.');
-            bool = false;
-        }
-        else if (!isEmail(deptEmail)) {
+        //if (deptEmail.length <= 0) {
+        //    $("#spanDeptEmail").html('Department Email Address is required.');
+        //    bool = false;
+        //}
+        //else
+        if ((deptEmail.length > 0) && (!isEmail(deptEmail))) {
             $("#spanDeptEmail").html('Please enter valid Department Email Address');
             bool = false;
         }
@@ -473,7 +478,36 @@
             }
         });
     };
-    /*Submit Section end */
+/*Submit Section end */
+
+/* certify*/
+    function getuserInfoForProxiedFields() {
+        //$('#txtSignerTitle').val('asdfasdf');
+
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            dataType: 'json',
+            data: JSON.stringify({ 'UserId': sessionStorage.getItem('UserId') }),
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            url: "/api/values/getUserProfileByUserId/",
+            success: function (data) {
+                debugger;
+                $("#txtSignerName").val(data.data.userProfileList.FirstName + ' ' + data.data.userProfileList.LastName);
+                //$("#txt_lastName").val();
+                $("#txtSignerEmail").val(data.data.userProfileList.Email);
+                $("#txtSignerPhone").val(data.data.userProfileList.PhoneNumber);
+            },
+            error: function (_XMLHttpRequest, textStatus, errorThrown) {
+                if (_XMLHttpRequest.status == '401') {
+                    window.location.href = "/Home/UnAuthorized";
+                }
+            }
+        });
+    }
+    /**
 
     /*Confirmation Section begin */
     function createReportandGettheFielName(vendorDetails) {

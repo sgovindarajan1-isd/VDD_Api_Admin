@@ -116,12 +116,12 @@
 
 
                     @*<div class="advSearchMenuSpacer">
-                            <label for="issueDate" style="margin-right: 4px; ">Application Type</label>
-                            <input class="clearable" id="search_ApplicationType" name="issueDate" type="search" value="" style="width:175px;">
-                            <div>
-                                <span class="field-validation-valid text-danger" data-valmsg-for="issueDate" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>*@
+                    <label for="issueDate" style="margin-right: 4px; ">Application Type</label>
+                    <input class="clearable" id="search_ApplicationType" name="issueDate" type="search" value="" style="width:175px;">
+                    <div>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="issueDate" data-valmsg-replace="true"></span>
+                    </div>
+                </div>*@
 
                     <div class="advSearchMenuSpacer">
                         <label class="firstLabelLong" for="selectProcessorsList" style="text-align:left;">Application Type:</label>
@@ -155,37 +155,38 @@
 
                 <div id="pnl_applicationAgeInfo" class="leftBox leftBoxMenu">
                     <h5>User Lists</h5>
-                    <div class="menu">
-                        <a @*class="leftNavItem ">*@ class="leftNavItem" id="sidemenu_AppOver60">
-                            <span id="span_appPendingOver60Days" class="badge pull-right" style="margin-right:3px;"></span>
-                            Applications Over 60 Days
-                        </a>
+                    <div class="menu" id="div_ManagerUserApplist">
+                        @*<a class="leftNavItem" id="sidemenu_AppOver60">
+                        <span id="span_appPendingOver60Days" class="badge pull-right" style="margin-right:3px;"></span>
+                        Applications Over 60 Days
+                    </a>*@
 
                     </div>
                 </div>
 
                 <div id="pnl_ManageUserInfo" class="topMargin">
-                    <a>
+                    <a id="sidemenu_ManageUserInfo">
                         <span class="fa smallRightMargin fa-gear"></span><b>Manage User Lists</b>
                     </a>
                 </div>
 
             </div>
 
-            <!--------------------------------->
+            <!--------------------------------->  
 
             <div class="mainContent">
                 <div class="mainBox">
                     <div id="customizeResults">
-
+                        <div  id="div_customizeFilter">
                         @*<a class="pull-right nonFormSubmit" href="#" data-url="#">*@
-                        <a id="btn_Assign" data-toggle="modal" data-target="#customizeFilterModal" class="pull-right nonFormSubmit">
-                            <strong>Customize Results</strong>
+                        <a id="btn_customizeFilter" data-toggle="modal" data-target="#customizeFilterModal" class="pull-right nonFormSubmit">
+                            <strong >Customize Results</strong>
                         </a>
+                        </div>
                         <h2 id="heading_applicationlist" class="smallBottomMargin">Application Pending Assignment</h2>
                     </div>
 
-                    <div>
+                    <div id="div_ageFilter">
                         <strong>Application Age: </strong>
 
                         <div id="btn_0_15_days" class="well well-xxs smallRightMargin" style="display:inline-block; ">

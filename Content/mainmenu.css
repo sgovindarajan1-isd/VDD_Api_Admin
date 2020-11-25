@@ -4933,10 +4933,13 @@ html{
 	margin-top: 1em}.leftBox{
 	padding: 1em;
 	margin-top: .5em;
-	border: 1px solid #ccc}.leftBoxMenu{
+	border: 1px solid #ccc}
+.leftBoxMenu {
 	background-color: #fafafa;
 	color: #333;
-	padding: 0}.leftBoxMenu h2, h4{
+	cursor: pointer;   /* dd admin*/
+	padding: 0
+}.leftBoxMenu h2, h4{
 	margin: .6em .9em}.menu ul,.menu .menuGroup ul{
 	margin: 0}.menu .menuGroup{
 	margin-bottom: 10px}.menu .menuGroup:last-child{

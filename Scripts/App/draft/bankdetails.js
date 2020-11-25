@@ -111,7 +111,7 @@
         $("#span_bankstep").removeClass("disabled");
         $("#span_attachmentstep").removeClass("disabled");
 
-        $('#lbl_header').html('Verify Bank Information');
+        $('#lbl_header').html('Verify Banking Information');
 
         var bankdetailsJson = jQuery.parseJSON(sessionStorage.bankdetailsJson);
         var acType = "Error";
@@ -472,13 +472,13 @@
     });
 
     $('#btn_Statement').hover(function () {
-        $(this).text('Statement must include the full bank account number and holder’s name.');
+        $(this).text('Statement must include the full bank account number and holder’s name and must be dated within 3 months. ');
     }, function () {
         $(this).text('First page of Bank Statement');
     });
 
     $('#btn_verifyLetter').hover(function () {
-        $(this).text('Letter must include the bank account number, account type and account holder’s name. The letter must be printed on the financial institution’s letterhead which includes the authorized bank representative name, title, phone number and signature.');
+        $(this).text('Letter must include the bank account number, account type and account holder’s name. The letter must be printed on the financial institution’s letterhead which includes the authorized bank representative name, title, phone number, signature and must be dated within 3 months.');
     }, function () {
         $(this).text('Bank Verification Letter');
     });
@@ -516,7 +516,8 @@
         sessionStorage.setItem('selectedFile_ddwetform', null);
         sessionStorage.setItem('imagefile-selectedFile_ddwetform', null);
 
-        window.history.back();
+       // window.history.back();
+        window.location.href = '/draft/_partialBankDetails';
     });
 
     $("#btn_verify_yes").on('click', function (e) {
