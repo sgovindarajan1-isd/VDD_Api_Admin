@@ -92,7 +92,7 @@ namespace eCAPDDApi.Controllers
             dr["VendorAttachmentFileName"] = vendordetails.VendorAttachmentFileName;
             
             dr["TotalAttachment"] = "Total: 1";
-            dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString();
+            dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString("g", System.Globalization.CultureInfo.CreateSpecificCulture("en-us"));
             dr["ConfirmationNumber"] = vendordetails.Confirmation;
             dt.Rows.Add(dr);
             return dt;
