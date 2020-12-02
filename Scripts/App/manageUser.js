@@ -182,7 +182,7 @@
 
             columnDefs: [
                 {
-                    "targets": [1],  //,2,3,4,5
+                    "targets": [1, 2,3,4,5],  //,2,3,4,5
                     "visible": false,
                     "searchable": false
                 },
@@ -236,7 +236,6 @@
     $('#manageUserModal').on('shown.bs.modal', function (e) {
         debugger;
         if (editData.ManageUserMenuId != 0) {
-            alert('editData.FilterStatus' + editData.FilterStatus);
             debugger;
             $("#txt_menuIdHidden").val(editData.ManageUserMenuId);
             $("#txt_menuName").val(editData.ManageUserMenuName);

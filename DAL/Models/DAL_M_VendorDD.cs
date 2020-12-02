@@ -76,7 +76,10 @@ namespace DAL.Models
         public string StatusDesc { get; set; }
         
         public string ProcessorID { get; set; }
-        public string AssignedBy { get; set; }
+        public string AssignedBy { get; set; }        
+        public string ProcessorName { get; set; }
+        public string AssignedByName { get; set; }
+
         public string AssignmentDate { get; set; }
 
         //  Draft submission informations

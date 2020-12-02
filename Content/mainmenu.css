@@ -4946,7 +4946,7 @@ html{
 	margin-bottom: 0}.mainContent{
 	float: right;
 	border: 1px solid #ccc;
-	width: 55em;  /**vdd-  it was 50**/
+	width: 56em;  /**vdd-  it was 50**/
 	margin-top: .5em;
 	position: relative;
 }.wideContent{
@@ -4971,14 +4971,17 @@ html{
 	padding-right: 5px}div .readOnlySection:first-of-type{
 	padding-top: 0}.readOnlySection{
 	padding-top: .5em;
-	padding-left: 0}.displayLabel{
-	width: 15em;
+	padding-left: 0}
+.displayLabel {
+	/*width: 15em;
 	text-align: right;
+		top: 3px;
+	*/ /*VDD*/
 	margin-right: 8px;
 	display: inline-block;
 	position: relative;
-	top: 3px;
-	font-weight: bold}.displayLabel.textBlock{
+	font-weight: bold
+}.displayLabel.textBlock{
 	width: auto;
 	margin: 0;
 	text-align: left;

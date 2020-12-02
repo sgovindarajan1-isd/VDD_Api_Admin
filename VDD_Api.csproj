@@ -583,7 +583,9 @@
     <Content Include="Content\login.css" />
     <Content Include="Content\main2.css" />
     <Content Include="Content\mainmenu.css" />
+    <Content Include="Content\manageUser.css" />
     <Content Include="Content\reports.css" />
+    <Content Include="Content\userProfile.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -616,7 +618,9 @@
     <Content Include="Scripts\App\draft\location.js" />
     <Content Include="Scripts\App\draft\vendordetails.js" />
     <Content Include="Scripts\App\login.js" />
+    <Content Include="Scripts\App\manageUser.js" />
     <Content Include="Scripts\App\reports.js" />
+    <Content Include="Scripts\App\userProfile.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -717,6 +721,8 @@
     <Content Include="Views\ApplicationList\advanceSearchList.cshtml" />
     <Content Include="Views\ApplicationReports\_partialApplicationReports.cshtml" />
     <Content Include="Views\Home\help.cshtml" />
+    <Content Include="Views\ApplicationList\manageUserList.cshtml" />
+    <Content Include="Views\Administration\userProfile.cshtml" />
     <None Include="Web References\gov.lacounty.webadminisd\service.disco" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

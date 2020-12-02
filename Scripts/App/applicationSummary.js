@@ -94,7 +94,7 @@
                 rejectReasonList.empty();
                 $.each(rrList, function (key, value) {
                     rejectReasonList.append(
-                        $('<option></option>').val(value.DenialReasonId).html(value.DenialReasonText)
+                        $('<option class="dropdown-item1"></option>').val(value.DenialReasonId).html(value.DenialReasonText)
                     );
                 });
             }
@@ -134,7 +134,7 @@
 
             if (status == 21 || status == 22) {
                 $("#div_supervisor_proce_review").show();
-                var msg = summaryData.StatusDesc + " by " + summaryData.AssignedBy + " on " + summaryData.AssignmentDate;
+                var msg = summaryData.StatusDesc + " by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
                 $("#span_review_processor_Approval_msg").text(msg);
                 $("#span_review_processor_notes").text(summaryData.Comment);
             }
@@ -189,6 +189,10 @@
         $("#AssignDate").text(data.AssignmentDate);
         $("#AssignedProcessor").text(data.ProcessorID);
         $("#AssignedBy").text(data.AssignedBy);
+
+        $("#AssignedProcessorName").text(data.ProcessorName);
+        $("#AssignedByName").text(data.AssignedByName);
+
         //$("#ClosedDate").text();
         //$("#EnteredBy").text();
         //$("#IPAddress").text();
@@ -315,7 +319,7 @@
                 $("#noteList").empty();
                 for (var item in data.data.returnValue) {
 
-                    var a = '<li class="list-group-item list-group-item-warning emptyResultMessage"> <span style="font-weight:bold; padding-right:10px" >' + '</span >' + data.data.returnValue[item].Notes + '</li> <br>';
+                    var a = '<li class="list-group-item list-group-item-warning emptyResultMessage">  <span>' + data.data.returnValue[item].LastUpdatedUser + ' : ' + data.data.returnValue[item].LastUpdatedDateTime + '</span> <br/> <span style="font-weight:bold; padding-right:10px" >' + '</span >' + data.data.returnValue[item].Notes + '</li> <br>';
                     $("#noteList").append(a);
                 }
             }
@@ -362,15 +366,18 @@
     }
 
     $("#btn_SubmitApprove").click(function () {
+        debugger;
         var comment = $("#txt_approve_comment").val();
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+
+        var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
+        var assignedToName = $("#AssignedByName").text(); 
+
         var status = 21;
 
-        if (role == 11)  // processor
-            status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
-        else {
-            if ($("#VendorCode").text() == '') {
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+            if ($("#VI_VendorCode").text() == '') {
                 $('#approveApplicationModal').modal('hide');
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Vendor Code Missing, Please check the entry!");
@@ -379,18 +386,36 @@
             status = 4;
             assignedTo = userName;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
         }
+        else { //(GlobalUserHasRoles.ProcessorRole) 
+            status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
+        }
 
-        UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
+        //if (role == 11)  // processor
+        //    status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
+        //else {
+        //    if ($("#VendorCode").text() == '') {
+        //        $('#approveApplicationModal').modal('hide');
+        //        toastr.options.positionClass = "toast-bottom-right";
+        //        toastr.warning("Vendor Code Missing, Please check the entry!");
+        //        return;
+        //    }
+        //    status = 4;
+        //    assignedTo = userName;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
+        //}
+
+        UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
     });
 
     $("#btn_SubmitReject").click(function () {
+        debugger;
         var reason_type = $("#select_rejectReason option:selected").text();
         var comment = $("#txt_reject_comment").val();
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+
+        var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
+        var assignedToName = $("#AssignedByName").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var status = 22;
-
-
 
         if (reason_type.indexOf('Other') >= 0) {
             $("#spanReasonType").html('Reason required.');
@@ -407,15 +432,18 @@
             $("#spanReasonType").html('');
         }
 
-        if (role == 11)  // processor
-            status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
-        else {
+        // if (role == 11)  // processor
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
             status = 6
-            assignedTo = userName; //$("#AssignedProcessor").text();; //  final reject  assigned to supervisor him self
+            //assignedTo = userName;  //  final reject  assigned to supervisor him self
+            assignedTo = userId;  //  final reject  assigned to supervisor him self
+            assignedToName = userName;
+        }
+        else {  //(GlobalUserHasRoles.ProcessorRole)
+                status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
         }
 
-
-        UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo);//   reject  status = 6;
+        UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//   reject  status = 6;
     });
 
     $("#btn_SubmitReturn").click(function () {
@@ -424,19 +452,22 @@
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
 
-        UpdateApplicationStatus(6, reason_type, "Rejected.", comment, assignedFrom, assignedTo);//   reject  status = 6;
+        var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
+        var assignedToName = $("#AssignedByName").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+
+        UpdateApplicationStatus(6, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//   reject  status = 6;
     });
 
     // Assign  the proccessors
     $("#btn_SubmitAssign").click(function () {
         var comment = '';
+        var supervisorName = userName;
         var supervisorID = userId;  //  always get from login user id // $("#AssignedProcessor").text();                       //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
-        //if (supervisorID == '') {  // very first time,  Supervisor Id not may be set
-        //    supervisorID == 
-        //}
-        var processorID = $("#selectProcessorsList option:selected").text();    //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
 
-        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, 'Assign');//  Status  2	Assigned to Processor
+        var processorID = $("#selectProcessorsList option:selected").val();    //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+        var processorName = $("#selectProcessorsList option:selected").text();
+        //return;
+        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
     });
 
 
@@ -456,7 +487,8 @@
         return month + '/' + day + '/' + yr + ' (' + strTime + ')';
     }
 
-    function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, action) {
+    function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, assignedFromName, assignedToName) {
+        debugger;
         var confirmNum = confirmationNum;
 
         $.ajax({
@@ -475,6 +507,10 @@
 
                 $("#AssignedProcessor").text(assignedTo);
                 $("#AssignedBy").text(assignedFrom);
+
+                $("#AssignedProcessorName").text(assignedToName);
+                $("#AssignedByName").text(assignedFromName);
+
                 $("#ClosedDate").text(getActualFullDate());
 
                 toastr.options.positionClass = "toast-bottom-right";
@@ -749,7 +785,7 @@
             url: "/api/values/InsertUpdateNotes/",
             dataType: 'json',
             data: JSON.stringify({
-                'ConfirmationNumber': confirmationNum, 'NotesType': notesType, 'Notes': notes
+                'ConfirmationNumber': confirmationNum, 'NotesType': notesType, 'Notes': notes, 'LastUpdatedUser': userId
             }),
 
             headers: {
@@ -759,13 +795,13 @@
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Successfully added notes.");
 
-
-                var a = '<li class="list-group-item list-group-item-warning emptyResultMessage"> <span style="font-weight:bold; padding-right:10px" >' + '</span >' + notes + '</li>';
-                $("#noteList").append(a);
-
+                var date = new Date();
+                var datenow = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+                
+                var a = '<li class="list-group-item list-group-item-warning emptyResultMessage">  <span>' + userName + ' : ' + datenow + '</span> <br/>  <span style="font-weight:bold; padding-right:10px" >' + '</span >' + notes + '</li> <br>';
+                $("#noteList").prepend(a);
 
                 $('#addNotesModal').modal('hide');
-
             }
             , complete: function (jqXHR) {
             }

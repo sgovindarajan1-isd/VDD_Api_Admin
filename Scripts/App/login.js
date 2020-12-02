@@ -43,7 +43,7 @@
         //testing values
         if ($(location).attr('href').indexOf("local") > -1) {
             //  To do :  test values for easy access,  remove later
-             // var userId = 'e622505';   // data entry -- old supervisor
+            // var userId = 'e622505';   // data entry -- old supervisor
             //  var userId = 'c197831' //'e631971';   //  processor
             //  var password = '';
         }

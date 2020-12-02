@@ -76,7 +76,7 @@ function navigateToSummaryPage() {
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                if (data.applicationSummary == null) {
+                if (data.data.applicationSummary == null) {
                     //toastr.options.positionClass = "toast-top-right";
                     toastr.warning("Invalid Application Number, Please check the entry!");
                    // $("#span_invalidAppNum").text("Invalid Application Number!").show().delay(3000).fadeOut();

@@ -284,7 +284,7 @@ namespace DAL
 
         public DAL_M_VendorDD GetApplicationSummary(string confirmationNumber)
         {
-            DAL_M_VendorDD reqM = new DAL_M_VendorDD();
+                DAL_M_VendorDD reqM = new DAL_M_VendorDD();
             List<DAL_M_LocationAddress> LocationAddressList = new List<DAL_M_LocationAddress>();
             List<string> reqDetails = new List<string>();
 
@@ -323,6 +323,10 @@ namespace DAL
 
                     reqM.ProcessorID = ds.Tables[0].Rows[i]["ProcessorID"].ToString();
                     reqM.AssignedBy = ds.Tables[0].Rows[i]["AssignedBy"].ToString();
+
+                    reqM.ProcessorName = ds.Tables[0].Rows[i]["ProcessorName"].ToString();
+                    reqM.AssignedByName = ds.Tables[0].Rows[i]["AssignedByName"].ToString();
+
                     reqM.AssignmentDate = ds.Tables[0].Rows[i]["AssignmentDate"].ToString(); //DateTime.Parse(ds.Tables[0].Rows[i]["AssignmentDate"].ToString());
 
                     //Console.WriteLine(aDate.ToString("MM/dd/yyyy hh:mm tt"));
@@ -593,8 +597,12 @@ namespace DAL
                     for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                     {
                         DAL_M_IdTextClass processors = new DAL_M_IdTextClass();
-                        processors.IdText = ds.Tables[0].Rows[i]["UserID"].ToString();
-                        processors.Text = ds.Tables[0].Rows[i]["NumberOFAssignment"].ToString();
+                       // processors.IdText = ds.Tables[0].Rows[i]["UserID"].ToString();
+                        //processors.Text = ds.Tables[0].Rows[i]["NumberOFAssignment"].ToString();
+
+                        processors.IdText = ds.Tables[0].Rows[i]["UserName"].ToString();
+                        processors.Text = ds.Tables[0].Rows[i]["UserID"].ToString();
+
                         processorsList.Add(processors);
                     }
 
@@ -657,6 +665,7 @@ namespace DAL
                     sqlComm.Parameters.AddWithValue("@ConfirmationNumber", vm_Notes.ConfirmationNumber);
                     sqlComm.Parameters.AddWithValue("@Note_Type", vm_Notes.NotesType);
                     sqlComm.Parameters.AddWithValue("@Note_Content", vm_Notes.Notes);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUserId", vm_Notes.LastUpdatedUser);
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.ExecuteNonQuery();
@@ -692,6 +701,9 @@ namespace DAL
                         v.NotesId = Int32.Parse(ds.Tables[0].Rows[i]["Note_Id"].ToString());
                         v.NotesType = ds.Tables[0].Rows[i]["Note_Type"].ToString();
                         v.Notes = ds.Tables[0].Rows[i]["Note_Content"].ToString();
+                        v.LastUpdatedDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
+                        v.LastUpdatedUser= ds.Tables[0].Rows[i]["LastUpdateUserName"].ToString();
+
 
                         notesList.Add(v);
                     }
