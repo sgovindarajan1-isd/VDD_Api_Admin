@@ -221,6 +221,7 @@
     }
 
     $('#manageUserGrid').on('click', '.fa-trash-o', function (e) {
+        debugger;
         var closestRow = $(this).closest('tr');
         var data = $('#manageUserGrid').DataTable().row(closestRow).data();
 

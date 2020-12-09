@@ -23,10 +23,6 @@
                     <div class="chosen-wrapper">
                         <select class="form-control cancel chosen-select" id="select_rejectReason" name="rejectReason" style="display: true">
                             <option value=""></option>
-                            @*<option value="1">Requested by Vendor</option>
-                                <option value="2">No EWS and Lexis/Nexis Vendor Verification</option>
-                                <option value="3">Invalid/Missing Documents</option>
-                                <option value="4">Other</option>*@
                         </select>
                     </div>
                 </div>
@@ -631,12 +627,6 @@
                             @*//Banking Information begin *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                            <a id="btn_BankDetails" data-toggle="modal" data-target="#bankDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                                <span class="fa fa-edit smallRightMargin"></span>
-                                                Edit
-                                            </a>
-                                        </div>*@
                                     Banking Information
                                 </div>
                                 <div class="panel-body">
@@ -663,12 +653,7 @@
                             @*//Authorized Information end *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                            <a id="btn_certificationDetails" data-toggle="modal" data-target="#certificationDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                                <span class="fa fa-edit smallRightMargin"></span>
-                                                Edit
-                                            </a>
-                                        </div>*@
+                                   
                                     Certification Information
                                 </div>
                                 <div class="panel-body">
@@ -694,12 +679,6 @@
                             @*Certification Information end *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                            <a id="btn_deptDetails" data-toggle="modal" data-target="#departmentDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                                <span class="fa fa-edit smallRightMargin"></span>
-                                                Edit
-                                            </a>
-                                        </div>*@
                                     Department Information
                                 </div>
                                 <div class="panel-body">
@@ -764,7 +743,7 @@
                                         Processor:
                                     </div>
                                     <div class="flex-column-3">
-                                        <span id="span_review_processor_Approval_msg"></span>  @*Approved by Monique Tsoi on 4/27/2020*@
+                                        <span id="span_review_processor_Approval_msg"></span> 
                                         <div>
                                             Note: <span id="span_review_processor_notes"></span>
                                         </div>
@@ -856,7 +835,6 @@
                             <table id="attachmentGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="border-collapse:collapse; border: 1px solid black; width:100%">
                                 <thead>
                                     <tr class="button-header-color">
-                                        @*<th></th>*@
                                         <th>AttachmentFileName</th>
                                         <th>Description</th>
                                         <th>UploadedDate</th>
@@ -898,7 +876,6 @@
                                                                     </span><span class="switch-handle"></span>
                                                                 </label>
                                                             </td>
-                                                            @*<td><a value ="1" data-toggle="modal" data-target="#addNotesModal" >04/24/2020</a></td>*@
                                                             <td>
                                                                 <a value="1" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe">
                                                                     <span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;">
@@ -1008,14 +985,6 @@
                 </div>
 
                 <div id="div_linkApplication_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_linkApplication_tab">
-
-                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                            <a class="btn btn-info" href="#">
-                                <span class="glyphicon glyphicon-search smallRightMargin"></span>
-                                Find New Links
-                            </a>
-                        </div>*@
-
                     <h2 class="smallBottomMargin">Linked Applications</h2>
 
                     <table id="ddAlreadyLinkedGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
@@ -1024,7 +993,6 @@
                                 <th>Linked_ConfirmationNum</th>
                                 <th>VendorNumber</th>
                                 <th>Payeename</th>
-                                @*<th>BankAccountNumber</th>*@
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -1042,53 +1010,9 @@
                         </thead>
                     </table>
 
-                    @*<ul class="list-group list-group-sm">
-                            <li class="list-group-item list-group-item-warning emptyItem" aria-hidden="true">Matched Applications list is empty.</li>
-
-                            <li class="list-group-item matchedClaimRow">
-                                <div class="pull-right btn-group btn-group-xs">
-                                    <a href="javascript:void(0);" data-method="post" data-url="#" class="btn btn-primary nonFormSubmit">
-                                        <span class="fa fa-link"></span>
-                                        Link
-                                    </a>
-                                    <a href="javascript:void(0);" data-action-target="#" class="btn btn-danger confirmModal">
-                                        <span class="fa fa-trash"></span>
-                                        Dismiss
-                                    </a>
-                                </div>
-
-                                <div class="flex">
-                                    <div class="flex-column-4">
-                                        <span>Application: </span>
-                                        <a href="#" class="bold">
-                                            DDOL-AXKUTG
-                                        </a>
-                                    </div>
-                                    <div class="flex-column-4">
-                                        <span>Vendor CD: </span>
-                                        <span>014473</span>
-                                    </div>
-                                    <div class="flex-column-4">
-                                        <span>Vendor NM: </span>
-                                        <span>COASTAL LAW FIRM</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>*@
-
-                </div>
+                 </div>
                 <div id="div_ArchieveApplication_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_ArchieveApplication_tab">
                     <h2 class="bottomMargin">Application Trash</h2>
-
-                    @*<div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-
-                                Suggested Documents
-                            </div>
-                            <ul id="suggestedDocumentList" class="list-group list-group-hover">
-                                <li class="list-group-item list-group-item-warning emptyItem">Suggested Documents list is empty.</li>
-                            </ul>
-                        </div>*@
 
                     <div class="panel panel-default panel-sm">
                         <div class="panel-heading">
@@ -1098,7 +1022,6 @@
                             <thead>
                                 <tr class="button-header-color">
                                     <th>AttachmentFileName</th>
-                                    @*<th>Description</th>*@
                                     <th>UploadedDate</th>
                                     <th>Command</th>
                                 </tr>

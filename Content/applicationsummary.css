@@ -11,7 +11,6 @@ option {
     -moz-white-space: pre-wrap;
     -o-white-space: pre-wrap;
     white-space: pre-wrap;
-    /* hide text that can't wrap with an ellipsis */
     overflow: hidden;
     text-overflow: ellipsis;
     /* add border after every option */

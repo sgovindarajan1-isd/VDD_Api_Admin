@@ -241,7 +241,6 @@
     };
 
     $('#input_attachment_ddwetform').change(function (e) {
-        debugger;
         var ext = ['.PDF', '.DOC', '.DOCX', '.JPG', '.JPEG', '.GIF', '.PNG'];
         displaywetForm = 'Original Direct Deposit Request Form';
         $("#fileError_or_Info_ddwetform").html("");
@@ -272,12 +271,12 @@
                 $("#modifiedFileName_ddwetform").text(modifiedFileName);
             }
         }
+
+        e.target.value = '';
     });
 
     // $('input[type="file"]').change(function (e) {
     $('#input_attachment').change(function (e) {
-        debugger;
-
         var ext = ['.PDF', '.DOC', '.DOCX', '.JPG', '.JPEG', '.GIF', '.PNG'];
         $("#fileError_or_Info").html("");
         var fileName = e.target.files[0].name;
@@ -306,9 +305,12 @@
                 $("#modifiedFileName").text(modifiedFileName);
             }
         }
+
+        e.target.value = '';
     });
 
     $("#btn_FileAttachmentDelete").on('click', function () {
+        debugger;
         sessionStorage.removeItem('selectedFile');
         sessionStorage.removeItem('imagefile-selectedFile');
         sessionStorage.removeItem('originalfileName');

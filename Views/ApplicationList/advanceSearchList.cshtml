@@ -1,6 +1,9 @@
 ﻿@section Scripts
 {
+    <link href="~/Content/bootstrap-datepicker3.standalone.css" rel="stylesheet" />
+
     <script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/App/BootsrapDatePicker/bootstrap-datepicker.min.js"></script>
     <script src="~/Scripts/App/advanceSearchList.js"></script>
 }
 
@@ -80,7 +83,7 @@
 
                     <div class="advSearchMenuSpacer">
                         <label for="claimant" style="margin-right: 4px; ">Vendor Number</label>
-                        <input class="clearable" id="search_VendorNumber" type="search" value="" >
+                        <input class="clearable" id="search_VendorNumber" type="search" value="">
                     </div>
 
                     <div class="advSearchMenuSpacer">
@@ -88,37 +91,51 @@
                         <input class="input-validation-error clearable" data-val="true" data-val-length="Max 20 numbers." data-val-length-max="20" id="search_PayeeName" name="checkNumber" type="search" value="">  @*style="width:175px;"*@
                     </div>
 
-                    <div class="advSearchMenuSpacer">
-                        <label for="payee" style="margin-right: 4px; ">Received Date</label>
-                        <input class="clearable" data-val="true" data-val-length="Max 100 characters." data-val-length-max="100" id="search_ReceivedDate" name="payee" type="search" value="">
-                    </div>
+                    @*<div class="advSearchMenuSpacer">
+                            <label for="payee" style="margin-right: 4px; ">Received Date</label>
+                            <input class="clearable" data-val="true" data-val-length="Max 100 characters." data-val-length-max="100" id="search_ReceivedDate" name="payee" type="search" value="" data-provide="datepicker">
+                        </div>*@
 
+                    @*<div class="advSearchMenuSpacer">
+                            <label for="amount" style="margin-right: 4px; ">Status Date</label>
+                            <input class="clearable" id="search_StatusDate" name="amount" type="search" value="" data-provide="datepicker">
 
-                    <div class="advSearchMenuSpacer">
-                        <label for="amount" style="margin-right: 4px; ">Status Date</label>
-                        <input class="clearable" id="search_StatusDate" name="amount" type="search" value="">
-                        <div>
-                            <span class="field-validation-valid text-danger" data-valmsg-for="amount" data-valmsg-replace="true"></span>
+                            <div>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="amount" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>*@
+
+                    <div class="advSearchMenuSpacer input-group date" data-provide="datepicker">
+                        <label style="margin-right: 4px; ">Received Date</label>
+                        <div class="input-group date" data-provide="datepicker">
+
+                            <input id="search_ReceivedDate" type="search" data-provide="datepicker">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
                         </div>
+
                     </div>
+
+                    <div class="advSearchMenuSpacer input-group date" id="datetimepicker6" data-provide="datepicker">
+                        <label style="margin-right: 4px; ">Status Date</label>
+                        <div class="input-group date" id="datetimepicker6" data-provide="datepicker">
+                            <input id="search_StatusDate" type="search" data-provide="datepicker">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+
+                    </div>
+
 
                     <div class="advSearchMenuSpacer">
                         <label for="issueDate" style="margin-right: 4px; ">Application Status</label>
-                        @* <div class="chosen-wrapper" style="text-align:left; width:350px; vertical-align:middle;">*@
                         <select class="" id="advanceSearch_StatusList" style="text-align:left; width:100%; vertical-align:middle;">
                             <option value=""></option>
                         </select>
 
                     </div>
-
-
-                    @*<div class="advSearchMenuSpacer">
-                            <label for="issueDate" style="margin-right: 4px; ">Application Type</label>
-                            <input class="clearable" id="search_ApplicationType" name="issueDate" type="search" value="" style="width:175px;">
-                            <div>
-                                <span class="field-validation-valid text-danger" data-valmsg-for="issueDate" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>*@
 
                     <div class="advSearchMenuSpacer">
                         <label class="firstLabelLong" for="selectProcessorsList" style="text-align:left;">Application Type:</label>

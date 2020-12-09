@@ -95,7 +95,7 @@
             url: "/api/values/InsertUpdateChecklistNotes/",
             dataType: 'json',
             data: JSON.stringify({
-                'ConfirmationNumber': confirmationNum, 'ChecklistId': checklistItemNumber, 'NotesType': notesType, 'Notes': notes, NotesId: modifyOrnewNoteId
+                'ConfirmationNumber': confirmationNum, 'ChecklistId': checklistItemNumber, 'NotesType': notesType, 'Notes': notes, NotesId: modifyOrnewNoteId, 'LastUpdatedUser': userId
             }),
 
             headers: {

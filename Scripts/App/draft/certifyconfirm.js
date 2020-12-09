@@ -109,6 +109,22 @@
 
         $("#confirmationNumber").html(sessionStorage.getItem('confirmationNumber'));
         $("#submittedDate").html(formatDateDisplay(sessionStorage.getItem('submittedDate')));
+
+        //clear all other sessions since  the application is already submitted.  Otherwise, when click the "Enter application" Menu second time old information will be available.
+        sessionStorage.removeItem('selectedFile');
+        sessionStorage.removeItem('imagefile-selectedFile');
+        sessionStorage.removeItem('originalfileName');
+        sessionStorage.removeItem('uploadedfile');
+        sessionStorage.removeItem('uploadedfileExtension');
+        sessionStorage.removeItem('selectedFile_ddwetform');
+        sessionStorage.removeItem('imagefile-selectedFile_ddwetform');
+        sessionStorage.removeItem('originalfileName_ddwetform');
+        sessionStorage.removeItem('uploadedfile_ddwetform');
+        sessionStorage.removeItem('uploadedfileExtension_ddwetform');
+        sessionStorage.removeItem("bankdetailsJson");
+        sessionStorage.removeItem('certifydetailsJson');
+        sessionStorage.removeItem("vendordetailsJson");
+        sessionStorage.removeItem("paymentJson");
     }
 
     $(".form-control").on('input', function (e) {

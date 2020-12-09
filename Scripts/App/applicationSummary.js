@@ -247,6 +247,8 @@
         //});
 
         var j = 1;
+
+        debugger;
         $.each(data.LocationAddressList, function (index, value) {
 
             var _address = value.Street;  //"16000 south street";
@@ -258,10 +260,11 @@
                 ' <div class="flex">' +
                 ' <ul class="noTopMargin flex-column-2">' +
                 ' <li>' +
-                ' <span class="smallRightMargin"><b>' + j + '.</b></span><b>ADDRESS:</b> ' + _address + '<span style= "padding-left: 150px"><b>CITY:</b></span> ' + _city +
+                ' <span class="smallRightMargin"><b>' + j + '.</b></span><b>ADDRESS:</b> ' + _address  +
                 '</li>' +
                 ' <li>' +
-                '<span class="smallRightMargin"></span><b>STATE:</b> ' + _state + '<span style= "padding-left: 310px">  <b>ZIP CODE:</b> ' + _zip +
+                '<span"><b>CITY:</b></span> ' + _city +
+                '<span style= "padding-Right: 100px" class="smallRightMargin"></span><b>STATE:</b> ' + _state + '<span style= "padding-left: 100px">  <b>ZIP CODE:</b> ' + _zip +
                 '</li>' +
                 '</ul>' +
                 ' </div>' +
@@ -417,7 +420,7 @@
         var assignedToName = $("#AssignedByName").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var status = 22;
 
-        if (reason_type.indexOf('Other') >= 0) {
+        if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
             $("#spanReasonType").html('Reason required.');
             return;
         }
@@ -562,7 +565,36 @@
 
     };
 
+    $("#txt_pop_VendorCode").focusout(function () {
+        if ($("#txt_pop_VendorCode").val().trim().length > 0) {
+            GetVendorNameByVendorCode($("#txt_pop_VendorCode").val());
+        }
+    }).click(function (e) {
+        e.stopPropagation();
+        return true;
+    });
+
+    function GetVendorNameByVendorCode(vname) {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "post",
+            dataType: 'json',
+            data: JSON.stringify({ 'UserId': vname }),
+            url: "/api/values/GetVendorNameByVendorCode/",
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            success: function (data) {
+                $("#txt_pop_PayeeName").val(data.data.VendorName);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#txt_pop_PayeeName").val("");
+            }
+        });
+    };
+
     $("#btn_SubmitVendorDetails").click(function (confirmationNum) {
+        debugger;
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
 
         var vendorNumber = $("#txt_pop_VendorCode").val();
@@ -571,7 +603,7 @@
         var middleName = $("#txt_pop_MiddleName").val();
         var phoneNumber = $("#txt_pop_PhoneNumber").val();
         var cellPhone = $("#txt_pop_CellPhone").val();
-        // var payeeName = $("#txt_pop_PayeeName").val();
+         var payeeName = $("#txt_pop_PayeeName").val();
         var aliasDBA = $("#txt_pop_AliasDBA").val();
         var companyName = $("#txt_pop_CompanyName").val();
         var tin = $("#txt_pop_Tin").val();
@@ -584,7 +616,7 @@
             dataType: 'json',
             data: JSON.stringify({
                 'Confirmation': confirmationNum, 'vendorNumber': vendorNumber, 'firstName': firstName, 'lastName': lastName, 'middleName': middleName, 'phoneNumber': phoneNumber, 'cellPhone': cellPhone
-                //, 'payeeName': payeeName  
+                , 'payeeName': payeeName  
                 , 'aliasDBA': aliasDBA, 'companyName': companyName, 'TaxpayerID': tin, 'DDnotifyEmail': ddNotify
             }),
 
@@ -597,17 +629,20 @@
 
                 $('#vendorDetailsModal').modal('hide');
 
-                $("#VI_VendorCode").text(vendorNumber);
-                $("#Alias_DBA").text(aliasDBA);
-                $("#FirstName").text(firstName);
-                $("#MiddleName").text(middleName);
-                $("#LastName").text(lastName);
+                //$("#VI_VendorCode").text(vendorNumber);
+                //$("#Alias_DBA").text(aliasDBA);
+                //$("#FirstName").text(firstName);
+                //$("#MiddleName").text(middleName);
+                //$("#LastName").text(lastName);
 
-                $("#PhoneNumber").text(phoneNumber);
-                //$("#VI_PayeeName").text(payeeName);
-                $("#CompanyName").text(companyName);
-                $("#TaxpayerID").text(tin);
-                $("#DirectDepositNotificationEmail").text(ddNotify);
+                //$("#PhoneNumber").text(phoneNumber);
+                ////$("#VI_PayeeName").text(payeeName);
+                //$("#CompanyName").text(companyName);
+                //$("#TaxpayerID").text(tin);
+                //$("#DirectDepositNotificationEmail").text(ddNotify);
+
+                $('#ul_ddoptionList').empty()
+                getApplicationSummary(confirmationNum);
             }
             , complete: function (jqXHR) {
             }
@@ -795,10 +830,16 @@
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Successfully added notes.");
 
-                var date = new Date();
-                var datenow = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+                //var date = new Date();
+                //var datenow = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+
+                var today = new Date();
+                var tdate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+                var ttime = (today.getHours() > 12) ? (today.getHours() - 12 + ':' + today.getMinutes() + ' PM') : (today.getHours() + ':' + today.getMinutes() + ' AM');
+                var dateTime = tdate + ' ' + ttime;
+
                 
-                var a = '<li class="list-group-item list-group-item-warning emptyResultMessage">  <span>' + userName + ' : ' + datenow + '</span> <br/>  <span style="font-weight:bold; padding-right:10px" >' + '</span >' + notes + '</li> <br>';
+                var a = '<li class="list-group-item list-group-item-warning emptyResultMessage">  <span>' + userName + ' : ' + dateTime + '</span> <br/>  <span style="font-weight:bold; padding-right:10px" >' + '</span >' + notes + '</li> <br>';
                 $("#noteList").prepend(a);
 
                 $('#addNotesModal').modal('hide');

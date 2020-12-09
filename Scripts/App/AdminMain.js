@@ -57,10 +57,16 @@ function userHasDataEntryRole(userRoleObj) {
 }
 
 $("#lnkAdvSearch").click(function (e) {
-    navigateToSummaryPage();
+    debugger;
+    if ($("#txt_appSearchNumber").val().length > 0) {
+        navigateToSummaryPage();
+        return;
+    }
+    window.location.href = '/applicationList/advanceSearchList?type=adv';
 });
 
 function navigateToSummaryPage() {
+    debugger;
     if ($("#txt_appSearchNumber").val().length <= 0) {
         return;
     } else {
@@ -79,7 +85,7 @@ function navigateToSummaryPage() {
                 if (data.data.applicationSummary == null) {
                     //toastr.options.positionClass = "toast-top-right";
                     toastr.warning("Invalid Application Number, Please check the entry!");
-                   // $("#span_invalidAppNum").text("Invalid Application Number!").show().delay(3000).fadeOut();
+                    // $("#span_invalidAppNum").text("Invalid Application Number!").show().delay(3000).fadeOut();
                     return;
                 }
                 else {
@@ -103,6 +109,7 @@ function navigateToSummaryPage() {
 };
 
 $("#txt_appSearchNumber").focusout(function (e) {
+    debugger;
     navigateToSummaryPage();
     //if ($("#txt_appSearchNumber").val().length <= 0) {
     //    return;
@@ -184,9 +191,13 @@ $(document).ready(function () {
     });
 
 
-  //  focus out and advance search click code here
+    //  focus out and advance search click code here
 
     $("#btnAdvanceSearch").click(function () {
+        if ($("#txt_appSearchNumber").val().length > 0) {
+            navigateToSummaryPage();
+            return;
+        }
         window.location.href = '/applicationList/advanceSearchList?type=adv';
     });
 

@@ -28,11 +28,11 @@
             return true;
         }
     };
-   // $("#div_spinnerpanel").addClass('loading');
+    // $("#div_spinnerpanel").addClass('loading');
     $("#div_spinner").addClass('loader');
 
     $('#txtZipCode').keypress(validateNumber);
-   
+
     $.ajax({
         contentType: 'application/json; charset=utf-8',
         type: "POST",
@@ -44,7 +44,7 @@
         url: "/../api/values/GetVendorDetailsByName/",
         success: function (data) {
 
-       ///     $("#div_spinnerpanel").removeClass('loading');
+            ///     $("#div_spinnerpanel").removeClass('loading');
             $("#div_spinner").removeClass('loader');
 
             debugger;
@@ -57,8 +57,28 @@
                     columns: [
                         { 'data': '' },
                         { 'data': 'VendorAddress' },
-                        { 'data': 'RoutingNumber' },
-                        { 'data': 'AcccountNo', "width": '12%' },
+                        {
+                            'data': 'RoutingNumber',
+                            "render": function (data, type, row, meta) {
+                                if (row.Status === 'Approved') {
+                                    // data = '******' + row.AcccountNo.substr(row.AcccountNo.length - 4);  //'Masked';
+                                    data = '******' + data.substr(data.length - 4);  //'Masked';
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            'data': 'AcccountNo',
+                            "render": function (data, type, row, meta) {
+                                if (row.Status === 'Approved') {
+                                    // data = '******' + row.AcccountNo.substr(row.AcccountNo.length - 4);  //'Masked';
+                                    data = '******' + data.substr(data.length - 4);  //'Masked';
+                                }
+                                return data;
+                            }
+
+                            , "width": '12%'
+                        },
                         { 'data': 'AccountType' },
                         { 'data': 'RemittanceEmail' },
                         { 'data': 'Status', "width": '140px', 'className': 'payment-status-color' }
@@ -78,20 +98,68 @@
                     select: {
                         style: 'multi',
                         selector: 'td:first-child'
+                    },
+                    "createdRow": function (row, data, dataIndex) {
+                        // if (data.Status.toLowerCase() === 'pending') {
+                        if (data.Status.toLowerCase() === 'new') {
+                            $(row).css('background-color', 'lightgrey');
+                            $('td', row).removeClass('select-checkbox');
+                        }
                     }
                 });
 
+                //var table = $('#ddGrid').DataTable();
+                //table.rows(function (idx, data, node) {
+                //    //if (data.Status.toLowerCase() === 'pending') {  // direct deposit
+                //    if (data.Status.toLowerCase() === 'new') {  // direct deposit
+                //        $("#pendingMessage").text("Your request is currently pending review. Please allow up to 20 days to process the request.")
+                //        $('#btn_deposit_next').hide();
+                //        return false;
+                //    }
+                //});
+
                 var table = $('#ddGrid').DataTable();
+                var allRowsArePending = true;
                 table.rows(function (idx, data, node) {
-                    if (data.Status.toLowerCase() === 'pending') {  // direct deposit
-                        $("#pendingMessage").text("Your request is currently pending review. Please allow up to 20 days to process the request.")
-                        $('#btn_deposit_next').hide();
-                        return false;
+                    if (data.Status.toLowerCase() !== 'new') {  // direct deposit    "pending" replaced as new
+                        allRowsArePending = false;
+                        return true;
                     }
                 });
+
+                if (allRowsArePending) {
+                    $("#pendingMessage").text("Your request is currently pending review. Please allow up to 20 days to process the request.")
+                    $('#btn_deposit_next').hide();
+                }
+
             } else {  //  if show the Enter payment info screen and hide the location table
                 $('#div_enterPaymentInfo').show();
                 $('#div_location_grid').hide();
+
+                //incase of coming back,  populate from session
+                debugger;
+                var paymentObj = JSON.parse(sessionStorage.getItem("paymentJson"));
+
+                if (!(paymentObj == null) || (paymentObj == 'undefined')) {
+                    var tbl = $('#ddLocationAddressGrid').DataTable();  //enterPaymentInfoGrid
+
+                    paymentSrNumber = 1
+                    for (var i = 0; i < paymentObj.length; i++) {
+                        tbl.row.add({
+                            "": true,
+                            "": paymentSrNumber,
+                            "Address": paymentObj[i].VendorAddress
+                            , "Address1": paymentObj[i].PaymentAddress1
+                            , "Address2": paymentObj[i].PaymentAddress2
+                            , "City": paymentObj[i].PaymentCity
+                            , "State": paymentObj[i].PaymentState
+                            , "Zipcode": paymentObj[i].PaymentZipCode
+                        }).draw(false);
+
+                        paymentSrNumber++;
+                    }
+                }
+                //END incase of coming back,  populate from session
             }
         },
         error: function (_XMLHttpRequest, textStatus, errorThrown) {
@@ -187,6 +255,11 @@
         }).draw(false);
 
         paymentSrNumber++;
+        $('#txtAddress1').val('');
+        $('#txtAddress2').val('');
+        $('#txtCity').val('');
+        $('#txtState').val('');
+        $('#txtZipCode').val('');
     });
 
     $('#btn_Location_reset').on('click', function (e) {
@@ -198,22 +271,42 @@
         $('#txtZipCode').val('');
     });
 
+    $('#ddLocationAddressGrid').on('click', '.locDelete', function () {
+        debugger;
+        $('#ddLocationAddressGrid').DataTable()
+            .row($(this).parents('tr'))
+            .remove()
+            .draw();
+    });
+
     $('#ddLocationAddressGrid').dataTable({
         responsive: true,
+        searching: false,
+        paging: false,
         columns: [
             //{ 'data': '' },
-            { 'data': ''},
+            { 'data': '', title: "#" },
             { 'data': 'Address' },
             { 'data': 'Address1' },
             { 'data': 'Address2' },
             { 'data': 'City' },
             { 'data': 'State' },
             { 'data': 'Zipcode' }
+            , {
+                "data": null,
+                "render": function (data, type, row) {
+                    return '<a class="btn btn-primary locDelete"> <span class="fa fa-trash-o"></span> Delete </a>';    //btn-group-xs nonFormSubmit unlinkBtn
+                },
+                'title': ""
+            }
         ],
         columnDefs: [
             { "width": "2px", "targets": [0] },
-            { "visible": false, "targets": [2, 3, 4,5,6] },
+            { "visible": false, "targets": [2, 3, 4, 5, 6] },
+            { "width": "2px", "targets": [7] },
         ],
+
+
 
         select: {
             style: 'multi',

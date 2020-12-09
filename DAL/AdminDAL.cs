@@ -515,7 +515,7 @@ namespace DAL
                     sqlComm.Parameters.AddWithValue("@MiddleName", adminModel.MiddleName);
                     sqlComm.Parameters.AddWithValue("@LastName", adminModel.LastName);
                     sqlComm.Parameters.AddWithValue("@PhoneNumber", adminModel.PhoneNumber);
-                    //sqlComm.Parameters.AddWithValue("@PayeeName", adminModel.Payeename);
+                    sqlComm.Parameters.AddWithValue("@PayeeName", adminModel.Payeename);
                     sqlComm.Parameters.AddWithValue("@CompanyName", adminModel.CompanyName);
                     sqlComm.Parameters.AddWithValue("@AliasDBA", adminModel.AliasDBAName);
                     sqlComm.Parameters.AddWithValue("@TaxpayerID", adminModel.TaxpayerID);
@@ -846,6 +846,7 @@ namespace DAL
                     sqlComm.Parameters.AddWithValue("@NotesId", vm_Notes.NotesId);  // for update
                     sqlComm.Parameters.AddWithValue("@Note_Type", vm_Notes.NotesType);
                     sqlComm.Parameters.AddWithValue("@Note_Content", vm_Notes.Notes);
+                    sqlComm.Parameters.AddWithValue("@LastUpdatedUserId", vm_Notes.LastUpdatedUser);
                     SqlParameter OutputNoteId = new SqlParameter("@OutputNoteId", SqlDbType.Int)
                     {
                         Direction = ParameterDirection.Output
@@ -1512,6 +1513,8 @@ namespace DAL
                         mulist.FilterUser =  ds.Tables[0].Rows[i]["FilterUser"].ToString();
                         mulist.FilterStatus =  ds.Tables[0].Rows[i]["FilterStatus"].ToString();
                         mulist.FilterAge = int.Parse(ds.Tables[0].Rows[i]["FilterAge"].ToString());
+
+                        mulist.ApplicationCount = manageuserMenuAppListcount(mulist.ManageUserMenuId);
                         manageUserMenuList.Add(mulist);
                     }
                     con.Close();
@@ -1683,6 +1686,34 @@ namespace DAL
                 LogManager.log.Error("Error in  Update User Profile Details.  Message: " + ex.Message);
                 return false;
             }
+        }
+
+        private int manageuserMenuAppListcount(int manageUserMenuId)
+        {
+            int manageuserMenuAppListcount = 0;
+            try
+            {
+                DataSet ds = new DataSet("ManageUserApplicationList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetApplicationListByManageUserMenuId", con);
+                    sqlComm.Parameters.AddWithValue("@ManageUserMenuId", manageUserMenuId);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    int tableNum = 0;  // for processor  only  one table  ( my pending approval table)
+
+                    manageuserMenuAppListcount = ds.Tables[tableNum].Rows.Count;
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in  getting applicationList by manageuserapplicationId,  Message: " + ex.Message);
+            }
+            return manageuserMenuAppListcount;
         }
 
     }

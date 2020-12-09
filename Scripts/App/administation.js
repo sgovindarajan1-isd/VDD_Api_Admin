@@ -291,13 +291,13 @@
             $("#spandisbursementCategory").html('');
         }
 
-        if (($("#chk_admin").prop('checked') == false) && ($("#chk_supervisor").prop('checked') == false) &&
-            ($("#chk_processor").prop('checked') == false) && ($("#chk_DataEntry").prop('checked') == false)) {
-            $("#spanRole").html('Assign atleast one Role to the user.');
-            bool = false;
-        } else {
-            $("#spanRole").html('');
-        }
+        //if (($("#chk_admin").prop('checked') == false) && ($("#chk_supervisor").prop('checked') == false) &&
+        //    ($("#chk_processor").prop('checked') == false) && ($("#chk_DataEntry").prop('checked') == false)) {
+        //    $("#spanRole").html('Assign atleast one Role to the user.');
+        //    bool = false;
+        //} else {
+        //    $("#spanRole").html('');
+        //}
       
 
         if (!bool) {

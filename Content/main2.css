@@ -3523,7 +3523,7 @@ select[multiple].input-lg, textarea.input-lg {
     -ms-user-select: none;
     user-select: none;
     background-image: none;
-    border: 1px solid transparent;
+    border: 1px solid darkgrey;
     border-radius: 4px
 }
 

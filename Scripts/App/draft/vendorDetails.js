@@ -16,7 +16,7 @@
     if ($(location).attr('href').indexOf("local") > -1) {
         $("#txtApplicationType").val('1');
         $("#txtVendorCode").val('');
-        $("#txtPayeeName").val('Payee');
+        //$("#txtPayeeName").val('Payee');
         $("#txtFirstName").val('Firstname');
         $("#txtMiddleName").val('MiddleName');
         $("#txtLastName").val('LastName');
