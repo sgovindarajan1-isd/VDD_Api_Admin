@@ -205,7 +205,7 @@
         //    $("#spanDeptPhone").html('Department Contact Number is required.');
         //    bool = false;
         //} else
-        if ( (deptPhone.length > 0) && (!validatePhone(deptPhone))) {
+        if ((deptPhone.length > 0) && (!validatePhone(deptPhone))) {
             $("#spanDeptPhone").html('Valid Department Contact Number is required.');
             bool = false;
         } else {
@@ -288,29 +288,25 @@
         var bankobj = JSON.parse(sessionStorage.getItem("bankdetailsJson"));
         var vendorNumber = sessionStorage.getItem('vendorNumber');
 
-        //$("#vendorname").html(vendorNumber);
-        //$("#payeename").html(sessionStorage.getItem('userName'));
-        //$("#ssn").html(sessionStorage.getItem('tin'));
-        //vendorDetails.vendorname = vendorNumber;
-        //vendorDetails.payeename = sessionStorage.getItem('userName');
-        //vendorDetails.ssn = sessionStorage.getItem('tin');
-
         if (!(vendorobj == null) || (vendorobj == 'undefined')) {
-            $("#typeofApplication").html(vendorobj[0].ApplicationType);
-            if ((vendorobj[0].VendorCode == null) || (vendorobj[0].VendorCode == ''))
-                $("#vendorCode").html('Not Available now');
-            else
-                $("#vendorCode").html(vendorobj[0].VendorCode);
-            $("#payeeName").html(vendorobj[0].PayeeName);
-            $("#firstName").html(vendorobj[0].FirstName);
-            $("#middleName").html(vendorobj[0].MiddleName);
-            $("#lastName").html(vendorobj[0].LastName);
-            $("#companyName").html(vendorobj[0].CompanyName);
-            $("#aliasDBAName").html(vendorobj[0].AliasDBAName);
-            $("#tin").html(vendorobj[0].TaxpayerID);
-            $("#caseNo").html(vendorobj[0].CaseNo);
+            $("#typeofApplication").val(vendorobj[0].ApplicationType);
+            if ((vendorobj[0].VendorCode == null) || (vendorobj[0].VendorCode == '')) {
+                $("#vendorCode").val('Not Available now');
+                $("#payeeName").val('Not Available now');
+            }
+            else {
+                $("#vendorCode").val(vendorobj[0].VendorCode);
+                $("#payeeName").val(vendorobj[0].PayeeName);
+            }
+            $("#firstName").val(vendorobj[0].FirstName);
+            $("#middleName").val(vendorobj[0].MiddleName);
+            $("#lastName").val(vendorobj[0].LastName);
+            $("#companyName").val(vendorobj[0].CompanyName);
+            $("#aliasDBAName").val(vendorobj[0].AliasDBAName);
+            $("#tin").val(vendorobj[0].TaxpayerID);
+            $("#caseNo").val(vendorobj[0].CaseNo);
             //$("#ddNotificationEmail").html(vendorobj[0].ddNotificationEmail);
-            $("#phoneNumber").html(vendorobj[0].PhoneNumber);
+            $("#phoneNumber").val(vendorobj[0].PhoneNumber);
 
             vendorDetails.RequestType = vendorobj[0].ApplicationType;
             vendorDetails.VendorNumber = vendorobj[0].VendorCode;
@@ -323,20 +319,18 @@
             vendorDetails.AliasDBAName = vendorobj[0].AliasDBAName;
             vendorDetails.Ssn = vendorobj[0].TaxpayerID;
             vendorDetails.CaseNo = vendorobj[0].CaseNo;
-            //vendorDetails.DDNotificationEmail = vendorobj[0].
             vendorDetails.PhoneNumber = vendorobj[0].PhoneNumber;
         }
 
         if (!(bankobj == null) || (bankobj == 'undefined')) {
             if (bankobj[0].AccountType == "1")
-                $("#typeofAccount").html("Checking");
+                $("#typeofAccount").val("Checking");
             else if (bankobj[0].AccountType == "2")
-                $("#typeofAccount").html("Saving");
-            //$("#typeofAccount").html(bankobj[0].AccountType);
-            $("#accountNumber").html(bankobj[0].BankAccountNumber);
-            $("#routingNumber").html(bankobj[0].BankRoutingNo);
-            $("#finInsName").html(bankobj[0].FinancialIns);
-            $("#ddNotificationEmail").html(bankobj[0].DDNotifyEmail);
+                $("#typeofAccount").val("Saving");
+            $("#accountNumber").val(bankobj[0].BankAccountNumber);
+            $("#routingNumber").val(bankobj[0].BankRoutingNo);
+            $("#finInsName").val(bankobj[0].FinancialIns);
+            $("#ddNotificationEmail").val(bankobj[0].DDNotifyEmail);
 
             vendorDetails.AccountType = bankobj[0].AccountType;
             vendorDetails.BankAccountNumber = bankobj[0].BankAccountNumber;
@@ -371,15 +365,15 @@
 
         var certifyobj = JSON.parse(sessionStorage.getItem("certifydetailsJson"));
         if (!(certifyobj == null) || (certifyobj == 'undefined')) {
-            $("#signername").html(certifyobj[0].Signername);
-            $("#signertitle").html(certifyobj[0].Signertitle);
-            $("#signerphone").html(certifyobj[0].Signerphone);
-            $("#signeremail").html(certifyobj[0].Signeremail);
+            $("#signername").val(certifyobj[0].Signername);
+            $("#signertitle").val(certifyobj[0].Signertitle);
+            $("#signerphone").val(certifyobj[0].Signerphone);
+            $("#signeremail").val(certifyobj[0].Signeremail);
 
-            $("#deptName").html(certifyobj[0].DeptName);
-            $("#deptPerson").html(certifyobj[0].DeptPerson);
-            $("#deptEmail").html(certifyobj[0].DeptEmail);
-            $("#deptPhone").html(certifyobj[0].DeptPhone);
+            $("#deptName").val(certifyobj[0].DeptName);
+            $("#deptPerson").val(certifyobj[0].DeptPerson);
+            $("#deptEmail").val(certifyobj[0].DeptEmail);
+            $("#deptPhone").val(certifyobj[0].DeptPhone);
 
             vendorDetails.Signername = certifyobj[0].Signername;
             vendorDetails.Signertitle = certifyobj[0].Signertitle;
@@ -391,27 +385,15 @@
             vendorDetails.DeptEmail = certifyobj[0].DeptEmail;
             vendorDetails.DeptPhone = certifyobj[0].DeptPhone;
         }
-
-        //vendorDetails.Confirmation = "";
-        //vendorDetails.SubmitDateTime = new Date();
         vendorDetails.VendorAttachmentFileName = sessionStorage.getItem('uploadedfile')
         vendorDetails.AttachmentFileName_ddwetform = sessionStorage.getItem('uploadedfile_ddwetform')
 
-        $("#span_totalAttachment").html(2);
-        $("#span_TypeofAttachment").html(sessionStorage.getItem('Display_TypeofAttachments'));
-
-        //var uniqueFileName = getUniqueFileNameusingCurrentTime();
-        //vendorDetails.VendorReportFileName = uniqueFileName + "_" + vendorNumber + "_VendorReport.pdf";
+        $("#span_totalAttachment").val(2);
+        $("#span_TypeofAttachment").html(sessionStorage.getItem('displaywetForm') + ', ' + sessionStorage.getItem('displayBankStatements'));  ///sessionStorage.getItem('Display_TypeofAttachments'));
 
         vendorDetails.LocationAddressList = LocationAddressList;
         vendorDetails.locationIDs = bankDetails;
-        vendorDetails.locationAddressDescList = locationList;        
-
-        //vendorDetails.Source_ip = "Source_ip";//getSourceip();
-        //vendorDetails.Source_device = "Source_device";
-        //vendorDetails.User_agent = navigator.userAgent;
-        //vendorDetails.Host_headers = "Host_headers";
-
+        vendorDetails.locationAddressDescList = locationList;
         vendorDetails.User_agent = sessionStorage.getItem('userName');
     }
 
@@ -494,9 +476,9 @@
             }
         });
     };
-/*Submit Section end */
+    /*Submit Section end */
 
-/* certify*/
+    /* certify*/
     function getuserInfoForProxiedFields() {
         //$('#txtSignerTitle').val('asdfasdf');
 

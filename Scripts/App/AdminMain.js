@@ -147,6 +147,7 @@ $(document).ready(function () {
 
     //	}
     //}
+    debugger;
     if (GlobalUserHasRoles.DataEntryRole) {
         //if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
         $('#menu_userName').text(sessionStorage.getItem('userName'));
@@ -160,7 +161,7 @@ $(document).ready(function () {
         $('#menu_userName').hide();
         $('#div_advanceSearch').show();
         $('#menu_applicatoinList').show();
-        $('#menu_enterApplication').show();
+        $('#menu_enterApplication').hide();
         $('#menu_admin').hide();
         $('#menu_reports').show();
     }
@@ -168,7 +169,7 @@ $(document).ready(function () {
         $('#menu_userName').hide();
         $('#div_advanceSearch').show();
         $('#menu_applicatoinList').show();
-        $('#menu_enterApplication').show();
+        $('#menu_enterApplication').hide();
         $('#menu_admin').hide();
         $('#menu_reports').show();
     }
@@ -180,8 +181,11 @@ $(document).ready(function () {
         $('#menu_admin').show();
         $('#menu_reports').show();
     }
-    if ((GlobalUserHasRoles.DataEntryRole) && (!GlobalUserHasRoles.ProcessorRole) && (!GlobalUserHasRoles.SupervisorRole) && (!GlobalUserHasRoles.AdminRole)) {
-        $('#menu_enterApplication').hide();  //  if user has only Dataentry role
+    if (  ((GlobalUserHasRoles.DataEntryRole) || (GlobalUserHasRoles.AdminRole) )  && (!GlobalUserHasRoles.ProcessorRole) && (!GlobalUserHasRoles.SupervisorRole) ) {
+        $('#menu_enterApplication').show();  //  if user has only Dataentry role  and admin role
+    }
+    else {
+        $('#menu_enterApplication').hide(); 
     }
 
     // ***********  Menu Building  ******************

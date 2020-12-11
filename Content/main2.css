@@ -1,3 +1,29 @@
+/* submit page alignment*/
+.submitinput {
+    border-color: transparent;
+    background-color: transparent;
+    border-width: 0px;
+    cursor: default;
+    padding: 2px 0px 0px 0px;
+    outline: none;
+    height: 20px;
+    pointer-events: none;
+}
+
+.submitSpan {
+    font-weight: bold;
+}
+
+.submitHeading {
+    text-decoration: underline;
+    display: inline-block;
+    padding-top: 20px;
+    color: #7030A0;
+    margin: 0px;
+}
+
+/* submit page alignment*/
+
 .payment-status-color {
     color: crimson;
 }

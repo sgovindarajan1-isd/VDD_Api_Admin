@@ -8,122 +8,119 @@
     <link href="~/Content/main2.css" rel="stylesheet" />
 }
 <div class="container" style="padding-top: 20px;">
-    <div class="col-lg-offset-3">
-        <span class="fontBold">Vendor information </span>
-
-        <div class="form-group">
-            <div class="col-md-6"> <span>Type of Application</span> </div>
-            <div class="col-md-6"> <span id="typeofApplication" /> </div>
+    <div class="col-lg-offset-2">
+        <div>
+            <h4 class="submitHeading fontBold" style="padding-top:0px !important">Vendor information </h4>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>Vendor Number(Code)</span> </div>
-            <div class="col-md-6"> <span id="vendorCode" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">Type of Application</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="typeofApplication" /> </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>Payee Name</span> </div>
-            <div class="col-md-6"> <span id="payeeName" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">Vendor Number(Code)</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="vendorCode" /> </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>First Name</span> </div>
-            <div class="col-md-6"> <span id="firstName" /> </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6"> <span>Middle Name</span> </div>
-            <div class="col-md-6"> <span id="middleName" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">Payee Name</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="payeeName" /> </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>Last Name</span> </div>
-            <div class="col-md-6"> <span id="lastName" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">First Name</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="firstName" /> </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>Company Name</span> </div>
-            <div class="col-md-6"> <span id="companyName" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">Middle Name</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="middleName" /> </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>Alias/DBA Name</span> </div>
-            <div class="col-md-6"> <span id="aliasDBAName" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">Last Name</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="lastName" /> </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>Taxpayer ID Number</span> </div>
-            <div class="col-md-6"> <span id="tin" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">Company Name</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="companyName" /> </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>Case No.</span> </div>
-            <div class="col-md-6"> <span id="caseNo" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">Alias/DBA Name</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="aliasDBAName" /> </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>Direct Deposit Notification Email</span> </div>
-            <div class="col-md-6"> <span id="ddNotificationEmail" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">Taxpayer ID Number</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="tin" /> </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-6"> <span>Phone Number</span> </div>
-            <div class="col-md-6"> <span id="phoneNumber" /> </div>
+            <div class="col-md-6"> <span class="submitSpan">Case No.</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="caseNo" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span class="submitSpan">Direct Deposit Notification Email</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="ddNotificationEmail" /> </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6"> <span class="submitSpan">Phone Number</span> </div>
+            <div class="col-md-6"> <input class="submitinput" id="phoneNumber" /> </div>
         </div>
 
         @* Bank Details start *@
 
-
-
-        @*<h10 style="padding-top:10px">
-            <span class="fontBold">Banking information </span>
-        </h10>*@
-
-        <div style="margin-top:90px">
-            <span class="fontBold">
+        <div @*style="margin-top:90px"*@>
+            <h4 class="submitHeading fontBold">
                 Banking information
-            </span>
+            </h4>
         </div>
 
 
         <div class="form-group">
             <div class="col-md-6">
-                <span>Type of Account</span>
+                <span class="submitSpan">Type of Account</span>
             </div>
             <div class="col-md-6">
-                <span id="typeofAccount" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6">
-                <span>Bank Account Number</span>
-            </div>
-            <div class="col-md-6">
-                <span id="accountNumber" />
+                <input class="submitinput" id="typeofAccount" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-6">
-                <span>Bank Routing Number</span>
+                <span class="submitSpan">Bank Account Number</span>
             </div>
             <div class="col-md-6">
-                <span id="routingNumber" />
+                <input class="submitinput" id="accountNumber" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-6">
-                <span>Financial Institution Name</span>
+                <span class="submitSpan">Bank Routing Number</span>
             </div>
             <div class="col-md-6">
-                <span id="finInsName" />
+                <input class="submitinput" id="routingNumber" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <span class="submitSpan">Financial Institution Name</span>
+            </div>
+            <div class="col-md-6">
+                <input class="submitinput" id="finInsName" />
             </div>
         </div>
         @* Bank Details End*@
 
         @* Address Details start*@
-        <div id="banklocations" style="padding-top:90px">
-            <span class="fontBold">
+        <div id="banklocations" @*style="padding-top:90px"*@>
+            <h4 class="submitHeading fontBold">
                 Direct Deposit Payment Option Selected
-            </span>
+            </h4>
 
             <div>
                 Assign this bank account to the following addresses:
@@ -133,106 +130,107 @@
         @* Address Details End*@
 
         @* Authorization*@
-        <div style="padding-top:20px">
-            <span class="fontBold">
+        <div @*style="padding-top:20px"*@>
+            <h4 class="submitHeading fontBold">
                 Certifications
-            </span>
+            </h4>
         </div>
         <div class="form-group">
             <div class="col-md-6">
-                <span>Authorized Signer’s Name</span>
+                <span class="submitSpan">Authorized Signer’s Name</span>
             </div>
             <div class="col-md-6">
-                <span id="signername" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-6">
-                <span>Authorized Signer’s Title</span>
-            </div>
-            <div class="col-md-6">
-                <span id="signertitle" />
+                <input class="submitinput" id="signername" />
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-6">
-                <span>Authorized Signer’s Phone Number</span>
+                <span class="submitSpan">Authorized Signer’s Title</span>
             </div>
             <div class="col-md-6">
-                <span id="signerphone" />
+                <input class="submitinput" id="signertitle" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <span class="submitSpan">Authorized Signer’s Phone Number</span>
+            </div>
+            <div class="col-md-6">
+                <input class="submitinput" id="signerphone" />
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-sm-6">
-                <span>Authorized Signer’s E-mail Address</span>
+                <span class="submitSpan">Authorized Signer’s E-mail Address</span>
             </div>
             <div class="col-sm-6">
-                <span id="signeremail" />
+                <input class="submitinput" id="signeremail" />
             </div>
         </div>
 
         @* deptment end*@
-        <div style="padding-top:20px">
-            <span class="fontBold">
+        <div @*style="padding-top:20px"*@>
+            <h4 class="submitHeading fontBold">
                 Department
-            </span>
+            </h4>
         </div>
         <div class="form-group">
             <div class="col-md-6">
-                <span>Department Name</span>
+                <span class="submitSpan">Department Name</span>
             </div>
             <div class="col-md-6">
-                <span id="deptName" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-6">
-                <span>Department Contact Person Name</span>
-            </div>
-            <div class="col-md-6">
-                <span id="deptPerson" />
+                <input class="submitinput" id="deptName" />
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-6">
-                <span>Department Email</span>
+                <span class="submitSpan">Department Contact Person Name</span>
             </div>
             <div class="col-md-6">
-                <span id="deptEmail" />
+                <input class="submitinput" id="deptPerson" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <span class="submitSpan">Department Email</span>
+            </div>
+            <div class="col-md-6">
+                <input class="submitinput" id="deptEmail" />
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-sm-6">
-                <span>Department Contact Number</span>
+                <span class="submitSpan">Department Contact Number</span>
             </div>
             <div class="col-sm-6">
-                <span id="deptPhone" />
+                <input class="submitinput" id="deptPhone" />
             </div>
         </div>
 
-        <div style="padding-top:20px">
-            <span class="fontBold">
+        <div>
+            @*style="padding-top:20px"*@
+            <h4 class="submitHeading fontBold">
                 Attachments
-            </span>
+            </h4>
         </div>
         <div class="form-group">
             <div class="col-md-6">
-                <span>Total</span>
+                <span class="submitSpan">Total</span>
             </div>
             <div class="col-md-6">
-                <span id="span_totalAttachment" />
+                <input class="submitinput" id="span_totalAttachment" />
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-6">
-                <span>Type</span>
+                <span class="submitSpan">Type</span>
             </div>
             <div class="col-md-6">
                 <span id="span_TypeofAttachment" />
@@ -244,9 +242,9 @@
         @* deptment end*@
 
         @*<div style="padding-top :10pt; text-align: center">
-            <button style="float: left" class="btn btn-back" id="btn_submit_back"> Back </button>
-            <button style="float: right" class="btn btn-continue" id="btn_submit_next"> Submit </button>
-        </div>*@
+                <button style="float: left" class="btn btn-back" id="btn_submit_back"> Back </button>
+                <button style="float: right" class="btn btn-continue" id="btn_submit_next"> Submit </button>
+            </div>*@
 
 
         </br>

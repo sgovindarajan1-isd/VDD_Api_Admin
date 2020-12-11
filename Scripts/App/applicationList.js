@@ -247,13 +247,36 @@
                 { 'data': 'VendorName', "title": "Payee Name" },
                 { 'data': 'ReceivedDate', "title": "Received Dt" },
                 { 'data': 'AssignedDate', "title": "Assignment Dt" },
-                { 'data': 'ApplicationAge', "title": "Application Age" },
+                {
+                    'data': 'ApplicationAge',
+                    "render": function (data, type, row, meta) {
+                        if (type === 'display') {
+
+                            if (data <= 15 ) {
+                                data = '<span class="fa fa-fw fa-circle text-green" aria-hidden="true"> </span>' + data + ' days';
+                            }
+                            else if (data >= 16 && data <= 30) {
+                                data = '<span class="fa fa-fw fa-circle text-blue" aria-hidden="true"> </span>' + data + ' days';
+                            } else if (data >= 31  &&  data < 60 ) {
+                                data = '<span class="fa fa-fw fa-circle text-orange" aria-hidden="true"> </span>' + data + ' days';
+                            } else {
+                                data = '<span class="fa fa-fw fa-circle text-red" aria-hidden="true"> </span>' + data + ' days';
+                            }
+
+                        }
+
+                        return data;
+                    },
+
+                    "title": "Application Age"
+                },
                 { 'data': 'StatusDesc', "title": "Status" }
             ],
 
             columnDefs: [
                 { "width": "30%", "targets": [0, 1] },
-                { "width": "10%", "targets": [2, 3, 4] },
+                { "width": "10%", "targets": [2, 3] },
+                { "width": "20%", "targets": [4] },
                 { "width": "5%", "targets": [5] },
                 {
                     searching: false,

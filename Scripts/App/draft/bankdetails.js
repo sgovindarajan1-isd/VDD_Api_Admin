@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     debugger;
-    var displaywetForm = '';
-    var displayBankStatements = '';
+    //var displaywetForm = '';
+    //var displayBankStatements = '';
     $("#liNavigation").show();
     $(".round-tab").css("border-color", "#e0e0e0");
     // testing values
@@ -178,7 +178,8 @@
 
     $("#btn_voidCheck").on('click', function () {
         fileSelectytedtype = 'VC';
-        displayBankStatements = 'Voided Check';
+        //displayBankStatements = 'Voided Check';
+        sessionStorage.setItem('displayBankStatements', 'Voided Check'); 
 
 
         $("#btn_voidCheck").removeClass('disabled_color');
@@ -188,7 +189,9 @@
     });
     $("#btn_Statement").on('click', function () {
         fileSelectytedtype = 'ST';
-        displayBankStatements = 'First page of Bank Statement';
+        //displayBankStatements = 'First page of Bank Statement';
+        sessionStorage.setItem('displayBankStatements', 'First page of Bank Statement'); 
+
 
 
         $("#btn_Statement").removeClass('disabled_color');
@@ -198,7 +201,9 @@
     });
     $("#btn_verifyLetter").on('click', function () {
         fileSelectytedtype = 'VL';
-        displayBankStatements = 'Bank Verification Letter';
+        //displayBankStatements = 'Bank Verification Letter';
+        sessionStorage.setItem('displayBankStatements', 'Bank Verification Letter'); 
+
 
         $("#btn_verifyLetter").removeClass('disabled_color');
         $("#btn_voidCheck").addClass('disabled_color');
@@ -208,7 +213,9 @@
 
     $("#btn_otherAttachment").on('click', function () {
         fileSelectytedtype = 'OA';
-        displayBankStatements = 'Other Attachment';
+        //displayBankStatements = 'Other Attachment';
+        sessionStorage.setItem('displayBankStatements', 'Other Attachment'); 
+
 
         $("#btn_otherAttachment").removeClass('disabled_color');
         $("#btn_voidCheck").addClass('disabled_color');
@@ -242,7 +249,7 @@
 
     $('#input_attachment_ddwetform').change(function (e) {
         var ext = ['.PDF', '.DOC', '.DOCX', '.JPG', '.JPEG', '.GIF', '.PNG'];
-        displaywetForm = 'Original Direct Deposit Request Form';
+        sessionStorage.setItem('displaywetForm', 'Original Direct Deposit Request Form'); 
         $("#fileError_or_Info_ddwetform").html("");
         var fileName = e.target.files[0].name;
         var file = e.target.files[0];
@@ -493,7 +500,7 @@
 
     $('#btn_attach_next').on('click', function (e) {
         if (($("#txtattachment").val().length > 0) && ($("#txtattachment_ddwetform").val().length > 0)) {
-            sessionStorage.setItem('Display_TypeofAttachments', displaywetForm+ ', '+displayBankStatements)
+            //sessionStorage.setItem('Display_TypeofAttachments', sessionStorage.getItem('displaywetForm') + ', ' + sessionStorage.getItem('displayBankStatements'));
             window.location.href = '/draft/_partialBankVerify';
         }
         else {
