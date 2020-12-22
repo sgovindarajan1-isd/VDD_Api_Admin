@@ -102,10 +102,13 @@
     };
 
     $('#rejectApplicationModal').on('shown.bs.modal', function (e) {
+        $("#txt_Notes_comment").val('');
         RetrieveDenialReasonList();
     });
 
-
+    $('#approveApplicationModal').on('shown.bs.modal', function (e) {
+        $("#txt_Notes_comment").val('');
+    });
 
     function getReviewPanelInformation(summaryData) {
         var status = summaryData.Status;
@@ -469,8 +472,8 @@
 
         var processorID = $("#selectProcessorsList option:selected").val();    //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var processorName = $("#selectProcessorsList option:selected").text();
-        //return;
-        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
+       // UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
+        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
     });
 
 
@@ -843,6 +846,7 @@
                 $("#noteList").prepend(a);
 
                 $('#addNotesModal').modal('hide');
+                $("#txt_Notes_comment").val('');
             }
             , complete: function (jqXHR) {
             }

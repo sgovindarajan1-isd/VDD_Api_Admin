@@ -99,6 +99,9 @@
         }
     }
     else if ($(location).attr('href').indexOf("_partialBankVerify") > -1) {
+
+        var vendordetailsJson = jQuery.parseJSON(sessionStorage.vendordetailsJson);
+
         $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_bank_step").attr('src', '/Content/Images/bank_step.png');
@@ -121,7 +124,7 @@
             acType = "Saving";
 
         $("#accountType").text(acType);
-        $("#nameonbankAc").text(sessionStorage.getItem('userName'));
+        $("#nameonbankAc").text(vendordetailsJson[0].PayeeName);
         $("#bankAcNo").text(bankdetailsJson[0].BankAccountNumber);
         $("#bankRoutingNo").text(bankdetailsJson[0].BankRoutingNo);
         var img = new Image();

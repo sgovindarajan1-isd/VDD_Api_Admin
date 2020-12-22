@@ -79,7 +79,18 @@
 
                             , "width": '12%'
                         },
-                        { 'data': 'AccountType' },
+                        {
+                            'data': 'AccountType',
+                            "render": function (data, type, row, meta) {
+                                if (row.AccountType === '1') {
+                                    data = 'Checking';
+                                }
+                                else if (row.AccountType === '2') {
+                                    data = 'Savings';
+                                }
+                                return 'Not Available';
+                            }
+                        },
                         { 'data': 'RemittanceEmail' },
                         { 'data': 'Status', "width": '140px', 'className': 'payment-status-color' }
                     ],
