@@ -13,7 +13,7 @@
             <div class="form-group padding-bottom-div">
                 <label for="Type Of Account" class="col-sm-7">Type of Account</label>
                 <div class="col-sm-5">
-                    <select id="txtAccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT " >
+                    <select id="txtAccountType" class="form-control bankdetailInput" placeholder="--SELECT TYPE OF ACCOUNT ">
                         <option value="0" selected>SELECT TYPE OF ACCOUNT</option>
                         <option value="1">Checking</option>
                         <option value="2">Savings</option>
@@ -26,11 +26,11 @@
                 <label for="Bank Account Number" class="col-sm-7">
                     Bank Account Number
                     <span>
-                        <img data-toggle="popover"  data-popover="true" data-placement="top" data-content="See sample check image to identify the Bank Account Number. Only enter numeric characters and no dashes." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="See sample check image to identify the Bank Account Number. Only enter numeric characters and no dashes." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
                     </span>
                 </label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="txtBankAcNo" maxlength="15" placeholder="Bank Account Number" value="" required>
+                    <input type="text" class="form-control" id="txtBankAcNo" maxlength="15" placeholder="Bank Account Number" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" value="" required>
                     <span id="bankAcNo" class="errmessage" />
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     <img data-toggle="popover" data-popover="true" data-placement="top" data-content="Re-enter the Bank Account Number that was previously entered. Only enter numeric characters and no dashes." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
                 </label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="txtRe-BankAcNo"  maxlength="15" placeholder="Re-enter Bank Account Number" value="" required>
+                    <input type="text" class="form-control" id="txtRe-BankAcNo" maxlength="15" placeholder="Re-enter Bank Account Number" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" value="" required>
                     <span id="re_BankAcNo" class="errmessage" />
                 </div>
             </div>
@@ -50,17 +50,12 @@
                 <label for="" class="col-sm-7">
                     Bank Routing Number
                     <span>
-                        <img data-toggle="popover" data-popover="true" data-placement="top"  data-content="See sample check image to identify the Bank Routing Number." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
+                        <img data-toggle="popover" data-popover="true" data-placement="top" data-content="See sample check image to identify the Bank Routing Number." id="Image2" border="0" hspace="0" vspace="0" align="bottom" src="/content/App_Themes/Images/question_icon.png" style="width: 15px; height: 15px; margin-top: -10px; vertical-align: middle;">
                     </span>
                 </label>
 
                 <div class="col-sm-5">
-                    @*<div class="input-group">*@
-                        <input type="text" class="form-control" maxlength="9" id="txtBankRoutingNo" placeholder="Routing Number" required>
-                        @*<span class="input-group-btn" style="width:0;">
-                            <button id="btn_verifyBank" class="btn btn-primary button-header-color" type="button">Verify Bank</button>
-                        </span>*@
-                    @*</div>*@
+                    <input type="text" class="form-control" maxlength="9" id="txtBankRoutingNo" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" placeholder="Routing Number" required>
                     <span id="bankRoutingNo" class="errmessage" />
                 </div>
             </div>
@@ -100,15 +95,15 @@
             </div>
         </div>
 
-        <div  class="col-sm-5 columnTwo">
+        <div class="col-sm-5 columnTwo">
             <img id="img_checkImage" src="~/Content/images/EnterBanking.png" class="responsive" />
         </div>
     </div>
 
     @*<div style="padding-bottom: 3pt; text-align: center">
-        <button class="btn-primary btn btn-back" id="btn_bank_back"> Back </button>
-        <button class="btn-primary btn btn-continue" id="btn_bank_next"> Next </button>
-    </div>*@
+            <button class="btn-primary btn btn-back" id="btn_bank_back"> Back </button>
+            <button class="btn-primary btn btn-continue" id="btn_bank_next"> Next </button>
+        </div>*@
 
     <div style="padding-top :10pt; text-align: center" class="row-wrapper">
         <button style="float: left" class="btn btn-back" id="btn_bank_back"> Back </button>
