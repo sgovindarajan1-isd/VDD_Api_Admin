@@ -24,41 +24,45 @@ $('#img_username').on('click', function (e) {
     //$('#logoutModal').modal('show');
 });
 
-$('.liselect').on('click', function () {
-	var eId = $(this)[0].id;
+//$('.liselect').on('click', function () {
+//	var paymentSelected = sessionStorage.getItem('paymentJson');
+//	if ((paymentSelected == null || paymentSelected == 'undefined')) {
+//		return;
+//	}
+//	var eId = $(this)[0].id;
 
-	var selectedValue = parseInt($(this).attr('value'));
+//	var selectedValue = parseInt($(this).attr('value'));
 
-	var currentNavId = $('.liselect.active')[0].id;
+//	var currentNavId = $('.liselect.active')[0].id;
 
-	var currentValue = parseInt($('#' + $('.liselect.active')[0].id).attr('value'));
+//	var currentValue = parseInt($('#' + $('.liselect.active')[0].id).attr('value'));
 
-	if (currentValue > selectedValue) {
-		switch (selectedValue) {
-			case 1:
-				window.location.href = '/draft/Index';   
-				break;
-			case 2:
-				window.location.href = '/draft/_partialBankDetails';
-				break;
-			case 3:
-				window.location.href = '/draft/_partialAttachment';
-				break;
-			case 4:
-				window.location.href = '/draft/_partialBankVerify';
-				break;
-			case 5:
-				window.location.href = '/draft/_partialCertify';
-				break;
-			case 6:
-				window.location.href = '/draft/_partialSubmit';
-				break;
-			case 6:
-				window.location.href = '/draft/_partialSubmit';
-				break;
-		}
-	}
-});
+//	if (currentValue > selectedValue) {
+//		switch (selectedValue) {
+//			case 1:
+//				window.location.href = '/draft/Index';   
+//				break;
+//			case 2:
+//				window.location.href = '/draft/_partialBankDetails';
+//				break;
+//			case 3:
+//				window.location.href = '/draft/_partialAttachment';
+//				break;
+//			case 4:
+//				window.location.href = '/draft/_partialBankVerify';
+//				break;
+//			case 5:
+//				window.location.href = '/draft/_partialCertify';
+//				break;
+//			case 6:
+//				window.location.href = '/draft/_partialSubmit';
+//				break;
+//			case 6:
+//				window.location.href = '/draft/_partialSubmit';
+//				break;
+//		}
+//	}
+//});
 
 $("#btn_logout").on('click', function () {
 	$('#logoutModal').modal('hide');

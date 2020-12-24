@@ -287,6 +287,10 @@ $('#img_username').on('click', function (e) {
 
 
 $('.liselect').on('click', function () {
+    var paymentSelected = sessionStorage.getItem('paymentJson');
+    if ((paymentSelected == null || paymentSelected == 'undefined')) {
+        return;
+    }
     var eId = $(this)[0].id;
 
     var selectedValue = parseInt($(this).attr('value'));

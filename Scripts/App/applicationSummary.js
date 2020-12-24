@@ -16,16 +16,6 @@
         $("#btn_vendorDetails").hide();
     }
 
-    //if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
-    //    $("#btn_reviewPrint").hide();
-
-    //    if ()//(application is New or Pending  donot show the Approve or Print button)
-    //    {
-    //        $("#btn_reviewPrint").hide();
-    //        $("#btn_reviewApprove").hide();
-    //    }
-    //}
-
     $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
         e.preventDefault();
         $(this).siblings('a.active').removeClass("active");
@@ -242,13 +232,6 @@
         $("#DeptContactPersonName").text(data.DepartmentContactName);
         $("#DeptEmailAddress").text(data.DepartmentEmail);
         $("#DeptContactNumber").text(data.DepartmentContactNo);
-        var i = 1;
-        //$.each(data.LocationAddress, function (index, value) {
-        //    var a = '<div> <span style="font-weight:bold; padding-right:10px" >' + i + '.    </span >' + value + '</div>';
-        //    $("#div_ddPaymentOptionSelected").append(a);//value);
-        //    i = i + 1;
-        //});
-
         var j = 1;
 
         debugger;
@@ -390,24 +373,13 @@
                 return;
             }
             status = 4;
-            assignedTo = userName;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
+            assignedTo = assignedFrom;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
+            assignedToName = assignedFromName;
         }
         else { //(GlobalUserHasRoles.ProcessorRole) 
             status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
         }
-
-        //if (role == 11)  // processor
-        //    status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
-        //else {
-        //    if ($("#VendorCode").text() == '') {
-        //        $('#approveApplicationModal').modal('hide');
-        //        toastr.options.positionClass = "toast-bottom-right";
-        //        toastr.warning("Vendor Code Missing, Please check the entry!");
-        //        return;
-        //    }
-        //    status = 4;
-        //    assignedTo = userName;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
-        //}
+      
 
         UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
     });
@@ -475,6 +447,36 @@
        // UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
         UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
     });
+
+    $("#btn_reviewPrint").click(function () {  // supervisor view
+        printBttonClick();
+    });
+
+    $("#btn_reviewPrint").click(function () {  // supervisor view
+        printButtonClick();
+    });
+    $("#btn_proce_print").click(function () {  // processor view
+        printButtonClick();
+    });    
+
+    function printButtonClick() {
+        debugger;
+        var comment = '';
+        var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
+        var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+
+        var assignedFromName = $("#AssignedProcessorName").text();   
+        var assignedToName = $("#AssignedByName").text();
+
+        var status = 23; //	Pending Vendor Confirmation
+
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+            assignedTo = assignedFrom;  //If supervisor "print" then  assigned to supervisor himself else if Processor Print then send to to supervisor
+            assignedToName = assignedFromName;  
+        }
+
+        UpdateApplicationStatus(status, '', "send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);
+    };
 
 
     function getActualFullDate() {
