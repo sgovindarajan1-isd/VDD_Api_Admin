@@ -92,8 +92,18 @@
     };
 
     $('#rejectApplicationModal').on('shown.bs.modal', function (e) {
+        debugger;
         $("#txt_Notes_comment").val('');
-        RetrieveDenialReasonList();
+
+        if (e.relatedTarget.id == "btn_reviewReject") {  // reject
+            RetrieveDenialReasonList();
+            $("#rejectModalTitle").html("Application Reject");
+            $("#rejctreason").show();
+        }
+        else {  // return
+            $("#rejectModalTitle").html("Application Return");
+            $("#rejctreason").hide();
+        }
     });
 
     $('#approveApplicationModal').on('shown.bs.modal', function (e) {
@@ -103,7 +113,9 @@
     function getReviewPanelInformation(summaryData) {
         var status = summaryData.Status;
         var statusDesc = summaryData.StatusDesc;
-        if (role == 11) {   //11	Processor
+
+        if (GlobalUserHasRoles.ProcessorRole)  {
+        //if (role == 11) {   //11	Processor View
             $("#div_processor_review").show();
             $("#div_supervisor_review").hide();
             $("#div_supervisor_proce_review").hide();
@@ -113,7 +125,7 @@
             }
             $("#span_processoreview_status").text(statusDesc);
         }
-        else {          //12	Supervisor
+        else {          //12	Supervisor View
             $("#div_supervisor_review").show();
             $("#div_processor_review").hide();
 
@@ -122,7 +134,6 @@
                 statusDesc = "(Application Pending)";
                 $("#btn_reviewReturn").hide();
                 //$("#btn_reviewReject").hide();
-                //$("#btn_reviewPrint").show();
             }
 
             if (status == 21 || status == 22) {
@@ -146,22 +157,22 @@
             // for new  display the reject button at top too
             $("#btn_Reject").show();
             $("#div_assignApplication").show();
-            $("div_processor_review").hide();
+            $("#div_processor_review").hide(); //
 
             if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
                 //(application is New or Pending  donot show the Approve or Print button)
-                    $("#btn_reviewPrint").hide();
+                    //$("#btn_reviewPrint").hide();
                     $("#btn_reviewApprove").hide();
             }
         }
         else if (data.Status == 21 || data.Status == 22) {  // recommend approve =21 recomment reject 22
             $("#div_assignApplication").show();
             $("#btn_Assign").text("Re-Assign");
-            $("div_processor_review").hide();
+            $("#div_processor_review").hide();
         }
         else {
             $("#div_assignApplication").hide();
-            $("div_processor_review").show();
+            $("#div_processor_review").show();
         }
 
         getReviewPanelInformation(data);  //   This section show the and hide the History information.
@@ -448,13 +459,13 @@
         UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
     });
 
-    $("#btn_reviewPrint").click(function () {  // supervisor view
-        printBttonClick();
-    });
+    //$("#btn_reviewPrint").click(function () {  // supervisor view
+    //    printBttonClick();
+    //});
 
-    $("#btn_reviewPrint").click(function () {  // supervisor view
-        printButtonClick();
-    });
+    //$("#btn_reviewPrint").click(function () {  // supervisor view
+    //    printButtonClick();
+    //});
     $("#btn_proce_print").click(function () {  // processor view
         printButtonClick();
     });    

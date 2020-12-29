@@ -13,6 +13,8 @@ using Microsoft.Reporting.WebForms;
 //using System.Web.Mvc;
 using System.Data;
 using System.IO;
+using System.Xml;
+
 
 using Newtonsoft.Json;
 using eCAPDDApi.infrastrure;
@@ -1366,6 +1368,45 @@ namespace eCAPDDApi.Controllers
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
         }
+
+        [HttpPost]
+        public HttpResponseMessage ValidateRoughtingNumberFromAPI(string aba)
+        {
+            string bankName = string.Empty;
+            try
+            {
+                abaService.ABAServiceSoapClient abaWebService = new abaService.ABAServiceSoapClient("ABAServiceSoap");
+                string token = abaWebService.Logon(3387, "lacounty".Trim(), "RXdqmYHg".Trim());
+                bool validRouting = abaWebService.VerifyABA(token, aba);
+
+
+                string xml = abaWebService.GetBanksPrimarySortXML(token, aba);
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(xml);
+
+                XmlNodeList iNodeList = xmlDoc.SelectNodes("//Institutions");
+
+                if (iNodeList.Count > 0)
+                {
+                    XmlNode node = iNodeList[0];
+                    bankName = node.InnerText;
+                }
+
+                var data = new
+                {
+                    bankName = bankName,
+                };
+                var response = Request.CreateResponse(HttpStatusCode.OK, new { data = bankName });
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "No banks found" });
+            }
+          
+        }
+
 
 
     }

@@ -15,10 +15,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Application Reject</h5>
+                <h5 id="rejectModalTitle" class="modal-title">Application Reject</h5>
             </div>
             <div class="modal-body" style="text-align:left">
-                <div class="form-group subSection">
+                <div id="rejctreason"class="form-group subSection">
                     <label class="firstLabelLong" for="rejectReason">Reason:</label>
                     <div class="chosen-wrapper">
                         <select class="form-control cancel chosen-select" id="select_rejectReason" name="rejectReason" style="display: true">
@@ -35,8 +35,6 @@
                 <span id="accountType">0 / 300 characters</span>
             </div>
 
-
-
             <div class="modal-footer">
                 <input id="btn_SubmitReject" class="btn btn-sm btn-primary" type="submit" value="Submit">
                 <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
@@ -44,6 +42,30 @@
         </div>
     </div>
 </div>
+
+@*<div class="modal" id="returnApplicationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Application Return</h5>
+            </div>
+            <div class="modal-body" style="text-align:left">
+                <div class="form-group subSection">
+                    <label for="comment">Note:</label>
+                    <textarea class="form-control" rows="5" id="txt_reject_comment"></textarea>
+                    <span id="spanReasonType" class="errmessage" />
+                </div>
+                <span id="accountType">0 / 300 characters</span>
+            </div>
+
+            <div class="modal-footer">
+                <input id="btn_SubmitReturn" class="btn btn-sm btn-primary" type="submit" value="Submit">
+                <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
 
 <div class="modal" id="addNotesModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -653,7 +675,7 @@
                             @*//Authorized Information end *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                   
+
                                     Certification Information
                                 </div>
                                 <div class="panel-body">
@@ -744,7 +766,7 @@
                                         Processor:
                                     </div>
                                     <div class="flex-column-3">
-                                        <span id="span_review_processor_Approval_msg"></span> 
+                                        <span id="span_review_processor_Approval_msg"></span>
                                         <div>
                                             Note: <span id="span_review_processor_notes"></span>
                                         </div>
@@ -764,7 +786,9 @@
                                                 <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
                                                 <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
                                                 <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-                                                <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>
+                                              
+                                                @*   As per spec  no print button for supervisor view only for Processor view
+                                                    <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>*@
                                             </div>
                                         </div>
                                     </div>
@@ -1011,7 +1035,7 @@
                         </thead>
                     </table>
 
-                 </div>
+                </div>
                 <div id="div_ArchieveApplication_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_ArchieveApplication_tab">
                     <h2 class="bottomMargin">Application Trash</h2>
 
