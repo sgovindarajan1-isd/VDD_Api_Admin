@@ -287,6 +287,7 @@ $('#img_username').on('click', function (e) {
 
 
 $('.liselect').on('click', function () {
+    debugger;
     var paymentSelected = sessionStorage.getItem('paymentJson');
     if ((paymentSelected == null || paymentSelected == 'undefined')) {
         return;
@@ -305,23 +306,24 @@ $('.liselect').on('click', function () {
                 window.location.href = '/draft/_partialVendor';
                 break;
             case 2:
-                window.location.href = '/draft/_partialBankDetails';
+                window.location.href = '/draft/_partialLocations';
                 break;
             case 3:
-                window.location.href = '/draft/_partialAttachment';
+                window.location.href = '/draft/_partialBankDetails';
                 break;
             case 4:
-                window.location.href = '/draft/_partialBankVerify';
+                window.location.href = '/draft/_partialAttachment';
                 break;
             case 5:
+                window.location.href = '/draft/_partialBankVerify';
+                break;
+            case 6:
                 window.location.href = '/draft/_partialCertify';
                 break;
-            case 6:
+            case 7:
                 window.location.href = '/draft/_partialSubmit';
                 break;
-            case 6:
-                window.location.href = '/draft/_partialSubmit';
-                break;
+            
         }
     }
 });
