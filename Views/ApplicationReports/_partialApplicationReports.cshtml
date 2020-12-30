@@ -1,25 +1,40 @@
-﻿<link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+﻿@*Important Working copy*@
+<link href="~/Content/ExportToexcel/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datepicker3.standalone.css" rel="stylesheet" />
+
 <link href="~/Content/reports.css" rel="stylesheet" />
 <link href="~/Content/button.css" rel="stylesheet" />
 <link href="~/Content/claims.css" rel="stylesheet" />
 
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+@*Important Working copy*@
+@*<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>*@
 
-@*<script src="~/Scripts/App/ExportToexcel/dataTables.buttons.min.js"></script>
+
+@*order of loading is important*@
 <script src="~/Scripts/App/ExportToexcel/jquery.dataTables.min.js"></script>
-
-<script src="~/Scripts/App/ExportToexcel/buttons.flash.min.js"></script>
+<script src="~/Scripts/App/ExportToexcel/dataTables.buttons.min.js"></script>
 <script src="~/Scripts/App/ExportToexcel/jszip.min.js"></script>
 <script src="~/Scripts/App/ExportToexcel/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="~/Scripts/App/ExportToexcel/vfs_fonts.js"></script>
 <script src="~/Scripts/App/ExportToexcel/buttons.html5.min.js"></script>
-<script src="~/Scripts/App/ExportToexcel/buttons.print.min.js"></script>*@
+<script src="~/Scripts/App/ExportToexcel/vfs_fonts.js"></script>
+<script src="~/Scripts/App/BootsrapDatePicker/bootstrap-datepicker.min.js"></script>
+@*
+    Old copy not working
+    <script src="~/Scripts/App/ExportToexcel/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/App/ExportToexcel/jquery.dataTables.min.js"></script>
+
+    <script src="~/Scripts/App/ExportToexcel/buttons.flash.min.js"></script>
+    <script src="~/Scripts/App/ExportToexcel/jszip.min.js"></script>
+    <script src="~/Scripts/App/ExportToexcel/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="~/Scripts/App/ExportToexcel/vfs_fonts.js"></script>
+    <script src="~/Scripts/App/ExportToexcel/buttons.html5.min.js"></script>
+    <script src="~/Scripts/App/ExportToexcel/buttons.print.min.js"></script>*@
 
 <script src="~/Scripts/App/AdminMain.js"></script>
 <script src="~/Scripts/App/reports.js"></script>
@@ -43,10 +58,6 @@
                     </div>
                 </div>
                 <hr>
-                @*<div id="divClaimsSection">
-                    </div>
-                    <div id="divClaimsResults">
-                    </div>*@
             </div>
             @*   end  testing for reports details *@
 
@@ -102,7 +113,7 @@
                             <div class="col-lg-3 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <h6>Start Date</h6>
-                                    <div class="input-group date" id="datetimepicker6">
+                                    <div class="input-group date" id="datetimepicker6"  data-provide="datepicker">
                                         <input type="text" class="datepicker-mod form-control datetimepicker-input" id="startDate" value="">
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -113,7 +124,7 @@
                             <div class="col-lg-3 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <h6>End Date</h6>
-                                    <div class="input-group date" id="datetimepicker7">
+                                    <div class="input-group date" id="datetimepicker7"  data-provide="datepicker">
                                         <input type="text" class="datepicker-mod form-control datetimepicker-input" id="endDate" value="">
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -144,18 +155,29 @@
                             <div class="col-lg-3 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <h6>Start Date</h6>
-                                    <div class="input-group date" id="datetimepicker6">
+                                    <div class="input-group date" id="datetimepicker6"  data-provide="datepicker">
                                         <input type="text" class="datepicker-mod form-control datetimepicker-input" id="vcmStartDate">
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
+
+                                    @*<input placeholder="From Date & Time" id="fdate" type="text" />
+                                    <input placeholder="To Date & Time" id="tdate" type="text" />
+                                    <input class="datepicker" data-date-format="mm/dd/yyyy">*@
+
+                                    @*<div class="input-group date" data-provide="datepicker">
+                                        <input type="text" class="form-control">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>*@
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <h6>End Date</h6>
-                                    <div class="input-group date" id="datetimepicker7">
+                                    <div class="input-group date" id="datetimepicker7"  data-provide="datepicker">
                                         <input type="text" class="datepicker-mod form-control datetimepicker-input" id="vcmEndDate">
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>

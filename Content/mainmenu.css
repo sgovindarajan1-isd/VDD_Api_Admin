@@ -4846,7 +4846,9 @@ html{
 	font-size: x-small}.navHeader{
 	height: 34px;
 	background-color:#7030A0;
-	color: #fff}.navLink,a.navLink{
+	color: #fff}
+.navLink, a.navLink {
+	cursor: pointer;
 	display: block;
 	float: left;
 	height: 34px;
@@ -4858,7 +4860,8 @@ html{
 	padding-right: 1em;
 	position: relative;
 	z-index: 13;
-	font-family: 'Roboto',sans-serif!important}a.navLink:hover,.navHover{
+	font-family: 'Roboto',sans-serif !important
+}a.navLink:hover,.navHover{
 	background-color: #8537c1}#pnlHistory{
 	position: relative;
 	background-color: #fff;
@@ -4930,17 +4933,20 @@ html{
 	margin-top: 1em}.leftBox{
 	padding: 1em;
 	margin-top: .5em;
-	border: 1px solid #ccc}.leftBoxMenu{
+	border: 1px solid #ccc}
+.leftBoxMenu {
 	background-color: #fafafa;
 	color: #333;
-	padding: 0}.leftBoxMenu h2, h4{
+	cursor: pointer;   /* dd admin*/
+	padding: 0
+}.leftBoxMenu h2, h4{
 	margin: .6em .9em}.menu ul,.menu .menuGroup ul{
 	margin: 0}.menu .menuGroup{
 	margin-bottom: 10px}.menu .menuGroup:last-child{
 	margin-bottom: 0}.mainContent{
 	float: right;
 	border: 1px solid #ccc;
-	width: 55em;  /**vdd-  it was 50**/
+	width: 56em;  /**vdd-  it was 50**/
 	margin-top: .5em;
 	position: relative;
 }.wideContent{
@@ -4965,14 +4971,17 @@ html{
 	padding-right: 5px}div .readOnlySection:first-of-type{
 	padding-top: 0}.readOnlySection{
 	padding-top: .5em;
-	padding-left: 0}.displayLabel{
-	width: 15em;
+	padding-left: 0}
+.displayLabel {
+	/*width: 15em;
 	text-align: right;
+		top: 3px;
+	*/ /*VDD*/
 	margin-right: 8px;
 	display: inline-block;
 	position: relative;
-	top: 3px;
-	font-weight: bold}.displayLabel.textBlock{
+	font-weight: bold
+}.displayLabel.textBlock{
 	width: auto;
 	margin: 0;
 	text-align: left;

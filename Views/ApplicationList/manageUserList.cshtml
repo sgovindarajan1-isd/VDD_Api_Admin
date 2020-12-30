@@ -1,0 +1,230 @@
+﻿<link href="~/Content/applicationsummary.css" rel="stylesheet" />  @*this one is to decide tab placement*@
+<link href="~/Content/button.css" rel="stylesheet" />
+<link href="~/Content/manageUser.css" rel="stylesheet" />
+
+<script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/App/AdminMain.js"></script>
+
+<script src="~/Scripts/App/manageUser.js"></script>
+@*<script src="~/Scripts/App/applicationSummary.js"></script>*@
+
+<script>
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+
+<div class="modal" id="manageUserModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Add Application List</h4>
+            </div>
+            <div class="modal-body" style="text-align:left">
+                @*  <div class="modal-body form-horizontal clearfix">*@
+                <div class="form-group">
+                    <input class="form-control" id="txt_menuIdHidden" style="display : none">
+
+                    <div class="subSection">
+                        <label class="firstLabelLong leftMargin" for="menuName">* List Menu Name: </label>
+                        <input class="form-control" data-val="true" data-val-length="Menu Name must be a max of 50 characters." data-val-length-max="50" data-val-required="Menu Name is required." id="txt_menuName" name="menuName" type="text" value="">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="menuName" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="subSection">
+                        <label class="firstLabelLong leftMargin" for="claimTypeID">Application Type: </label>
+                        <div class="chosen-wrapper">
+
+                            <div class="chosen-container chosen-container-single chosen-container-single-nosearch" style="width: 200px;" title="">
+
+                                <select id="filterApplicationType" class="chosen-select" data-val="true" data-val-number="The field stageID must be a number." data-width="275px" name="stageID"
+                                        style="width:200px">
+                                    <option value=""></option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="subSection">
+                            <label class="firstLabelLong leftMargin" for="stageID">Status: </label>
+                            <div class="chosen-wrapper">
+                                <select id="filterStatus" class="chosen-select" data-val="true" data-val-number="The field stageID must be a number." data-width="285px" name="stageID" style="width:200px">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="subSection">
+                                <label class="firstLabelLong leftMargin" for="assignedUserID">Assigned User: </label>
+                                <div class="chosen-wrapper">
+                                    <select id="filterUser" class="chosen-select" data-threshold="10" data-val="true" data-val-number="The field assignedUserID must be a number." data-width="200px" name="assignedUserID" style="width:200px">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="subSection">
+                                    <label class="firstLabelLong leftMargin" for="ageID">Application Age: </label>
+                                    <div class="chosen-wrapper">
+                                        <select id="filerAge" class="chosen-select" data-threshold="10" data-val="true" data-val-number="The field ageID must be a number." data-width="150px" name="ageID">
+                                            <option value=""></option>
+                                            @*<option value="30">0 - 30</option>
+                                            <option value="60">31 - 60</option>
+                                            <option value="90">61 - 90</option>
+                                            <option value="91">90+</option>*@
+
+                                            <option value="61">60+</option>
+                                            <option value="60">31-60</option>
+                                            <option value="30">16-30</option>
+                                            <option value="15">0-15</option>
+
+                                        </select>
+                                    </div>
+                                    <div><br><br></div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                @*</div>*@
+            </div>
+            <div class="modal-footer">
+                <input id="btn_SubmitManageUser" class="btn btn-sm btn-primary" type="submit" value="Submit">
+                <button type="button" id="btn_CancelManugeUser" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container row-wrapper">
+    <div class="centerColumn">
+        <div class="content clearfix">
+            <div class="leftContent">
+                <div class="leftBox leftBoxMenu bhoechie-tab-container">
+                    <h2><label id="lbl_manageUserUserId" for=""></label></h2>
+
+                    <div class="menu claimMenu bhoechie-tab-menu" role="tablist">
+                        <div class="list-group">
+                            <a class="leftNavItem Active leftNavItemActive1">Application Lists</a>
+
+                            <a class="leftNavItem" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
+                               aria-selected="true">User Profile</a>
+
+                        </div>
+                    </div>
+                        <div class="leftBox1">
+                            <h2>Rights</h2>
+
+                            <ul id="ul_roleMenuList" class="bulletList">
+                                @*<li>
+                                        Admin
+                                    </li>
+                                    <li>
+                                        Write
+                                    </li>
+                                    <li>
+                                        Assign
+                                    </li>
+                                    <li>
+                                        Manager Approver
+                                    </li>
+                                    <li>
+                                        Executive Approver
+                                    </li>
+                            </ul>*@
+                        </div>
+                </div>
+            </div>
+
+
+            <div class="bhoechie-tab">
+                <div id="div_summaryContent" class="mainBox tab-pane mainContent bhoechie-tab-content active">
+                    <div class="pull-right">
+                        <a id="btn_manageUser_add" data-toggle="modal" data-target="#manageUserModal" class="btn btn-success">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Add
+                        </a>
+                    </div>
+
+                    <h2 class="bottomMargin">Application Lists</h2>
+
+                    <div id="div_manageUserList" class="divSeparator">
+                        <table id="manageUserGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="border-collapse:collapse; border: 1px solid black; width:100%">
+                            <thead>
+                                <tr class="button-header-color">
+                                    <th>ManageUserMenuId</th>
+                                    <th>ManageUserMenuName</th>
+                                    <th>
+                                        FilterApptype
+                                    </th>
+                                    <th>
+                                        FilterUser
+                                    </th>
+                                    <th>
+                                        FilterStatus
+                                    </th>
+                                    <th>"FilterAge</th>
+                                    <th>Command</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="div_notes_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="notes-tab">
+                    <center>
+
+
+                                <h2>User Profile</h2>
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <div class="subSection">
+                                            <label class="firstLabel" for="firstName">* First Name: </label> 
+                                            <div class="chosen-wrapper">
+                                                <input  readonly="" disabled="" class="form-control" data-val="true" data-val-length="First Name must be less than 50 characters." data-val-length-max="50" 
+                                                        data-val-required="First Name is required." id="txt_firstName" name="firstName" type="text">
+                                                <span class="field-validation-valid text-danger" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="subSection">
+                                            <label class="firstLabel" for="lastName">* Last Name: </label>
+                                            <div class="chosen-wrapper">
+                                                <input  readonly="" disabled="" class="form-control" data-val="true" data-val-length="Last Name must be less than 50 characters." data-val-length-max="50" 
+                                                       data-val-required="Last Name is required." id="txt_lastName" name="lastName" type="text">
+                                                <span class="field-validation-valid text-danger" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="subSection">
+                                            <label class="firstLabel" for="email">* Email Address: </label>
+                                            <div class="chosen-wrapper">
+                                                <input  readonly="" disabled="" class="form-control inputLong" data-val="true" data-val-length="Email must be less than 100 characters." data-val-length-max="100" 
+                                                       data-val-required="Email is required." id="txt_email" name="email" type="text">
+                                                <span class="field-validation-valid text-danger" data-valmsg-for="email" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="subSection">
+                                            <label class="firstLabel" for="phoneNumber">* Phone Number: </label>
+                                            <div class="chosen-wrapper">
+                                                <input class="form-control" data-val="true" data-val-required="Phone Number is required" id="txt_phoneNumber" name="phoneNumber" type="text" >
+                                                <span class="field-validation-valid text-danger" data-valmsg-for="phoneNumber" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <input id="btn_userProfileUpdate" class="btn btn-primary" type="submit" value="Save">
+                                    </div>
+                                </div>
+                
+
+                    </center>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+

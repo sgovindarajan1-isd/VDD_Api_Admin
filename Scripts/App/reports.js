@@ -28,7 +28,6 @@
                 var filterUserList = $('#selectUser');
                 $.each(userList, function (key, value) {
                     filterUserList.append(
-                        //--$('<option></option>').val(value.Text).html(value.IdText)
                          $('<option></option>').html(value.Text).val(value.IdText)
                     );
                 });
@@ -61,16 +60,7 @@
             }
         });
     }
-
-    //--------------------------------------------------------------
-    //$(document).on('dp.change', '#datetimepicker6', function (e) {
-    //$('#datetimepicker6').click(function (e) {
-    //    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-    //});
-
-    //$(document).on('dp.change', '#datetimepicker7', function (e) {
-    //    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-    //});
+  
 
     $('#btn_runReport').click(function () {
         debugger;
@@ -91,6 +81,7 @@
         if (parseInt(selClaimsType) == 1) {
             $('#panel_Application').show();
             $('#panel_VCM').hide();
+            $("#divVCMResults").hide();
         }
         else if (parseInt(selClaimsType) == 2) {
             $('#panel_VCM').show();
@@ -132,7 +123,8 @@
                     "data": "ConfirmationNum",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a href="../applicationList/applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            //data = '<a href="../applicationList/applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            data = '<a href="../applicationList/applicationSummary">' + row.RequestType + ' - ' + data + ' </a>';
                         }
 
                         return data;
@@ -212,7 +204,7 @@
 
                 for (var item in data.data.lst_ApplicationCountList) {
                     debugger;
-                    if ((data.data.lst_ApplicationCountList[item].StatusCode == 5) || (data.data.lst_ApplicationCountList[item].StatusCode == 3) ) {  //3	EFT ELIGIBLE
+                    if ((data.data.lst_ApplicationCountList[item].StatusCode == 5)  ) {  
                         newApp = newApp + data.data.lst_ApplicationCountList[item].ApplicationCount;
                         $("#card_New").html(newApp);
                     }
@@ -229,7 +221,7 @@
                         supervisorReview = supervisorReview + data.data.lst_ApplicationCountList[item].ApplicationCount;
                         $("#card_SupervisorReview").html(supervisorReview);
                     }
-                    if ((data.data.lst_ApplicationCountList[item].StatusCode == 4) || (data.data.lst_ApplicationCountList[item].StatusCode == 7)) {  // 7- Check,  4-Direct Deposit
+                    if (data.data.lst_ApplicationCountList[item].StatusCode == 4) {   //|| (data.data.lst_ApplicationCountList[item].StatusCode == 3) //3	EFT ELIGIBLE 4-Direct Deposit  (data.data.lst_ApplicationCountList[item].StatusCode == 7) // 7- Check, 
                         approve = approve + data.data.lst_ApplicationCountList[item].ApplicationCount;
                         $("#card_Approved").html(approve);
                     }
@@ -256,10 +248,15 @@
         getVCMDetails( vcmStartDate, vcmEndDate);
 
         $("#panel_VCM").show();
+        $("#ddVCMGrid").show();
     });
 
     function getVCMDetails(startDate, endDate) {
         debugger;
+        //$("#divVCMResults").show();
+        //$('#ddVCMGrid').DataTable().destroy();
+        //$('#ddVCMGrid').empty();
+       
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
@@ -273,6 +270,14 @@
 
             url: "/api/values/GetVCMReport/",
             success: function (data) {
+                debugger;
+                if (data.data.lst_VCMList.length <= 0) {  //  jquery  >0  has issue  :)
+                    toastr.options.positionClass = "toast-bottom-right";
+                    toastr.warning("No Data Found!");
+                    setVCMData(data.data.lst_VCMList)
+                   // return;
+                }
+                //else {}
                 //setting defaults
                 setVCMData(data.data.lst_VCMList);
             },
@@ -285,8 +290,8 @@
     }
 
     $('#ddVCMGrid').on('click', 'tbody tr', function () {
-        sessionStorage.setItem('selectedConfirmationNumber', $('#ddGrid').DataTable().row(this).data().ConfirmationNum);
-        sessionStorage.setItem('selectedRequestType', $('#ddGrid').DataTable().row(this).data().RequestType);
+        sessionStorage.setItem('selectedConfirmationNumber', $('#ddVCMGrid').DataTable().row(this).data().ConfirmationNum);
+        sessionStorage.setItem('selectedRequestType', $('#ddVCMGrid').DataTable().row(this).data().RequestType);
     });
 
     function setVCMData(data) {
@@ -316,7 +321,8 @@
                     "data": "ConfirmationNum",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            //data = '<a href="applicationSummary">' + row.RequestType + ' - ' + data + ' </a>';
+                            data = '<a href="../applicationList/applicationSummary">' + row.RequestType + ' - ' + data + ' </a>';
                         }
 
                         return data;
@@ -332,7 +338,9 @@
             ],
 
             columnDefs: [
-                { "width": "20%", "targets": [0,1,2,3,4,5] },
+                { "width": "30%", "targets": [0, 1] },
+                { "width": "10%", "targets": [2, 3, 4] },
+                { "width": "5%", "targets": [5] },
                 {
                     searching: false,
                     data: null,

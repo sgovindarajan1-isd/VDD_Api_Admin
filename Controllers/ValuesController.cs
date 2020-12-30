@@ -13,6 +13,8 @@ using Microsoft.Reporting.WebForms;
 //using System.Web.Mvc;
 using System.Data;
 using System.IO;
+using System.Xml;
+
 
 using Newtonsoft.Json;
 using eCAPDDApi.infrastrure;
@@ -146,6 +148,8 @@ namespace eCAPDDApi.Controllers
 
             string confirmNumber = GenerateConfirmationNumber(6);
             DateTime updateDate = DateTime.Now;
+
+            //date1.ToString("g",CultureInfo.CreateSpecificCulture("en-us"))
 
             var uniqueDatetime = DateTime.Now.ToString("ddMMyyyyhhmmss");
             vmvendorDD.VendorReportFileName = "VCM_" + confirmNumber + "_" + uniqueDatetime + ".pdf";
@@ -878,7 +882,9 @@ namespace eCAPDDApi.Controllers
             dr["VendorAttachmentFileName"] = vendordetails.VendorAttachmentFileName;
 
             dr["TotalAttachment"] = "Total: 1";
-            dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString();
+           // dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString();
+            dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString("g", System.Globalization.CultureInfo.CreateSpecificCulture("en-us"));
+
             dr["ConfirmationNumber"] = vendordetails.Confirmation;
             dt.Rows.Add(dr);
             return dt;
@@ -1253,6 +1259,155 @@ namespace eCAPDDApi.Controllers
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
         }
+
+        [HttpPost]
+        public HttpResponseMessage InsertUpdateManageUserApplicationFilter([FromBody] DAL.Models.DAL_M_ApplicationList dal_m_ManageUserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt1 = adminDAL.InsertUpdateManageUserApplicationFilter(dal_m_ManageUserData);
+
+            dal_m_ManageUserData.ManageUserMenuId = 0;
+
+            var dt = adminDAL.GetManageUserMenuList(dal_m_ManageUserData);
+
+            var data = new
+            {
+                lst_ManageUserList = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+        
+        [HttpPost]
+        public HttpResponseMessage GetManageUserMenuList([FromBody] DAL.Models.DAL_M_ApplicationList dal_m_ManageUserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetManageUserMenuList(dal_m_ManageUserData);
+            var data = new
+            {
+                manageUserMenuList = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage DeleteManageUserApplicationList([FromBody] DAL.Models.DAL_M_ApplicationList dal_m_ManageUserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dtDte = adminDAL.DeleteManageUserApplicationList(dal_m_ManageUserData);
+
+            dal_m_ManageUserData.ManageUserMenuId = 0;
+
+            var dt = adminDAL.GetManageUserMenuList(dal_m_ManageUserData);
+            var data = new
+            {
+                manageUserApplicationList = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetApplicationListByManageUserMenuId([FromBody]DAL.Models.DAL_M_ApplicationList dal_m_ManageUserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetApplicationListByManageUserMenuId(dal_m_ManageUserData);
+            var data = new
+            {
+                manageUserApplicationList = dt  //  supervisor view only
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetUsersRoleList([FromBody]DAL.Models.DAL_M_Role dal_m_RoleData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetUsersRoleList(dal_m_RoleData);
+            var data = new
+            {
+                roleMenuList = dt  
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+        
+        [HttpPost]
+        public HttpResponseMessage GetUserProfileByUserId([FromBody]DAL.Models.DAL_M_UsersData dal_m_UserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetUserProfileByUserId(dal_m_UserData);
+            var data = new
+            {
+                userProfileList = dt
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        
+
+        [HttpPost]
+        public HttpResponseMessage UpdateUserProfile([FromBody] DAL.Models.DAL_M_UsersData dal_m_UserData)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.UpdateUserProfile(dal_m_UserData);
+            var data = new
+            {
+                returnValue = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage ValidateRoughtingNumberFromAPI(string aba)
+        {
+            string bankName = string.Empty;
+            try
+            {
+                abaService.ABAServiceSoapClient abaWebService = new abaService.ABAServiceSoapClient("ABAServiceSoap");
+                string token = abaWebService.Logon(3387, "lacounty".Trim(), "RXdqmYHg".Trim());
+                bool validRouting = abaWebService.VerifyABA(token, aba);
+
+
+                string xml = abaWebService.GetBanksPrimarySortXML(token, aba);
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(xml);
+
+                XmlNodeList iNodeList = xmlDoc.SelectNodes("//Institutions");
+
+                if (iNodeList.Count > 0)
+                {
+                    XmlNode node = iNodeList[0];
+                    bankName = node.InnerText;
+                }
+
+                var data = new
+                {
+                    bankName = bankName,
+                };
+                var response = Request.CreateResponse(HttpStatusCode.OK, new { data = bankName });
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "No banks found" });
+            }
+          
+        }
+
+
 
     }
 }

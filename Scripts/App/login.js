@@ -43,8 +43,8 @@
         //testing values
         if ($(location).attr('href').indexOf("local") > -1) {
             //  To do :  test values for easy access,  remove later
-            //  var userId = 'e622505';   // data entry -- old supervisor
-            //  var userId = 'e631971';//'c197831';   //  processor
+            // var userId = 'e622505';   // data entry -- old supervisor
+            //  var userId = 'c197831' //'e631971';   //  processor
             //  var password = '';
         }
         //testing values
@@ -99,7 +99,11 @@
                 GlobalUserHasRoles.ProcessorRole = false;
                 GlobalUserHasRoles.SupervisorRole = false;
                 GlobalUserHasRoles.AdminRole = false;
-                  userHasDataEntryRole(JSON.stringify(userRoles));
+              //  userHasDataEntryRole(JSON.stringify(userRoles));
+                debugger;
+                var userRoleObj = JSON.parse(sessionStorage.getItem("UserRolesListJson"));
+                userHasDataEntryRole(userRoleObj);
+
 
                 //var userRoleObj = sessionStorage.getItem('UserRolesListJson');
                 //for (var i = 0; i < userRoleObj.length-1; i++) {
@@ -136,14 +140,15 @@
                     //deptuser landing page and dataentry role
                     //else if  //Dispersement user and dataentry role
                     //vendor code entry page
-                    
-                    if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
-                   // if (GlobalUserHasRoles.DataEntryRole) {
-                        window.location.href = '/draft/_partialDraftLanding';//'/draft/_partialVendor';
-                    }
-                    else {
+                    debugger;
+                    // if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
+                    if (GlobalUserHasRoles.AdminRole || GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.ProcessorRole) {
                         window.location.href = '/home/dashboard';
                     }
+                    else { // only for DataEntry role (GlobalUserHasRoles.DataEntryRole) {
+                        window.location.href = '/draft/_partialDraftLanding';//'/draft/_partialVendor';
+                    }
+                    
                     //else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
                     //    window.location.href = '/home/dashboard';
                     //}

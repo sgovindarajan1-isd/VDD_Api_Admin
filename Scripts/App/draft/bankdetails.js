@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     debugger;
-    var displaywetForm = '';
-    var displayBankStatements = '';
+    //var displaywetForm = '';
+    //var displayBankStatements = '';
     $("#liNavigation").show();
     $(".round-tab").css("border-color", "#e0e0e0");
     // testing values
@@ -99,6 +99,9 @@
         }
     }
     else if ($(location).attr('href').indexOf("_partialBankVerify") > -1) {
+
+        var vendordetailsJson = jQuery.parseJSON(sessionStorage.vendordetailsJson);
+
         $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_bank_step").attr('src', '/Content/Images/bank_step.png');
@@ -111,7 +114,7 @@
         $("#span_bankstep").removeClass("disabled");
         $("#span_attachmentstep").removeClass("disabled");
 
-        $('#lbl_header').html('Verify Bank Information');
+        $('#lbl_header').html('Verify Banking Information');
 
         var bankdetailsJson = jQuery.parseJSON(sessionStorage.bankdetailsJson);
         var acType = "Error";
@@ -121,7 +124,7 @@
             acType = "Saving";
 
         $("#accountType").text(acType);
-        $("#nameonbankAc").text(sessionStorage.getItem('userName'));
+        $("#nameonbankAc").text(vendordetailsJson[0].PayeeName);
         $("#bankAcNo").text(bankdetailsJson[0].BankAccountNumber);
         $("#bankRoutingNo").text(bankdetailsJson[0].BankRoutingNo);
         var img = new Image();
@@ -178,7 +181,8 @@
 
     $("#btn_voidCheck").on('click', function () {
         fileSelectytedtype = 'VC';
-        displayBankStatements = 'Voided Check';
+        //displayBankStatements = 'Voided Check';
+        sessionStorage.setItem('displayBankStatements', 'Voided Check'); 
 
 
         $("#btn_voidCheck").removeClass('disabled_color');
@@ -188,7 +192,9 @@
     });
     $("#btn_Statement").on('click', function () {
         fileSelectytedtype = 'ST';
-        displayBankStatements = 'First page of Bank Statement';
+        //displayBankStatements = 'First page of Bank Statement';
+        sessionStorage.setItem('displayBankStatements', 'First page of Bank Statement'); 
+
 
 
         $("#btn_Statement").removeClass('disabled_color');
@@ -198,7 +204,9 @@
     });
     $("#btn_verifyLetter").on('click', function () {
         fileSelectytedtype = 'VL';
-        displayBankStatements = 'Bank Verification Letter';
+        //displayBankStatements = 'Bank Verification Letter';
+        sessionStorage.setItem('displayBankStatements', 'Bank Verification Letter'); 
+
 
         $("#btn_verifyLetter").removeClass('disabled_color');
         $("#btn_voidCheck").addClass('disabled_color');
@@ -208,7 +216,9 @@
 
     $("#btn_otherAttachment").on('click', function () {
         fileSelectytedtype = 'OA';
-        displayBankStatements = 'Other Attachment';
+        //displayBankStatements = 'Other Attachment';
+        sessionStorage.setItem('displayBankStatements', 'Other Attachment'); 
+
 
         $("#btn_otherAttachment").removeClass('disabled_color');
         $("#btn_voidCheck").addClass('disabled_color');
@@ -241,9 +251,8 @@
     };
 
     $('#input_attachment_ddwetform').change(function (e) {
-        debugger;
         var ext = ['.PDF', '.DOC', '.DOCX', '.JPG', '.JPEG', '.GIF', '.PNG'];
-        displaywetForm = 'Original Direct Deposit Request Form';
+        sessionStorage.setItem('displaywetForm', 'Original Direct Deposit Request Form'); 
         $("#fileError_or_Info_ddwetform").html("");
         var fileName = e.target.files[0].name;
         var file = e.target.files[0];
@@ -272,12 +281,12 @@
                 $("#modifiedFileName_ddwetform").text(modifiedFileName);
             }
         }
+
+        e.target.value = '';
     });
 
     // $('input[type="file"]').change(function (e) {
     $('#input_attachment').change(function (e) {
-        debugger;
-
         var ext = ['.PDF', '.DOC', '.DOCX', '.JPG', '.JPEG', '.GIF', '.PNG'];
         $("#fileError_or_Info").html("");
         var fileName = e.target.files[0].name;
@@ -306,9 +315,12 @@
                 $("#modifiedFileName").text(modifiedFileName);
             }
         }
+
+        e.target.value = '';
     });
 
     $("#btn_FileAttachmentDelete").on('click', function () {
+        debugger;
         sessionStorage.removeItem('selectedFile');
         sessionStorage.removeItem('imagefile-selectedFile');
         sessionStorage.removeItem('originalfileName');
@@ -472,13 +484,13 @@
     });
 
     $('#btn_Statement').hover(function () {
-        $(this).text('Statement must include the full bank account number and holder’s name.');
+        $(this).text('Statement must include the full bank account number and holder’s name and must be dated within 3 months. ');
     }, function () {
         $(this).text('First page of Bank Statement');
     });
 
     $('#btn_verifyLetter').hover(function () {
-        $(this).text('Letter must include the bank account number, account type and account holder’s name. The letter must be printed on the financial institution’s letterhead which includes the authorized bank representative name, title, phone number and signature.');
+        $(this).text('Letter must include the bank account number, account type and account holder’s name. The letter must be printed on the financial institution’s letterhead which includes the authorized bank representative name, title, phone number, signature and must be dated within 3 months.');
     }, function () {
         $(this).text('Bank Verification Letter');
     });
@@ -491,7 +503,7 @@
 
     $('#btn_attach_next').on('click', function (e) {
         if (($("#txtattachment").val().length > 0) && ($("#txtattachment_ddwetform").val().length > 0)) {
-            sessionStorage.setItem('Display_TypeofAttachments', displaywetForm+ ', '+displayBankStatements)
+            //sessionStorage.setItem('Display_TypeofAttachments', sessionStorage.getItem('displaywetForm') + ', ' + sessionStorage.getItem('displayBankStatements'));
             window.location.href = '/draft/_partialBankVerify';
         }
         else {
@@ -516,7 +528,8 @@
         sessionStorage.setItem('selectedFile_ddwetform', null);
         sessionStorage.setItem('imagefile-selectedFile_ddwetform', null);
 
-        window.history.back();
+       // window.history.back();
+        window.location.href = '/draft/_partialBankDetails';
     });
 
     $("#btn_verify_yes").on('click', function (e) {
