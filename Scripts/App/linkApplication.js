@@ -32,7 +32,8 @@
                     "data": "Confirmation",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            //data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            data = '<a href="applicationSummary">' + row.RequestType + ' - ' + data + ' </a>';
                         }
 
                         return data;
@@ -87,7 +88,8 @@
                     "data": "Linked_ConfirmationNum",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            //data = '<a href="applicationSummary">' + data + ' - ' + row.RequestType + ' </a>';
+                            data = '<a href="applicationSummary">' + row.RequestType + ' - ' + data + ' </a>';
                         }
 
                         return data;
@@ -96,6 +98,13 @@
                 },
                 { 'data': 'VendorNumber', "title": "Vendor Number" },
                 { 'data': 'Payeename', "title": "Vendor Name" },
+                {
+                    "data": null,
+                    "render": function (data, type, row) {
+                        return '<a class="btn btn-primary btn-group-xs nonFormSubmit unlinkBtn"> <span class="fa fa-trash-o"></span> UnLink </a>';
+                    },
+                    'title': "Action"
+                }
             ],
 
             columnDefs: [
@@ -169,14 +178,14 @@
         });
     }
        
-    function UpdateLink_UnLink_ApplicationByConfirmationNum(confirmationNum, link_to_ConfirmationNum, userID) {
+    function UpdateLink_UnLink_ApplicationByConfirmationNum(confirmationNum, link_to_ConfirmationNum, userID, link_unlink) {
         debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
             dataType: 'json',
             data: JSON.stringify({
-                'ConfirmationNum': confirmationNum, 'Link_ConfirmationNum': link_to_ConfirmationNum, 'Action': 'LINK', 'LastUpdatedUser': userID
+                'ConfirmationNum': confirmationNum, 'Link_ConfirmationNum': link_to_ConfirmationNum, 'Action': link_unlink , 'LastUpdatedUser': userID
             }),
             headers: {
                 'Authorization': 'Basic ' + btoa('admin')
@@ -205,6 +214,17 @@
 
         var link_to_ConfirmationNum = data1.Confirmation;
         var userId = sessionStorage.getItem('UserId');
-        UpdateLink_UnLink_ApplicationByConfirmationNum(confirmationNum, link_to_ConfirmationNum, userId)
+        UpdateLink_UnLink_ApplicationByConfirmationNum(confirmationNum, link_to_ConfirmationNum, userId, 'LINK')
+    });
+
+    $('#ddAlreadyLinkedGrid').on('click', '.unlinkBtn', function () {
+        debugger;
+        var RowIndex = $(this).closest('tr');
+        var table = $('#ddAlreadyLinkedGrid').DataTable();
+        var data = table.row(RowIndex).data();
+
+        var unlink_to_ConfirmationNum = data.Linked_ConfirmationNum;
+        var userId = sessionStorage.getItem('UserId');
+        UpdateLink_UnLink_ApplicationByConfirmationNum(confirmationNum, unlink_to_ConfirmationNum, userId, 'UNLINK')
     });
 });

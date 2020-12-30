@@ -32,6 +32,8 @@
         $("#span_attachmentstep").removeClass("disabled");
         $("#span_verify_step").removeClass("disabled");
 
+        getuserInfoForProxiedFields();
+
         ////testing values
 
         if ($(location).attr('href').indexOf("local") > -1) {
@@ -73,7 +75,7 @@
         $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_certify_step").attr('src', '/Content/Images/certify_step.png');
-        $("#img_submit_step").attr('src', '/Content/Images/confirmation_step_on.png');
+        $("#img_submit_step").attr('src', '/Content/Images/submit_step_on.png');
         $("#img_submit_step").addClass("active");
         $("#li_submit_step").addClass("active");
         $("#img_submit_step").parent().css("border-color", "#7030A0");
@@ -91,8 +93,9 @@
         $("#img_vendor_step").attr('src', '/Content/Images/user_step.png');
         $("#img_info_step").attr('src', '/Content/Images/info_step.png');
         $("#img_certify_step").attr('src', '/Content/Images/certify_step.png');
-        $("#img_submit_step").attr('src', '/Content/Images/confirmation_step.png');
+        $("#img_submit_step").attr('src', '/Content/Images/submit_step.png');
         $("#img_confirmation_step").attr('src', '/Content/Images/confirmation_step_on.png');
+
         $("#img_confirmation_step").addClass("active");
         $("#li_confirmation_step").addClass("active");
         $("#img_confirmation_step").parent().css("border-color", "#7030A0");
@@ -106,6 +109,22 @@
 
         $("#confirmationNumber").html(sessionStorage.getItem('confirmationNumber'));
         $("#submittedDate").html(formatDateDisplay(sessionStorage.getItem('submittedDate')));
+
+        //clear all other sessions since  the application is already submitted.  Otherwise, when click the "Enter application" Menu second time old information will be available.
+        sessionStorage.removeItem('selectedFile');
+        sessionStorage.removeItem('imagefile-selectedFile');
+        sessionStorage.removeItem('originalfileName');
+        sessionStorage.removeItem('uploadedfile');
+        sessionStorage.removeItem('uploadedfileExtension');
+        sessionStorage.removeItem('selectedFile_ddwetform');
+        sessionStorage.removeItem('imagefile-selectedFile_ddwetform');
+        sessionStorage.removeItem('originalfileName_ddwetform');
+        sessionStorage.removeItem('uploadedfile_ddwetform');
+        sessionStorage.removeItem('uploadedfileExtension_ddwetform');
+        sessionStorage.removeItem("bankdetailsJson");
+        sessionStorage.removeItem('certifydetailsJson');
+        sessionStorage.removeItem("vendordetailsJson");
+        sessionStorage.removeItem("paymentJson");
     }
 
     $(".form-control").on('input', function (e) {
@@ -132,31 +151,31 @@
         var bool = true;
 
         if (signerName.length <= 0) {
-            $("#signerName").html('Authorized Signer’s Name is required.');
+            $("#signerName").html('Proxied Signer’s Name is required.');
             bool = false;
         } else {
             $("#signerName").html('');
         }
 
         if (signerTitle.length <= 0) {
-            $("#signerTitle").html('Authorized Signer’s Title is required.');
+            $("#signerTitle").html('Proxied Signer’s Title is required.');
             bool = false;
         } else {
             $("#signerTitle").html('');
         }
         debugger;
         if (signerPhone.length <= 0) {
-            $("#signerPhone").html('Authorized Signer’s Phone # is required.');
+            $("#signerPhone").html('Proxied Signer’s Phone # is required.');
             bool = false;
         } else if (!validatePhone(signerPhone)) {
-            $("#signerPhone").html('Valid Authorized Signer’s Phone # is required.');
+            $("#signerPhone").html('Valid Proxied Signer’s Phone # is required.');
             bool = false;
         } else {
             $("#signerPhone").html('');
         }
 
         if (signerEmail.length <= 0) {
-            $("#signerEmail").html('Authorized Signer’s Email is required.');
+            $("#signerEmail").html('Proxied Signer’s Email is required.');
             bool = false;
         }
         else if (!isEmail(signerEmail)) {
@@ -168,35 +187,37 @@
         }
 
 
-        if (deptName.length <= 0) {
-            $("#spanDeptName").html('Department Name is required.');
-            bool = false;
-        } else {
-            $("#spanDeptName").html('');
-        }
+        //if (deptName.length <= 0) {
+        //    $("#spanDeptName").html('Department Name is required.');
+        //    bool = false;
+        //} else {
+        //    $("#spanDeptName").html('');
+        //}
 
-        if (deptPerson.length <= 0) {
-            $("#spanDeptPerson").html('Department Contact Person Name is required.');
-            bool = false;
-        } else {
-            $("#spanDeptPerson").html('');
-        }
+        //if (deptPerson.length <= 0) {
+        //    $("#spanDeptPerson").html('Department Contact Person Name is required.');
+        //    bool = false;
+        //} else {
+        //    $("#spanDeptPerson").html('');
+        //}
         debugger;
-        if (deptPhone.length <= 0) {
-            $("#spanDeptPhone").html('Department Contact Number is required.');
-            bool = false;
-        } else if (!validatePhone(deptPhone)) {
+        //if (deptPhone.length <= 0) {
+        //    $("#spanDeptPhone").html('Department Contact Number is required.');
+        //    bool = false;
+        //} else
+        if ((deptPhone.length > 0) && (!validatePhone(deptPhone))) {
             $("#spanDeptPhone").html('Valid Department Contact Number is required.');
             bool = false;
         } else {
             $("#spanDeptPhone").html('');
         }
 
-        if (deptEmail.length <= 0) {
-            $("#spanDeptEmail").html('Department Email Address is required.');
-            bool = false;
-        }
-        else if (!isEmail(deptEmail)) {
+        //if (deptEmail.length <= 0) {
+        //    $("#spanDeptEmail").html('Department Email Address is required.');
+        //    bool = false;
+        //}
+        //else
+        if ((deptEmail.length > 0) && (!isEmail(deptEmail))) {
             $("#spanDeptEmail").html('Please enter valid Department Email Address');
             bool = false;
         }
@@ -267,29 +288,25 @@
         var bankobj = JSON.parse(sessionStorage.getItem("bankdetailsJson"));
         var vendorNumber = sessionStorage.getItem('vendorNumber');
 
-        //$("#vendorname").html(vendorNumber);
-        //$("#payeename").html(sessionStorage.getItem('userName'));
-        //$("#ssn").html(sessionStorage.getItem('tin'));
-        //vendorDetails.vendorname = vendorNumber;
-        //vendorDetails.payeename = sessionStorage.getItem('userName');
-        //vendorDetails.ssn = sessionStorage.getItem('tin');
-
         if (!(vendorobj == null) || (vendorobj == 'undefined')) {
-            $("#typeofApplication").html(vendorobj[0].ApplicationType);
-            if ((vendorobj[0].VendorCode == null) || (vendorobj[0].VendorCode == ''))
-                $("#vendorCode").html('Not Available now');
-            else
-                $("#vendorCode").html(vendorobj[0].VendorCode);
-            $("#payeeName").html(vendorobj[0].PayeeName);
-            $("#firstName").html(vendorobj[0].FirstName);
-            $("#middleName").html(vendorobj[0].MiddleName);
-            $("#lastName").html(vendorobj[0].LastName);
-            $("#companyName").html(vendorobj[0].CompanyName);
-            $("#aliasDBAName").html(vendorobj[0].AliasDBAName);
-            $("#tin").html(vendorobj[0].TaxpayerID);
-            $("#caseNo").html(vendorobj[0].CaseNo);
+            $("#typeofApplication").val(vendorobj[0].ApplicationType);
+            if ((vendorobj[0].VendorCode == null) || (vendorobj[0].VendorCode == '')) {
+                $("#vendorCode").val('Not Available now');
+                $("#payeeName").val('Not Available now');
+            }
+            else {
+                $("#vendorCode").val(vendorobj[0].VendorCode);
+                $("#payeeName").val(vendorobj[0].PayeeName);
+            }
+            $("#firstName").val(vendorobj[0].FirstName);
+            $("#middleName").val(vendorobj[0].MiddleName);
+            $("#lastName").val(vendorobj[0].LastName);
+            $("#companyName").val(vendorobj[0].CompanyName);
+            $("#aliasDBAName").val(vendorobj[0].AliasDBAName);
+            $("#tin").val(vendorobj[0].TaxpayerID);
+            $("#caseNo").val(vendorobj[0].CaseNo);
             //$("#ddNotificationEmail").html(vendorobj[0].ddNotificationEmail);
-            $("#phoneNumber").html(vendorobj[0].PhoneNumber);
+            $("#phoneNumber").val(vendorobj[0].PhoneNumber);
 
             vendorDetails.RequestType = vendorobj[0].ApplicationType;
             vendorDetails.VendorNumber = vendorobj[0].VendorCode;
@@ -302,20 +319,18 @@
             vendorDetails.AliasDBAName = vendorobj[0].AliasDBAName;
             vendorDetails.Ssn = vendorobj[0].TaxpayerID;
             vendorDetails.CaseNo = vendorobj[0].CaseNo;
-            //vendorDetails.DDNotificationEmail = vendorobj[0].
             vendorDetails.PhoneNumber = vendorobj[0].PhoneNumber;
         }
 
         if (!(bankobj == null) || (bankobj == 'undefined')) {
             if (bankobj[0].AccountType == "1")
-                $("#typeofAccount").html("Checking");
+                $("#typeofAccount").val("Checking");
             else if (bankobj[0].AccountType == "2")
-                $("#typeofAccount").html("Saving");
-            //$("#typeofAccount").html(bankobj[0].AccountType);
-            $("#accountNumber").html(bankobj[0].BankAccountNumber);
-            $("#routingNumber").html(bankobj[0].BankRoutingNo);
-            $("#finInsName").html(bankobj[0].FinancialIns);
-            $("#ddNotificationEmail").html(bankobj[0].DDNotifyEmail);
+                $("#typeofAccount").val("Saving");
+            $("#accountNumber").val(bankobj[0].BankAccountNumber);
+            $("#routingNumber").val(bankobj[0].BankRoutingNo);
+            $("#finInsName").val(bankobj[0].FinancialIns);
+            $("#ddNotificationEmail").val(bankobj[0].DDNotifyEmail);
 
             vendorDetails.AccountType = bankobj[0].AccountType;
             vendorDetails.BankAccountNumber = bankobj[0].BankAccountNumber;
@@ -350,15 +365,15 @@
 
         var certifyobj = JSON.parse(sessionStorage.getItem("certifydetailsJson"));
         if (!(certifyobj == null) || (certifyobj == 'undefined')) {
-            $("#signername").html(certifyobj[0].Signername);
-            $("#signertitle").html(certifyobj[0].Signertitle);
-            $("#signerphone").html(certifyobj[0].Signerphone);
-            $("#signeremail").html(certifyobj[0].Signeremail);
+            $("#signername").val(certifyobj[0].Signername);
+            $("#signertitle").val(certifyobj[0].Signertitle);
+            $("#signerphone").val(certifyobj[0].Signerphone);
+            $("#signeremail").val(certifyobj[0].Signeremail);
 
-            $("#deptName").html(certifyobj[0].DeptName);
-            $("#deptPerson").html(certifyobj[0].DeptPerson);
-            $("#deptEmail").html(certifyobj[0].DeptEmail);
-            $("#deptPhone").html(certifyobj[0].DeptPhone);
+            $("#deptName").val(certifyobj[0].DeptName);
+            $("#deptPerson").val(certifyobj[0].DeptPerson);
+            $("#deptEmail").val(certifyobj[0].DeptEmail);
+            $("#deptPhone").val(certifyobj[0].DeptPhone);
 
             vendorDetails.Signername = certifyobj[0].Signername;
             vendorDetails.Signertitle = certifyobj[0].Signertitle;
@@ -370,27 +385,15 @@
             vendorDetails.DeptEmail = certifyobj[0].DeptEmail;
             vendorDetails.DeptPhone = certifyobj[0].DeptPhone;
         }
-
-        //vendorDetails.Confirmation = "";
-        //vendorDetails.SubmitDateTime = new Date();
         vendorDetails.VendorAttachmentFileName = sessionStorage.getItem('uploadedfile')
         vendorDetails.AttachmentFileName_ddwetform = sessionStorage.getItem('uploadedfile_ddwetform')
 
-        $("#span_totalAttachment").html(2);
-        $("#span_TypeofAttachment").html(sessionStorage.getItem('Display_TypeofAttachments'));
-
-        //var uniqueFileName = getUniqueFileNameusingCurrentTime();
-        //vendorDetails.VendorReportFileName = uniqueFileName + "_" + vendorNumber + "_VendorReport.pdf";
+        $("#span_totalAttachment").val(2);
+        $("#span_TypeofAttachment").html(sessionStorage.getItem('displaywetForm') + ', ' + sessionStorage.getItem('displayBankStatements'));  ///sessionStorage.getItem('Display_TypeofAttachments'));
 
         vendorDetails.LocationAddressList = LocationAddressList;
         vendorDetails.locationIDs = bankDetails;
-        vendorDetails.locationAddressDescList = locationList;        
-
-        //vendorDetails.Source_ip = "Source_ip";//getSourceip();
-        //vendorDetails.Source_device = "Source_device";
-        //vendorDetails.User_agent = navigator.userAgent;
-        //vendorDetails.Host_headers = "Host_headers";
-
+        vendorDetails.locationAddressDescList = locationList;
         vendorDetails.User_agent = sessionStorage.getItem('userName');
     }
 
@@ -474,6 +477,35 @@
         });
     };
     /*Submit Section end */
+
+    /* certify*/
+    function getuserInfoForProxiedFields() {
+        //$('#txtSignerTitle').val('asdfasdf');
+
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            dataType: 'json',
+            data: JSON.stringify({ 'UserId': sessionStorage.getItem('UserId') }),
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            url: "/api/values/getUserProfileByUserId/",
+            success: function (data) {
+                debugger;
+                $("#txtSignerName").val(data.data.userProfileList.FirstName + ' ' + data.data.userProfileList.LastName);
+                //$("#txt_lastName").val();
+                $("#txtSignerEmail").val(data.data.userProfileList.Email);
+                $("#txtSignerPhone").val(data.data.userProfileList.PhoneNumber);
+            },
+            error: function (_XMLHttpRequest, textStatus, errorThrown) {
+                if (_XMLHttpRequest.status == '401') {
+                    window.location.href = "/Home/UnAuthorized";
+                }
+            }
+        });
+    }
+    /**
 
     /*Confirmation Section begin */
     function createReportandGettheFielName(vendorDetails) {

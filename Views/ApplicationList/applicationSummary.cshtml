@@ -4,6 +4,7 @@
 <script src="~/Scripts/App/AdminMain.js"></script>
 <script src="~/Scripts/App/applicationSummary.js"></script>
 <script src="~/Scripts/App/checklist.js"></script>
+
 <script>
     $(function () {
         $("#tabs").tabs();
@@ -14,18 +15,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Application Reject</h5>
+                <h5 id="rejectModalTitle" class="modal-title">Application Reject</h5>
             </div>
             <div class="modal-body" style="text-align:left">
-                <div class="form-group subSection">
+                <div id="rejctreason"class="form-group subSection">
                     <label class="firstLabelLong" for="rejectReason">Reason:</label>
                     <div class="chosen-wrapper">
                         <select class="form-control cancel chosen-select" id="select_rejectReason" name="rejectReason" style="display: true">
                             <option value=""></option>
-                            <option value="1">Requested by Vendor</option>
-                            <option value="2">No EWS and Lexis/Nexis Vendor Verification</option>
-                            <option value="3">Invalid/Missing Documents</option>
-                            <option value="4">Other</option>
                         </select>
                     </div>
                 </div>
@@ -33,6 +30,7 @@
                 <div class="form-group subSection">
                     <label for="comment">Note:</label>
                     <textarea class="form-control" rows="5" id="txt_reject_comment"></textarea>
+                    <span id="spanReasonType" class="errmessage" />
                 </div>
                 <span id="accountType">0 / 300 characters</span>
             </div>
@@ -44,6 +42,30 @@
         </div>
     </div>
 </div>
+
+@*<div class="modal" id="returnApplicationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Application Return</h5>
+            </div>
+            <div class="modal-body" style="text-align:left">
+                <div class="form-group subSection">
+                    <label for="comment">Note:</label>
+                    <textarea class="form-control" rows="5" id="txt_reject_comment"></textarea>
+                    <span id="spanReasonType" class="errmessage" />
+                </div>
+                <span id="accountType">0 / 300 characters</span>
+            </div>
+
+            <div class="modal-footer">
+                <input id="btn_SubmitReturn" class="btn btn-sm btn-primary" type="submit" value="Submit">
+                <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
 
 <div class="modal" id="addNotesModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -488,10 +510,13 @@
 </div>
 
 <div class="container row-wrapper">
+
+    <div class="spinner-border text-primary"></div>
+
     <h1 id="heading_appsummaryHeader"></h1>
     <div class="centerColumn">
         <div class="content clearfix">
-            <input id="skipUnSavedChanges" type="hidden" value="0">
+            @*<input id="skipUnSavedChanges" type="hidden" value="0">*@
 
             <div class="leftContent">
                 <div class="leftBox leftBoxMenu bhoechie-tab-container">
@@ -505,7 +530,7 @@
                             <a class="leftNavItem " id="tab_Notes" href="#div_notes_tab" role="tab" aria-controls="div_notes_tab"
                                aria-selected="false"><span class="fa fa-fw fa-pencil"></span>Notes</a>
 
-                            <a class="leftNavItem " id="menu_Documents"  href="#div_attachment_tab" aria-controls="div_attachment_tab" role="tab">
+                            <a class="leftNavItem " id="menu_Documents" href="#div_attachment_tab" aria-controls="div_attachment_tab" role="tab">
                                 <span class="fa fa-fw fa-file-text"></span>Documents
                                 <span id="menuDocCount" class="badge pull-right UpdateMenuDocumentCount">0</span>
                             </a>
@@ -514,7 +539,7 @@
                                 <span class="fa fa-fw fa-link"></span>Linked Applications
                                 <span id="menuLinkAppCount" class="badge pull-right">0</span>
                             </a>
-                            <a class="leftNavItem " id="menu_archieveApplication" href="#div_ArchieveApplication_tab"  aria-controls="div_ArchieveApplication_tab"><span class="fa fa-fw fa-archive"></span>Application Archive</a>
+                            <a class="leftNavItem " id="menu_archieveApplication" href="#div_ArchieveApplication_tab" aria-controls="div_ArchieveApplication_tab"><span class="fa fa-fw fa-archive"></span>Application Archive</a>
                         </div>
                     </div>
                 </div>
@@ -550,11 +575,11 @@
                 <div id="div_summaryContent" class="mainBox tab-pane mainContent bhoechie-tab-content active">
                     @*<center1>*@
                     <div id="div_summary_tab" class="mainBox tab-pane show " role="tabpanel" aria-labelledby="summary-tab">
-                        @*<div class="pull-right">
+                        <div class="pull-right">
                             <a id="btn_Reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger btn-xs">
                                 Reject Application
                             </a>
-                        </div>*@
+                        </div>
                         <h2 class="bottomMargin">Application Summary</h2>
 
                         <div class="well well-sm">
@@ -563,20 +588,28 @@
                                     Assign
                                 </a>
                             </div>
+                            <div class="panel panel-default panel-sm">
+                                <div class="panel-body">
+                                    <div class="flex">
+                                        <div class="flex-column-1">
+                                            <div class="readOnlySection"><span class="displayLabel">Received Date: </span><span id="ReceivedDate" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Assign Date: </span><span id="AssignDate" class="displayValue "></span></div>
+                                            <div class="readOnlySection" style="display:none"><span class="displayLabel">Assigned Processor ID: </span><span id="AssignedProcessor" class="displayValue "></span></div>
+                                            <div class="readOnlySection" style="display:none"><span class="displayLabel">Assigned By ID: </span><span id="AssignedBy" class="displayValue "></span></div>
 
-                            <div class="flex">
-                                <div class="flex-column-1">
-                                    <div class="readOnlySection"><span class="displayLabel">Received Date: </span><span id="ReceivedDate" class="displayValue "></span></div>
-                                    <div class="readOnlySection"><span class="displayLabel">Assign Date: </span><span id="AssignDate" class="displayValue "></span></div>
-                                    <div class="readOnlySection"><span class="displayLabel">Assigned Processor: </span><span id="AssignedProcessor" class="displayValue "></span></div>
-                                    <div class="readOnlySection"><span class="displayLabel">Assigned By: </span><span id="AssignedBy" class="displayValue "></span></div>
-                                    <div class="readOnlySection"><span class="displayLabel">Closed Date: </span><span id="ClosedDate" class="displayValue "></span></div>
-                                </div>
-                                <div class="flex-column-1">
-                                    <div class="readOnlySection"><span class="displayLabel">Entered By: </span><span id="EnteredBy" class="displayValue "></span></div>
-                                    <div class="readOnlySection"><span class="displayLabel">IP Address: </span><span id="IPAddress" class="displayValue "></span></div>
-                                    <div class="readOnlySection"><span class="displayLabel">IP Device: </span><span id="IPDevice" class="displayValue "></span></div>
-                                    <div class="readOnlySection"><span class="displayLabel">IP Location: </span><span id="IPLocation" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Assigned Processor Name: </span><span id="AssignedProcessorName" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">Assigned By Name: </span><span id="AssignedByName" class="displayValue "></span></div>
+
+
+                                            <div class="readOnlySection"><span class="displayLabel">Closed Date: </span><span id="ClosedDate" class="displayValue "></span></div>
+                                        </div>
+                                        <div class="flex-column-1">
+                                            <div class="readOnlySection"><span class="displayLabel">Entered By: </span><span id="EnteredBy" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">IP Address: </span><span id="IPAddress" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">IP Device: </span><span id="IPDevice" class="displayValue "></span></div>
+                                            <div class="readOnlySection"><span class="displayLabel">IP Location: </span><span id="IPLocation" class="displayValue "></span></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -616,12 +649,6 @@
                             @*//Banking Information begin *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                        <a id="btn_BankDetails" data-toggle="modal" data-target="#bankDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                            <span class="fa fa-edit smallRightMargin"></span>
-                                            Edit
-                                        </a>
-                                    </div>*@
                                     Banking Information
                                 </div>
                                 <div class="panel-body">
@@ -648,12 +675,7 @@
                             @*//Authorized Information end *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                        <a id="btn_certificationDetails" data-toggle="modal" data-target="#certificationDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                            <span class="fa fa-edit smallRightMargin"></span>
-                                            Edit
-                                        </a>
-                                    </div>*@
+
                                     Certification Information
                                 </div>
                                 <div class="panel-body">
@@ -679,12 +701,6 @@
                             @*Certification Information end *@
                             <div class="panel panel-default panel-sm">
                                 <div class="panel-heading">
-                                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                                        <a id="btn_deptDetails" data-toggle="modal" data-target="#departmentDetailsModal" class="btn btn-info" data-additionalprocess="chosen,maxLength">
-                                            <span class="fa fa-edit smallRightMargin"></span>
-                                            Edit
-                                        </a>
-                                    </div>*@
                                     Department Information
                                 </div>
                                 <div class="panel-body">
@@ -735,7 +751,8 @@
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-xs">
                                                 <a id="btn_proce_approve" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
-                                                <a data-toggle="modal" style="margin:5px;" data-target="#printApplicationModal" class="btn btn-danger">&nbsp;print&nbsp;</a>
+                                                @*data-toggle="modal" data-target="#printApplicationModal"*@
+                                                <a id="btn_proce_print" style="margin:5px;" class="btn btn-danger">&nbsp;print&nbsp;</a>
                                                 <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
                                             </div>
                                         </div>
@@ -749,9 +766,9 @@
                                         Processor:
                                     </div>
                                     <div class="flex-column-3">
-                                        <span id="span_review_processor_Approval_msg"></span>  @*Approved by Monique Tsoi on 4/27/2020*@
+                                        <span id="span_review_processor_Approval_msg"></span>
                                         <div>
-                                            Note: <span id="span_review_processor_notes">test srini forward application to Supervisor</span>
+                                            Note: <span id="span_review_processor_notes"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -769,7 +786,9 @@
                                                 <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
                                                 <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
                                                 <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-                                                <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>
+                                              
+                                                @*   As per spec  no print button for supervisor view only for Processor view
+                                                    <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>*@
                                             </div>
                                         </div>
                                     </div>
@@ -841,7 +860,6 @@
                             <table id="attachmentGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="border-collapse:collapse; border: 1px solid black; width:100%">
                                 <thead>
                                     <tr class="button-header-color">
-                                        @*<th></th>*@
                                         <th>AttachmentFileName</th>
                                         <th>Description</th>
                                         <th>UploadedDate</th>
@@ -883,7 +901,6 @@
                                                                     </span><span class="switch-handle"></span>
                                                                 </label>
                                                             </td>
-                                                            @*<td><a value ="1" data-toggle="modal" data-target="#addNotesModal" >04/24/2020</a></td>*@
                                                             <td>
                                                                 <a value="1" data-toggle="modal" data-target="#addchecklistModal" class="btn btn-successe">
                                                                     <span class="glyphicon glyphicon-plus smallRightMargin" style="padding:0 0 0 0; width:8px; height:3px; font-size:12px;">
@@ -993,14 +1010,6 @@
                 </div>
 
                 <div id="div_linkApplication_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_linkApplication_tab">
-
-                    @*<div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
-                        <a class="btn btn-info" href="#">
-                            <span class="glyphicon glyphicon-search smallRightMargin"></span>
-                            Find New Links
-                        </a>
-                    </div>*@
-
                     <h2 class="smallBottomMargin">Linked Applications</h2>
 
                     <table id="ddAlreadyLinkedGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
@@ -1009,7 +1018,6 @@
                                 <th>Linked_ConfirmationNum</th>
                                 <th>VendorNumber</th>
                                 <th>Payeename</th>
-                                @*<th>BankAccountNumber</th>*@
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -1027,53 +1035,9 @@
                         </thead>
                     </table>
 
-                    @*<ul class="list-group list-group-sm">
-                            <li class="list-group-item list-group-item-warning emptyItem" aria-hidden="true">Matched Applications list is empty.</li>
-
-                            <li class="list-group-item matchedClaimRow">
-                                <div class="pull-right btn-group btn-group-xs">
-                                    <a href="javascript:void(0);" data-method="post" data-url="#" class="btn btn-primary nonFormSubmit">
-                                        <span class="fa fa-link"></span>
-                                        Link
-                                    </a>
-                                    <a href="javascript:void(0);" data-action-target="#" class="btn btn-danger confirmModal">
-                                        <span class="fa fa-trash"></span>
-                                        Dismiss
-                                    </a>
-                                </div>
-
-                                <div class="flex">
-                                    <div class="flex-column-4">
-                                        <span>Application: </span>
-                                        <a href="#" class="bold">
-                                            DDOL-AXKUTG
-                                        </a>
-                                    </div>
-                                    <div class="flex-column-4">
-                                        <span>Vendor CD: </span>
-                                        <span>014473</span>
-                                    </div>
-                                    <div class="flex-column-4">
-                                        <span>Vendor NM: </span>
-                                        <span>COASTAL LAW FIRM</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>*@
-
                 </div>
                 <div id="div_ArchieveApplication_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="div_ArchieveApplication_tab">
                     <h2 class="bottomMargin">Application Trash</h2>
-
-                    @*<div class="panel panel-default panel-sm">
-                            <div class="panel-heading">
-
-                                Suggested Documents
-                            </div>
-                            <ul id="suggestedDocumentList" class="list-group list-group-hover">
-                                <li class="list-group-item list-group-item-warning emptyItem">Suggested Documents list is empty.</li>
-                            </ul>
-                        </div>*@
 
                     <div class="panel panel-default panel-sm">
                         <div class="panel-heading">
@@ -1083,7 +1047,6 @@
                             <thead>
                                 <tr class="button-header-color">
                                     <th>AttachmentFileName</th>
-                                    @*<th>Description</th>*@
                                     <th>UploadedDate</th>
                                     <th>Command</th>
                                 </tr>

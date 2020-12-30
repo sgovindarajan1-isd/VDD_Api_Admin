@@ -3,18 +3,18 @@
     var userId = sessionStorage.getItem('UserId');
     var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
     var role = sessionStorage.getItem('RoleId');
+
+    // default
+    $("#btn_Reject").hide();
     // to do later
 
     // admin role
     if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
-        debugger;
         $("#btn_vendorDetails").show();
     }
     else {
-        debugger;
         $("#btn_vendorDetails").hide();
     }
-
 
     $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
         e.preventDefault();
@@ -57,7 +57,6 @@
     });
 
     $("#menu_Documents").click(function () {
-        debugger;
         GetAttachmentDocuments(confirmationNum);
     });
 
@@ -79,28 +78,44 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                debugger;
                 rrList = data.data.denialReasonList;
 
                 var rejectReasonList = $('#select_rejectReason');
+                rejectReasonList.empty();
                 $.each(rrList, function (key, value) {
                     rejectReasonList.append(
-                        $('<option></option>').val(value.DenialReasonId).html(value.DenialReasonText)
+                        $('<option class="dropdown-item1"></option>').val(value.DenialReasonId).html(value.DenialReasonText)
                     );
                 });
             }
         });
-    };   
+    };
 
     $('#rejectApplicationModal').on('shown.bs.modal', function (e) {
         debugger;
-        RetrieveDenialReasonList();
+        $("#txt_Notes_comment").val('');
+
+        if (e.relatedTarget.id == "btn_reviewReject") {  // reject
+            RetrieveDenialReasonList();
+            $("#rejectModalTitle").html("Application Reject");
+            $("#rejctreason").show();
+        }
+        else {  // return
+            $("#rejectModalTitle").html("Application Return");
+            $("#rejctreason").hide();
+        }
     });
-    
+
+    $('#approveApplicationModal').on('shown.bs.modal', function (e) {
+        $("#txt_Notes_comment").val('');
+    });
+
     function getReviewPanelInformation(summaryData) {
         var status = summaryData.Status;
         var statusDesc = summaryData.StatusDesc;
-        if (role == 11) {   //11	Processor
+
+        if (GlobalUserHasRoles.ProcessorRole)  {
+        //if (role == 11) {   //11	Processor View
             $("#div_processor_review").show();
             $("#div_supervisor_review").hide();
             $("#div_supervisor_proce_review").hide();
@@ -110,7 +125,7 @@
             }
             $("#span_processoreview_status").text(statusDesc);
         }
-        else {          //12	Supervisor
+        else {          //12	Supervisor View
             $("#div_supervisor_review").show();
             $("#div_processor_review").hide();
 
@@ -119,12 +134,11 @@
                 statusDesc = "(Application Pending)";
                 $("#btn_reviewReturn").hide();
                 //$("#btn_reviewReject").hide();
-                //$("#btn_reviewPrint").show();
             }
 
             if (status == 21 || status == 22) {
                 $("#div_supervisor_proce_review").show();
-                var msg = summaryData.StatusDesc + " by " + summaryData.ProcessorID + " on " + summaryData.AssignmentDate;
+                var msg = summaryData.StatusDesc + " by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
                 $("#span_review_processor_Approval_msg").text(msg);
                 $("#span_review_processor_notes").text(summaryData.Comment);
             }
@@ -140,24 +154,32 @@
             return;
         }
         if (data.Status == 5) {  // Pending =5
+            // for new  display the reject button at top too
+            $("#btn_Reject").show();
             $("#div_assignApplication").show();
-            $("div_processor_review").hide();
+            $("#div_processor_review").hide(); //
+
+            if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
+                //(application is New or Pending  donot show the Approve or Print button)
+                    //$("#btn_reviewPrint").hide();
+                    $("#btn_reviewApprove").hide();
+            }
         }
         else if (data.Status == 21 || data.Status == 22) {  // recommend approve =21 recomment reject 22
             $("#div_assignApplication").show();
             $("#btn_Assign").text("Re-Assign");
-            $("div_processor_review").hide();
+            $("#div_processor_review").hide();
         }
         else {
             $("#div_assignApplication").hide();
-            $("div_processor_review").show();
+            $("#div_processor_review").show();
         }
 
         getReviewPanelInformation(data);  //   This section show the and hide the History information.
 
         $("#lbl_userName").text(userName); //id_userName
 
-        $("#head_confirmationNum").text(confirmationNum);
+        $("#head_confirmationNum").text(data.RequestType + " - " + confirmationNum);
         $("#header_status").text(data.StatusDesc);
 
         //side panel
@@ -171,6 +193,10 @@
         $("#AssignDate").text(data.AssignmentDate);
         $("#AssignedProcessor").text(data.ProcessorID);
         $("#AssignedBy").text(data.AssignedBy);
+
+        $("#AssignedProcessorName").text(data.ProcessorName);
+        $("#AssignedByName").text(data.AssignedByName);
+
         //$("#ClosedDate").text();
         //$("#EnteredBy").text();
         //$("#IPAddress").text();
@@ -217,16 +243,10 @@
         $("#DeptContactPersonName").text(data.DepartmentContactName);
         $("#DeptEmailAddress").text(data.DepartmentEmail);
         $("#DeptContactNumber").text(data.DepartmentContactNo);
-        var i = 1;
-        //$.each(data.LocationAddress, function (index, value) {
-        //    var a = '<div> <span style="font-weight:bold; padding-right:10px" >' + i + '.    </span >' + value + '</div>';
-        //    $("#div_ddPaymentOptionSelected").append(a);//value);
-        //    i = i + 1;
-        //});
-
         var j = 1;
+
+        debugger;
         $.each(data.LocationAddressList, function (index, value) {
-            debugger;
 
             var _address = value.Street;  //"16000 south street";
             var _city = value.City;
@@ -237,10 +257,11 @@
                 ' <div class="flex">' +
                 ' <ul class="noTopMargin flex-column-2">' +
                 ' <li>' +
-                ' <span class="smallRightMargin"><b>' + j + '.</b></span><b>ADDRESS:</b> ' + _address + '<span style= "padding-left: 150px"><b>CITY:</b></span> ' + _city +
+                ' <span class="smallRightMargin"><b>' + j + '.</b></span><b>ADDRESS:</b> ' + _address  +
                 '</li>' +
                 ' <li>' +
-                '<span class="smallRightMargin"></span><b>STATE:</b> ' + _state + '<span style= "padding-left: 310px">  <b>ZIP CODE:</b> ' + _zip +
+                '<span"><b>CITY:</b></span> ' + _city +
+                '<span style= "padding-Right: 100px" class="smallRightMargin"></span><b>STATE:</b> ' + _state + '<span style= "padding-left: 100px">  <b>ZIP CODE:</b> ' + _zip +
                 '</li>' +
                 '</ul>' +
                 ' </div>' +
@@ -298,7 +319,7 @@
                 $("#noteList").empty();
                 for (var item in data.data.returnValue) {
 
-                    var a = '<li class="list-group-item list-group-item-warning emptyResultMessage"> <span style="font-weight:bold; padding-right:10px" >' + '</span >' + data.data.returnValue[item].Notes + '</li> <br>';
+                    var a = '<li class="list-group-item list-group-item-warning emptyResultMessage">  <span>' + data.data.returnValue[item].LastUpdatedUser + ' : ' + data.data.returnValue[item].LastUpdatedDateTime + '</span> <br/> <span style="font-weight:bold; padding-right:10px" >' + '</span >' + data.data.returnValue[item].Notes + '</li> <br>';
                     $("#noteList").append(a);
                 }
             }
@@ -345,44 +366,73 @@
     }
 
     $("#btn_SubmitApprove").click(function () {
+        debugger;
         var comment = $("#txt_approve_comment").val();
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+
+        var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
+        var assignedToName = $("#AssignedByName").text(); 
+
         var status = 21;
 
-        if (role == 11)  // processor
-            status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
-        else {
-            debugger;
-            if ($("#VendorCode").text() == '') {
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+            if ($("#VI_VendorCode").text() == '') {
                 $('#approveApplicationModal').modal('hide');
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Vendor Code Missing, Please check the entry!");
                 return;
             }
             status = 4;
-            assignedTo = userName;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
+            assignedTo = assignedFrom;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
+            assignedToName = assignedFromName;
         }
+        else { //(GlobalUserHasRoles.ProcessorRole) 
+            status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
+        }
+      
 
-        UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
+        UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
     });
 
     $("#btn_SubmitReject").click(function () {
+        debugger;
         var reason_type = $("#select_rejectReason option:selected").text();
         var comment = $("#txt_reject_comment").val();
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+
+        var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
+        var assignedToName = $("#AssignedByName").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var status = 22;
 
-        if (role == 11)  // processor
-            status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
+        if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
+            $("#spanReasonType").html('Reason required.');
+            return;
+        }
         else {
-            status = 6
-            assignedTo = userName; //$("#AssignedProcessor").text();; //  final reject  assigned to supervisor him self
+            $("#spanReasonType").html('');
         }
 
+        if (reason_type.length <= 0) {
+            $("#spanReasonType").html('Reason Type is required.');
+            return;
+        } else {
+            $("#spanReasonType").html('');
+        }
 
-        UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo);//   reject  status = 6;
+        // if (role == 11)  // processor
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+            status = 6
+            //assignedTo = userName;  //  final reject  assigned to supervisor him self
+            assignedTo = userId;  //  final reject  assigned to supervisor him self
+            assignedToName = userName;
+        }
+        else {  //(GlobalUserHasRoles.ProcessorRole)
+                status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
+        }
+
+        UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//   reject  status = 6;
     });
 
     $("#btn_SubmitReturn").click(function () {
@@ -391,20 +441,53 @@
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
 
-        UpdateApplicationStatus(6, reason_type, "Rejected.", comment, assignedFrom, assignedTo);//   reject  status = 6;
+        var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
+        var assignedToName = $("#AssignedByName").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+
+        UpdateApplicationStatus(6, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//   reject  status = 6;
     });
 
     // Assign  the proccessors
     $("#btn_SubmitAssign").click(function () {
         var comment = '';
+        var supervisorName = userName;
         var supervisorID = userId;  //  always get from login user id // $("#AssignedProcessor").text();                       //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
-        //if (supervisorID == '') {  // very first time,  Supervisor Id not may be set
-        //    supervisorID == 
-        //}
-        var processorID = $("#selectProcessorsList option:selected").text();    //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
 
-        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, 'Assign');//  Status  2	Assigned to Processor
+        var processorID = $("#selectProcessorsList option:selected").val();    //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+        var processorName = $("#selectProcessorsList option:selected").text();
+       // UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
+        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
     });
+
+    //$("#btn_reviewPrint").click(function () {  // supervisor view
+    //    printBttonClick();
+    //});
+
+    //$("#btn_reviewPrint").click(function () {  // supervisor view
+    //    printButtonClick();
+    //});
+    $("#btn_proce_print").click(function () {  // processor view
+        printButtonClick();
+    });    
+
+    function printButtonClick() {
+        debugger;
+        var comment = '';
+        var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
+        var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+
+        var assignedFromName = $("#AssignedProcessorName").text();   
+        var assignedToName = $("#AssignedByName").text();
+
+        var status = 23; //	Pending Vendor Confirmation
+
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+            assignedTo = assignedFrom;  //If supervisor "print" then  assigned to supervisor himself else if Processor Print then send to to supervisor
+            assignedToName = assignedFromName;  
+        }
+
+        UpdateApplicationStatus(status, '', "send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);
+    };
 
 
     function getActualFullDate() {
@@ -423,7 +506,8 @@
         return month + '/' + day + '/' + yr + ' (' + strTime + ')';
     }
 
-    function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, action) {
+    function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, assignedFromName, assignedToName) {
+        debugger;
         var confirmNum = confirmationNum;
 
         $.ajax({
@@ -442,6 +526,10 @@
 
                 $("#AssignedProcessor").text(assignedTo);
                 $("#AssignedBy").text(assignedFrom);
+
+                $("#AssignedProcessorName").text(assignedToName);
+                $("#AssignedByName").text(assignedFromName);
+
                 $("#ClosedDate").text(getActualFullDate());
 
                 toastr.options.positionClass = "toast-bottom-right";
@@ -493,7 +581,36 @@
 
     };
 
+    $("#txt_pop_VendorCode").focusout(function () {
+        if ($("#txt_pop_VendorCode").val().trim().length > 0) {
+            GetVendorNameByVendorCode($("#txt_pop_VendorCode").val());
+        }
+    }).click(function (e) {
+        e.stopPropagation();
+        return true;
+    });
+
+    function GetVendorNameByVendorCode(vname) {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "post",
+            dataType: 'json',
+            data: JSON.stringify({ 'UserId': vname }),
+            url: "/api/values/GetVendorNameByVendorCode/",
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            success: function (data) {
+                $("#txt_pop_PayeeName").val(data.data.VendorName);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#txt_pop_PayeeName").val("");
+            }
+        });
+    };
+
     $("#btn_SubmitVendorDetails").click(function (confirmationNum) {
+        debugger;
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
 
         var vendorNumber = $("#txt_pop_VendorCode").val();
@@ -502,7 +619,7 @@
         var middleName = $("#txt_pop_MiddleName").val();
         var phoneNumber = $("#txt_pop_PhoneNumber").val();
         var cellPhone = $("#txt_pop_CellPhone").val();
-        // var payeeName = $("#txt_pop_PayeeName").val();
+         var payeeName = $("#txt_pop_PayeeName").val();
         var aliasDBA = $("#txt_pop_AliasDBA").val();
         var companyName = $("#txt_pop_CompanyName").val();
         var tin = $("#txt_pop_Tin").val();
@@ -515,7 +632,7 @@
             dataType: 'json',
             data: JSON.stringify({
                 'Confirmation': confirmationNum, 'vendorNumber': vendorNumber, 'firstName': firstName, 'lastName': lastName, 'middleName': middleName, 'phoneNumber': phoneNumber, 'cellPhone': cellPhone
-                //, 'payeeName': payeeName  
+                , 'payeeName': payeeName  
                 , 'aliasDBA': aliasDBA, 'companyName': companyName, 'TaxpayerID': tin, 'DDnotifyEmail': ddNotify
             }),
 
@@ -528,17 +645,20 @@
 
                 $('#vendorDetailsModal').modal('hide');
 
-                $("#VI_VendorCode").text(vendorNumber);
-                $("#Alias_DBA").text(aliasDBA);
-                $("#FirstName").text(firstName);
-                $("#MiddleName").text(middleName);
-                $("#LastName").text(lastName);
+                //$("#VI_VendorCode").text(vendorNumber);
+                //$("#Alias_DBA").text(aliasDBA);
+                //$("#FirstName").text(firstName);
+                //$("#MiddleName").text(middleName);
+                //$("#LastName").text(lastName);
 
-                $("#PhoneNumber").text(phoneNumber);
-                //$("#VI_PayeeName").text(payeeName);
-                $("#CompanyName").text(companyName);
-                $("#TaxpayerID").text(tin);
-                $("#DirectDepositNotificationEmail").text(ddNotify);
+                //$("#PhoneNumber").text(phoneNumber);
+                ////$("#VI_PayeeName").text(payeeName);
+                //$("#CompanyName").text(companyName);
+                //$("#TaxpayerID").text(tin);
+                //$("#DirectDepositNotificationEmail").text(ddNotify);
+
+                $('#ul_ddoptionList').empty()
+                getApplicationSummary(confirmationNum);
             }
             , complete: function (jqXHR) {
             }
@@ -716,7 +836,7 @@
             url: "/api/values/InsertUpdateNotes/",
             dataType: 'json',
             data: JSON.stringify({
-                'ConfirmationNumber': confirmationNum, 'NotesType': notesType, 'Notes': notes
+                'ConfirmationNumber': confirmationNum, 'NotesType': notesType, 'Notes': notes, 'LastUpdatedUser': userId
             }),
 
             headers: {
@@ -726,13 +846,20 @@
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Successfully added notes.");
 
+                //var date = new Date();
+                //var datenow = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
 
-                var a = '<li class="list-group-item list-group-item-warning emptyResultMessage"> <span style="font-weight:bold; padding-right:10px" >' + '</span >' + notes + '</li>';
-                $("#noteList").append(a);
+                var today = new Date();
+                var tdate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+                var ttime = (today.getHours() > 12) ? (today.getHours() - 12 + ':' + today.getMinutes() + ' PM') : (today.getHours() + ':' + today.getMinutes() + ' AM');
+                var dateTime = tdate + ' ' + ttime;
 
+                
+                var a = '<li class="list-group-item list-group-item-warning emptyResultMessage">  <span>' + userName + ' : ' + dateTime + '</span> <br/>  <span style="font-weight:bold; padding-right:10px" >' + '</span >' + notes + '</li> <br>';
+                $("#noteList").prepend(a);
 
                 $('#addNotesModal').modal('hide');
-
+                $("#txt_Notes_comment").val('');
             }
             , complete: function (jqXHR) {
             }
@@ -804,6 +931,12 @@
 
     $('#vendorDetailsModal').on('shown.bs.modal', function (e) {
         $("#txt_pop_VendorCode").val($("#VI_VendorCode").text());
+
+        if ($("#txt_pop_VendorCode").val().length > 0) {
+            $("#txt_pop_VendorCode").prop("readonly", true);
+            $("#txt_pop_VendorCode").attr("disabled", "disabled");
+        }
+
         $("#txt_pop_FirstName").val($("#FirstName").text());
         $("#txt_pop_LastName").val($("#LastName").text());
         $("#txt_pop_MiddleName").val($("#MiddleName").text());
@@ -860,7 +993,6 @@
     // 
 
     $('#attachmentGrid').on('click', '.clsdownload', function (e) {
-        debugger;
         var closestRow = $(this).closest('tr');
         var data = $('#attachmentGrid').DataTable().row(closestRow).data();
 
@@ -884,7 +1016,6 @@
             },
             url: "/api/values/UpdateRetireAttachment/",
             success: function (data) {
-                debugger;
                 // REMOVE THE LINE
                 // closestRow.remove();
                 toastr.options.positionClass = "toast-bottom-right";
@@ -938,7 +1069,7 @@
                     'data': 'UploadedDate', "title": "Uploaded Date"
                     , "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<span class="fa fa-calendar">'+ data + ' </span>';    
+                            data = '<span class="fa fa-calendar">' + data + ' </span>';
                         }
                         return data;
                     }
@@ -984,11 +1115,14 @@
                 selector: 'td:first-child'
             },
 
-            //"createdRow": function (row, data, dataIndex) {
-            //    $(row).find('td:eq(1)')
-            //        .addClass('fa fa-calendar');
-            //}
         });
+
+        if (GlobalUserHasRoles.AdminRole) {
+            $(".clsretire").show();
+        }
+        else {
+            $(".clsretire").hide();
+        }
     };
 
     function GetAttachmentDocuments(confirmationNum) {
@@ -1052,7 +1186,6 @@
     });
 
     function uploadfile(filetoupload, modifiedFileName, ext) {
-        debugger;
         if (window.FormData !== undefined) {
 
             //var fileUpload = filetoupload;
@@ -1085,7 +1218,6 @@
     };
 
     function UploadDocumentAttachment(fileName) {
-        debugger;
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
         var attachmentFileName = fileName;
         var documentAttachmentTypeId = 4;	//Other Attachment in documenttype table
@@ -1103,7 +1235,6 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                debugger;
                 //var fullDate = new Date();
                 //var currentDate = fullDate.getDate() + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
 
@@ -1150,7 +1281,6 @@
             },
             url: "/api/values/GetDocumentCheckList/",
             success: function (data) {
-                debugger;
                 for (var item in data.data.ChecklistItems) {
                     if (data.data.ChecklistItems[item].Active == 1) {
                         $('input[value=' + data.data.ChecklistItems[item].CheckListID + ']').attr('checked', 'checked');
@@ -1167,7 +1297,6 @@
     }
 
     function GetAlreadyLinkedApplicationByConfirmationNum(confirmationNum) {  //  this is called here jest to get count display at the  side menu
-        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",

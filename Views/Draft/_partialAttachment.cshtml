@@ -5,7 +5,7 @@
 @section Scripts
 {
     <script src="~/Scripts/App/draft/bankdetails.js"></script>
-    <script src="~/Scripts/App/jquery.json.js"></script>
+   @* <script src="~/Scripts/App/jquery.json.js"></script>*@
     <link href="~/Content/main2.css" rel="stylesheet" />
 }
 <div class="container">
@@ -16,7 +16,8 @@
     <div class="row-inner1" style="padding-left:15px;">
         <h4> Original Direct Deposit Request Form<font color="red"> *</font></h4>
     </div>
-    <p class="text-bold attachment-header">Upload your form with wet signature authorizing this transaction: </p>
+    @*<p class="text-bold attachment-header">Upload your form with wet signature authorizing this transaction: </p>*@
+    <p class="text-bold attachment-header">Original/Hardcopy Application: </p>
     <div class="container" style="text-align: center; padding-left:0px; padding-top:10px;    margin-left: -25px;" id="pnlAttachment_ddwetform" visible="false">
         <label for="attachment">
             Attachment
@@ -45,24 +46,24 @@
             <button type="button" id="btn_FileAttachmentDelete_ddwetform" style="width : auto" class="btn-primary btn button-header-color"> Delete</button>
         </div>
     </div>
-   
+
     <br><hr>
 
 
     <div class="row padding-bottom-div" style="text-align:center;">
         <p class="text-bold attachment-header"> Select attachment(s) you are providing: </p>
-        <div id="div_voidedCheck" class="col-sm-3 form-group div-attachmentbuttons">
+        <div id="div_voidedCheck" class="col-sm-4 form-group div-attachmentbuttons">
             <button class="btn-primary btn  buttonBig" id="btn_voidCheck"> Voided Check </button>
         </div>
-        <div class="col-sm-3 form-group div-attachmentbuttons">
+        <div class="col-sm-4 form-group div-attachmentbuttons">
             <button class="btn-primary btn  buttonBig" id="btn_Statement"> First page of Bank Statement </button>
         </div>
-        <div class="col-sm-3 form-group div-attachmentbuttons">
+        <div class="col-sm-4 form-group div-attachmentbuttons">
             <button class="btn-primary btn buttonBig" id="btn_verifyLetter"> Bank Verification Letter </button>
         </div>
-        <div class="col-sm-3 form-group div-attachmentbuttons" id="div_otherAttachment">
-            <button class="btn-primary btn buttonBig" id="btn_otherAttachment"> OtherAttachment </button>
-        </div>
+        @*<div class="col-sm-3 form-group div-attachmentbuttons" id="div_otherAttachment">
+                <button class="btn-primary btn buttonBig" id="btn_otherAttachment"> OtherAttachment </button>
+            </div>*@
     </div>
 
     <div class="container" style="text-align: center;vertical-align:central" id="pnlAttachment" visible="false">

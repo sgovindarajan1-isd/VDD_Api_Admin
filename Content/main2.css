@@ -1,3 +1,29 @@
+/* submit page alignment*/
+.submitinput {
+    border-color: transparent;
+    background-color: transparent;
+    border-width: 0px;
+    cursor: default;
+    padding: 2px 0px 0px 0px;
+    outline: none;
+    height: 20px;
+    pointer-events: none;
+}
+
+.submitSpan {
+    font-weight: bold;
+}
+
+.submitHeading {
+    text-decoration: underline;
+    display: inline-block;
+    padding-top: 20px;
+    color: #7030A0;
+    margin: 0px;
+}
+
+/* submit page alignment*/
+
 .payment-status-color {
     color: crimson;
 }
@@ -3523,7 +3549,7 @@ select[multiple].input-lg, textarea.input-lg {
     -ms-user-select: none;
     user-select: none;
     background-image: none;
-    border: 1px solid transparent;
+    border: 1px solid darkgrey;
     border-radius: 4px
 }
 

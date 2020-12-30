@@ -1,0 +1,53 @@
+﻿<link href="~/Content/applicationsummary.css" rel="stylesheet" />  @*this one is to decide tab placement*@
+<link href="~/Content/button.css" rel="stylesheet" />
+<link href="~/Content/manageUser.css" rel="stylesheet" />
+
+<script src="~/Scripts/App/AdminMain.js"></script>
+
+<script src="~/Scripts/App/manageUser.js"></script>
+
+
+<div class="mainContent">
+    <div class="mainBox">
+        <h2>User Profile</h2>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="subSection">
+                    <label class="firstLabel" for="firstName">* First Name: </label>
+                    <div class="chosen-wrapper">
+                        <input class="form-control" data-val="true" data-val-length="First Name must be less than 50 characters." data-val-length-max="50" data-val-required="First Name is required." id="firstName" name="firstName" type="text" value="Girlie">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="subSection">
+                    <label class="firstLabel" for="lastName">* Last Name: </label>
+                    <div class="chosen-wrapper">
+                        <input class="form-control" data-val="true" data-val-length="Last Name must be less than 50 characters." data-val-length-max="50" data-val-required="Last Name is required." id="lastName" name="lastName" type="text" value="Guevarra">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="subSection">
+                    <label class="firstLabel" for="email">* Email Address: </label>
+                    <div class="chosen-wrapper">
+                        <input class="form-control inputLong" data-val="true" data-val-length="Email must be less than 100 characters." data-val-length-max="100" data-val-required="Email is required." id="email" name="email" type="text" value="gguevarra@auditor.lacounty.gov">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="email" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="subSection">
+                    <label class="firstLabel" for="phoneNumber">* Phone Number: </label>
+                    <div class="chosen-wrapper">
+                        <input class="form-control" data-val="true" data-val-required="Phone Number is required" id="phoneNumber" name="phoneNumber" type="text" value="(213) 974-8402">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="phoneNumber" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <input class="btn btn-primary" type="submit" value="Save">
+            </div>
+        </div>
+    </div>
+</div>
+
