@@ -32,7 +32,15 @@ namespace DAL
         public static bool Login(string UserId, string TIN)
         {
             VendorDAL cls = new VendorDAL();
-            return true;
+            Tuple<string, bool> result = cls.ValidateUserbyuid_pwd(UserId, TIN);
+
+            if (result != null)
+            {
+                return result.Item2;
+            }
+            else {
+                return false;
+            }
         }
     }
 
