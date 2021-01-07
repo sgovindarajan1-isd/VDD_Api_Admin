@@ -68,11 +68,11 @@
     GetDocumentCheckList(confirmationNum);
     GetAlreadyLinkedApplicationByConfirmationNum(confirmationNum);  // for count display
 
-    function RetrieveDenialReasonList() {
+    function RetrieveDenialReasonList(select_rejectReasonCategory) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
-            url: "/api/values/RetrieveDenialReasonList/",
+            url: "/api/values/RetrieveDenialReasonList/" + select_rejectReasonCategory,
             dataType: 'json',
             headers: {
                 'Authorization': 'Basic ' + btoa('admin')
@@ -91,18 +91,75 @@
         });
     };
 
+
+    function GetDenialReasonCategoryList() {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            url: "/api/values/GetDenialReasonCategoryList/",
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            success: function (data) {
+                rrList = data.data.denialReasonCategoryList;
+
+                var rejectReasonCategoryList = $('#select_rejectReasonCategory');
+                rejectReasonCategoryList.empty();
+                $.each(rrList, function (key, value) {
+                    rejectReasonCategoryList.append(
+                        $('<option class="dropdown-item1"></option>').val(value.DenialReasonCategoryId).html(value.DenialReasonCategoryText)
+                    );
+                });
+
+
+                if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0)  {
+                    $("#txtrejectReason").show();
+                    $("#select_rejectReason").hide();
+                }
+                else {
+                    $("#txtrejectReason").hide();
+                    $("#select_rejectReason").show();
+                    //  set the default
+                    var select_rejectReasonCategory = $('#select_rejectReasonCategory').val();
+                    RetrieveDenialReasonList(select_rejectReasonCategory);
+                }
+            }
+        });
+    };
+
+
+    $('#select_rejectReasonCategory').change(function (e) {
+        var select_rejectReasonCategory = $('#select_rejectReasonCategory').val();
+        if (parseInt(select_rejectReasonCategory) != 1) {
+
+            if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0)  {
+                $("#txtrejectReason").show();
+                $("#select_rejectReason").hide();
+            }
+            else {
+                $("#txtrejectReason").hide();
+                $("#select_rejectReason").show();
+                RetrieveDenialReasonList(select_rejectReasonCategory);
+            }
+        }
+    });
+
+
     $('#rejectApplicationModal').on('shown.bs.modal', function (e) {
-        debugger;
         $("#txt_Notes_comment").val('');
 
-        if (e.relatedTarget.id == "btn_reviewReject") {  // reject
-            RetrieveDenialReasonList();
+        if (e.relatedTarget.id == "btn_Reject" || e.relatedTarget.id == "btn_reviewReject" || e.relatedTarget.id == "btn_proce_reject") {  // reject
+            GetDenialReasonCategoryList();
+            
             $("#rejectModalTitle").html("Application Reject");
             $("#rejctreason").show();
+            $('#rejctreasonCategory').show();
         }
         else {  // return
             $("#rejectModalTitle").html("Application Return");
             $("#rejctreason").hide();
+            $('#rejctreasonCategory').hide();
         }
     });
 
@@ -130,13 +187,14 @@
             $("#div_processor_review").hide();
 
 
-            if (status == 5 || status == 21 || status == 22) {  //'pending'    // If Pending  no needed to show "Return" button
+            if (status == 5) { //|| status == 21 || status == 22) {  //'pending'    // If Pending  no needed to show "Return" button
                 statusDesc = "(Application Pending)";
                 $("#btn_reviewReturn").hide();
                 //$("#btn_reviewReject").hide();
             }
 
             if (status == 21 || status == 22) {
+                statusDesc = "(Application Pending)";
                 $("#div_supervisor_proce_review").show();
                 var msg = summaryData.StatusDesc + " by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
                 $("#span_review_processor_Approval_msg").text(msg);
@@ -226,6 +284,7 @@
         //Banking Information
 
         $("#TypeofAccount").text(data.AccountTypeDesc);
+        $("#NameOnBankAccount").text(data.NameOnBankAccount);
         $("#BankAccountNumber").text(data.BankAccountNumber);
         $("#BankRoutingNumber").text(data.BankRoutingNo);
         $("#FinancialInstitutionName").text(data.FinancialIns);
@@ -396,7 +455,7 @@
     });
 
     $("#btn_SubmitReject").click(function () {
-        debugger;
+        var reason_category = $("#select_rejectReasonCategory option:selected").text();
         var reason_type = $("#select_rejectReason option:selected").text();
         var comment = $("#txt_reject_comment").val();
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
@@ -406,7 +465,8 @@
         var assignedToName = $("#AssignedByName").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var status = 22;
 
-        if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
+        //if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
+        if ((reason_category.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
             $("#spanReasonType").html('Reason required.');
             return;
         }
@@ -414,11 +474,21 @@
             $("#spanReasonType").html('');
         }
 
-        if (reason_type.length <= 0) {
-            $("#spanReasonType").html('Reason Type is required.');
-            return;
-        } else {
-            $("#spanReasonType").html('');
+        if (reason_category.indexOf('Other') >= 0) {
+            if ($("#txtrejectReason").length <= 0) {
+                $("#spanReasonType").html('Reason Type is required.');
+                return;
+            } else {
+                $("#spanReasonType").html('');
+            }
+        }
+        else {
+            if (reason_type.length <= 0) {
+                $("#spanReasonType").html('Reason Type is required.');
+                return;
+            } else {
+                $("#spanReasonType").html('');
+            }
         }
 
         // if (role == 11)  // processor
@@ -459,19 +529,11 @@
         UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
     });
 
-    //$("#btn_reviewPrint").click(function () {  // supervisor view
-    //    printBttonClick();
-    //});
-
-    //$("#btn_reviewPrint").click(function () {  // supervisor view
-    //    printButtonClick();
-    //});
-    $("#btn_proce_print").click(function () {  // processor view
+      $("#btn_proce_print").click(function () {  // processor view
         printButtonClick();
     });    
 
     function printButtonClick() {
-        debugger;
         var comment = '';
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
@@ -507,7 +569,6 @@
     }
 
     function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, assignedFromName, assignedToName) {
-        debugger;
         var confirmNum = confirmationNum;
 
         $.ajax({
@@ -557,6 +618,8 @@
                     else if (status == 4) {
                         $("#header_status").text("Approved");
                     }
+                } else if (status == 23) {  // 23	Pending Vendor Confirmation 
+                    $("#header_status").text("Pending Vendor Confirmation");  
                 }
 
                 //  Make invisible the tool bar and button after status changes
@@ -610,7 +673,6 @@
     };
 
     $("#btn_SubmitVendorDetails").click(function (confirmationNum) {
-        debugger;
         var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
 
         var vendorNumber = $("#txt_pop_VendorCode").val();
@@ -747,11 +809,6 @@
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Certification information updated successfully.");
                 $('#certificationDetailsModal').modal('hide');
-
-                //$("#txt_pop_SignerName").val(SignerName);
-                //$("#txt_pop_SignerTitle").val(SignerTitle);
-                //$("#txt_pop_SignerPhone").text(SignerPhone);
-                //$("#txt_pop_SignerEmail").text(SignerEmail);
 
                 $("#AuthorizedSignerName").text(SignerName);
                 $("#AuthorizedSignerTitle").text(SignerTitle);
@@ -1235,22 +1292,12 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                //var fullDate = new Date();
-                //var currentDate = fullDate.getDate() + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
 
                 d = new Date();
                 var currentDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Document attachment successfully uploaded.");
                 setAttachment(data.data.attachments);
-
-                // var t = $('#attachmentGrid').DataTable();
-                // t.row.add({
-                //     "ConfirmationNum": confirmationNum,
-                //     "AttachmentFileName": fileName,
-                //     "DisplayName": fileName,
-                //     "UploadedDate": currentDate,
-                //}).draw();
 
                 $("#menuDocCount").text(data.data.attachments.length);
 

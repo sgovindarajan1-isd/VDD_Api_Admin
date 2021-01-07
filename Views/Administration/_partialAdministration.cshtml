@@ -196,11 +196,20 @@
                 <h5 class="modal-title">Denial Reason</h5>
             </div>
             <div class="modal-body" style="text-align:left">
-                
+
+
+                <div id="rejctreasonCategory" class="form-group subSection">
+                    <label class="firstLabelLong" for="rejectReason">Category:</label>
+                    <div class="chosen-wrapper">
+                        <select class="form-control cancel chosen-select" id="select_rejectReasonCategory" name="rejectReasonCategory" style="display: true">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
 
                 <div class="form-group subSection">
                     <label for="comment">Denial Reason:</label>
-                    <textarea class="form-control" rows="5"  maxlength="50" id="txt_DenialReason"></textarea>
+                    <textarea class="form-control" rows="5" maxlength="50" id="txt_DenialReason"></textarea>
                 </div>
                 <span id="accountType">0 / 50 characters</span>
             </div>
@@ -353,6 +362,7 @@
                                 <table id="denialReasonGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="border-collapse:collapse; border: 1px solid black; width:100%">
                                     <thead>
                                         <tr class="button-header-color">
+                                            <th>Category</th>
                                             <th>Denial Reason</th>
                                             <th>Command</th>
 

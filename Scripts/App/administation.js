@@ -6,7 +6,6 @@
     $('#txt_pop_PhoneNumber').mask('(000)000-0000');
 
     $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
-        debugger;
         e.preventDefault();
         $(this).siblings('a.active').removeClass("active");
         $(this).addClass("active");
@@ -16,7 +15,6 @@
     });
 
     $('#ddUserGrid').on('click', '.addeditUser', function () {
-        debugger;
         var RowIndex = $(this).closest('tr');
         var table = $('#ddUserGrid').DataTable();
         var userId = table.row(RowIndex).data().UserId;
@@ -24,7 +22,6 @@
     });
 
     function setData(usersList) {
-        debugger;
         $('#ddUserGrid').DataTable().destroy();
         $('#ddUserGrid').empty();
         $('#ddUserGrid').dataTable({
@@ -98,7 +95,6 @@
     });
 
     function getUserEditPopup(userID) {
-        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
@@ -111,7 +107,6 @@
             },
             url: "/api/values/getUsersListByUserId/",
             success: function (data) {
-                debugger;
                 $("#txt_pop_UserId").val(userID);
                 $("#txt_pop_FirstName").val(data.data.usersList[0].FirstName);
                 $("#txt_pop_LastName").val(data.data.usersList[0].LastName);
@@ -129,7 +124,6 @@
                 var userRoles = data.data.list_userRoles;
                 for (var item in data.data.list_userRoles) {
 
-                    debugger;
                     if (data.data.list_userRoles[item].RoleId == 1) {
                         $("#chk_DataEntry").prop('checked', true)
                         $("#lbl_DataEntry").addClass('active');
@@ -162,7 +156,6 @@
     };
 
     function getUsersList(userID) {
-        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
@@ -175,7 +168,6 @@
             },
             url: "/api/values/getUsersListByUserId/",
             success: function (data) {
-                debugger;
                 setData(data.data.usersList);
             },
             error: function (_XMLHttpRequest, textStatus, errorThrown) {
@@ -187,7 +179,6 @@
     };
 
     $("#txt_pop_UserId").focusout(function () {
-        debugger;
         if ($("#txt_pop_UserId").val().length <= 0) {
             $("#spanUserId").html('User Id is required.');
             return;
@@ -215,7 +206,6 @@
             },
             url: "/api/values/RetrieveUserDetails/",
             success: function (data) {
-                debugger;
                 var d = data.data.userProfile;
                 $('#txt_pop_FirstName').val(d.givenNameField);
                 $('#txt_pop_LastName').val(d.snField);
@@ -223,11 +213,8 @@
                 $('#txt_pop_Email').val(d.mailField);
                 $('#txt_pop_DisbursementCategory').val(d.departmentField);
 
-
                 var userRoles = data.data.list_userRoles;
                 for (var item in data.data.list_userRoles) {
-
-                    debugger;
                     if (data.data.list_userRoles[item].RoleId == 1) {
                         $("#chk_DataEntry").prop('checked', true)
                         $("#lbl_DataEntry").addClass('active');
@@ -291,15 +278,6 @@
             $("#spandisbursementCategory").html('');
         }
 
-        //if (($("#chk_admin").prop('checked') == false) && ($("#chk_supervisor").prop('checked') == false) &&
-        //    ($("#chk_processor").prop('checked') == false) && ($("#chk_DataEntry").prop('checked') == false)) {
-        //    $("#spanRole").html('Assign atleast one Role to the user.');
-        //    bool = false;
-        //} else {
-        //    $("#spanRole").html('');
-        //}
-      
-
         if (!bool) {
             return false;
         }
@@ -309,8 +287,6 @@
     }
 
     $('#btn_AddEditUser').on('click', function (e) {
-        debugger;
-
         var userId = $("#txt_pop_UserId").val();
         var firstName = $("#txt_pop_FirstName").val();
         var lastName = $("#txt_pop_LastName").val();
@@ -319,9 +295,6 @@
         if (validateUser() == false) {
             return;
         };
-
-        //var phoneNumber = $("#txt_pop_PhoneNumber").val();
-        //var cellPhone = $("#txt_pop_CellPhone").val();
 
         var isActive = 0;
         var isAdmin = 0;
@@ -391,7 +364,6 @@
         GetGetGeneralContent_ContactUs();
     });
     function GetGetGeneralContent_ContactUs() {
-        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
@@ -403,7 +375,6 @@
             },
 
             success: function (data) {
-                debugger;
                 $("#txt_pop_gcEmail").val(data.data.generalContent_ContactUs.Email);
                 $("#txt_pop_MailingAddress").val(data.data.generalContent_ContactUs.MailingAddress);
                 $("#txt_pop_gcPhoneNumber").val(data.data.generalContent_ContactUs.Phone);
@@ -512,7 +483,7 @@
     });
 
     GetDenialReasonList();
-
+    
     function GetDenialReasonList() {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
@@ -522,9 +493,8 @@
             headers: {
                 'Authorization': 'Basic ' + btoa('admin')
             },
-            url: "/api/values/RetrieveDenialReasonList/",
+            url: "/api/values/RetrieveDenialReasonList/"+ 0,  //  0 means  get all the category and reasons
             success: function (data) {
-                debugger;
                 setDenialReasonList(data.data.denialReasonList);
             },
             error: function (_XMLHttpRequest, textStatus, errorThrown) {
@@ -534,6 +504,39 @@
             }
         });
     }
+
+    $('#denialReasonEditModal').on('shown.bs.modal', function (e) {
+        $("#txt_DenialReason").val('');
+        GetDenialReasonCategoryList();
+    });
+
+    function GetDenialReasonCategoryList() {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            url: "/api/values/GetDenialReasonCategoryList/",
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            success: function (data) {
+                rrList = data.data.denialReasonCategoryList;
+
+                var rejectReasonCategoryList = $('#select_rejectReasonCategory');
+                rejectReasonCategoryList.empty();
+                $.each(rrList, function (key, value) {
+                    rejectReasonCategoryList.append(
+                        $('<option class="dropdown-item1"></option>').val(value.DenialReasonCategoryId).html(value.DenialReasonCategoryText)
+                    );
+                });
+
+                //  set the default
+                var select_rejectReasonCategory = $('#select_rejectReasonCategory').val();
+                RetrieveDenialReasonList(select_rejectReasonCategory);
+            }
+        });
+    };
+
 
     function setDenialReasonList(data) {
         $('#denialReasonGrid').DataTable().destroy();
@@ -548,6 +551,10 @@
             , data: data,
             columns: [
                 {
+                    "data": "DenialReasonCategoryText",
+                    "title": "Category"
+                },
+                {
                     "data": "DenialReasonText",
                     "title": "Denial Reason"
                 },
@@ -559,13 +566,6 @@
                         return '<div id = "div_action "class= "pull-right btn-group" >' +
                             '<span class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>' +
                             '<ul class="dropdown-menu context-menu-left-showOnLeft">' +
-                            //'<li>' +
-                            //'<a class="clsdownload" title="Edit" > ' +
-
-                            //'<span class="glyphicon glyphicon-download-alt"></span>' +
-                            //'<span>Download</span>' +
-                            //'</a>' +
-                            //'</li>' +
 
                             '<li>' +
                             '<a title="Retire File" class="clsretire"  data-rowclass="documentRow">' +
@@ -595,8 +595,8 @@
 
 
     $('#btn_SubmitDenialReason').click(function (e) {
-        debugger;
         var denialReason = $("#txt_DenialReason").val();
+        var category = $('#select_rejectReasonCategory').val();
 
         $.ajax({
             contentType: 'application/json; charset=utf-8',
@@ -604,7 +604,7 @@
             url: "/api/values/InsertUpdateDenialReason/",
             dataType: 'json',
             data: JSON.stringify({
-                'DenialReasonText': denialReason, 'LastUpdatedUser': userId
+                'DenialReasonCategoryId': category, 'DenialReasonText': denialReason, 'LastUpdatedUser': userId
             }),
 
             headers: {
@@ -614,11 +614,7 @@
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Successfully added Denial Reason.");
 
-                var tbl = $('#denialReasonGrid').DataTable();
-                tbl.row.add({
-                    "DenialReasonText": denialReason
-                }).draw(false);
-
+                setDenialReasonList(data.data.denialReasonList);
 
                 $('#denialReasonEditModal').modal('hide');
 
@@ -638,7 +634,6 @@
     });
 
     $('#denialReasonGrid').on('click', '.clsretire', function (e) {
-        debugger;
         var closestRow = $(this).closest('tr');
         var data = $('#denialReasonGrid').DataTable().row(closestRow).data();
         var denialReasonId = data.DenialReasonId;
@@ -652,9 +647,6 @@
             },
             url: "/api/values/InsertUpdateDenialReason/",
             success: function (data) {
-                debugger;
-                // REMOVE THE LINE
-                // closestRow.remove();
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("This Denial Reason deleted from the Application!");
 

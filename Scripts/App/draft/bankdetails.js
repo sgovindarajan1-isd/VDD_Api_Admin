@@ -117,6 +117,8 @@
         $('#lbl_header').html('Verify Banking Information');
 
         var bankdetailsJson = jQuery.parseJSON(sessionStorage.bankdetailsJson);
+        var vendorobj = JSON.parse(sessionStorage.getItem("vendordetailsJson"));
+
         var acType = "Error";
         if (bankdetailsJson[0].AccountType == "1")
             acType = "Checking";
@@ -124,7 +126,10 @@
             acType = "Saving";
 
         $("#accountType").text(acType);
-        $("#nameonbankAc").text(vendordetailsJson[0].PayeeName);
+        //var pName = vendordetailsJson[0].PayeeName;
+      
+        $("#nameonbankAc").text(bankdetailsJson[0].NameonbankAc);  //  label
+
         $("#bankAcNo").text(bankdetailsJson[0].BankAccountNumber);
         $("#bankRoutingNo").text(bankdetailsJson[0].BankRoutingNo);
         var img = new Image();
@@ -182,7 +187,7 @@
     $("#btn_voidCheck").on('click', function () {
         fileSelectytedtype = 'VC';
         //displayBankStatements = 'Voided Check';
-        sessionStorage.setItem('displayBankStatements', 'Voided Check'); 
+        sessionStorage.setItem('displayBankStatements', 'Voided Check');
 
 
         $("#btn_voidCheck").removeClass('disabled_color');
@@ -193,7 +198,7 @@
     $("#btn_Statement").on('click', function () {
         fileSelectytedtype = 'ST';
         //displayBankStatements = 'First page of Bank Statement';
-        sessionStorage.setItem('displayBankStatements', 'First page of Bank Statement'); 
+        sessionStorage.setItem('displayBankStatements', 'First page of Bank Statement');
 
 
 
@@ -205,7 +210,7 @@
     $("#btn_verifyLetter").on('click', function () {
         fileSelectytedtype = 'VL';
         //displayBankStatements = 'Bank Verification Letter';
-        sessionStorage.setItem('displayBankStatements', 'Bank Verification Letter'); 
+        sessionStorage.setItem('displayBankStatements', 'Bank Verification Letter');
 
 
         $("#btn_verifyLetter").removeClass('disabled_color');
@@ -217,7 +222,7 @@
     $("#btn_otherAttachment").on('click', function () {
         fileSelectytedtype = 'OA';
         //displayBankStatements = 'Other Attachment';
-        sessionStorage.setItem('displayBankStatements', 'Other Attachment'); 
+        sessionStorage.setItem('displayBankStatements', 'Other Attachment');
 
 
         $("#btn_otherAttachment").removeClass('disabled_color');
@@ -252,7 +257,7 @@
 
     $('#input_attachment_ddwetform').change(function (e) {
         var ext = ['.PDF', '.DOC', '.DOCX', '.JPG', '.JPEG', '.GIF', '.PNG'];
-        sessionStorage.setItem('displaywetForm', 'Original Direct Deposit Request Form'); 
+        sessionStorage.setItem('displaywetForm', 'Original Direct Deposit Request Form');
         $("#fileError_or_Info_ddwetform").html("");
         var fileName = e.target.files[0].name;
         var file = e.target.files[0];
@@ -452,10 +457,14 @@
         $.ajax({
             contentType: "application/json; charset=utf-8",
             type: "post",
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
 
-            url: "/helper/validateRoughtingNumber?aba=" + aba,
+            //url: "/helper/validateRoughtingNumber?aba=" + aba,
+            url: "../api/values/ValidateRoughtingNumberFromAPI?aba=" + aba,
             success: function (data) {
-                $("#txtFinancialIns").val(data);
+                $("#txtFinancialIns").val(data.data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $("#txtFinancialIns").val("No banks found");
@@ -464,6 +473,31 @@
     };
 
     function storeDetails() {
+        var vendorobj = jQuery.parseJSON(sessionStorage.vendordetailsJson);
+        var pName = vendorobj[0].PayeeName;
+        if ((pName == null) || (pName == '')) {
+            var companyName = vendorobj[0].CompanyName;
+            var fName = vendorobj[0].FirstName;
+            var mName = vendorobj[0].MiddleName;
+            var lName = vendorobj[0].LastName;
+
+            if (!Boolean(fName))
+                fName = '';
+            if (!Boolean(mName))
+                mName = ' ';
+            else
+                mName = ' ' + mName + ' ';
+            if (!Boolean(lName))
+                lName = '';
+
+            if (Boolean(companyName)) {
+                pName = companyName
+            }
+            else {
+                pName = fName + mName + lName;
+            }
+
+        }
         var bankdetailsRow = [];
         bankdetailsRow.push({
             AccountType: $("#txtAccountType").val(),
@@ -473,6 +507,7 @@
             FinancialIns: $("#txtFinancialIns").val(),
             DDNotifyEmail: $("#txtDDNotifyEmail").val(),
             ReDDNotifyEmail: $("#txtReDDNotifyEmail").val(),
+            NameonbankAc: pName
         });
         sessionStorage.setItem('bankdetailsJson', JSON.stringify(bankdetailsRow));
     }
@@ -528,7 +563,7 @@
         sessionStorage.setItem('selectedFile_ddwetform', null);
         sessionStorage.setItem('imagefile-selectedFile_ddwetform', null);
 
-       // window.history.back();
+        // window.history.back();
         window.location.href = '/draft/_partialBankDetails';
     });
 

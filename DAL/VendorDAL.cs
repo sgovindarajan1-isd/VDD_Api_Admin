@@ -237,6 +237,7 @@ namespace DAL
                         sqlComm.Parameters.AddWithValue("@Status", 5);  //  5 pending 
                         sqlComm.Parameters.AddWithValue("@DDNotifyEmail", vmvendorDD.DDNotifyEmail);
                         sqlComm.Parameters.AddWithValue("@AccountType", vmvendorDD.AccountType);
+                        sqlComm.Parameters.AddWithValue("@NameOnBankAccount", vmvendorDD.NameOnBankAccount);
                         sqlComm.Parameters.AddWithValue("@AccountNumber", vmvendorDD.BankAccountNumber);
 
                         sqlComm.Parameters.AddWithValue("@RoutingNumber", vmvendorDD.BankRoutingNo);

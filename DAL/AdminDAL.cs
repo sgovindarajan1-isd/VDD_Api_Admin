@@ -332,6 +332,8 @@ namespace DAL
                     //Console.WriteLine(aDate.ToString("MM/dd/yyyy hh:mm tt"));
 
                     reqM.AccountType = Int32.Parse(ds.Tables[0].Rows[i]["AccountType"].ToString());
+                    reqM.NameOnBankAccount = ds.Tables[0].Rows[i]["NameOnBankAccount"].ToString();
+
                     reqM.AccountTypeDesc = ds.Tables[0].Rows[i]["AccountTypeDesc"].ToString();
                     reqM.BankRoutingNo = ds.Tables[0].Rows[i]["BankRountingNumber"].ToString();
                     reqM.BankAccountNumber = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
@@ -1227,6 +1229,7 @@ namespace DAL
                     SqlCommand sqlComm = new SqlCommand("InsertUpdateDenialReason", con);
                     sqlComm.Parameters.AddWithValue("@DenialReasonId", vm_DenialReason.DenialReasonId);
                     sqlComm.Parameters.AddWithValue("@DenialReasonText", vm_DenialReason.DenialReasonText);
+                    sqlComm.Parameters.AddWithValue("@DenialReasonCategoryId", vm_DenialReason.DenialReasonCategoryId);
                     sqlComm.Parameters.AddWithValue("@Active", vm_DenialReason.Active);
                     sqlComm.Parameters.AddWithValue("@LastUpdatedUser", vm_DenialReason.LastUpdatedUser);
                     sqlComm.Parameters.AddWithValue("@Action", vm_DenialReason.Action);
@@ -1253,7 +1256,7 @@ namespace DAL
             return returnDenialReasonId;
         }
 
-        public List<DAL_M_DenialReason> GetDenialReasonList()
+        public List<DAL_M_DenialReason> GetDenialReasonList(int id)
         {
             List<DAL_M_DenialReason> reasonlist = new List<DAL_M_DenialReason>();
             try
@@ -1262,6 +1265,8 @@ namespace DAL
                 using (SqlConnection con = DBconnection.Open())
                 {
                     SqlCommand sqlComm = new SqlCommand("GetDenialReasonList", con);
+                    sqlComm.Parameters.AddWithValue("@DenialReasonCategoryId", id);
+
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = sqlComm;
@@ -1272,6 +1277,8 @@ namespace DAL
                         DAL_M_DenialReason v = new DAL_M_DenialReason();
                         v.DenialReasonId = Int32.Parse(ds.Tables[0].Rows[i]["DenialReasonId"].ToString());
                         v.DenialReasonText = ds.Tables[0].Rows[i]["DenialReasonText"].ToString();
+                        v.DenialReasonCategoryId = Int32.Parse(ds.Tables[0].Rows[i]["DenialReasonCategoryId"].ToString());
+                        v.DenialReasonCategoryText = ds.Tables[0].Rows[i]["DenialReasonCategoryText"].ToString();
                         v.Active = int.Parse(ds.Tables[0].Rows[i]["Active"].ToString());
                         v.LastUpdatedUser = ds.Tables[0].Rows[i]["LastUpdatedUser"].ToString();
                         v.LastUpdatedDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
@@ -1285,6 +1292,40 @@ namespace DAL
                 LogManager.log.Error("Error in Getting Denial Reason List.  Message: " + ex.Message);
             }
             return reasonlist;
+        }
+
+        public List<DAL_M_DenialReason> GetDenialReasonCategoryList()
+        {
+            List<DAL_M_DenialReason> reasonCategoryList = new List<DAL_M_DenialReason>();
+            try
+            {
+                DataSet ds = new DataSet("DenialReasonCategory");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetDenialReasonCategoryList", con);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_DenialReason v = new DAL_M_DenialReason();
+                        v.DenialReasonCategoryId = Int32.Parse(ds.Tables[0].Rows[i]["DenialReasonCategoryId"].ToString());
+                        v.DenialReasonCategoryText = ds.Tables[0].Rows[i]["DenialReasonCategoryText"].ToString();
+                        v.Active = int.Parse(ds.Tables[0].Rows[i]["Active"].ToString());
+                        v.LastUpdatedUser = ds.Tables[0].Rows[i]["LastUpdatedUser"].ToString();
+                        v.LastUpdatedDateTime = String.Format("{0:M/d/yyyy}", ds.Tables[0].Rows[i]["LastUpdateDateTime"]);
+                        reasonCategoryList.Add(v);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in Getting Denial Reason Category List.  Message: " + ex.Message);
+            }
+            return reasonCategoryList;
         }
 
         public List<DAL_M_ApplicationList> GetApplicationAdvancedSearch(DAL_M_ApplicationList dal_M_ApplicationList)

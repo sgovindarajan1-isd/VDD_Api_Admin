@@ -35,6 +35,7 @@ namespace DAL.Models
         public string Application { get; set; }  // concadination of conf num and request type
         public string Linked_ConfirmationNum { get; set; }
         public int AccountType { get; set; }
+        public string NameOnBankAccount { get; set; }
         public string BankAccountNumber { get; set; }
         public string BankRoutingNo { get; set; }
         public string FinancialIns { get; set; }

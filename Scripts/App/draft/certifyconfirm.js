@@ -327,12 +327,14 @@
                 $("#typeofAccount").val("Checking");
             else if (bankobj[0].AccountType == "2")
                 $("#typeofAccount").val("Saving");
+            $("#nameonbankAc").val(bankobj[0].NameonbankAc); 
             $("#accountNumber").val(bankobj[0].BankAccountNumber);
             $("#routingNumber").val(bankobj[0].BankRoutingNo);
             $("#finInsName").val(bankobj[0].FinancialIns);
             $("#ddNotificationEmail").val(bankobj[0].DDNotifyEmail);
 
             vendorDetails.AccountType = bankobj[0].AccountType;
+            vendorDetails.NameOnBankAccount = bankobj[0].NameonbankAc;
             vendorDetails.BankAccountNumber = bankobj[0].BankAccountNumber;
             vendorDetails.BankRoutingNo = bankobj[0].BankRoutingNo;
             vendorDetails.FinancialIns = bankobj[0].FinancialIns;

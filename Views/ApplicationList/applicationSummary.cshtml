@@ -18,12 +18,26 @@
                 <h5 id="rejectModalTitle" class="modal-title">Application Reject</h5>
             </div>
             <div class="modal-body" style="text-align:left">
-                <div id="rejctreason"class="form-group subSection">
+                <div id="rejctreasonCategory" class="form-group subSection">
+                    <label class="firstLabelLong" for="rejectReason">Category:</label>
+                    <div class="chosen-wrapper">
+                        <select class="form-control cancel chosen-select" id="select_rejectReasonCategory" name="rejectReasonCategory" style="display: true">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="rejctreason" class="form-group subSection">
                     <label class="firstLabelLong" for="rejectReason">Reason:</label>
                     <div class="chosen-wrapper">
                         <select class="form-control cancel chosen-select" id="select_rejectReason" name="rejectReason" style="display: true">
                             <option value=""></option>
                         </select>
+
+                        <div style="float:left">
+                            <input type="text" class="form-control" id="txtrejectReason" />
+                        </div>
+
                     </div>
                 </div>
 
@@ -657,6 +671,7 @@
                                             <div class="flex">
                                                 <div class="flex-column-1">
                                                     <div class="readOnlySection"><span class="displayLabel">Type of Account: </span><span id="TypeofAccount" class="displayValue "></span></div>
+                                                    <div class="readOnlySection"><span class="displayLabel">Name on Bank Account #: </span><span id="NameOnBankAccount" class="displayValue "></span></div>
                                                     <div class="readOnlySection"><span class="displayLabel">Bank Account #: </span><span id="BankAccountNumber" class="displayValue "></span></div>
                                                     <div class="readOnlySection"><span class="displayLabel">Bank Routing #: </span><span id="BankRoutingNumber" class="displayValue "></span></div>
                                                 </div>

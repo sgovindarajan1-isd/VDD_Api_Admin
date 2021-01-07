@@ -21,7 +21,9 @@ namespace DAL.Models
     public class DAL_M_DenialReason
     {
         public int DenialReasonId { get; set; }
+        public int DenialReasonCategoryId { get; set; }
         public string DenialReasonText { get; set; }
+        public string DenialReasonCategoryText { get; set; }
         public int Active { get; set; }
         public string Action { get; set; }
         public string LastUpdatedUser { get; set; }

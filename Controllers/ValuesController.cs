@@ -1178,25 +1178,46 @@ namespace eCAPDDApi.Controllers
         public HttpResponseMessage InsertUpdateDenialReason([FromBody] DAL.Models.DAL_M_DenialReason vm_DenialReason)
         {
             AdminDAL adminDAL = new AdminDAL();
+            //var dt = 
+            adminDAL.InsertUpdateDenialReason(vm_DenialReason);
+            //var data = new
+            //{
+            //    returnValue = dt,
+            //};
 
-            var dt = adminDAL.InsertUpdateDenialReason(vm_DenialReason);
+            var dt = adminDAL.GetDenialReasonList(0);  //  0 means get all
             var data = new
             {
-                returnValue = dt,
+                denialReasonList = dt,
             };
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
         }
 
         [HttpPost]
-        public HttpResponseMessage RetrieveDenialReasonList()
+        public HttpResponseMessage RetrieveDenialReasonList(int id)
         {
             AdminDAL adminDAL = new AdminDAL();
 
-            var dt = adminDAL.GetDenialReasonList();
+            var dt = adminDAL.GetDenialReasonList(id);
             var data = new
             {
                 denialReasonList = dt,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        
+        [HttpPost]
+        public HttpResponseMessage GetDenialReasonCategoryList()
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetDenialReasonCategoryList();
+            var data = new
+            {
+                denialReasonCategoryList = dt,
             };
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;

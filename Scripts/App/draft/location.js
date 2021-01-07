@@ -28,7 +28,6 @@
             return true;
         }
     };
-    // $("#div_spinnerpanel").addClass('loading');
     $("#div_spinner").addClass('loader');
 
     $('#txtZipCode').keypress(validateNumber);
@@ -43,8 +42,6 @@
         },
         url: "/../api/values/GetVendorDetailsByName/",
         success: function (data) {
-
-            ///     $("#div_spinnerpanel").removeClass('loading');
             $("#div_spinner").removeClass('loader');
 
             debugger;
