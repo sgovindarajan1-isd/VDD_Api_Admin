@@ -57,7 +57,7 @@
     </div>
 </div>
 
-@*<div class="modal" id="returnApplicationModal" tabindex="-1" role="dialog">
+<div class="modal" id="returnApplicationModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -66,19 +66,19 @@
             <div class="modal-body" style="text-align:left">
                 <div class="form-group subSection">
                     <label for="comment">Note:</label>
-                    <textarea class="form-control" rows="5" id="txt_reject_comment"></textarea>
-                    <span id="spanReasonType" class="errmessage" />
+                    <textarea class="form-control" rows="5" id="txt_return_comment"></textarea>
+                    <span id="span_error_return_comment" class="errmessage" />
                 </div>
-                <span id="accountType">0 / 300 characters</span>
+                <span id="span_return_comment">0 / 300 characters</span>
             </div>
 
             <div class="modal-footer">
-                <input id="btn_SubmitReturn" class="btn btn-sm btn-primary" type="submit" value="Submit">
+                <input id="btn_Popup_SubmitReturn" class="btn btn-sm btn-primary" type="submit" value="Submit">
                 <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
-</div>*@
+</div>
 
 
 <div class="modal" id="addNotesModal" tabindex="-1" role="dialog">
@@ -799,7 +799,7 @@
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-xs">
                                                 <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
-                                                <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
+                                                <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#returnApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
                                                 <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
                                               
                                                 @*   As per spec  no print button for supervisor view only for Processor view

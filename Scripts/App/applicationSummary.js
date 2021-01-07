@@ -163,6 +163,12 @@
         }
     });
 
+
+    $('#returnApplicationModal').on('shown.bs.modal', function (e) {
+        $("#txt_return_comment").val('');
+    });
+
+
     $('#approveApplicationModal').on('shown.bs.modal', function (e) {
         $("#txt_Notes_comment").val('');
     });
@@ -211,6 +217,15 @@
         if ((data == null) || (data == 'undefined')) {
             return;
         }
+
+        //  Make invisible the tool bar If the status is Approved or Rejected  4 -Direct Deposit, 6	Reject
+        if (data.Status == 4 || data.Status == 6) {
+            $("#btn_Reject").hide();
+            $("#btn_Assign").hide();
+            $("#div_supervisor_review_panel").hide();
+        }
+        //
+
         if (data.Status == 5) {  // Pending =5
             // for new  display the reject button at top too
             $("#btn_Reject").show();
@@ -505,16 +520,24 @@
         UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//   reject  status = 6;
     });
 
-    $("#btn_SubmitReturn").click(function () {
-        var reason_type = $("#select_rejectReason option:selected").text();
-        var comment = $("#txt_comment").val();
+    $("#btn_Popup_SubmitReturn").click(function () {
+        var comment = $("#txt_return_comment").val();
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
 
         var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedToName = $("#AssignedByName").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
 
-        UpdateApplicationStatus(6, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//   reject  status = 6;
+        if (comment.length <= 0) {
+            $("#span_error_return_comment").html('Comment required.');
+            return;
+        }
+        else {
+            $("#span_error_return_comment").html('');
+        }
+
+        UpdateApplicationStatus(2, '', "Returned to Processor.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);
+        //   2	Assigned to Processor;
     });
 
     // Assign  the proccessors
@@ -607,6 +630,7 @@
                 }
                 else if (status == 2) {  // assign = 2  
                     $('#assignApplicationModal').modal('hide');
+                    $('#returnApplicationModal').modal('hide');
                     $("#header_status").text("Assigned to Processor");  //StatusCode	StatusDesc
                 }
                 else if (status == 21 || status == 4) {
