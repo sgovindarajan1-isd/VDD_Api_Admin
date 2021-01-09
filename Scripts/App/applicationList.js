@@ -58,7 +58,7 @@
     // first priority given to click from chart
     if ((sessionStorage.getItem("fromPendingAssignmentChartClick") != null) && (sessionStorage.getItem("fromPendingAssignmentChartClick") != 'null')) {
         var ag = sessionStorage.getItem("fromPendingAssignmentChartClick");
-        getApplicationListFilteredByAge(ag);        
+        getApplicationListFilteredByAge(ag);
     }
 
     else if ((sessionStorage.getItem("fromPendingMyApprovalChartClick") != null)  && (sessionStorage.getItem("fromPendingMyApprovalChartClick") != 'null')) {
@@ -101,7 +101,7 @@
     $("#sidemenu_PendingMyApproval").click(function () {
         $(".leftNavItem").removeClass('leftNavItemActive');
         $("#sidemenu_PendingMyApproval").addClass('leftNavItemActive');
-       // $("#sidemenu_PendingAssignment").removeClass('leftNavItemActive');
+        // $("#sidemenu_PendingAssignment").removeClass('leftNavItemActive');
 
         $("#heading_applicationlist").text("Pending My Approval");
         $("#div_ageFilter").show();
@@ -142,7 +142,7 @@
         $("#customizeFilterModal").modal('hide');
     });
 
-   
+
     $("#btn_0_15_days").click(function () {
         debugger;
         getApplicationListFilteredByAge(15);
@@ -430,7 +430,7 @@
             },
             url: "/api/values/getManageUserMenuList/",
             success: function (data) {
-                buildManageUserApplicationList(data.data.manageUserMenuList); 
+                buildManageUserApplicationList(data.data.manageUserMenuList);
             },
             error: function (_XMLHttpRequest, textStatus, errorThrown) {
                 if (_XMLHttpRequest.status == '401') {

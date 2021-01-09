@@ -4,7 +4,7 @@
 
     $("#img_vendor_step").attr('src', '/Content/Images/user_step_on.png');
     $("#img_info_step").attr('src', '/Content/Images/info_step.png');
-    
+
     $("#img_vendor_step").addClass("active");
     $("#li_vendorstep").addClass("active");
     $("#li_vendorstep").removeClass("disabled");
@@ -35,8 +35,8 @@
     }).click(function (e) {
         e.stopPropagation();
         return true;
-    });   
-    
+    });
+
     function GetVendorNameByVendorCode(vname) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
@@ -102,55 +102,44 @@
             $("#span_applicationType").html('');
         }
 
-        //if (txtVendorCode.length <= 0) {
-        //    $("#txtVendorCode").html('txtVendorCode Account Number is required.');
+        if (txtVendorCode.length <= 0) {  // if vendor code avaialbe no needed to check
+            debugger;
+            var someNameAvailable = false;
+            if ((txtFirstName.length > 0) || (txtMiddleName.length > 0) || (txtLastName.length > 0)) {
+                someNameAvailable = true;
+            }
+
+            if (((txtFirstName.length <= 0) && (txtCompanyName.length <= 0)) || ((txtFirstName.length <= 0) && ((txtMiddleName.length > 0) || (txtLastName.length > 0)))) {
+                $("#span_firstName").html('First Name is required.');
+                bool = false;
+            } else {
+                $("#span_firstName").html('');
+            }
+
+
+
+            if ((txtLastName.length <= 0) && ((txtFirstName.length > 0) || (txtMiddleName.length > 0))) {
+                $("#span_lastName").html('Last Name is required.');
+                bool = false;
+            } else {
+                $("#span_lastName").html('');
+            }
+
+            if ((someNameAvailable == false) && (txtCompanyName.length <= 0)) {
+                $("#span_companyName").html('Company Name is required.');
+                bool = false;
+            } else {
+                $("#span_companyName").html('');
+            }
+
+        }
+
+        //if ((txtMiddleName.length <= 0)  && (txtCompanyName.length <= 0))   {
+        //    $("#span_middleName").html('Middle Name is required.');
         //    bool = false;
         //} else {
-        //    $("#txtVendorCode").html('');
+        //    $("#span_middleName").html('');
         //}
-
-        //if (txtPayeeName.length <= 0) {
-        //    $("#span_payeeName").html('Payee Name is required.');
-        //    bool = false;
-        //} else {
-        //    $("#span_payeeName").html('');
-        //}
-        debugger;
-        var someNameAvailable = false;
-        if ((txtFirstName.length > 0) || (txtMiddleName.length > 0) || (txtLastName.length > 0)) {
-            someNameAvailable = true;
-        }
-
-        if (((txtFirstName.length <= 0) && (txtCompanyName.length <= 0)) || ((txtFirstName.length <= 0) && ((txtMiddleName.length > 0) || (txtLastName.length >= 0)) ) ){
-            $("#span_firstName").html('First Name is required.');
-            bool = false;
-        } else {
-            $("#span_firstName").html('');
-        }
-
-        if ((txtMiddleName.length <= 0)  && (txtCompanyName.length <= 0))   {
-            $("#span_middleName").html('Middle Name is required.');
-            bool = false;
-        } else {
-            $("#span_middleName").html('');
-        }
-
-        if  ((txtLastName.length <= 0) &&( (txtFirstName.length > 0) ||  (txtMiddleName.length > 0)) ) {
-            $("#span_lastName").html('Last Name is required.');
-            bool = false;
-        } else {
-            $("#span_lastName").html('');
-        }
-
-        if ( (someNameAvailable == false )&& (txtCompanyName.length <= 0)) {
-            $("#span_companyName").html('Company Name is required.');
-            bool = false;
-        } else {
-            $("#span_companyName").html('');
-        }
-
-
-
         //if (txtAliasDBAName .length <= 0) {
         //    $("#span_aliasDBAName ").html('Alias / DBA Name  is required');
         //    bool = false;
@@ -176,12 +165,12 @@
         //    $("#span_PhoneNumber").html('Phone Number is required.');
         //    bool = false;
         //} else
-        if (!validatePhone(txtPhoneNumber)) {
-            $("#span_PhoneNumber").html('Valid Phone Number is required.');
-            bool = false;
-        } else {
-            $("#span_PhoneNumber").html('');
-        }
+        //if (!validatePhone(txtPhoneNumber)) {
+        //    $("#span_PhoneNumber").html('Valid Phone Number is required.');
+        //    bool = false;
+        //} else {
+        //    $("#span_PhoneNumber").html('');
+        //}
 
         if (!bool) {
             return false;

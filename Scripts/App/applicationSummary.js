@@ -230,13 +230,14 @@
             // for new  display the reject button at top too
             $("#btn_Reject").show();
             $("#div_assignApplication").show();
-            $("#div_processor_review").hide(); //
+            $("#div_processor_review").hide(); 
+            $("#div_supervisor_review_panel").hide();  //  per uat mail on 1/7/2021
 
-            if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
-                //(application is New or Pending  donot show the Approve or Print button)
-                    //$("#btn_reviewPrint").hide();
-                    $("#btn_reviewApprove").hide();
-            }
+            //if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
+            //    //(application is New or Pending  donot show the Approve or Print button)
+            //        //$("#btn_reviewPrint").hide();
+            //        $("#btn_reviewApprove").hide();
+            //}
         }
         else if (data.Status == 21 || data.Status == 22) {  // recommend approve =21 recomment reject 22
             $("#div_assignApplication").show();
