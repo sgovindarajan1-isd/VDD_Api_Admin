@@ -234,11 +234,17 @@ $(document).ready(function () {
         //else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
         //	window.location.href = '/home/dashboard';
         //}
+        //if (GlobalUserHasRoles.DataEntryRole) {
+        //    window.location.href = '/draft/_partialDraftLanding';
+        //}
+        //else if ((GlobalUserHasRoles.ProcessorRole) || (GlobalUserHasRoles.SupervisorRole)) {
+        //    window.location.href = '/home/dashboard';
+        //}
 
-        if (GlobalUserHasRoles.DataEntryRole) {
+        if ((GlobalUserHasRoles.DataEntryRole == true) && (GlobalUserHasRoles.ProcessorRole) == false && (GlobalUserHasRoles.SupervisorRole == false) && (GlobalUserHasRoles.AdminRole == false) ) {
             window.location.href = '/draft/_partialDraftLanding';
         }
-        else if ((GlobalUserHasRoles.ProcessorRole) || (GlobalUserHasRoles.SupervisorRole)) {
+        else {
             window.location.href = '/home/dashboard';
         }
 
