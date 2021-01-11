@@ -16,7 +16,6 @@
     if ($(location).attr('href').indexOf("local") > -1) {
         $("#txtApplicationType").val('1');
         $("#txtVendorCode").val('');
-        //$("#txtPayeeName").val('Payee');
         $("#txtFirstName").val('Firstname');
         $("#txtMiddleName").val('MiddleName');
         $("#txtLastName").val('LastName');
@@ -56,7 +55,7 @@
         });
     };
 
-    $('#id_userName').text(sessionStorage.getItem('userName')); //lbl_userName 
+    $('#id_userName').text(sessionStorage.getItem('userName'));
 
     $("#txtFirstName").focusout(function (e) {
         $("#txtCompanyName").val('');
@@ -116,8 +115,6 @@
                 $("#span_firstName").html('');
             }
 
-
-
             if ((txtLastName.length <= 0) && ((txtFirstName.length > 0) || (txtMiddleName.length > 0))) {
                 $("#span_lastName").html('Last Name is required.');
                 bool = false;
@@ -133,44 +130,6 @@
             }
 
         }
-
-        //if ((txtMiddleName.length <= 0)  && (txtCompanyName.length <= 0))   {
-        //    $("#span_middleName").html('Middle Name is required.');
-        //    bool = false;
-        //} else {
-        //    $("#span_middleName").html('');
-        //}
-        //if (txtAliasDBAName .length <= 0) {
-        //    $("#span_aliasDBAName ").html('Alias / DBA Name  is required');
-        //    bool = false;
-        //} else {
-        //    $("#span_aliasDBAName ").html('');
-        //}
-
-        //if (txtTIN .length <= 0) {
-        //    $("#span_tin").html('Tax Identification Number is required.');
-        //    bool = false;
-        //} else {
-        //    $("#span_tin").html('');
-        //}
-
-        //if (txtCaseNo.length <= 0) {
-        //    $("#span_CaseNo").html('Case No is required.');
-        //    bool = false;
-        //} else {
-        //    $("#span_CaseNo").html('');
-        //}
-
-        //if (txtPhoneNumber.length <= 0) {
-        //    $("#span_PhoneNumber").html('Phone Number is required.');
-        //    bool = false;
-        //} else
-        //if (!validatePhone(txtPhoneNumber)) {
-        //    $("#span_PhoneNumber").html('Valid Phone Number is required.');
-        //    bool = false;
-        //} else {
-        //    $("#span_PhoneNumber").html('');
-        //}
 
         if (!bool) {
             return false;
@@ -195,15 +154,6 @@
         }
 
         if ($("#txtPayeeName").val().trim().length > 0) PayeeName = $("#txtPayeeName").val();
-        //if ($("#txtFirstName").val() FirstName
-        //if ($("#txtMiddleName").val() MiddleName
-        //if ($("#txtLastName").val() LastName
-        //if ($("#txtCompanyName").val() CompanyName
-        //if ($("#txtAliasDBAName").val() AliasDBAName
-        //if ($("#txtTIN").val() TIN
-        //if ($("#txtCaseNo").val() CaseNo
-        //if ($("#txtPhoneNumber").val() PhoneNumber
-
 
         vendordetailsRow.push({
             ApplicationType: $("#txtApplicationType option:selected").text(),

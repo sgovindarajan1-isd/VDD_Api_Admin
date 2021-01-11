@@ -177,20 +177,12 @@
         var status = summaryData.Status;
         var statusDesc = summaryData.StatusDesc;
 
-        if (GlobalUserHasRoles.ProcessorRole)  {
-        //if (role == 11) {   //11	Processor View
-            $("#div_processor_review").show();
-            $("#div_supervisor_review").hide();
-            $("#div_supervisor_proce_review").hide();
 
-            if (status == 2) {  //'pending'   2	Assigned to Processor
-                statusDesc = "(Pending Approval)";
-            }
-            $("#span_processoreview_status").text(statusDesc);
-        }
-        else {          //12	Supervisor View
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole ) {          //12	Supervisor View
             $("#div_supervisor_review").show();
             $("#div_processor_review").hide();
+
+ 
 
 
             if (status == 5) { //|| status == 21 || status == 22) {  //'pending'    // If Pending  no needed to show "Return" button
@@ -200,16 +192,43 @@
             }
 
             if (status == 21 || status == 22) {
-                statusDesc = "(Application Pending)";
+                statusDesc = "(Pending Approval)";
                 $("#div_supervisor_proce_review").show();
-                var msg = summaryData.StatusDesc + " by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
+                var msg = '';
+                if (status == 21)
+                    msg = "Approved" + " by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
+                else
+                    msg = "Rejected" + " by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
+
                 $("#span_review_processor_Approval_msg").text(msg);
                 $("#span_review_processor_notes").text(summaryData.Comment);
+            }
+            else if (status == 23) {
+                //$("#span_supervisor_panel_processorSection_msg").text("Printed by" + summaryData.AssignedByName + " on " + summaryData.AssignmentDate);
+                //$("#span_supervisor_panel_processorSection_notes").text(summaryData.Comment)
+                statusDesc = "(Pending Vendor Confirmation)";
+                $("#div_supervisor_proce_review").show();
+                var msg = "Printed by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
+                $("#span_review_processor_Approval_msg").text(msg);
+                $("#span_review_processor_notes").text(summaryData.Comment);
+
+                $("#div_supervisor_proce_note").hide();  // there is no noted for print status
             }
             else {
                 $("#div_supervisor_proce_review").hide();
             }
             $("#span_suervisorreview_status").text(statusDesc);
+        }
+        else { //if (GlobalUserHasRoles.ProcessorRole)
+            //if (role == 11) {   //11	Processor View
+            $("#div_processor_review").show();
+            $("#div_supervisor_review").hide();
+            $("#div_supervisor_proce_review").hide();
+
+            if (status == 2) {  //'pending'   2	Assigned to Processor
+                statusDesc = "(Pending Approval)";
+            }
+            $("#span_processoreview_status").text(statusDesc);
         }
     }
 

@@ -776,13 +776,27 @@
                             </li>
 
                             <li id="div_supervisor_proce_review" class="list-group-item list-group-item-sm">
+
+                                @*<div class="flex" id="processor_panel_supervisorSection">
+                                    <div class="flex-column-1">
+                                        Processor:
+                                    </div>
+                                    <div class="flex-column-3">
+                                        <span id="span_processor_panel_supervisorSection_msg"></span>
+                                        <div>
+                                            Note: <span id="span_processor_panel_supervisorSection_notes"></span>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+
                                 <div class="flex">
                                     <div class="flex-column-1">
                                         Processor:
                                     </div>
                                     <div class="flex-column-3">
                                         <span id="span_review_processor_Approval_msg"></span>
-                                        <div>
+                                        <div id="div_supervisor_proce_note">
                                             Note: <span id="span_review_processor_notes"></span>
                                         </div>
                                     </div>
@@ -790,6 +804,20 @@
                             </li>
 
                             <li id="div_supervisor_review" class="list-group-item list-group-item-sm">
+
+                                @*<div class="flex" id="supervisor_panel_processorSection">
+                                    <div class="flex-column-1">
+                                        Processor:
+                                    </div>
+                                    <div class="flex-column-3">
+                                        <span id="span_supervisor_panel_processorSection_msg"></span>
+                                        <div>
+                                            Note: <span id="span_supervisor_panel_processorSection_notes"></span>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+
                                 <div class="flex">
                                     <div class="flex-column-1">
                                         Supervisor:
@@ -801,9 +829,9 @@
                                                 <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
                                                 <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#returnApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
                                                 <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-                                              
+
                                                 @*   As per spec  no print button for supervisor view only for Processor view
-                                                    <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>*@
+                        <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>*@
                                             </div>
                                         </div>
                                     </div>
