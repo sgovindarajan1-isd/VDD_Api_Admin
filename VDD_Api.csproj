@@ -354,6 +354,11 @@
     <Compile Include="Models\VM_login.cs" />
     <Compile Include="Models\VM_R_Vend_User.cs" />
     <Compile Include="Models\VM_SourceIPInfo.cs" />
+    <Compile Include="PrintVendorConfirmationDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintVendorConfirmationDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -652,6 +657,17 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\App_Themes\Images\Thumbs.db" />
     <None Include="Connected Services\abaService\abaservice.wsdl" />
+    <Content Include="PrintVendorConfirmationDataSet.xsc">
+      <DependentUpon>PrintVendorConfirmationDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="PrintVendorConfirmationDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PrintVendorConfirmationDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="PrintVendorConfirmationDataSet.xss">
+      <DependentUpon>PrintVendorConfirmationDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -818,6 +834,7 @@
     <WCFMetadataStorage Include="Connected Services\abaService\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="PrintConfirmationLetter.rdlc" />
     <EmbeddedResource Include="VendorAPIAuthorizationForm.rdlc" />
     <EmbeddedResource Include="VendorAuthorizationForm.rdlc" />
   </ItemGroup>

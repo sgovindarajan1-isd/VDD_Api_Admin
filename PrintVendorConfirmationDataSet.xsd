@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="PrintVendorConfirmationDataSet" targetNamespace="http://tempuri.org/PrintVendorConfirmationDataSet.xsd" xmlns:mstns="http://tempuri.org/PrintVendorConfirmationDataSet.xsd" xmlns="http://tempuri.org/PrintVendorConfirmationDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="PrintVendorConfirmationDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="PrintVendorConfirmationDataSet" msprop:Generator_UserDSName="PrintVendorConfirmationDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PrintDataTable" msprop:Generator_TableClassName="PrintDataTableDataTable" msprop:Generator_TableVarName="tablePrintDataTable" msprop:Generator_RowChangedName="PrintDataTableRowChanged" msprop:Generator_TablePropName="PrintDataTable" msprop:Generator_RowDeletingName="PrintDataTableRowDeleting" msprop:Generator_RowChangingName="PrintDataTableRowChanging" msprop:Generator_RowEvHandlerName="PrintDataTableRowChangeEventHandler" msprop:Generator_RowDeletedName="PrintDataTableRowDeleted" msprop:Generator_RowClassName="PrintDataTableRow" msprop:Generator_UserTableName="PrintDataTable" msprop:Generator_RowEvArgName="PrintDataTableRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ConfirmationNumber" msprop:Generator_ColumnVarNameInTable="columnConfirmationNumber" msprop:Generator_ColumnPropNameInRow="ConfirmationNumber" msprop:Generator_ColumnPropNameInTable="ConfirmationNumberColumn" msprop:Generator_UserColumnName="ConfirmationNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="ControlNumber" msprop:Generator_ColumnVarNameInTable="columnControlNumber" msprop:Generator_ColumnPropNameInRow="ControlNumber" msprop:Generator_ColumnPropNameInTable="ControlNumberColumn" msprop:Generator_UserColumnName="ControlNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="PayeeName" msprop:Generator_ColumnVarNameInTable="columnPayeeName" msprop:Generator_ColumnPropNameInRow="PayeeName" msprop:Generator_ColumnPropNameInTable="PayeeNameColumn" msprop:Generator_UserColumnName="PayeeName" type="xs:string" minOccurs="0" />
+              <xs:element name="AddressStreetLine" msprop:Generator_ColumnVarNameInTable="columnAddressStreetLine" msprop:Generator_ColumnPropNameInRow="AddressStreetLine" msprop:Generator_ColumnPropNameInTable="AddressStreetLineColumn" msprop:Generator_UserColumnName="AddressStreetLine" type="xs:string" minOccurs="0" />
+              <xs:element name="CityStateZip" msprop:Generator_ColumnVarNameInTable="columnCityStateZip" msprop:Generator_ColumnPropNameInRow="CityStateZip" msprop:Generator_ColumnPropNameInTable="CityStateZipColumn" msprop:Generator_UserColumnName="CityStateZip" type="xs:string" minOccurs="0" />
+              <xs:element name="SubmitDate" msprop:Generator_ColumnVarNameInTable="columnSubmitDate" msprop:Generator_ColumnPropNameInRow="SubmitDate" msprop:Generator_ColumnPropNameInTable="SubmitDateColumn" msprop:Generator_UserColumnName="SubmitDate" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

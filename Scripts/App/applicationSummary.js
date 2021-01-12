@@ -113,7 +113,7 @@
                 });
 
 
-                if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0)  {
+                if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0) {
                     $("#txtrejectReason").show();
                     $("#select_rejectReason").hide();
                 }
@@ -133,7 +133,7 @@
         var select_rejectReasonCategory = $('#select_rejectReasonCategory').val();
         if (parseInt(select_rejectReasonCategory) != 1) {
 
-            if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0)  {
+            if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0) {
                 $("#txtrejectReason").show();
                 $("#select_rejectReason").hide();
             }
@@ -151,7 +151,7 @@
 
         if (e.relatedTarget.id == "btn_Reject" || e.relatedTarget.id == "btn_reviewReject" || e.relatedTarget.id == "btn_proce_reject") {  // reject
             GetDenialReasonCategoryList();
-            
+
             $("#rejectModalTitle").html("Application Reject");
             $("#rejctreason").show();
             $('#rejctreasonCategory').show();
@@ -178,11 +178,11 @@
         var statusDesc = summaryData.StatusDesc;
 
 
-        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole ) {          //12	Supervisor View
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {          //12	Supervisor View
             $("#div_supervisor_review").show();
             $("#div_processor_review").hide();
 
- 
+
 
 
             if (status == 5) { //|| status == 21 || status == 22) {  //'pending'    // If Pending  no needed to show "Return" button
@@ -249,7 +249,7 @@
             // for new  display the reject button at top too
             $("#btn_Reject").show();
             $("#div_assignApplication").show();
-            $("#div_processor_review").hide(); 
+            $("#div_processor_review").hide();
             $("#div_supervisor_review_panel").hide();  //  per uat mail on 1/7/2021
 
             //if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
@@ -351,7 +351,7 @@
                 ' <div class="flex">' +
                 ' <ul class="noTopMargin flex-column-2">' +
                 ' <li>' +
-                ' <span class="smallRightMargin"><b>' + j + '.</b></span><b>ADDRESS:</b> ' + _address  +
+                ' <span class="smallRightMargin"><b>' + j + '.</b></span><b>ADDRESS:</b> ' + _address +
                 '</li>' +
                 ' <li>' +
                 '<span"><b>CITY:</b></span> ' + _city +
@@ -466,7 +466,7 @@
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
 
         var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
-        var assignedToName = $("#AssignedByName").text(); 
+        var assignedToName = $("#AssignedByName").text();
 
         var status = 21;
 
@@ -484,7 +484,7 @@
         else { //(GlobalUserHasRoles.ProcessorRole) 
             status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
         }
-      
+
 
         UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
     });
@@ -501,7 +501,7 @@
         var status = 22;
 
         //if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
-        if ((reason_category.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
+        if ((reason_category.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0)) {
             $("#spanReasonType").html('Reason required.');
             return;
         }
@@ -534,7 +534,7 @@
             assignedToName = userName;
         }
         else {  //(GlobalUserHasRoles.ProcessorRole)
-                status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
+            status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
         }
 
         UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//   reject  status = 6;
@@ -568,31 +568,102 @@
 
         var processorID = $("#selectProcessorsList option:selected").val();    //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var processorName = $("#selectProcessorsList option:selected").text();
-       // UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
+        // UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
         UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
     });
 
-      $("#btn_proce_print").click(function () {  // processor view
+    $("#btn_proce_print").click(function () {  // processor view
         printButtonClick();
-    });    
+    });
 
     function printButtonClick() {
         var comment = '';
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
 
-        var assignedFromName = $("#AssignedProcessorName").text();   
+        var assignedFromName = $("#AssignedProcessorName").text();
         var assignedToName = $("#AssignedByName").text();
 
         var status = 23; //	Pending Vendor Confirmation
 
         if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
             assignedTo = assignedFrom;  //If supervisor "print" then  assigned to supervisor himself else if Processor Print then send to to supervisor
-            assignedToName = assignedFromName;  
+            assignedToName = assignedFromName;
         }
 
-        UpdateApplicationStatus(status, '', "send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);
+        debugger;
+
+        UpdateApplicationStatus(status, '', "Send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);
+
+        var vendorDetails = {};
+        vendorDetails.Confirmation = confirmationNum;
+        vendorDetails.PayeeName = $("#PayeeName").text();
+
+        var venDetails = JSON.stringify(vendorDetails);
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            url: "/../api/values/PrintVendorConfirmationLetter/",
+            dataType: 'json',
+            data: venDetails,
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')  // This method can be called before login,  so there wont be any security token created,  hense this by pass
+            },
+            success: function (data) {
+                debugger;
+                sessionStorage.setItem('PrintConfirmationLetter', data.data.VendorReportFileName);
+
+                uploadprintVendorconfDoctoRepository(confirmationNum, data.data.VendorReportFileName, 7);  // Vendor Confirmation Letter = 7
+
+                var url = "/Uploads/" + data.data.VendorReportFileName;
+                window.open(url, '_blank');
+
+            }
+            , complete: function (jqXHR) {
+            }
+            , error: function (jqXHR, textStatus, errorThrown) {
+                debugger;
+                if (textStatus == 'error') {
+                    toastr.options.positionClass = "toast-bottom-right";
+                    toastr.warning("Error in Generating Print confirmation letter, Please check the entry!");
+                }
+                else if (jqXHR.status == '401') {
+                    window.location.href = "/Home/UnAuthorized";
+                }
+            }
+        });
+
     };
+
+    function uploadprintVendorconfDoctoRepository(confirmationNum, vendorconfirmationletter, documentAttachmentTypeId) {
+        debugger;
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            url: "/api/values/InsertDocumentAttachment/",
+            dataType: 'json',
+            data: JSON.stringify({
+                'Confirmation': confirmationNum, 'VendorAttachmentFileName': vendorconfirmationletter, 'LastUpdatedUser': userId, 'DocumentAttachmentTypeId': documentAttachmentTypeId
+            }),
+
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            success: function (data) {
+            }
+            , complete: function (jqXHR) {
+            }
+            , error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus == 'error') {
+                    toastr.options.positionClass = "toast-bottom-right";
+                    toastr.warning("Error uploading vendor confirmation letter , Please check!");
+                }
+                else if (jqXHR.status == '401') {
+                    window.location.href = "/Home/UnAuthorized";
+                }
+            }
+        });
+    }
 
 
     function getActualFullDate() {
@@ -663,7 +734,7 @@
                         $("#header_status").text("Approved");
                     }
                 } else if (status == 23) {  // 23	Pending Vendor Confirmation 
-                    $("#header_status").text("Pending Vendor Confirmation");  
+                    $("#header_status").text("Pending Vendor Confirmation");
                 }
 
                 //  Make invisible the tool bar and button after status changes
@@ -725,7 +796,7 @@
         var middleName = $("#txt_pop_MiddleName").val();
         var phoneNumber = $("#txt_pop_PhoneNumber").val();
         var cellPhone = $("#txt_pop_CellPhone").val();
-         var payeeName = $("#txt_pop_PayeeName").val();
+        var payeeName = $("#txt_pop_PayeeName").val();
         var aliasDBA = $("#txt_pop_AliasDBA").val();
         var companyName = $("#txt_pop_CompanyName").val();
         var tin = $("#txt_pop_Tin").val();
@@ -738,7 +809,7 @@
             dataType: 'json',
             data: JSON.stringify({
                 'Confirmation': confirmationNum, 'vendorNumber': vendorNumber, 'firstName': firstName, 'lastName': lastName, 'middleName': middleName, 'phoneNumber': phoneNumber, 'cellPhone': cellPhone
-                , 'payeeName': payeeName  
+                , 'payeeName': payeeName
                 , 'aliasDBA': aliasDBA, 'companyName': companyName, 'TaxpayerID': tin, 'DDnotifyEmail': ddNotify
             }),
 
@@ -955,7 +1026,7 @@
                 var ttime = (today.getHours() > 12) ? (today.getHours() - 12 + ':' + today.getMinutes() + ' PM') : (today.getHours() + ':' + today.getMinutes() + ' AM');
                 var dateTime = tdate + ' ' + ttime;
 
-                
+
                 var a = '<li class="list-group-item list-group-item-warning emptyResultMessage">  <span>' + userName + ' : ' + dateTime + '</span> <br/>  <span style="font-weight:bold; padding-right:10px" >' + '</span >' + notes + '</li> <br>';
                 $("#noteList").prepend(a);
 

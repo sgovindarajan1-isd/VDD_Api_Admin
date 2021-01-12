@@ -76,6 +76,13 @@ namespace eCAPDDApi.Controllers
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+        public string GenerateControlNumber(int length)
+        {
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
         private string getMessageBody(string vendorName, string confirmNumber)
         {
             string emailBody = string.Empty;
@@ -139,6 +146,20 @@ namespace eCAPDDApi.Controllers
             return "Success";
         }
 
+        [HttpPost]
+        public HttpResponseMessage PrintVendorConfirmationLetter([FromBody]DAL.Models.DAL_M_VendorDD vmvendorDD)
+        {
+            var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
+            VendorDAL clsdal = new VendorDAL();
+
+            vmvendorDD.CaseNo = GenerateControlNumber(4);
+            vmvendorDD.VendorReportFileName = vmvendorDD.Confirmation + "_Conf_"+ vmvendorDD.CaseNo + ".pdf";   //uniqueDatetime + ".pdf";
+
+            generatePrintConfirmationLetter(vmvendorDD);
+            response = Request.CreateResponse(HttpStatusCode.OK, new { data = vmvendorDD });
+           
+            return response;
+        }
 
         [HttpPost]
         public HttpResponseMessage SubmitVendorDD([FromBody]DAL.Models.DAL_M_VendorDD vmvendorDD)
@@ -852,8 +873,31 @@ namespace eCAPDDApi.Controllers
             }
             catch (Exception ex)
             {
-                return "error " + ex.Message + " -*- " + rptPathandFileName + " -*- " + rptFileName;
+                return "error " + ex.Message + " -*- " + rptPathandFileName + " -*- " + rptFileName; 
             }
+        }
+
+        public DataTable createPrintConfirmationLetterDataTable(DAL.Models.DAL_M_VendorDD vendordetails)
+        {
+            DataTable dt = new DataTable();
+            dt.Clear();
+            dt.Columns.Add("ConfirmationNumber");
+            dt.Columns.Add("ControlNumber");
+            dt.Columns.Add("PayeeName");
+            dt.Columns.Add("AddressStreetLine");
+            dt.Columns.Add("CityStateZip");
+            dt.Columns.Add("SubmitDate");
+
+            DataRow dr = dt.NewRow();
+            dr["ConfirmationNumber"] = vendordetails.Confirmation;
+            dr["ControlNumber"] = vendordetails.CaseNo;
+            dr["PayeeName"] = vendordetails.Payeename;
+            dr["AddressStreetLine"] = "Test Address Ave";
+            dr["CityStateZip"] = "Test City, CA, 90703";
+            dr["SubmitDate"] = DateTime.Now.ToString("dd/MM/yyyy");
+            
+            dt.Rows.Add(dr);
+            return dt;
         }
 
         public DataTable createVendorDataTable(DAL.Models.DAL_M_VendorDD vendordetails)
@@ -896,8 +940,12 @@ namespace eCAPDDApi.Controllers
             dr["Signerphone"] = vendordetails.Signerphone;
             dr["Signertitle"] = vendordetails.Signertitle;
             dr["VendorAttachmentFileName"] = vendordetails.VendorAttachmentFileName;
-
-            dr["TotalAttachment"] = "Total: 1";
+            if (vendordetails.SubmitFromWhere.ToUpper() == "DRAFT"){
+                dr["TotalAttachment"] = "Total: 2";
+            }
+            else{
+                dr["TotalAttachment"] = "Total: 1";
+            }
            // dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString();
             dr["SubmittedDate"] = "SubmittedDate: " + vendordetails.SubmitDateTime.ToString("g", System.Globalization.CultureInfo.CreateSpecificCulture("en-us"));
 
@@ -1008,6 +1056,42 @@ namespace eCAPDDApi.Controllers
                 viewer.LocalReport.DataSources.Clear();
                 viewer.LocalReport.DataSources.Add(rds);
                 viewer.LocalReport.DataSources.Add(lds);
+
+                string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
+                logw.LogWrite("inside generate vcm sucess file name- " + retFileName);
+                return retFileName; //Json(retFileName);
+            }
+            catch (Exception ex)
+            {
+                logw.LogWrite("inside generate vcm exception- " + ex.Message);
+                return "ERROR - " + ex.Message;
+            }
+        }
+
+
+        private string generatePrintConfirmationLetter(DAL.Models.DAL_M_VendorDD vendordetails)
+        {
+            try
+            {
+                string localPath = AppDomain.CurrentDomain.BaseDirectory;
+                string uploadPath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
+                //  here is the path where  vendorreport file will be saved
+                //string uploadFileName = Path.Combine(Server.MapPath("~/" + uploadPath + "/ "), vendordetails.VendorReportFileName);
+
+                string uploadFileName = localPath + uploadPath + "\\" + vendordetails.VendorReportFileName;
+
+                ReportViewer viewer = new ReportViewer();
+                viewer.ProcessingMode = ProcessingMode.Local;
+                viewer.SizeToReportContent = true;
+                viewer.SizeToReportContent = true;
+                viewer.AsyncRendering = true;
+                viewer.LocalReport.ReportPath = "PrintConfirmationLetter.rdlc";
+
+                DataTable vdt = createPrintConfirmationLetterDataTable(vendordetails);
+                ReportDataSource rds = new ReportDataSource("PrintVendorConfirmationDataSet", vdt);
+
+                viewer.LocalReport.DataSources.Clear();
+                viewer.LocalReport.DataSources.Add(rds);
 
                 string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
                 logw.LogWrite("inside generate vcm sucess file name- " + retFileName);
