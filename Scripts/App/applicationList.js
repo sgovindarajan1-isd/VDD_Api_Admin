@@ -8,6 +8,11 @@
     $("#div_customizeFilter").show();
     $("#btn_customizeFilter").show();
 
+    var reqType = sessionStorage.getItem("sessionfilterReqType");
+    var sessionFilterAge = sessionStorage.getItem("sessionfilterAge");
+
+    //alert('reqType + sessionFilterAge  '+reqType + sessionFilterAge);
+
     if (window.location.href.indexOf('?') > 0) {
         $("#pnl_advanceSearch").show();
         $("#pnl_applicationInfo").hide();
@@ -48,7 +53,6 @@
             }
         });
     });
-    debugger;
     getApplicationCustomFilterList();
 
     //building Side Manage user menu
@@ -56,14 +60,26 @@
 
     debugger;
     // first priority given to click from chart
-    if ((sessionStorage.getItem("fromPendingAssignmentChartClick") != null) && (sessionStorage.getItem("fromPendingAssignmentChartClick") != 'null')) {
-        var ag = sessionStorage.getItem("fromPendingAssignmentChartClick");
-        getApplicationListFilteredByAge(ag);
-    }
+    //if ((sessionStorage.getItem("fromPendingAssignmentChartClick") != null) && (sessionStorage.getItem("fromPendingAssignmentChartClick") != 'null')) {
+    //    var ag = sessionStorage.getItem("fromPendingAssignmentChartClick");
+    //    var reqtype = sessionStorage.getItem("requestType_fromPendingAssignmentChartClick");
 
-    else if ((sessionStorage.getItem("fromPendingMyApprovalChartClick") != null)  && (sessionStorage.getItem("fromPendingMyApprovalChartClick") != 'null')) {
-        var ageMyapprove =  sessionStorage.getItem("fromPendingMyApprovalChartClick")
-        getApplicationListFilteredByAge(ageMyapprove);
+    if (sessionFilterAge != null && sessionFilterAge != 'null') {
+        if ((reqType != null) && (reqType != 'null')) {
+            getApplicationListFilteredByAge_ReqType(sessionFilterAge, reqType);
+        }
+        else {
+            getApplicationListFilteredByAge(sessionFilterAge);
+        }
+    }
+    else if ((sessionStorage.getItem("fromPendingMyApprovalChartClick") != null) && (sessionStorage.getItem("fromPendingMyApprovalChartClick") != 'null')) {
+        var ageMyapprove = sessionStorage.getItem("fromPendingMyApprovalChartClick")
+        if ((reqType != null) && (reqType != 'null')) {
+            getApplicationListFilteredByAge_ReqType(ageMyapprove, reqType);
+        }
+        else {
+            getApplicationListFilteredByAge(ageMyapprove);
+        }
 
         $(".leftNavItem").removeClass('leftNavItemActive');
         $("#sidemenu_PendingMyApproval").addClass('leftNavItemActive');
@@ -76,7 +92,7 @@
     else if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
         getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23');  //  supervisor and adminwill see all the pending  status
     }
-    else if (GlobalUserHasRoles.ProcessorRole) {
+    else { //if (GlobalUserHasRoles.ProcessorRole) {
         $("#sidemenu_PendingAssignment").hide();
         $("#sidemenu_PendingAssignment").addClass('isDisabledApplicationListLink');
         $("#heading_applicationlist").text("Pending My Approval");
@@ -87,21 +103,20 @@
     }
 
     $("#sidemenu_PendingAssignment").click(function () {
-        //$("#sidemenu_PendingMyApproval").removeClass('leftNavItemActive');
-        //$("#sidemenu_PendingAssignment").addClass('leftNavItemActive');
-        $(".leftNavItem").removeClass('leftNavItemActive');
-        $("#sidemenu_PendingAssignment").addClass('leftNavItemActive');
-        $("#heading_applicationlist").text("Application Pending Assignment");
-        $("#div_ageFilter").show();
-        $("#div_customizeFilter").show();
-        $("#btn_customizeFilter").show();
-        setData(pendingAssignList);
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+            $(".leftNavItem").removeClass('leftNavItemActive');
+            $("#sidemenu_PendingAssignment").addClass('leftNavItemActive');
+            $("#heading_applicationlist").text("Application Pending Assignment");
+            $("#div_ageFilter").show();
+            $("#div_customizeFilter").show();
+            $("#btn_customizeFilter").show();
+            setData(pendingAssignList);
+        }
     });
 
     $("#sidemenu_PendingMyApproval").click(function () {
         $(".leftNavItem").removeClass('leftNavItemActive');
         $("#sidemenu_PendingMyApproval").addClass('leftNavItemActive');
-        // $("#sidemenu_PendingAssignment").removeClass('leftNavItemActive');
 
         $("#heading_applicationlist").text("Pending My Approval");
         $("#div_ageFilter").show();
@@ -117,6 +132,10 @@
 
     $("#btn_customizeFilter").click(function () {
         debugger;
+        sessionStorage.removeItem('sessionfilterAge');  // clear the chart click sessions
+        sessionStorage.removeItem('sessionfilterReqType');
+        sessionStorage.removeItem('fromPendingMyApprovalChartClick');
+
         var filterApptype = $("#filterApplicationType  option:selected").text();
         var filterUser = $("#filterUser  option:selected").val();
         var filterStatus = $("#filterStatus  option:selected").text();
@@ -135,7 +154,7 @@
         if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
             getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
         }
-        if (GlobalUserHasRoles.ProcessorRole) {
+        else { //(GlobalUserHasRoles.ProcessorRole) {
             getApplicationDetails(GlobalRoles.ProcessorRole, userId, '2', '', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)
         }
 
@@ -145,44 +164,77 @@
 
     $("#btn_0_15_days").click(function () {
         debugger;
-        getApplicationListFilteredByAge(15);
+        //alert('reqType + sessionFilterAge 15  ' + reqType + sessionFilterAge);
+
+        if ((reqType != null) && (reqType != 'null')) {
+            getApplicationListFilteredByAge_ReqType(15, reqType);
+        }
+        else {
+            getApplicationListFilteredByAge(15);
+        }
+
     });
 
     $("#btn_16_30_days").click(function () {
-        debugger;
-        getApplicationListFilteredByAge(30);
+        //alert('reqType + sessionFilterAge  ' + reqType + sessionFilterAge);
+
+        if ((reqType != null) && (reqType != 'null')) {
+            getApplicationListFilteredByAge_ReqType(30, reqType);
+        }
+        else {
+            getApplicationListFilteredByAge(30);
+        }
     });
 
     $("#btn_31_60_days").click(function () {
-        getApplicationListFilteredByAge(60);
+        //alert('reqType + sessionFilterAge  ' + reqType + sessionFilterAge);
+
+        if ((reqType != null) && (reqType != 'null')) {
+            getApplicationListFilteredByAge_ReqType(60, reqType);
+        }
+        else {
+            getApplicationListFilteredByAge(60);
+        }
     });
 
     $("#btn_60_plus_days").click(function () {
-        getApplicationListFilteredByAge(61);
+        //alert('reqType + sessionFilterAge  ' + reqType + sessionFilterAge);
+
+        if ((reqType != null) && (reqType != 'null')) {
+            getApplicationListFilteredByAge_ReqType(61, reqType);
+        }
+        else {
+            getApplicationListFilteredByAge(61);
+        }
     });
 
     function getApplicationListFilteredByAge(age) {
-        // Default view for Supervisor
-        //if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-        //    getApplicationDetails(12, userId, '5', '21,22,23', age,'','','');  //  supervisor will see all the pending  status
-        //}
-
-        //// Default view For Processor
-        //if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
-        //    getApplicationDetails(11, userId, '2', '', age,'','','');  //  Processor will see only  My pending approval  ( not the application pending assignment)
-        //}
         debugger;
-        sessionStorage.setItem("fromPendingAssignmentChartClick", null);
-        sessionStorage.setItem("fromPendingMyApprovalChartClick", null);
-
         if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
             getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23', age, '', '', '');
         }
-        if (GlobalUserHasRoles.ProcessorRole) {
+        else { //if (GlobalUserHasRoles.ProcessorRole) {
             $("#div_application_PendingAssignment").remove();
             getApplicationDetails(GlobalRoles.ProcessorRole, userId, '2', '', age, '', '', '');
         }
     };
+
+
+    //function getApplicationDetails(roleId, userID, pendingAssignmentStatus, myapprovalStatus, filterAge, filterApptype, filterUser, filterStatus) {
+    function getApplicationListFilteredByAge_ReqType(age, reqtype) {
+        debugger;
+        //sessionStorage.setItem("sessionfilterAge", null);
+        //sessionStorage.setItem("fromPendingMyApprovalChartClick", null);
+
+        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
+            getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23', age, reqtype, '', '');
+        }
+        else { // if (GlobalUserHasRoles.ProcessorRole) {
+            $("#div_application_PendingAssignment").remove();
+            getApplicationDetails(GlobalRoles.ProcessorRole, userId, '2', '', age, reqtype, '', '');
+        }
+    };
+
 
     $('#ddGrid').on('click', 'tbody tr', function () {
         sessionStorage.setItem('selectedConfirmationNumber', $('#ddGrid').DataTable().row(this).data().ConfirmationNum);

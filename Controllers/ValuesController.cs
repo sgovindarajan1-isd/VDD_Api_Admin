@@ -392,6 +392,22 @@ namespace eCAPDDApi.Controllers
         }
 
         [HttpPost]
+        public HttpResponseMessage GetAppliationAgeAssignedByRequestType([FromBody] VM_AdminUser VM_adminUser)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+
+            var dt = adminDAL.GetAppliationAgeAssignedByRequestType(VM_adminUser.RoleId, VM_adminUser.UserId, VM_adminUser.Status, VM_adminUser.Age1, VM_adminUser.Age2, VM_adminUser.Age3, VM_adminUser.FilterApptype);
+            var data = new
+            {
+                appliationAgeAssignedList = dt.Item1,
+                totalApplicationCount = dt.Item2,
+                totalApplicationCountOver60 = dt.Item3,
+            };
+            var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
+            return response;
+        }
+
+        [HttpPost]
         public HttpResponseMessage GetApplicationSummary([FromBody] IdTextClass idTextClass)
         {
             AdminDAL adminDAL = new AdminDAL();

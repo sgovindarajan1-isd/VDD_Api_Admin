@@ -237,6 +237,8 @@ namespace DAL
             return lst_DAL_M_AttachmentData;
         }
 
+
+        //  previously  used to consolidate the  all the request type, not used now
         public Tuple<List<DAL_M_ApplicationList>, int, int> GetAppliationAgeAssigned(int roleId, string userId, string status, string age1, string age2, string age3)
         {
             List<DAL_M_ApplicationList> lst_DAL_M_ApplicationList = new List<DAL_M_ApplicationList>();
@@ -281,6 +283,54 @@ namespace DAL
             }
             return new Tuple<List<DAL_M_ApplicationList>, int, int>(lst_DAL_M_ApplicationList, totalApplicationCount, totalApplicationCountOver60);
         }
+
+        //  New one created on 1/10/2021  used to seperate the listing by each request type
+        public Tuple<List<DAL_M_ApplicationList>, int, int> GetAppliationAgeAssignedByRequestType(int roleId, string userId, string status, string age1, string age2, string age3, string requestType)
+        {
+            List<DAL_M_ApplicationList> lst_DAL_M_ApplicationList = new List<DAL_M_ApplicationList>();
+            int totalApplicationCount = 0;
+            int totalApplicationCountOver60 = 0;
+            try
+            {
+                DataSet ds = new DataSet("ApplicateList");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetAppliationAgeAssignedByRequestType", con);
+                    sqlComm.Parameters.AddWithValue("@RoleId", roleId);
+                    sqlComm.Parameters.AddWithValue("@UserId", userId);
+                    sqlComm.Parameters.AddWithValue("@StatusCode", status);
+                    sqlComm.Parameters.AddWithValue("@ageOption1", age1);
+                    sqlComm.Parameters.AddWithValue("@ageOption2", age2);
+                    sqlComm.Parameters.AddWithValue("@ageOption3", age3);
+                    sqlComm.Parameters.AddWithValue("@RequestType", requestType);
+
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                    {
+                        DAL_M_ApplicationList v = new DAL_M_ApplicationList();
+                        v.Age = ds.Tables[0].Rows[i]["Days"].ToString();
+                        v.AgeCount = ds.Tables[0].Rows[i]["Application Count"].ToString();
+                        totalApplicationCount += int.Parse(v.AgeCount);
+                        if (v.Age.Trim().ToLower() == "60+")
+                        {
+                            totalApplicationCountOver60 = int.Parse(v.AgeCount);
+                        }
+                        lst_DAL_M_ApplicationList.Add(v);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("Error in GetAppliationAgeAssignedByRequestType.  Message: " + ex.Message);
+            }
+            return new Tuple<List<DAL_M_ApplicationList>, int, int>(lst_DAL_M_ApplicationList, totalApplicationCount, totalApplicationCountOver60);
+        }
+
 
         public DAL_M_VendorDD GetApplicationSummary(string confirmationNumber)
         {

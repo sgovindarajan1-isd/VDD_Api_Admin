@@ -191,8 +191,19 @@ $(document).ready(function () {
     // ***********  Menu Building  ******************
 
     $("#menu_applicatoinList").click(function () {
+
+        //clear the Application list search sessions;
+        clearApplicationlist_search_sessions();
+
         window.location.href = '/applicationList/applicationList';
     });
+
+    function clearApplicationlist_search_sessions() {
+        sessionStorage.removeItem('sessionfilterAge');
+        sessionStorage.removeItem('sessionfilterReqType');
+        sessionStorage.removeItem('fromPendingMyApprovalChartClick');
+    }
+
 
 
     //  focus out and advance search click code here
