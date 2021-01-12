@@ -97,8 +97,8 @@ input[type=checkbox] {
 .buttonBig {
     width: 260px !important;
     height: 160px !important;
-    background-color: #7030A0 /
-    
+    background-color: #7030A0;
+    cursor:pointer !important;    
 }
 
 .buttonBig:hover {

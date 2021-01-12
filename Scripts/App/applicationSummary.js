@@ -3,6 +3,7 @@
     var userId = sessionStorage.getItem('UserId');
     var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
     var role = sessionStorage.getItem('RoleId');
+    var countHowManytimesAppReturns = 0;  //  used to for reveiw panel  display incase of application returned back to processor
 
     // default
     $("#btn_Reject").hide();
@@ -182,15 +183,11 @@
             $("#div_supervisor_review").show();
             $("#div_processor_review").hide();
 
-
-
-
             if (status == 5) { //|| status == 21 || status == 22) {  //'pending'    // If Pending  no needed to show "Return" button
                 statusDesc = "(Application Pending)";
                 $("#btn_reviewReturn").hide();
                 //$("#btn_reviewReject").hide();
             }
-
             if (status == 21 || status == 22) {
                 statusDesc = "(Pending Approval)";
                 $("#div_supervisor_proce_review").show();
@@ -220,10 +217,23 @@
             $("#span_suervisorreview_status").text(statusDesc);
         }
         else { //if (GlobalUserHasRoles.ProcessorRole)
-            //if (role == 11) {   //11	Processor View
+            if ((status == 2) && (countHowManytimesAppReturns > 2)) {
+                $("#div_supervisor_proce_review").show();
+                var msg = '';
+                msg = "Sent Back" + " by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
+
+                $("#span_review_processor_Approval_msg").text(msg);
+                $("#span_review_processor_notes").text(summaryData.Comment);
+                $("#div_supervisor_proce_review").show();
+                $("#div_super_panel_processor_lbl").text("Supervisor:");
+            }else
+            {
+                $("#div_supervisor_proce_review").hide();
+            }
             $("#div_processor_review").show();
             $("#div_supervisor_review").hide();
-            $("#div_supervisor_proce_review").hide();
+            
+
 
             if (status == 2) {  //'pending'   2	Assigned to Processor
                 statusDesc = "(Pending Approval)";
@@ -378,6 +388,8 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
+                countHowManytimesAppReturns = data.data.returnValue.length;
+
                 for (var item in data.data.returnValue) {
 
                     var a = '<div> <span style="font-weight:bold; padding-right:10px" >' + '</span >' + data.data.returnValue[item].TimeLineMessage + '</div>';
