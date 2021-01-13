@@ -256,7 +256,7 @@
     };
 
     $('#input_attachment_ddwetform').change(function (e) {
-        var ext = ['.PDF', '.DOC', '.DOCX', '.JPG', '.JPEG', '.GIF', '.PNG'];
+        var ext = ['.PDF', '.JPG', '.JPEG', '.GIF', '.PNG'];  // '.DOC', '.DOCX',
         sessionStorage.setItem('displaywetForm', 'Original Direct Deposit Request Form');
         $("#fileError_or_Info_ddwetform").html("");
         var fileName = e.target.files[0].name;
@@ -270,7 +270,7 @@
                 $("#fileError_or_Info_ddwetform").html('The file size is too large. Please choose another file.');
             }
             else if (fileExtenstion == null)
-                $("#fileError_or_Info_ddwetform").html('The acceptable file types are .pdf, .doc, .docx, .jpg, .jpeg, .gif, .png. Please choose another file.');
+                $("#fileError_or_Info_ddwetform").html('The acceptable file types are .pdf, .jpg, .jpeg, .gif, .png. Please choose another file.');  //.doc, .docx,
             else {
                 sessionStorage.setItem('selectedFile_ddwetform', imagefile);  //  if sessionstorage 'uploadedfile'  works delete this key
 
@@ -292,7 +292,7 @@
 
     // $('input[type="file"]').change(function (e) {
     $('#input_attachment').change(function (e) {
-        var ext = ['.PDF', '.DOC', '.DOCX', '.JPG', '.JPEG', '.GIF', '.PNG'];
+        var ext = ['.PDF', '.JPG', '.JPEG', '.GIF', '.PNG'];  //'.DOC', '.DOCX'
         $("#fileError_or_Info").html("");
         var fileName = e.target.files[0].name;
         var file = e.target.files[0];
@@ -304,7 +304,7 @@
                 $("#fileError_or_Info").html('The file size is too large. Please choose another file.');
             }
             else if (fileExtenstion == null)
-                $("#fileError_or_Info").html('The acceptable file types are .pdf, .doc, .docx, .jpg, .jpeg, .gif, .png. Please choose another file.');
+                $("#fileError_or_Info").html('The acceptable file types are .pdf, .jpg, .jpeg, .gif, .png. Please choose another file.');  // .doc, .docx,
             else {
                 sessionStorage.setItem('selectedFile', imagefile);  //  if sessionstorage 'uploadedfile'  works delete this key
 

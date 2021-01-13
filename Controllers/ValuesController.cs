@@ -940,7 +940,7 @@ namespace eCAPDDApi.Controllers
             dr["Signerphone"] = vendordetails.Signerphone;
             dr["Signertitle"] = vendordetails.Signertitle;
             dr["VendorAttachmentFileName"] = vendordetails.VendorAttachmentFileName;
-            if (vendordetails.SubmitFromWhere.ToUpper() == "DRAFT"){
+            if ( (vendordetails.SubmitFromWhere != null) && (vendordetails.SubmitFromWhere.ToUpper() == "DRAFT") ){
                 dr["TotalAttachment"] = "Total: 2";
             }
             else{

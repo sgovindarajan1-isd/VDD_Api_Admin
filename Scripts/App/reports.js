@@ -327,7 +327,7 @@
 
                         return data;
                     },
-                    "title": "Confirmation #", "width": '52px'
+                    "title": "Confirmation / VCM #", "width": '52px'
                 },
                 { 'data': 'VendorNumber', "title": "Vendor Number" },
                 { 'data': 'VendorName', "title": "Payee Name" },
