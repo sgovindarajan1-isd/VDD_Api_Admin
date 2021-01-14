@@ -12,7 +12,7 @@
         $('#txtBankRoutingNo').val('122000661');
 
         $('#txtDDNotifyEmail').val('ddnotify@isd.com');
-        $('#txtReDDNotifyEmail').val('ddnotify@isd.com');
+        //$('#txtReDDNotifyEmail').val('ddnotify@isd.com');
     }
     // testing values
 
@@ -37,7 +37,7 @@
                 $("#txtBankRoutingNo").val(bankobj[0].BankRoutingNo);
             $("#txtFinancialIns").val(bankobj[0].FinancialIns);
             $("#txtDDNotifyEmail").val(bankobj[0].DDNotifyEmail);
-            $("#txtReDDNotifyEmail").val(bankobj[0].ReDDNotifyEmail);
+            //$("#txtReDDNotifyEmail").val(bankobj[0].ReDDNotifyEmail);
 
             var accountType = $('#txtAccountType').val();
             if (parseInt(accountType) != 1) {
@@ -255,6 +255,14 @@
         }
     };
 
+    $("#btn_uploadWETattachment").on('click', function () {
+        $('#input_attachment_ddwetform').click();
+    });
+
+    $("#btn_upload_attachment").on('click', function () {
+        $('#input_attachment').click();
+    });
+
     $('#input_attachment_ddwetform').change(function (e) {
         var ext = ['.PDF', '.JPG', '.JPEG', '.GIF', '.PNG'];  // '.DOC', '.DOCX',
         sessionStorage.setItem('displaywetForm', 'Original Direct Deposit Request Form');
@@ -371,7 +379,7 @@
         var bankRoutingNo = $('#txtBankRoutingNo').val();
         var financialIns = $('#txtFinancialIns').val().toLowerCase();
         var dDNotifyEmail = $('#txtDDNotifyEmail').val();
-        var reDDNotifyEmail = $('#txtReDDNotifyEmail').val();
+        //var reDDNotifyEmail = $('#txtReDDNotifyEmail').val();
 
         var bool = true;
 
@@ -425,18 +433,18 @@
             $("#dDNotifyEmail").html('');
         }
 
-        if (reDDNotifyEmail.length <= 0) {
-            $("#reDDNotifyEmail").html('Re Enter Email Address is required.');
-            bool = false;
-        } else if (!isEmail(reDDNotifyEmail)) {
-            $("#reDDNotifyEmail").html('Please enter valid Email Address.');
-            bool = false;
-        } else if (dDNotifyEmail !== reDDNotifyEmail) {
-            $("#reDDNotifyEmail").html('Direct Deposit Notification Email Addresses do not match.');
-            bool = false;
-        } else {
-            $("#reDDNotifyEmail").html('');
-        }
+        //if (reDDNotifyEmail.length <= 0) {
+        //    $("#reDDNotifyEmail").html('Re Enter Email Address is required.');
+        //    bool = false;
+        //} else if (!isEmail(reDDNotifyEmail)) {
+        //    $("#reDDNotifyEmail").html('Please enter valid Email Address.');
+        //    bool = false;
+        //} else if (dDNotifyEmail !== reDDNotifyEmail) {
+        //    $("#reDDNotifyEmail").html('Direct Deposit Notification Email Addresses do not match.');
+        //    bool = false;
+        //} else {
+        //    $("#reDDNotifyEmail").html('');
+        //}
 
         if (!bool) {
             return false;
@@ -506,7 +514,7 @@
             BankRoutingNo: $("#txtBankRoutingNo").val(),
             FinancialIns: $("#txtFinancialIns").val(),
             DDNotifyEmail: $("#txtDDNotifyEmail").val(),
-            ReDDNotifyEmail: $("#txtReDDNotifyEmail").val(),
+            //ReDDNotifyEmail: $("#txtReDDNotifyEmail").val(),
             NameonbankAc: pName
         });
         sessionStorage.setItem('bankdetailsJson', JSON.stringify(bankdetailsRow));

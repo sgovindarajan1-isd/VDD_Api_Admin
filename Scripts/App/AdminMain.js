@@ -181,7 +181,7 @@ $(document).ready(function () {
         $('#menu_admin').show();
         $('#menu_reports').show();
     }
-    if (  ((GlobalUserHasRoles.DataEntryRole) || (GlobalUserHasRoles.AdminRole) )  && (!GlobalUserHasRoles.ProcessorRole) && (!GlobalUserHasRoles.SupervisorRole) ) {
+    if (((GlobalUserHasRoles.DataEntryRole))) {// || (GlobalUserHasRoles.AdminRole) )  && (!GlobalUserHasRoles.ProcessorRole) && (!GlobalUserHasRoles.SupervisorRole) ) {
         $('#menu_enterApplication').show();  //  if user has only Dataentry role  and admin role
     }
     else {

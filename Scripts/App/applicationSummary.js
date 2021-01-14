@@ -83,6 +83,9 @@
 
                 var rejectReasonList = $('#select_rejectReason');
                 rejectReasonList.empty();
+
+                rejectReasonList.append($('<option class="dropdown-item1"></option>').val(0).html(''));
+
                 $.each(rrList, function (key, value) {
                     rejectReasonList.append(
                         $('<option class="dropdown-item1"></option>').val(value.DenialReasonId).html(value.DenialReasonText)
@@ -107,6 +110,9 @@
 
                 var rejectReasonCategoryList = $('#select_rejectReasonCategory');
                 rejectReasonCategoryList.empty();
+
+                rejectReasonCategoryList.append($('<option class="dropdown-item1"></option>').val(0).html(''));
+
                 $.each(rrList, function (key, value) {
                     rejectReasonCategoryList.append(
                         $('<option class="dropdown-item1"></option>').val(value.DenialReasonCategoryId).html(value.DenialReasonCategoryText)
@@ -132,7 +138,7 @@
 
     $('#select_rejectReasonCategory').change(function (e) {
         var select_rejectReasonCategory = $('#select_rejectReasonCategory').val();
-        if (parseInt(select_rejectReasonCategory) != 1) {
+       // if (parseInt(select_rejectReasonCategory) != 1) {
 
             if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0) {
                 $("#txtrejectReason").show();
@@ -143,7 +149,7 @@
                 $("#select_rejectReason").show();
                 RetrieveDenialReasonList(select_rejectReasonCategory);
             }
-        }
+       // }
     });
 
 
@@ -282,9 +288,13 @@
 
         $("#lbl_userName").text(userName); //id_userName
 
-        $("#head_confirmationNum").text(data.RequestType + " - " + confirmationNum);
-        $("#header_status").text(data.StatusDesc);
-
+        $("#head_confirmationNum").text((data.RequestType + " - " + confirmationNum).toUpperCase());
+        if (data.Status == 5) { // "pending"
+            $("#header_status").text('New');
+        }
+        else {
+            $("#header_status").text(data.StatusDesc);
+        }
         //side panel
 
         $("#ApplicationType").text(data.RequestType);
@@ -502,6 +512,8 @@
     });
 
     $("#btn_SubmitReject").click(function () {
+        debugger;
+
         var reason_category = $("#select_rejectReasonCategory option:selected").text();
         var reason_type = $("#select_rejectReason option:selected").text();
         var comment = $("#txt_reject_comment").val();
@@ -514,7 +526,7 @@
 
         //if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
         if ((reason_category.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0)) {
-            $("#spanReasonType").html('Reason required.');
+            $("#spanReasonType").html('Reason is required.');
             return;
         }
         else {
@@ -523,7 +535,7 @@
 
         if (reason_category.indexOf('Other') >= 0) {
             if ($("#txtrejectReason").length <= 0) {
-                $("#spanReasonType").html('Reason Type is required.');
+                $("#spanReasonType").html('Reason is required.');
                 return;
             } else {
                 $("#spanReasonType").html('');
@@ -531,7 +543,7 @@
         }
         else {
             if (reason_type.length <= 0) {
-                $("#spanReasonType").html('Reason Type is required.');
+                $("#spanReasonType").html('Reason is required.');
                 return;
             } else {
                 $("#spanReasonType").html('');
@@ -717,7 +729,8 @@
                 $("#AssignedProcessorName").text(assignedToName);
                 $("#AssignedByName").text(assignedFromName);
 
-                $("#ClosedDate").text(getActualFullDate());
+                $("#AssignDate").text(getActualFullDate());
+               // $("#ClosedDate").text(getActualFullDate());
 
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Application " + message);
@@ -729,6 +742,7 @@
                     }
                     else if (status == 6) {
                         $("#header_status").text("Rejected");
+                        $("#ClosedDate").text(getActualFullDate());
                     }
                 }
                 else if (status == 2) {  // assign = 2  
@@ -744,6 +758,7 @@
                     }
                     else if (status == 4) {
                         $("#header_status").text("Approved");
+                        $("#ClosedDate").text(getActualFullDate());
                     }
                 } else if (status == 23) {  // 23	Pending Vendor Confirmation 
                     $("#header_status").text("Pending Vendor Confirmation");
