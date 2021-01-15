@@ -16061,7 +16061,7 @@ div.reviewShaded > div {
     margin: 0 auto;
     left: 0;
     right: 5;
-    top: 40%; /*vdd*/
+    top: 50%; /*vdd*/
     z-index: 1
 }
 

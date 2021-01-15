@@ -423,10 +423,11 @@
             $("#financialIns").html('');
         }
 
-        if (dDNotifyEmail.length <= 0) {
-            $("#dDNotifyEmail").html('Email Address is required.');
-            bool = false;
-        } else if (!isEmail(dDNotifyEmail)) {
+        //if (dDNotifyEmail.length <= 0) {
+        //    $("#dDNotifyEmail").html('Email Address is required.');
+        //    bool = false;
+        //} else
+        if ( (dDNotifyEmail.length > 0) && (!isEmail(dDNotifyEmail))) {
             $("#dDNotifyEmail").html('Please enter valid Email Address.');
             bool = false;
         } else {
