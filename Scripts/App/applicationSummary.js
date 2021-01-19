@@ -225,12 +225,19 @@
                 $("#btn_reviewReject").hide();
                 $("#div_supervisor_proce_review").hide();
 
-                $("#div_supervisor_reason_panel").css("display", "block");
+                // For Approved status Reason label Invisbile
+                if (status == 6) {
+                    //$("#span_supervisor_panel_reason").hide();
+
+
+                    $("#div_supervisor_reason_panel").css("display", "block");
+                    $("#div_supervisor_reason_panel").show();
+                }
+
                 $("#div_supervisor_note_panel").css("display", "block"); 
-                
-                $("#div_supervisor_reason_panel").show();
                 var msg = statusDesc + ' by ' + summaryData.ProcessorName + " on " + summaryData.AssignmentDate;
                 $("#span_suervisorreview_status").text(msg);
+                $("#span_supervisor_panel_reason").text(summaryData.ReasonType);
                 $("#span_supervisor_panel_note").text(summaryData.Comment);
 
                 //$("#div_supervisor_proce_review").show();

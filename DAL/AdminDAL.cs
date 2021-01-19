@@ -411,6 +411,7 @@ namespace DAL
                     reqM.User_agent = ds.Tables[0].Rows[i]["User_agent"].ToString();
 
                     reqM.Comment = ds.Tables[0].Rows[i]["Comment"].ToString();
+                    reqM.ReasonType = ds.Tables[0].Rows[i]["ReasonType"].ToString();
                     ///}
 
                     for (int j = 0; j <= ds.Tables[1].Rows.Count - 1; j++)
