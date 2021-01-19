@@ -63,14 +63,13 @@
                                         <select id="filerAge" style="width: 100% !important" class="chosen-select" data-threshold="10" data-val="true" data-val-number="The field ageID must be a number." data-width="150px" name="ageID">
                                             <option value=""></option>
                                             @*<option value="30">0 - 30</option>
-                                            <option value="60">31 - 60</option>
-                                            <option value="90">61 - 90</option>
-                                            <option value="91">90+</option>*@
-
-                                            <option value="61">60+</option>
-                                            <option value="60">31-60</option>
-                                            <option value="30">16-30</option>
+                                                <option value="60">31 - 60</option>
+                                                <option value="90">61 - 90</option>
+                                                <option value="91">90+</option>*@
                                             <option value="15">0-15</option>
+                                            <option value="30">16-30</option>
+                                            <option value="60">31-60</option>
+                                            <option value="61">60+</option>
 
                                         </select>
                                     </div>
@@ -104,34 +103,34 @@
 
                     <div class="menu claimMenu bhoechie-tab-menu" role="tablist">
                         <div class="list-group">
-                            <a id="sidemenu_applicationLists"class="leftNavItem active leftNavItemActive1 ">Application Lists</a> 
+                            <a id="sidemenu_applicationLists" class="leftNavItem active leftNavItemActive1 ">Application Lists</a>
 
-                            <a id="sidemenu_userProfile"class="leftNavItem" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
+                            <a id="sidemenu_userProfile" class="leftNavItem" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
                                aria-selected="true">User Profile</a>
 
                         </div>
                     </div>
-                        <div class="leftBox1">
-                            <h2>Rights</h2>
+                    <div class="leftBox1">
+                        <h2>Rights</h2>
 
-                            <ul id="ul_roleMenuList" class="bulletList">
-                                @*<li>
-                                        Admin
-                                    </li>
-                                    <li>
-                                        Write
-                                    </li>
-                                    <li>
-                                        Assign
-                                    </li>
-                                    <li>
-                                        Manager Approver
-                                    </li>
-                                    <li>
-                                        Executive Approver
-                                    </li>
-                            </ul>*@
-                        </div>
+                        <ul id="ul_roleMenuList" class="bulletList">
+                            @*<li>
+                                            Admin
+                                        </li>
+                                        <li>
+                                            Write
+                                        </li>
+                                        <li>
+                                            Assign
+                                        </li>
+                                        <li>
+                                            Manager Approver
+                                        </li>
+                                        <li>
+                                            Executive Approver
+                                        </li>
+                                </ul>*@
+                    </div>
                 </div>
             </div>
 
@@ -174,49 +173,49 @@
                     <center>
 
 
-                                <h2>User Profile</h2>
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <div class="subSection">
-                                            <label class="firstLabel" for="firstName">* First Name: </label> 
-                                            <div class="chosen-wrapper">
-                                                <input  readonly="" disabled="" class="form-control" data-val="true" data-val-length="First Name must be less than 50 characters." data-val-length-max="50" 
-                                                        data-val-required="First Name is required." id="txt_firstName" name="firstName" type="text">
-                                                <span class="field-validation-valid text-danger" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="subSection">
-                                            <label class="firstLabel" for="lastName">* Last Name: </label>
-                                            <div class="chosen-wrapper">
-                                                <input  readonly="" disabled="" class="form-control" data-val="true" data-val-length="Last Name must be less than 50 characters." data-val-length-max="50" 
-                                                       data-val-required="Last Name is required." id="txt_lastName" name="lastName" type="text">
-                                                <span class="field-validation-valid text-danger" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="subSection">
-                                            <label class="firstLabel" for="email">* Email Address: </label>
-                                            <div class="chosen-wrapper">
-                                                <input  readonly="" disabled="" class="form-control inputLong" data-val="true" data-val-length="Email must be less than 100 characters." data-val-length-max="100" 
-                                                       data-val-required="Email is required." id="txt_email" name="email" type="text">
-                                                <span class="field-validation-valid text-danger" data-valmsg-for="email" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="subSection">
-                                            <label class="firstLabel" for="phoneNumber">* Phone Number: </label>
-                                            <div class="chosen-wrapper">
-                                                <input class="form-control" data-val="true" data-val-required="Phone Number is required" id="txt_phoneNumber" name="phoneNumber" type="text" >
-                                                <span class="field-validation-valid text-danger" data-valmsg-for="phoneNumber" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <input id="btn_userProfileUpdate" class="btn btn-primary" type="submit" value="Save">
+                        <h2>User Profile</h2>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="subSection">
+                                    <label class="firstLabel" for="firstName">* First Name: </label>
+                                    <div class="chosen-wrapper">
+                                        <input readonly="" disabled="" class="form-control" data-val="true" data-val-length="First Name must be less than 50 characters." data-val-length-max="50"
+                                               data-val-required="First Name is required." id="txt_firstName" name="firstName" type="text">
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
                                     </div>
                                 </div>
-                
+
+                                <div class="subSection">
+                                    <label class="firstLabel" for="lastName">* Last Name: </label>
+                                    <div class="chosen-wrapper">
+                                        <input readonly="" disabled="" class="form-control" data-val="true" data-val-length="Last Name must be less than 50 characters." data-val-length-max="50"
+                                               data-val-required="Last Name is required." id="txt_lastName" name="lastName" type="text">
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+
+                                <div class="subSection">
+                                    <label class="firstLabel" for="email">* Email Address: </label>
+                                    <div class="chosen-wrapper">
+                                        <input readonly="" disabled="" class="form-control inputLong" data-val="true" data-val-length="Email must be less than 100 characters." data-val-length-max="100"
+                                               data-val-required="Email is required." id="txt_email" name="email" type="text">
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="email" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+
+                                <div class="subSection">
+                                    <label class="firstLabel" for="phoneNumber">* Phone Number: </label>
+                                    <div class="chosen-wrapper">
+                                        <input class="form-control" data-val="true" data-val-required="Phone Number is required" id="txt_phoneNumber" name="phoneNumber" type="text">
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="phoneNumber" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <input id="btn_userProfileUpdate" class="btn btn-primary" type="submit" value="Save">
+                            </div>
+                        </div>
+
 
                     </center>
                 </div>
