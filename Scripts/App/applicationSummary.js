@@ -1075,7 +1075,11 @@
 
                 var today = new Date();
                 var tdate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
-                var ttime = (today.getHours() > 12) ? (today.getHours() - 12 + ':' + today.getMinutes() + ' PM') : (today.getHours() + ':' + today.getMinutes() + ' AM');
+
+                var minutes = today.getMinutes();
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+
+                var ttime = (today.getHours() > 12) ? (today.getHours() - 12 + ':' + minutes + ' PM') : (today.getHours() + ':' + minutes + ' AM');
                 var dateTime = tdate + ' ' + ttime;
 
 
