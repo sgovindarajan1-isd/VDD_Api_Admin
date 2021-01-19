@@ -57,7 +57,6 @@ function userHasDataEntryRole(userRoleObj) {
 }
 
 $("#lnkAdvSearch").click(function (e) {
-    debugger;
     if ($("#txt_appSearchNumber").val().length > 0) {
         navigateToSummaryPage();
         return;
@@ -65,8 +64,12 @@ $("#lnkAdvSearch").click(function (e) {
     window.location.href = '/applicationList/advanceSearchList?type=adv';
 });
 
+
+$("#btn_layout_profile").click(function (e) {
+    window.location.href = '/applicationList/ManageUserList?goto=userProfile';
+});
+
 function navigateToSummaryPage() {
-    debugger;
     if ($("#txt_appSearchNumber").val().length <= 0) {
         return;
     } else {
@@ -109,7 +112,6 @@ function navigateToSummaryPage() {
 };
 
 $("#txt_appSearchNumber").focusout(function (e) {
-    debugger;
     navigateToSummaryPage();
     //if ($("#txt_appSearchNumber").val().length <= 0) {
     //    return;
@@ -147,7 +149,6 @@ $(document).ready(function () {
 
     //	}
     //}
-    debugger;
     if (GlobalUserHasRoles.DataEntryRole) {
         //if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
         $('#menu_userName').text(sessionStorage.getItem('userName'));

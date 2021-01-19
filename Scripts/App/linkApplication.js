@@ -6,7 +6,8 @@
         debugger;
         var vendorNumber = sessionStorage.getItem('selectedVendorNumber');
         var bankAccountNumber = sessionStorage.getItem('selectedBankAccountNumber');
-        GetAvailableApplicationLinkByConfirmationNum(confirmationNum, vendorNumber, bankAccountNumber);
+        var nameOnBankAccount = sessionStorage.getItem('selectedNameOnBankAccount');
+        GetAvailableApplicationLinkByConfirmationNum(confirmationNum, vendorNumber, bankAccountNumber, nameOnBankAccount);
         GetAlreadyLinkedApplicationByConfirmationNum(confirmationNum);
 
     });
@@ -123,14 +124,14 @@
         });
     };
 
-    function GetAvailableApplicationLinkByConfirmationNum(confirmationNum, vendorNumber, bankAccountNumber) {
+    function GetAvailableApplicationLinkByConfirmationNum(confirmationNum, vendorNumber, nameOnBankAccount, bankAccountNumber) {
         debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
             dataType: 'json',
             data: JSON.stringify({
-                'Confirmation': confirmationNum, 'VendorNumber': vendorNumber, 'BankAccountNumber': bankAccountNumber  //'Payeename': vendorName,
+                'Confirmation': confirmationNum, 'VendorNumber': vendorNumber, 'BankAccountNumber': bankAccountNumber, 'NameOnBankAccount': nameOnBankAccount,
                 //'Confirmation': '1FEGJF', 'VendorNumber': '505653', 'BankAccountNumber': '66112342'
             }),
             headers: {

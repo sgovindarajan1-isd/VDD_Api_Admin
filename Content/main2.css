@@ -1,3 +1,8 @@
+.advanceSeachInputs {
+    width: 100% !important;
+    height:2.5em;
+}
+
 /* submit page alignment*/
 .submitinput {
     border-color: transparent;

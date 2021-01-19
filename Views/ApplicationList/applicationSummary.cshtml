@@ -823,7 +823,18 @@
                                         Supervisor:
                                     </div>
                                     <div id="div_suervisorreview_status" class="flex-column-3">
-                                        <span id="span_suervisorreview_status"></span>
+
+                                        <div class="flex-column-3">
+                                            <span id="span_suervisorreview_status"></span>
+                                            <div id="div_supervisor_reason_panel" style="display: none">
+                                                Reason: <span id="span_supervisor_panel_reason"></span>
+                                            </div>
+                                            <div id="div_supervisor_note_panel" style="display: none">
+                                                Note: <span id="span_supervisor_panel_note"></span>
+                                            </div>
+                                        </div>
+
+                                        @*<span id="span_suervisorreview_status"></span>*@
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-xs">
                                                 <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
@@ -831,7 +842,7 @@
                                                 <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
 
                                                 @*   As per spec  no print button for supervisor view only for Processor view
-                        <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>*@
+                <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>*@
                                             </div>
                                         </div>
                                     </div>

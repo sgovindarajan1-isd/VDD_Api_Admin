@@ -4861,8 +4861,12 @@ html{
 	position: relative;
 	z-index: 13;
 	font-family: 'Roboto',sans-serif !important
-}a.navLink:hover,.navHover{
-	background-color: #8537c1}#pnlHistory{
+}
+	a.navLink:hover, .navHover {
+		background-color: #8537c1;
+		color: #fff;
+		text-decoration: none;
+	}#pnlHistory{
 	position: relative;
 	background-color: #fff;
 	margin: 0}#lblHistory{
@@ -4890,7 +4894,9 @@ html{
 	display: inline}.search input[type="button"]{
 	line-height: 1em}.searchAddNew{
 	display: inline}.advSearchMenuSpacer{
-	margin-bottom: 15px}.leftNavItem,a.leftNavItem{
+	margin-bottom: 15px;
+	margin-left:.25em
+	                }.leftNavItem,a.leftNavItem{
 	display: block;
 	color: #000;
 	background: #fff;
@@ -4937,8 +4943,8 @@ html{
 .leftBoxMenu {
 	background-color: #fafafa;
 	color: #333;
-	cursor: pointer;   /* dd admin*/
-	padding: 0
+	cursor: pointer; /* dd admin*/
+	padding: 0;
 }.leftBoxMenu h2, h4{
 	margin: .6em .9em}.menu ul,.menu .menuGroup ul{
 	margin: 0}.menu .menuGroup{

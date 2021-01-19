@@ -188,6 +188,7 @@
         if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {          //12	Supervisor View
             $("#div_supervisor_review").show();
             $("#div_processor_review").hide();
+            $("#span_suervisorreview_status").text(statusDesc);
 
             if (status == 5) { //|| status == 21 || status == 22) {  //'pending'    // If Pending  no needed to show "Return" button
                 statusDesc = "(Application Pending)";
@@ -217,10 +218,34 @@
 
                 $("#div_supervisor_proce_note").hide();  // there is no noted for print status
             }
+            else if (status == 4 || status == 6) {  //6	Rejected  // 4 approved
+                $("#btn_reviewApprove").hide();
+                debugger;
+                $("#btn_reviewReturn").hide();
+                $("#btn_reviewReject").hide();
+                $("#div_supervisor_proce_review").hide();
+
+                $("#div_supervisor_reason_panel").css("display", "block");
+                $("#div_supervisor_note_panel").css("display", "block"); 
+                
+                $("#div_supervisor_reason_panel").show();
+                var msg = statusDesc + ' by ' + summaryData.ProcessorName + " on " + summaryData.AssignmentDate;
+                $("#span_suervisorreview_status").text(msg);
+                $("#span_supervisor_panel_note").text(summaryData.Comment);
+
+                //$("#div_supervisor_proce_review").show();
+                //var msg = statusDesc + ' by ' + summaryData.ProcessorName + " on " + summaryData.AssignmentDate;
+                //$("#span_review_processor_Approval_msg").text(msg);
+                //$("#span_review_processor_notes").text(summaryData.Comment);
+
+                //$("#div_supervisor_proce_note").hide();  // there is no noted for print status
+
+            }
             else {
                 $("#div_supervisor_proce_review").hide();
             }
-            $("#span_suervisorreview_status").text(statusDesc);
+
+            
         }
         else { //if (GlobalUserHasRoles.ProcessorRole)
             if ((status == 2) && (countHowManytimesAppReturns > 2)) {
@@ -257,7 +282,7 @@
         if (data.Status == 4 || data.Status == 6) {
             $("#btn_Reject").hide();
             $("#btn_Assign").hide();
-            $("#div_supervisor_review_panel").hide();
+            //$("#div_supervisor_review_panel").hide();
         }
         //
 
@@ -320,6 +345,7 @@
         $("#VI_VendorCode").text(data.VendorNumber);
         sessionStorage.setItem('selectedVendorNumber', data.VendorNumber);  // vendorcode
         sessionStorage.setItem('selectedBankAccountNumber', data.BankAccountNumber);
+        sessionStorage.setItem('selectedNameOnBankAccount', data.NameOnBankAccount);
         $("#Alias_DBA").text(data.AliasDBAName);
         $("#FirstName").text(data.FirstName);
         $("#MiddleName").text(data.MiddleName);
@@ -359,7 +385,6 @@
         $("#DeptContactNumber").text(data.DepartmentContactNo);
         var j = 1;
 
-        debugger;
         $.each(data.LocationAddressList, function (index, value) {
 
             var _address = value.Street;  //"16000 south street";
@@ -482,7 +507,6 @@
     }
 
     $("#btn_SubmitApprove").click(function () {
-        debugger;
         var comment = $("#txt_approve_comment").val();
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
@@ -512,7 +536,6 @@
     });
 
     $("#btn_SubmitReject").click(function () {
-        debugger;
 
         var reason_category = $("#select_rejectReasonCategory option:selected").text();
         var reason_type = $("#select_rejectReason option:selected").text();
@@ -615,8 +638,6 @@
             assignedToName = assignedFromName;
         }
 
-        debugger;
-
         UpdateApplicationStatus(status, '', "Send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);
 
         var vendorDetails = {};
@@ -634,7 +655,6 @@
                 'Authorization': 'Basic ' + btoa('admin')  // This method can be called before login,  so there wont be any security token created,  hense this by pass
             },
             success: function (data) {
-                debugger;
                 sessionStorage.setItem('PrintConfirmationLetter', data.data.VendorReportFileName);
 
                 uploadprintVendorconfDoctoRepository(confirmationNum, data.data.VendorReportFileName, 7);  // Vendor Confirmation Letter = 7
@@ -646,7 +666,6 @@
             , complete: function (jqXHR) {
             }
             , error: function (jqXHR, textStatus, errorThrown) {
-                debugger;
                 if (textStatus == 'error') {
                     toastr.options.positionClass = "toast-bottom-right";
                     toastr.warning("Error in Generating Print confirmation letter, Please check the entry!");
@@ -660,7 +679,6 @@
     };
 
     function uploadprintVendorconfDoctoRepository(confirmationNum, vendorconfirmationletter, documentAttachmentTypeId) {
-        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",

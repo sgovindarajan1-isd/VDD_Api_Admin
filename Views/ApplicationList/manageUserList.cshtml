@@ -60,7 +60,7 @@
                                 <div class="subSection">
                                     <label class="firstLabelLong leftMargin" for="ageID">Application Age: </label>
                                     <div class="chosen-wrapper">
-                                        <select id="filerAge" class="chosen-select" data-threshold="10" data-val="true" data-val-number="The field ageID must be a number." data-width="150px" name="ageID">
+                                        <select id="filerAge" style="width: 100% !important" class="chosen-select" data-threshold="10" data-val="true" data-val-number="The field ageID must be a number." data-width="150px" name="ageID">
                                             <option value=""></option>
                                             @*<option value="30">0 - 30</option>
                                             <option value="60">31 - 60</option>
@@ -104,9 +104,9 @@
 
                     <div class="menu claimMenu bhoechie-tab-menu" role="tablist">
                         <div class="list-group">
-                            <a class="leftNavItem Active leftNavItemActive1">Application Lists</a>
+                            <a id="sidemenu_applicationLists"class="leftNavItem active leftNavItemActive1 ">Application Lists</a> 
 
-                            <a class="leftNavItem" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
+                            <a id="sidemenu_userProfile"class="leftNavItem" href="#div_summary_tab" role="tab" aria-controls="div_summary_tab"
                                aria-selected="true">User Profile</a>
 
                         </div>

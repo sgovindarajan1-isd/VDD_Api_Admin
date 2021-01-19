@@ -5,6 +5,14 @@
     $("#lbl_manageUserUserId").text(userId);
     $('#txt_phoneNumber').mask('(000)000-0000');
 
+    
+    if ($(location).attr('href').indexOf("userProfile") > -1) {
+        $("#sidemenu_userProfile").addClass('active');
+        $("#div_notes_tab").addClass('active');
+
+        $("#sidemenu_applicationLists").removeClass('active');
+        $("#div_summaryContent").removeClass('active');
+    }
 
 
     $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {

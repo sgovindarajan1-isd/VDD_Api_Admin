@@ -1017,6 +1017,7 @@ namespace DAL
                     sqlComm.Parameters.AddWithValue("@VendorCode", dal_M_VendorDD.VendorNumber);
                     //sqlComm.Parameters.AddWithValue("@PayeeName", dal_M_VendorDD.Payeename);
                     sqlComm.Parameters.AddWithValue("@AccountNumber", dal_M_VendorDD.BankAccountNumber);
+                    sqlComm.Parameters.AddWithValue("@NameOnBankAccount", dal_M_VendorDD.NameOnBankAccount);
 
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter da = new SqlDataAdapter();
