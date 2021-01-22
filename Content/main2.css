@@ -2,9 +2,8 @@
     width: 100% !important;
     height:2.5em;
 }
-
 /* submit page alignment*/
-.submitinput {
+    .submitinput {
     border-color: transparent;
     background-color: transparent;
     border-width: 0px;

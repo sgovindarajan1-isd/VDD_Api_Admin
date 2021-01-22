@@ -1,11 +1,16 @@
 ﻿$(document).ready(function () {
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
+
     $("#lbl_userName").text(sessionStorage.getItem('userName'));
     var userId = sessionStorage.getItem('UserId');
     var editData = [];
     $("#lbl_manageUserUserId").text(userId);
     $('#txt_phoneNumber').mask('(000)000-0000');
 
-    
+
     if ($(location).attr('href').indexOf("userProfile") > -1) {
         $("#sidemenu_userProfile").addClass('active');
         $("#div_notes_tab").addClass('active');
@@ -27,7 +32,7 @@
     getManageUserMenuList();
     getApplicationCustomFilterList();
     getUsersRoleList(userId);
-    
+
     $("#tab_Notes").click(function (e) {
         $("#div_notes_tab").removeClass("fade");
         $("#div_notes_tab").addClass("show").addClass("in");
@@ -100,6 +105,26 @@
         var manageUserMenuId = $("#txt_menuIdHidden").val();
         var menuName = $("#txt_menuName").val();
 
+        debugger;
+        if (menuName.length <= 0) {
+            $("#spanmenuName").html('Menu Name required.');
+            return;
+        } else {
+            $("#spanmenuName").html('');
+        }
+
+        var filApplicationType = $('#filterApplicationType').val();
+        var filStatus = $('#filterStatus').val();
+        var filUser = $('#filterUser').val();
+        var filAge = $('#filerAge').val();
+
+        if ((filApplicationType.length <= 0) && (filStatus.length <= 0) && (filUser.length <= 0) && (filAge.length <= 0)) {
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.warning("Please enter atleast one filter.");
+            return;
+        }      
+
+
         var filterApptype = $("#filterApplicationType  option:selected").text();
         var filterUser = $("#filterUser  option:selected").val();
         var filterStatus = $("#filterStatus  option:selected").val();
@@ -166,7 +191,7 @@
 
                         return data;
                     },
-                      
+
                     "title": "Application List"
                 },
                 {
@@ -190,7 +215,7 @@
 
             columnDefs: [
                 {
-                    "targets": [1, 2,3,4,5],  //,2,3,4,5
+                    "targets": [1, 2, 3, 4, 5],  //,2,3,4,5
                     "visible": false,
                     "searchable": false
                 },
@@ -327,7 +352,7 @@
 
     //User profile
 
-    
+
     GetUserProfileByUserId(userId);
     function GetUserProfileByUserId(userId) {
         $.ajax({
@@ -354,7 +379,7 @@
         });
     };
 
-    $("#btn_userProfileUpdate").click(function() {
+    $("#btn_userProfileUpdate").click(function () {
         var uId = sessionStorage.getItem('UserId');
         var phoneNumber = $("#txt_phoneNumber").val();
 

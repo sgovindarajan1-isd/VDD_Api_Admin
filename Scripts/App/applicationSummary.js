@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
+
     var userName = sessionStorage.getItem('userName');
     var userId = sessionStorage.getItem('UserId');
     var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
@@ -184,7 +189,6 @@
         var status = summaryData.Status;
         var statusDesc = summaryData.StatusDesc;
 
-
         if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {          //12	Supervisor View
             $("#div_supervisor_review").show();
             $("#div_processor_review").hide();
@@ -208,8 +212,6 @@
                 $("#span_review_processor_notes").text(summaryData.Comment);
             }
             else if (status == 23) {
-                //$("#span_supervisor_panel_processorSection_msg").text("Printed by" + summaryData.AssignedByName + " on " + summaryData.AssignmentDate);
-                //$("#span_supervisor_panel_processorSection_notes").text(summaryData.Comment)
                 statusDesc = "(Pending Vendor Confirmation)";
                 $("#div_supervisor_proce_review").show();
                 var msg = "Printed by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
@@ -227,9 +229,7 @@
 
                 // For Approved status Reason label Invisbile
                 if (status == 6) {
-                    //$("#span_supervisor_panel_reason").hide();
-
-
+                    $("#div_supervisor_reasoncategory_panel").css("display", "block");
                     $("#div_supervisor_reason_panel").css("display", "block");
                     $("#div_supervisor_reason_panel").show();
                 }
@@ -237,15 +237,9 @@
                 $("#div_supervisor_note_panel").css("display", "block"); 
                 var msg = statusDesc + ' by ' + summaryData.ProcessorName + " on " + summaryData.AssignmentDate;
                 $("#span_suervisorreview_status").text(msg);
+                $("#span_supervisor_panel_reasoncategory").text(summaryData.ReasonCategory);
                 $("#span_supervisor_panel_reason").text(summaryData.ReasonType);
                 $("#span_supervisor_panel_note").text(summaryData.Comment);
-
-                //$("#div_supervisor_proce_review").show();
-                //var msg = statusDesc + ' by ' + summaryData.ProcessorName + " on " + summaryData.AssignmentDate;
-                //$("#span_review_processor_Approval_msg").text(msg);
-                //$("#span_review_processor_notes").text(summaryData.Comment);
-
-                //$("#div_supervisor_proce_note").hide();  // there is no noted for print status
 
             }
             else {
@@ -360,7 +354,7 @@
         $("#PhoneNumber").text(data.PhoneNumber);
         $("#VI_PayeeName").text(data.Vendorname);
         $("#CompanyName").text(data.CompanyName);
-        $("#TaxpayerID").text(data.SSN); // //TaxpayerIDNumber
+        $("#TaxpayerID").text(data.Ssn); // //TaxpayerIDNumber
         $("#DirectDepositNotificationEmail").text(data.DDNotifyEmail);
 
         $("#ClosedDate").text(data.ClosedDate);
@@ -853,6 +847,13 @@
         var companyName = $("#txt_pop_CompanyName").val();
         var tin = $("#txt_pop_Tin").val();
         var ddNotify = $("#txt_pop_DDNotify").val();
+
+        if (vendorNumber.length <= 0){
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.warning("Please enter Vendor code!");
+            return;
+        }
+
 
         $.ajax({
             contentType: 'application/json; charset=utf-8',

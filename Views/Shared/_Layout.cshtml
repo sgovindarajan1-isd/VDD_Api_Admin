@@ -48,7 +48,8 @@
                                 <a id="menu_reports" text="Case List" class="navLink">REPORTS</a>
 
                                 <div id="div_menuUsername" class="search">
-                                    <span id="menu_userName" class="fa fa-expeditedssl fa-right" style="float: right; font-size: 22px;"></span> @*id_userName*@
+                                    @*fa fa-expeditedssl fa-right*@
+                                    <span id="menu_userName" class="navLink" style="cursor: default; float: right;"></span> @*id_userName*@
                                 </div>
                                 <div id="div_advanceSearch" class="search">
                                     <a id="lnkAdvSearch" text="Adv. Search" class="navLink">ADV SEARCH</a>
@@ -169,12 +170,13 @@
 
                     @*Navigation round button end *@
 
-                    <h3 id="lbl_header">
-                        Direct Deposit Management System
-                        <span id="btn_loginLock" class="fa fa-expeditedssl fa-right" style="font-size: 22px;"></span>
+                <h3 id="lbl_header">
+                    Direct Deposit Management System
+                    @*<span id="btn_loginLock" class="fa fa-expeditedssl fa-right" style="font-size: 22px;"></span>*@
 
-                        <span id="lbl_userName" class="fa fa-expeditedssl fa-right" style="float: right; font-size: 22px;"></span> @*id_userName*@
-                    </h3>
+                    @*fa fa-expeditedssl fa-right*@
+                    <span id="lbl_userName" class="" style="float: right; font-size: 22px;"></span> @*id_userName*@
+                </h3>
 
                     <div class="header-line header-line-purple"><span></span></div>
                 </div>
@@ -214,7 +216,6 @@
         <div id="layoutBody" class="row-wrapper layoutBody">
             @RenderBody()
         </div>
-
 
 
         <!--new footer -->

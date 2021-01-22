@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
+
     $("#liNavigation").show();
     $(".round-tab").css("border-color", "#e0e0e0");
 

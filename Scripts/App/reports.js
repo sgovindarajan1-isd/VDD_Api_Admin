@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
+
     debugger;
     $("#divClaimsResults").hide();
     $("#divVCMResults").hide();

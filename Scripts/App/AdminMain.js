@@ -57,6 +57,12 @@ function userHasDataEntryRole(userRoleObj) {
 }
 
 $("#lnkAdvSearch").click(function (e) {
+    // if Session not set then redirect to home page
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
+
     if ($("#txt_appSearchNumber").val().length > 0) {
         navigateToSummaryPage();
         return;
@@ -70,6 +76,12 @@ $("#btn_layout_profile").click(function (e) {
 });
 
 function navigateToSummaryPage() {
+    // if Session not set then redirect to home page
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
+
     if ($("#txt_appSearchNumber").val().length <= 0) {
         return;
     } else {
@@ -192,6 +204,11 @@ $(document).ready(function () {
     // ***********  Menu Building  ******************
 
     $("#menu_applicatoinList").click(function () {
+        // if Session not set then redirect to home page
+        if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+            window.location.href = "/Home/Index";
+            return;
+        }
 
         //clear the Application list search sessions;
         clearApplicationlist_search_sessions();
@@ -205,29 +222,41 @@ $(document).ready(function () {
         sessionStorage.removeItem('fromPendingMyApprovalChartClick');
     }
 
-
-
     //  focus out and advance search click code here
 
     $("#btnAdvanceSearch").click(function () {
         if ($("#txt_appSearchNumber").val().length > 0) {
             navigateToSummaryPage();
             return;
-        }
+        } 
         window.location.href = '/applicationList/advanceSearchList?type=adv';
     });
 
 
     $("#menu_admin").click(function () {
+        // if Session not set then redirect to home page
+        if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+            window.location.href = "/Home/Index";
+        } else
         window.location.href = '/Administration/_partialAdministration';
     });
 
     $("#menu_reports").click(function () {
+        // if Session not set then redirect to home page
+        if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+            window.location.href = "/Home/Index";
+            
+        } else
         window.location.href = '/ApplicationReports/_partialApplicationReports';
     });
 
 
     $("#menu_enterApplication").click(function () {
+        // if Session not set then redirect to home page
+        if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+            window.location.href = "/Home/Index";
+            return;
+        }
         window.location.href = '/draft/_partialVendor';
     });
 
@@ -239,19 +268,10 @@ $(document).ready(function () {
     }
 
     $("#lnkHome").click(function () {
-        //window.location.href = '/home/dashboard';
-        //if (sessionStorage.getItem('RoleId') == GlobalRoles.DataEntryRole) {
-        //	window.location.href = '/draft/_partialDraftLanding';//'/draft/_partialVendor';
-        //}
-        //else if ((sessionStorage.getItem('RoleId') == GlobalRoles.ProcessorRole) || (sessionStorage.getItem('RoleId') == GlobalRoles.SupervisorRole)) {
-        //	window.location.href = '/home/dashboard';
-        //}
-        //if (GlobalUserHasRoles.DataEntryRole) {
-        //    window.location.href = '/draft/_partialDraftLanding';
-        //}
-        //else if ((GlobalUserHasRoles.ProcessorRole) || (GlobalUserHasRoles.SupervisorRole)) {
-        //    window.location.href = '/home/dashboard';
-        //}
+        // if Session not set then redirect to home page
+        if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+            window.location.href = "/Home/Index";
+        }
 
         if ((GlobalUserHasRoles.DataEntryRole == true) && (GlobalUserHasRoles.ProcessorRole) == false && (GlobalUserHasRoles.SupervisorRole == false) && (GlobalUserHasRoles.AdminRole == false) ) {
             window.location.href = '/draft/_partialDraftLanding';
@@ -298,11 +318,9 @@ function IsSessionAlive() {
     });
 }
 
-
 $('#img_username').on('click', function (e) {
     //$('#logoutModal').modal('show');
 });
-
 
 $('.liselect').on('click', function () {
     debugger;

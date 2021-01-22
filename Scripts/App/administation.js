@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
+
     $("#lbl_userName").text(sessionStorage.getItem('userName'));  //id_userName
     var userId = sessionStorage.getItem('UserId');
     getUsersList('ALL');  //  get all the users for grid list

@@ -1,5 +1,9 @@
 ﻿$(document).ready(function () {
-    debugger;
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
+
     $("#menu_TopPanel").show();
     $("#menu_div_TopPanel").show();
     $("#lbl_userName").text(sessionStorage.getItem('userName')); 

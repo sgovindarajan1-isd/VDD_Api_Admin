@@ -38,7 +38,8 @@ namespace DAL.Models
         public string NameOnBankAccount { get; set; }
         public string BankAccountNumber { get; set; }
         public string BankRoutingNo { get; set; }
-        public string FinancialIns { get; set; }
+        public string AttachmentType { get; set; }
+    public string FinancialIns { get; set; }
         public string DDNotifyEmail { get; set; }
 
         public string Signername { get; set; }   //AuthorizedName
@@ -70,6 +71,7 @@ namespace DAL.Models
         public string RequestDate { get; set; }
         public string AuthorizedPhoneExt { get; set; }
         public string Comment { get; set; }
+        public string ReasonCategory { get; set; }
         public string ReasonType{ get; set; }
 
         public string OfficeNotes { get; set; }

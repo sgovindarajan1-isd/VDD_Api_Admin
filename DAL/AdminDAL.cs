@@ -388,6 +388,8 @@ namespace DAL
                     reqM.BankRoutingNo = ds.Tables[0].Rows[i]["BankRountingNumber"].ToString();
                     reqM.BankAccountNumber = ds.Tables[0].Rows[i]["BankAccountNumber"].ToString();
                     reqM.FinancialIns = ds.Tables[0].Rows[i]["FininstName"].ToString();
+                    reqM.AttachmentType = ds.Tables[0].Rows[i]["AttachmentType"].ToString();
+
                     reqM.DDNotifyEmail = ds.Tables[0].Rows[i]["DDNotifyEmail"].ToString();
                     reqM.Status = Int32.Parse(ds.Tables[0].Rows[i]["Status"].ToString());
                     reqM.StatusDesc = ds.Tables[0].Rows[i]["StatusDesc"].ToString();
@@ -411,6 +413,8 @@ namespace DAL
                     reqM.User_agent = ds.Tables[0].Rows[i]["User_agent"].ToString();
 
                     reqM.Comment = ds.Tables[0].Rows[i]["Comment"].ToString();
+                    
+                    reqM.ReasonCategory = ds.Tables[0].Rows[i]["DenialReasonCategoryText"].ToString();
                     reqM.ReasonType = ds.Tables[0].Rows[i]["ReasonType"].ToString();
                     ///}
 

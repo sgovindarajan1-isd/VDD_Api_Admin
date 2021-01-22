@@ -150,35 +150,39 @@
 
         var bool = true;
 
-        if (signerName.length <= 0) {
-            $("#signerName").html('Proxied Signer’s Name is required.');
-            bool = false;
-        } else {
-            $("#signerName").html('');
-        }
+        //if (signerName.length <= 0) {
+        //    $("#signerName").html('Proxied Signer’s Name is required.');
+        //    bool = false;
+        //} else {
+        //    $("#signerName").html('');
+        //}
 
-        if (signerTitle.length <= 0) {
-            $("#signerTitle").html('Proxied Signer’s Title is required.');
-            bool = false;
-        } else {
-            $("#signerTitle").html('');
-        }
-        debugger;
-        if (signerPhone.length <= 0) {
-            $("#signerPhone").html('Proxied Signer’s Phone # is required.');
-            bool = false;
-        } else if (!validatePhone(signerPhone)) {
-            $("#signerPhone").html('Valid Proxied Signer’s Phone # is required.');
+        //if (signerTitle.length <= 0) {
+        //    $("#signerTitle").html('Proxied Signer’s Title is required.');
+        //    bool = false;
+        //} else {
+        //    $("#signerTitle").html('');
+        //}
+        //debugger;
+        //if (signerPhone.length <= 0) {
+        //    $("#signerPhone").html('Proxied Signer’s Phone # is required.');
+        //    bool = false;
+        //} else
+
+        //if (signerEmail.length <= 0) {
+        //    $("#signerEmail").html('Proxied Signer’s Email is required.');
+        //    bool = false;
+        //}
+        //else
+
+        if ( (signerPhone.length > 0) && (!validatePhone(signerPhone))) {
+            $("#signerPhone").html('Valid proxied signer’s phone # is required.');
             bool = false;
         } else {
             $("#signerPhone").html('');
         }
 
-        if (signerEmail.length <= 0) {
-            $("#signerEmail").html('Proxied Signer’s Email is required.');
-            bool = false;
-        }
-        else if (!isEmail(signerEmail)) {
+        if ( (signerEmail.length > 0) && (!isEmail(signerEmail)) ) {
             $("#signerEmail").html('Please enter valid Email address');
             bool = false;
         }

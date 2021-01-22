@@ -222,7 +222,7 @@
                             <div class="readOnlySection">
                                 <span class="displayLabel">Vendor Code: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_VendorCode" maxlength="15" placeholder="Vendor Code" value="" required>
+                                    <input type="text" class="form-control" id="txt_pop_VendorCode" maxlength="15" @*placeholder="Vendor Code"*@>
                                     <span id="vendorcode" class="errmessage" />
                                 </span>
 
@@ -230,7 +230,7 @@
                             <div class="readOnlySection">
                                 <span class="displayLabel">First Name: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_FirstName" placeholder="First Name" value="" required>
+                                    <input type="text" class="form-control" id="txt_pop_FirstName" @*placeholder="First Name"*@   readonly disabled>
                                     <span id="firstName" class="errmessage" />
                                 </span>
 
@@ -238,7 +238,7 @@
                             <div class="readOnlySection">
                                 <span class="displayLabel">Middle Name: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_MiddleName" placeholder="Middle Name">
+                                    <input type="text" class="form-control" id="txt_pop_MiddleName" @*placeholder="Middle Name"*@ readonly disabled>
                                     <span id="middleName" class="errmessage" />
                                 </span>
                             </div>
@@ -246,7 +246,7 @@
                             <div class="readOnlySection">
                                 <span class="displayLabel">Last Name: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_LastName" placeholder="Last Name">
+                                    <input type="text" class="form-control" id="txt_pop_LastName" @*placeholder="Last Name"*@ readonly disabled>
                                     <span id="lastName" class="errmessage" />
                                 </span>
                             </div>
@@ -254,14 +254,14 @@
                             <div class="readOnlySection">
                                 <span class="displayLabel">Phone Number: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_PhoneNumber" placeholder="Phone Number">
+                                    <input type="text" class="form-control" id="txt_pop_PhoneNumber" @*placeholder="Phone Number"*@ readonly disabled>
                                     <span id="phoneNumber" class="errmessage" />
                                 </span>
                             </div>
                             <div class="readOnlySection">
                                 <span class="displayLabel">Cell Phone: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_CellPhone" placeholder="Cell Phone">
+                                    <input type="text" class="form-control" id="txt_pop_CellPhone" @*placeholder="Cell Phone"*@ readonly disabled>
                                     <span id="cellPhone" class="errmessage" />
                                 </span>
                             </div>
@@ -269,14 +269,14 @@
                             <div class="readOnlySection">
                                 <span class="displayLabel">Payee Name: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_PayeeName" placeholder="Payee Name" readonly disabled>
+                                    <input type="text" class="form-control" id="txt_pop_PayeeName" @*placeholder="Payee Name"*@ readonly disabled>
                                     <span id="payeeName" class="errmessage" />
                                 </span>
                             </div>
                             <div class="readOnlySection">
                                 <span class="displayLabel">Company Name: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_CompanyName" placeholder="Company Name">
+                                    <input type="text" class="form-control" id="txt_pop_CompanyName" @*placeholder="Company Name"*@ readonly disabled>
                                     <span id="companyName" class="errmessage" />
                                 </span>
                             </div>
@@ -284,7 +284,7 @@
                             <div class="readOnlySection">
                                 <span class="displayLabel">Alias/DBA: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_AliasDBA" placeholder="Alias/DBA">
+                                    <input type="text" class="form-control" id="txt_pop_AliasDBA" @*placeholder="Alias/DBA"*@ readonly disabled>
                                     <span id="aliasDBA" class="errmessage" />
                                 </span>
                             </div>
@@ -292,14 +292,14 @@
                             <div class="readOnlySection">
                                 <span class="displayLabel">Taxpayer ID Number: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_Tin" placeholder="Taxpayer Id Number">
+                                    <input type="text" class="form-control" id="txt_pop_Tin" readonly disabled>  @*placeholder="Taxpayer Id Number"*@
                                     <span id="tin" class="errmessage" />
                                 </span>
                             </div>
                             <div class="readOnlySection">
                                 <span class="displayLabel">Direct Deposit Notification Email: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_DDNotify" placeholder="Direct Deposit Notification Email">
+                                    <input type="text" class="form-control" id="txt_pop_DDNotify" @*placeholder="Direct Deposit Notification Email"*@ readonly disabled>
                                     <span id="ddNotify" class="errmessage" />
                                 </span>
                             </div>
@@ -826,6 +826,9 @@
 
                                         <div class="flex-column-3">
                                             <span id="span_suervisorreview_status"></span>
+                                            <div id="div_supervisor_reasoncategory_panel" style="display: none">
+                                                Category: <span id="span_supervisor_panel_reasoncategory"></span>
+                                            </div>
                                             <div id="div_supervisor_reason_panel" style="display: none">
                                                 Reason: <span id="span_supervisor_panel_reason"></span>
                                             </div>

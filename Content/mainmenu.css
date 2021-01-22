@@ -4895,7 +4895,8 @@ html{
 	line-height: 1em}.searchAddNew{
 	display: inline}.advSearchMenuSpacer{
 	margin-bottom: 15px;
-	margin-left:.25em
+	margin-left:1em;
+	margin-right:1em;
 	                }.leftNavItem,a.leftNavItem{
 	display: block;
 	color: #000;

@@ -271,19 +271,18 @@ namespace eCAPDDApi.Controllers
 
             gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
             // just to go for demo
-            //////bool bool_isAuthenicated = false;
-            //////if (vm_AdminUser.UserId != string.Empty)
-            //////{
-            //////    //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
-            //////    bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
+            bool bool_isAuthenicated = false;
+            if (vm_AdminUser.UserId != string.Empty)
+            {
+                //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
+                bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
 
-            //////}
+            }
 
-            //////if (!bool_isAuthenicated)
-            //////{
-            //////    return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: User Id and Password not found!" });
-            //////}
-            ///
+            if (!bool_isAuthenicated){
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "Login Failed: User Id and Password not found!" });
+            }
+            
             // just to go for demo  -  end GlobalRoles.DataEntryRole
 
             AdminDAL clsdal = new AdminDAL();

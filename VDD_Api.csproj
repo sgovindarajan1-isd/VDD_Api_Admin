@@ -565,6 +565,7 @@
     <Content Include="Content\DataTable\jquery.dataTables.min.css" />
     <Content Include="Content\DataTable\jquery.dataTables.min-new.css" />
     <Content Include="Content\DataTable\select.dataTables.min.css" />
+    <Content Include="Content\draft-screens.css" />
     <Content Include="Content\ExportToexcel\buttons.dataTables.min.css" />
     <Content Include="Content\ExportToexcel\jquery.dataTables.min.css" />
     <Content Include="Content\images\attachment_step.png" />

@@ -1,0 +1,11 @@
+﻿.btn-group-xs > .btn, .btn-xs {
+    font-size: 13px !important;
+    /*padding: 1px 5px;
+    line-height: 1.5;*/
+    border-radius: 3px;
+}
+
+#txt_appSearchNumber {
+    width: 94%;
+    border-radius: 3px;
+}

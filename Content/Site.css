@@ -1,4 +1,16 @@
-﻿/*spinner start*/
+﻿.btn-continue {
+    color: #fff;
+    background-color: #5cb85c !important;
+    border-color: #4cae4c !important;
+}
+
+.btn-back {
+    color: #333;
+    background-color: #fff;
+    border-color: #808080 !important;
+}
+
+/*spinner start*/
 .loading {
     position: fixed;
     top: 0;
