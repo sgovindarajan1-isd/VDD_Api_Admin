@@ -259,7 +259,7 @@ namespace DAL
                         sqlComm.Parameters.AddWithValue("@LastName", vmvendorDD.LastName);
                         sqlComm.Parameters.AddWithValue("@CompanyName", vmvendorDD.CompanyName);
                         sqlComm.Parameters.AddWithValue("@AliasDBA", vmvendorDD.AliasDBAName);
-                        sqlComm.Parameters.AddWithValue("@TaxpayerID", vmvendorDD.TaxpayerID);
+                        sqlComm.Parameters.AddWithValue("@TaxpayerID", vmvendorDD.Ssn);
                         sqlComm.Parameters.AddWithValue("@CaseNo", vmvendorDD.CaseNo);
                         sqlComm.Parameters.AddWithValue("@PhoneNumber", vmvendorDD.PhoneNumber);
                         sqlComm.Parameters.AddWithValue("@DepartmentName", vmvendorDD.DepartmentName);

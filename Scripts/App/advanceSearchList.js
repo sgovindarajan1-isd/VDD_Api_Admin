@@ -1,4 +1,8 @@
 ﻿$(document).ready(function () {
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
     $("#lbl_userName").text(sessionStorage.getItem('userName'));  //id_userName
     debugger;
     var userId = sessionStorage.getItem('UserId');

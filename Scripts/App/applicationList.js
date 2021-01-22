@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+        window.location.href = "/Home/Index";
+        return;
+    }
+
     $("#lbl_userName").text(sessionStorage.getItem('userName'));  //id_userName
     var pendingAssignList = [];
     var pendingMyApprovalList = [];
@@ -122,6 +127,8 @@
         $("#div_ageFilter").show();
         $("#div_customizeFilter").show();
         $("#btn_customizeFilter").show();
+        getApplicationDetails(GlobalRoles.ProcessorRole, userId, '2', '');  //  Processor will see only  My pending approval  ( not the application pending assignment)
+
 
         setData(pendingMyApprovalList);
     });
