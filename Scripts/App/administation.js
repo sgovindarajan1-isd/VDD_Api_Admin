@@ -4,7 +4,7 @@
         return;
     }
 
-    $("#lbl_userName").text(sessionStorage.getItem('userName'));  //id_userName
+    $("#lbl_userName").text("Logged in as "+ sessionStorage.getItem('userName'));  //id_userName
     var userId = sessionStorage.getItem('UserId');
     getUsersList('ALL');  //  get all the users for grid list
     $('#txt_pop_gcPhoneNumber').mask('(000)000-0000');

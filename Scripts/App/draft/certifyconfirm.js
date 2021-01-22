@@ -1,12 +1,14 @@
 ﻿$(document).ready(function () {
-    debugger;
+    $('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
+    $('#menu_loggedinasUserName').css("display", "block");
+
     var vendorDetails = {};
     var LocationAddressList = new Array();
     var bankDetails = new Array();
     var locationList = new Array();
 
     $("#img_info_step").parent().css("border-color", "#7030A0");
-    $('#lbl_userName').text(sessionStorage.getItem('userName'));
+    $('#lbl_userName').text("Logged in as " + sessionStorage.getItem('userName'));
     var vendorNumber = sessionStorage.getItem('vendorNumber');
 
     $("#liNavigation").show();

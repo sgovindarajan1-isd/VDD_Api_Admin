@@ -8,7 +8,7 @@
     }
 
     if ($(location).attr('href').indexOf("_partialDraftLanding") > -1) {
-        $('#lbl_userName').text(sessionStorage.getItem('userName'));
+        $('#lbl_userName').text("Logged in as " + sessionStorage.getItem('userName'));
         $("#pnl_login_footer").show();
     }
     else {

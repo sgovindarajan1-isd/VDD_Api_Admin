@@ -4,7 +4,7 @@
         return;
     }
 
-    $("#lbl_userName").text(sessionStorage.getItem('userName'));
+    $("#lbl_userName").text("Logged in as " + sessionStorage.getItem('userName'));
     var userId = sessionStorage.getItem('UserId');
     var editData = [];
     $("#lbl_manageUserUserId").text(userId);

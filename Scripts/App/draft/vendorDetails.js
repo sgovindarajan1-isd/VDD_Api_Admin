@@ -3,6 +3,9 @@
         window.location.href = "/Home/Index";
         return;
     }
+   
+    $('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
+    $('#menu_loggedinasUserName').css("display", "block");
 
     $("#liNavigation").show();
     $(".round-tab").css("border-color", "#e0e0e0");

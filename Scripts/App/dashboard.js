@@ -6,7 +6,7 @@
 
     $("#menu_TopPanel").show();
     $("#menu_div_TopPanel").show();
-    $("#lbl_userName").text(sessionStorage.getItem('userName')); 
+    $("#lbl_userName").text("Logged in as " + sessionStorage.getItem('userName')); 
    
     var userId = sessionStorage.getItem('UserId');
     if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {

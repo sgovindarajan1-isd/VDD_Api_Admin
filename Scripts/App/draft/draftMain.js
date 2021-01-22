@@ -2,6 +2,9 @@
 //  Global variables
 var vdd = {};
 
+$('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
+$('#menu_loggedinasUserName').css("display", "block");
+
 /* Intial settings */
 //$(".nav li").removeClass("active");
 $("#btn_loginLock").hide();

@@ -312,7 +312,7 @@
 
         getReviewPanelInformation(data);  //   This section show the and hide the History information.
 
-        $("#lbl_userName").text(userName); //id_userName
+        $("#lbl_userName").text("Logged in as " + userName); //id_userName
 
         $("#head_confirmationNum").text((data.RequestType + " - " + confirmationNum).toUpperCase());
         if (data.Status == 5) { // "pending"

@@ -4,7 +4,7 @@
         return;
     }
 
-    $("#lbl_userName").text(sessionStorage.getItem('userName'));  //id_userName
+    $("#lbl_userName").text("Logged in as " + sessionStorage.getItem('userName'));  //id_userName
     var pendingAssignList = [];
     var pendingMyApprovalList = [];
     var userId = sessionStorage.getItem('UserId');

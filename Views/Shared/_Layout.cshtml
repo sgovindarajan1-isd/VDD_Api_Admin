@@ -66,6 +66,12 @@
                                     </div>
                                     <span class="errmessage" style="font-weight:bold" id="span_invalidAppNum"></span>
                                 </div>
+
+                                <div id="div_menuUsername1" class="search">
+                                    @*fa fa-expeditedssl fa-right*@
+                                    <span id="menu_loggedinasUserName" class="" style="color: #333; display: none; cursor: default; float: right;">Logged in as </span> @*id_userName*@
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -77,7 +83,7 @@
     <div id="wp_content">
 
         <div id="div_spinnerpanel" class="loading1">
-            <div id="div_spinner"class="loader1"></div>
+            <div id="div_spinner" class="loader1"></div>
         </div>
 
 
@@ -170,13 +176,13 @@
 
                     @*Navigation round button end *@
 
-                <h3 id="lbl_header">
-                    Direct Deposit Management System
-                    @*<span id="btn_loginLock" class="fa fa-expeditedssl fa-right" style="font-size: 22px;"></span>*@
+                    <h3 id="lbl_header">
+                        Direct Deposit Management System
+                        @*<span id="btn_loginLock" class="fa fa-expeditedssl fa-right" style="font-size: 22px;"></span>*@
 
-                    @*fa fa-expeditedssl fa-right*@
-                    <span id="lbl_userName" class="" style="float: right; font-size: 22px;"></span> @*id_userName*@
-                </h3>
+                        @*fa fa-expeditedssl fa-right*@
+                            <span id="lbl_userName" class="" style="float: right; font-size: 22px;"></span> @*id_userName*@
+                    </h3>
 
                     <div class="header-line header-line-purple"><span></span></div>
                 </div>
@@ -234,8 +240,8 @@
     </div>  @*wp_content*@
 
     @*@Scripts.Render("~/jsbundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
-   @* <script src="~/Scripts/jquery.mask.min.js"></script>*@
+        @Scripts.Render("~/bundles/bootstrap")*@
+    @* <script src="~/Scripts/jquery.mask.min.js"></script>*@
     @Scripts.Render("~/bundles/vddAdmin");
 
     <script>
