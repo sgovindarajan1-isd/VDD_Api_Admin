@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     debugger;
-    $('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
-    $('#menu_loggedinasUserName').css("display", "block");
+    //$('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
+    //$('#menu_loggedinasUserName').css("display", "block");
 
     $('#liNavigation').show();
     $('#div_enterPaymentInfo').hide();
@@ -16,7 +16,8 @@
     $('#li_infostep').removeClass("disabled");
     $("#img_info_step").parent().css("border-color", "#7030A0");
 
-    $('#lbl_userName').text(sessionStorage.getItem('userName'));
+    //$('#lbl_userName').text(sessionStorage.getItem('userName'));
+    $("#lbl_userName").text("Logged in as " + sessionStorage.getItem('userName')); //id_userName
     var vendorNumber = sessionStorage.getItem('vendorNumber');
     $('#lbl_header').html('Payment Information');
     var paymentSrNumber = 1;

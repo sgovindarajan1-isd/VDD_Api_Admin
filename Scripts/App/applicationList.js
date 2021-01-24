@@ -34,7 +34,6 @@
         var appStatus = $("#advanceSearch_StatusList  option:selected").val();
         var appType = $("#advanceSearch_ApplicationTypeList  option:selected").val();
 
-        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
@@ -94,9 +93,13 @@
         $("#div_customizeFilter").show();
         $("#btn_customizeFilter").show();
     }
+    else if (GlobalUserHasRoles.SupervisorRole && GlobalUserHasRoles.AdminRole && GlobalRoles.ProcessorRole) {
+        getApplicationDetails(99, userId, '2', '21,22,23,2');  //  Processor will see only  My pending approval  ( not the application pending assignment)  --  99  means temp value to tell stored proc  bring all the 21 22 23 and 2
+    }
     else if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
         getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23');  //  supervisor and adminwill see all the pending  status
     }
+ 
     else { //if (GlobalUserHasRoles.ProcessorRole) {
         $("#sidemenu_PendingAssignment").hide();
         $("#sidemenu_PendingAssignment").addClass('isDisabledApplicationListLink');
@@ -127,8 +130,6 @@
         $("#div_ageFilter").show();
         $("#div_customizeFilter").show();
         $("#btn_customizeFilter").show();
-        getApplicationDetails(GlobalRoles.ProcessorRole, userId, '2', '');  //  Processor will see only  My pending approval  ( not the application pending assignment)
-
 
         setData(pendingMyApprovalList);
     });
@@ -138,7 +139,6 @@
     });
 
     $("#btn_customizeFilter").click(function () {
-        debugger;
         sessionStorage.removeItem('sessionfilterAge');  // clear the chart click sessions
         sessionStorage.removeItem('sessionfilterReqType');
         sessionStorage.removeItem('fromPendingMyApprovalChartClick');
@@ -148,17 +148,10 @@
         var filterStatus = $("#filterStatus  option:selected").text();
         var age = $("#filerAge  option:selected").val();
 
-        // Default view for Supervisor
-        //if (sessionStorage.getItem('RoleId') == "12") { //        12	- Supervisor
-        //     getApplicationDetails(12, userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
-        //}
-
-        //// Default view For Processor
-        //if (sessionStorage.getItem('RoleId') == "11") { //        11	- Processor
-        //     getApplicationDetails(11, userId, '2', '', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)
-        // }
-
-        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
+        if (GlobalUserHasRoles.SupervisorRole && GlobalUserHasRoles.AdminRole && GlobalRoles.ProcessorRole) {
+            getApplicationDetails(99, userId, '2', '21,22,23,2', age, filterApptype, filterUser, filterStatus);  //  Processor will see only  My pending approval  ( not the application pending assignment)  --  99  means temp value to tell stored proc  bring all the 21 22 23 and 2
+        }
+        else if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
             getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23', age, filterApptype, filterUser, filterStatus);  //  supervisor will see all the pending  status
         }
         else { //(GlobalUserHasRoles.ProcessorRole) {
@@ -170,7 +163,6 @@
 
 
     $("#btn_0_15_days").click(function () {
-        debugger;
         //alert('reqType + sessionFilterAge 15  ' + reqType + sessionFilterAge);
 
         if ((reqType != null) && (reqType != 'null')) {
@@ -216,8 +208,10 @@
     });
 
     function getApplicationListFilteredByAge(age) {
-        debugger;
-        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
+        if (GlobalUserHasRoles.SupervisorRole && GlobalUserHasRoles.AdminRole && GlobalRoles.ProcessorRole) {
+            getApplicationDetails(99, userId, '2', '21,22,23,2', age, '', '', '');  //  Processor will see only  My pending approval  ( not the application pending assignment)  --  99  means temp value to tell stored proc  bring all the 21 22 23 and 2
+        }
+        else if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
             getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23', age, '', '', '');
         }
         else { //if (GlobalUserHasRoles.ProcessorRole) {
@@ -229,11 +223,10 @@
 
     //function getApplicationDetails(roleId, userID, pendingAssignmentStatus, myapprovalStatus, filterAge, filterApptype, filterUser, filterStatus) {
     function getApplicationListFilteredByAge_ReqType(age, reqtype) {
-        debugger;
-        //sessionStorage.setItem("sessionfilterAge", null);
-        //sessionStorage.setItem("fromPendingMyApprovalChartClick", null);
-
-        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
+        if (GlobalUserHasRoles.SupervisorRole && GlobalUserHasRoles.AdminRole && GlobalRoles.ProcessorRole) {
+            getApplicationDetails(99, userId, '2', '21,22,23,2', age, reqtype, '', '');  //  Processor will see only  My pending approval  ( not the application pending assignment)  --  99  means temp value to tell stored proc  bring all the 21 22 23 and 2
+        }
+        else if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {    //12 - Supervisor
             getApplicationDetails(GlobalRoles.SupervisorRole, userId, '5', '21,22,23', age, reqtype, '', '');
         }
         else { // if (GlobalUserHasRoles.ProcessorRole) {
@@ -252,8 +245,6 @@
         $(".leftNavItem").removeClass('leftNavItemActive');
         $($(this)[0]).addClass('leftNavItemActive');
 
-        debugger;
-        // $("#heading_applicationlist").text($(this)[0].innerHTML);
         $("#heading_applicationlist").text($(this).contents().get(0).nodeValue);
         $("#div_ageFilter").hide();
         $("#div_customizeFilter").hide();
@@ -381,7 +372,7 @@
 
                 pendingAssignList = data.data.pendingAssignmentList;
                 pendingMyApprovalList = data.data.pendingMyApprovalList;
-                if (roleId == 12) {  //  supervisor view
+                if (roleId == 12 || roleId == 99) {  //  supervisor view  // roleid == 99  means user has both supervisor and processor role
                     if ($("#sidemenu_PendingMyApproval").hasClass("leftNavItemActive")) {
                         setData(pendingMyApprovalList);
                     }
@@ -463,7 +454,6 @@
 
 
     function buildManageUserApplicationList(data) {
-        debugger;
         var str = ""
         if (data != null) {
             for (var i = 0; i < data.length; i++) {

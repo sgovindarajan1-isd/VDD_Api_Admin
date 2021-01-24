@@ -4,8 +4,8 @@
         return;
     }
    
-    $('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
-    $('#menu_loggedinasUserName').css("display", "block");
+    //$('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
+    //$('#menu_loggedinasUserName').css("display", "block");
 
     $("#liNavigation").show();
     $(".round-tab").css("border-color", "#e0e0e0");
@@ -17,7 +17,8 @@
     $("#li_vendorstep").addClass("active");
     $("#li_vendorstep").removeClass("disabled");
     $("#img_vendor_step").parent().css("border-color", "#7030A0");
-    $('#lbl_header').html('Vendor Information');
+    $('#lbl_header').text('Vendor Information');
+    $("#lbl_userName").text("Logged in as " + sessionStorage.getItem('userName')); 
     $('#txtPhoneNumber').mask('(000)000-0000');
 
     // testing values

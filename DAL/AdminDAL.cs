@@ -86,7 +86,7 @@ namespace DAL
                     SqlDataAdapter da = new SqlDataAdapter();
                     da.SelectCommand = sqlComm;
                     da.Fill(ds);
-                    if (roleId == 12)  // only for Superuser Role,  Pending Assignment list populated
+                    if (roleId == 12 || roleId == 99)  // only for Superuser Role  or  user has all roles ,  Pending Assignment list populated
                     {
                         for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
                         {
@@ -110,7 +110,7 @@ namespace DAL
                         }
                     }
                     int tableNum = 0;  // for processor  only  one table  ( my pending approval table)
-                    if (roleId == 12)
+                    if (roleId == 12 || roleId == 99)
                     {  // only for Superuser Role,  Pending Assignment list populated
                         tableNum = 1;
                     }

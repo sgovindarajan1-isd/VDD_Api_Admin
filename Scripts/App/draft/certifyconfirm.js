@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    $('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
-    $('#menu_loggedinasUserName').css("display", "block");
+    //$('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
+    //$('#menu_loggedinasUserName').css("display", "block");
 
     var vendorDetails = {};
     var LocationAddressList = new Array();

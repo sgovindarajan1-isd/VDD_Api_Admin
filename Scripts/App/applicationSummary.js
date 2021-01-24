@@ -143,18 +143,18 @@
 
     $('#select_rejectReasonCategory').change(function (e) {
         var select_rejectReasonCategory = $('#select_rejectReasonCategory').val();
-       // if (parseInt(select_rejectReasonCategory) != 1) {
+        // if (parseInt(select_rejectReasonCategory) != 1) {
 
-            if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0) {
-                $("#txtrejectReason").show();
-                $("#select_rejectReason").hide();
-            }
-            else {
-                $("#txtrejectReason").hide();
-                $("#select_rejectReason").show();
-                RetrieveDenialReasonList(select_rejectReasonCategory);
-            }
-       // }
+        if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0) {
+            $("#txtrejectReason").show();
+            $("#select_rejectReason").hide();
+        }
+        else {
+            $("#txtrejectReason").hide();
+            $("#select_rejectReason").show();
+            RetrieveDenialReasonList(select_rejectReasonCategory);
+        }
+        // }
     });
 
 
@@ -194,7 +194,7 @@
             $("#div_processor_review").hide();
             $("#span_suervisorreview_status").text(statusDesc);
 
-            if (status == 5) { //|| status == 21 || status == 22) {  //'pending'    // If Pending  no needed to show "Return" button
+            if (status == 5) {  //'pending'    // If Pending  no needed to show "Return" button
                 statusDesc = "(Application Pending)";
                 $("#btn_reviewReturn").hide();
                 //$("#btn_reviewReject").hide();
@@ -234,19 +234,26 @@
                     $("#div_supervisor_reason_panel").show();
                 }
 
-                $("#div_supervisor_note_panel").css("display", "block"); 
+                $("#div_supervisor_note_panel").css("display", "block");
                 var msg = statusDesc + ' by ' + summaryData.ProcessorName + " on " + summaryData.AssignmentDate;
                 $("#span_suervisorreview_status").text(msg);
                 $("#span_supervisor_panel_reasoncategory").text(summaryData.ReasonCategory);
                 $("#span_supervisor_panel_reason").text(summaryData.ReasonType);
                 $("#span_supervisor_panel_note").text(summaryData.Comment);
 
+            } else if ((status == 2) && (GlobalUserHasRoles.ProcessorRole))  //If user has all the roles then   if supervisor  select the status 2 then processor button needed to show
+            {
+                statusDesc = "(Pending Approval)";
+                $("#span_processoreview_status").text(statusDesc);
+                $("#div_processor_review").show();
+                $("#div_supervisor_review").hide();
+                $("#div_supervisor_proce_review").hide();
             }
             else {
                 $("#div_supervisor_proce_review").hide();
             }
 
-            
+
         }
         else { //if (GlobalUserHasRoles.ProcessorRole)
             if ((status == 2) && (countHowManytimesAppReturns > 2)) {
@@ -258,13 +265,12 @@
                 $("#span_review_processor_notes").text(summaryData.Comment);
                 $("#div_supervisor_proce_review").show();
                 $("#div_super_panel_processor_lbl").text("Supervisor:");
-            }else
-            {
+            } else {
                 $("#div_supervisor_proce_review").hide();
             }
             $("#div_processor_review").show();
             $("#div_supervisor_review").hide();
-            
+
 
 
             if (status == 2) {  //'pending'   2	Assigned to Processor
@@ -517,7 +523,10 @@
 
         var status = 21;
 
-        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+        if (GlobalUserHasRoles.ProcessorRole && $("#header_status").text() == "Processor Review") {   // to do : change to status code from text later) {
+            status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
+        }
+        else { //(GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
             if ($("#VI_VendorCode").text() == '') {
                 $('#approveApplicationModal').modal('hide');
                 toastr.options.positionClass = "toast-bottom-right";
@@ -528,9 +537,7 @@
             assignedTo = assignedFrom;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
             assignedToName = assignedFromName;
         }
-        else { //(GlobalUserHasRoles.ProcessorRole) 
-            status = 21;	//  Recommend Approve  if processor approve  it will be 21 if the Supervisor approve it will be 4
-        }
+
 
 
         UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
@@ -574,15 +581,14 @@
             }
         }
 
-        // if (role == 11)  // processor
-        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+        if (GlobalUserHasRoles.ProcessorRole && $("#header_status").text() == "Processor Review") {   // to do : change to status code from text later
+            status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
+        }
+        else { //(GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
             status = 6
             //assignedTo = userName;  //  final reject  assigned to supervisor him self
             assignedTo = userId;  //  final reject  assigned to supervisor him self
             assignedToName = userName;
-        }
-        else {  //(GlobalUserHasRoles.ProcessorRole)
-            status = 22;	//  Recommend reject  if processor approve  it will be 22 if the Supervisor approve it will be 6
         }
 
         UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//   reject  status = 6;
@@ -749,7 +755,7 @@
                 $("#AssignedByName").text(assignedFromName);
 
                 $("#AssignDate").text(getActualFullDate());
-               // $("#ClosedDate").text(getActualFullDate());
+                // $("#ClosedDate").text(getActualFullDate());
 
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Application " + message);
@@ -848,7 +854,7 @@
         var tin = $("#txt_pop_Tin").val();
         var ddNotify = $("#txt_pop_DDNotify").val();
 
-        if (vendorNumber.length <= 0){
+        if (vendorNumber.length <= 0) {
             toastr.options.positionClass = "toast-bottom-right";
             toastr.warning("Please enter Vendor code!");
             return;

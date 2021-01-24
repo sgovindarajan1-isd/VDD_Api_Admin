@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    $('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
-    $('#menu_loggedinasUserName').css("display", "block");
+    //$('#menu_loggedinasUserName').text("Logged in as " + sessionStorage.getItem('userName'));
+    //$('#menu_loggedinasUserName').css("display", "block");
 
     $("#liNavigation").show();
     $(".round-tab").css("border-color", "#e0e0e0");
@@ -149,7 +149,8 @@
         }
     }
 
-    $('#lbl_userName').text(sessionStorage.getItem('userName'));
+    //$('#lbl_userName').text(sessionStorage.getItem('userName'));
+    $("#lbl_userName").text("Logged in as " + sessionStorage.getItem('userName')); //id_userName
     var vendorNumber = sessionStorage.getItem('vendorNumber');
 
     $('#btn_bank_back').on('click', function (e) {
