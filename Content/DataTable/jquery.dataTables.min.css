@@ -291,7 +291,8 @@ table.dataTable th {
     }
 
         .dataTables_wrapper .dataTables_filter input {
-            margin-left: 0.5em
+            margin-left: 0.5em;
+            margin-bottom: 0.7em
         }
 
     .dataTables_wrapper .dataTables_info {

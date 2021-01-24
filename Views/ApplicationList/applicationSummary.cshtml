@@ -230,7 +230,7 @@
                             <div class="readOnlySection">
                                 <span class="displayLabel">First Name: </span>
                                 <span class="displayValue ">
-                                    <input type="text" class="form-control" id="txt_pop_FirstName" @*placeholder="First Name"*@   readonly disabled>
+                                    <input type="text" class="form-control" id="txt_pop_FirstName" @*placeholder="First Name"*@ readonly disabled>
                                     <span id="firstName" class="errmessage" />
                                 </span>
 
@@ -498,31 +498,6 @@
     </div>
 </div>
 
-@*<div id="div_action" class="pull-right btn-group">
-    <span class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-    <ul class="dropdown-menu context-menu-left-showOnLeft">
-        <li>
-            <a title="Download Document" href="#">
-                <span class="glyphicon glyphicon-download-alt"></span>
-                <span>Download top top </span>
-            </a>
-        </li>
-
-        <li>
-            <a title="Rename File" href="#" onclick="return ShowModal(this);" action-target="#">
-                <span class="glyphicon glyphicon-pencil"></span>
-                Rename
-            </a>
-        </li>
-        <li>
-            <a title="Retire File" href="javascript:void(0);" class="confirmModal" data-action-target="#" data-rowclass="documentRow">
-                <span class="fa fa-trash-o"></span>
-                Retire
-            </a>
-        </li>
-    </ul>
-</div>*@
-
 <div class="container row-wrapper">
 
     <div class="spinner-border text-primary"></div>
@@ -535,7 +510,7 @@
             <div class="leftContent">
                 <div class="leftBox leftBoxMenu bhoechie-tab-container">
                     <h2 id="head_confirmationNum" style="color:purple; ; cursor: default"></h2>
-                    <span  style="cursor: default" ><h4 style="color:#000000;">&nbsp;Status: <font style="font-size:14px; font-weight:bold;"> <span id="header_status"> </span> </font></h4></span>
+                    <span style="cursor: default"><h4 style="color:#000000;">&nbsp;Status: <font style="font-size:14px; font-weight:bold;"> <span id="header_status"> </span> </font></h4></span>
 
                     <div class="menu claimMenu bhoechie-tab-menu" role="tablist">
                         <div class="list-group">
@@ -747,113 +722,83 @@
 
                             @*Direct Deposit Payment Option Selected *@
                         </div>
-                    </div>
 
-                    <div id="div_supervisor_review_panel" class="panel panel-default panel-sm">
-                        <div class="panel-heading">
-                            Review
-                        </div>
+                        <div id="div_supervisor_review_panel" class="panel panel-default panel-sm">
+                            <div class="panel-heading">
+                                Review
+                            </div>
 
-                        <ul class="list-group list-group-sm">
-                            <li id="div_processor_review" class="list-group-item list-group-item-sm">
-                                <div class="flex">
-                                    <div class="flex-column-1">
-                                        Processor:
-                                    </div>
-                                    <div class="flex-column-3">
-                                        @*(Assigned To Processor)*@
-                                        <span id="span_processoreview_status"></span>
-                                        <div class="pull-right">
-                                            <div class="btn-group btn-group-xs">
-                                                <a id="btn_proce_approve" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
-                                                @*data-toggle="modal" data-target="#printApplicationModal"*@
-                                                <a id="btn_proce_print" style="margin:5px;" class="btn btn-danger">&nbsp;Print&nbsp;</a>
-                                                <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-                                            </div>
+                            <ul class="list-group list-group-sm">
+                                <li id="div_processor_review" class="list-group-item list-group-item-sm">
+                                    <div class="flex">
+                                        <div class="flex-column-1">
+                                            Processor:
                                         </div>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li id="div_supervisor_proce_review" class="list-group-item list-group-item-sm">
-
-                                @*<div class="flex" id="processor_panel_supervisorSection">
-                                    <div class="flex-column-1">
-                                        Processor:
-                                    </div>
-                                    <div class="flex-column-3">
-                                        <span id="span_processor_panel_supervisorSection_msg"></span>
-                                        <div>
-                                            Note: <span id="span_processor_panel_supervisorSection_notes"></span>
-                                        </div>
-                                    </div>
-                                </div>*@
-
-
-                                <div class="flex">
-                                    <div id ="div_super_panel_processor_lbl" class="flex-column-1">
-                                        Processor:
-                                    </div>
-                                    <div class="flex-column-3">
-                                        <span id="span_review_processor_Approval_msg"></span>
-                                        <div id="div_supervisor_proce_note">
-                                            Note: <span id="span_review_processor_notes"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li id="div_supervisor_review" class="list-group-item list-group-item-sm">
-
-                                @*<div class="flex" id="supervisor_panel_processorSection">
-                                    <div class="flex-column-1">
-                                        Processor:
-                                    </div>
-                                    <div class="flex-column-3">
-                                        <span id="span_supervisor_panel_processorSection_msg"></span>
-                                        <div>
-                                            Note: <span id="span_supervisor_panel_processorSection_notes"></span>
-                                        </div>
-                                    </div>
-                                </div>*@
-
-
-                                <div class="flex">
-                                    <div class="flex-column-1">
-                                        Supervisor:
-                                    </div>
-                                    <div id="div_suervisorreview_status" class="flex-column-3">
-
                                         <div class="flex-column-3">
-                                            <span id="span_suervisorreview_status"></span>
-                                            <div id="div_supervisor_reasoncategory_panel" style="display: none">
-                                                Category: <span id="span_supervisor_panel_reasoncategory"></span>
-                                            </div>
-                                            <div id="div_supervisor_reason_panel" style="display: none">
-                                                Reason: <span id="span_supervisor_panel_reason"></span>
-                                            </div>
-                                            <div id="div_supervisor_note_panel" style="display: none">
-                                                Note: <span id="span_supervisor_panel_note"></span>
-                                            </div>
-                                        </div>
-
-                                        @*<span id="span_suervisorreview_status"></span>*@
-                                        <div class="pull-right">
-                                            <div class="btn-group btn-group-xs">
-                                                <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
-                                                <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#returnApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
-                                                <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
-
-                                                @*   As per spec  no print button for supervisor view only for Processor view
-                <a id="btn_reviewPrint" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Print&nbsp;&nbsp;</a>*@
+                                            @*(Assigned To Processor)*@
+                                            <span id="span_processoreview_status"></span>
+                                            <div class="pull-right">
+                                                <div class="btn-group btn-group-xs">
+                                                    <a id="btn_proce_approve" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
+                                                    @*data-toggle="modal" data-target="#printApplicationModal"*@
+                                                    <a id="btn_proce_print" style="margin:5px;" class="btn btn-danger">&nbsp;Print&nbsp;</a>
+                                                    <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
 
-                        </ul>
+                                <li id="div_supervisor_proce_review" class="list-group-item list-group-item-sm">
+                                    <div class="flex">
+                                        <div id="div_super_panel_processor_lbl" class="flex-column-1">
+                                            Processor:
+                                        </div>
+                                        <div class="flex-column-3">
+                                            <span id="span_review_processor_Approval_msg"></span>
+                                            <div id="div_supervisor_proce_note">
+                                                Note: <span id="span_review_processor_notes"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li id="div_supervisor_review" class="list-group-item list-group-item-sm">
+                                    <div class="flex">
+                                        <div class="flex-column-1">
+                                            Supervisor:
+                                        </div>
+                                        <div id="div_suervisorreview_status" class="flex-column-3">
+
+                                            <div class="flex-column-3">
+                                                <span id="span_suervisorreview_status"></span>
+                                                <div id="div_supervisor_reasoncategory_panel" style="display: none">
+                                                    Category: <span id="span_supervisor_panel_reasoncategory"></span>
+                                                </div>
+                                                <div id="div_supervisor_reason_panel" style="display: none">
+                                                    Reason: <span id="span_supervisor_panel_reason"></span>
+                                                </div>
+                                                <div id="div_supervisor_note_panel" style="display: none">
+                                                    Note: <span id="span_supervisor_panel_note"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="pull-right">
+                                                <div class="btn-group btn-group-xs">
+                                                    <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
+                                                    <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#returnApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
+                                                    <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
                     </div>
+
+                    @*review panel was here*@
                 </div>
 
                 <div id="div_notes_tab" class="mainBox tab-pane mainContent bhoechie-tab-content" role="tabpanel" aria-labelledby="notes-tab">
