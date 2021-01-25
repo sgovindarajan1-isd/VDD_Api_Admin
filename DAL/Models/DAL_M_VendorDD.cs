@@ -94,6 +94,7 @@ namespace DAL.Models
         public string DepartmentEmail { get; set; }
         public string DepartmentContactNo { get; set; }
         public string ClosedDate { get; set; }
+        public string VCMCreateDate { get; set; }
         public string TaxpayerID { get; set; }
         //
 

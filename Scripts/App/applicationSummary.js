@@ -364,6 +364,7 @@
         $("#DirectDepositNotificationEmail").text(data.DDNotifyEmail);
 
         $("#ClosedDate").text(data.ClosedDate);
+        $("#VCMCreateDate").text(data.VCMCreateDate);
         $("#IPAddress").text(data.Source_IP);
         $("#IPDevice").text(data.Source_Device);
         $("#IPLocation").text(data.Source_Location);

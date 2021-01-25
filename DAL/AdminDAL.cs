@@ -407,6 +407,7 @@ namespace DAL
                     reqM.DepartmentEmail = ds.Tables[0].Rows[i]["DepartmentEmail"].ToString();
                     reqM.DepartmentContactNo = ds.Tables[0].Rows[i]["DepartmentContactNo"].ToString();
                     reqM.ClosedDate = ds.Tables[0].Rows[i]["ClosedDate"].ToString();
+                    reqM.VCMCreateDate = ds.Tables[0].Rows[i]["VCMCreateDate"].ToString();
 
                     reqM.Source_IP = ds.Tables[0].Rows[i]["Source_ip"].ToString();
                     reqM.Source_Device = ds.Tables[0].Rows[i]["Source_device"].ToString();
