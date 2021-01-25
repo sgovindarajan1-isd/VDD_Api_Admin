@@ -21,7 +21,8 @@ namespace DAL
                 DataSet ds = new DataSet("Admin");
                 using (SqlConnection con = DBconnection.Open())
                 {
-                    SqlCommand sqlComm = new SqlCommand("GetRolesAndPermissionsByUserID_test", con);
+                    SqlCommand sqlComm = new SqlCommand("GetRolesAndPermissionsByUserID", con);
+                    //SqlCommand sqlComm = new SqlCommand("GetRolesAndPermissionsByUserID_test", con);
                     sqlComm.Parameters.AddWithValue("@UserId", user_id);
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter da = new SqlDataAdapter();

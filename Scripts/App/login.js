@@ -66,9 +66,10 @@
             },
             success: function (data) {
                 debugger;
-
+                sessionStorage.setItem('UserId', userId);
                 if (data.data.List_userRoles.length > 0) {
                     sessionStorage.setItem('RoleId', data.data.List_userRoles[0].RoleId);
+                    sessionStorage.setItem('userName', data.data.List_userRoles[0].UserName);
                 }
                 if (data.data.List_userRoles.length > 0) {
                     if (data.data.List_userRoles[0].Department == "Auditor-Controller #050") {
@@ -80,8 +81,8 @@
                         sessionStorage.setItem('deptUser', true);
                     }
                 }
-                sessionStorage.setItem('UserId', userId);
-                sessionStorage.setItem('userName', data.data.userProfile_2.displayNameField);
+                
+                //sessionStorage.setItem('userName', data.data.userProfile_2.displayNameField);
                 sessionStorage.setItem('UserRoles', data.data.List_userRoles);  // example  data.data.List_userRoles[0].UserID UserName UserStatus RoleId RoleName PermissionName
                 $("#lbl_userName").text(data.data.userProfile_2.displayNameField); //id_userName
 

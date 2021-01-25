@@ -34,7 +34,7 @@
         $("#span_attachmentstep").removeClass("disabled");
         $("#span_verify_step").removeClass("disabled");
 
-        getuserInfoForProxiedFields();
+        //getuserInfoForProxiedFields();
 
         ////testing values
 
@@ -487,32 +487,32 @@
     /*Submit Section end */
 
     /* certify*/
-    function getuserInfoForProxiedFields() {
-        //$('#txtSignerTitle').val('asdfasdf');
+    //function getuserInfoForProxiedFields() {
+    //    //$('#txtSignerTitle').val('asdfasdf');
 
-        $.ajax({
-            contentType: 'application/json; charset=utf-8',
-            type: "POST",
-            dataType: 'json',
-            data: JSON.stringify({ 'UserId': sessionStorage.getItem('UserId') }),
-            headers: {
-                'Authorization': 'Basic ' + btoa('admin')
-            },
-            url: "/api/values/getUserProfileByUserId/",
-            success: function (data) {
-                debugger;
-                $("#txtSignerName").val(data.data.userProfileList.FirstName + ' ' + data.data.userProfileList.LastName);
-                //$("#txt_lastName").val();
-                $("#txtSignerEmail").val(data.data.userProfileList.Email);
-                $("#txtSignerPhone").val(data.data.userProfileList.PhoneNumber);
-            },
-            error: function (_XMLHttpRequest, textStatus, errorThrown) {
-                if (_XMLHttpRequest.status == '401') {
-                    window.location.href = "/Home/UnAuthorized";
-                }
-            }
-        });
-    }
+    //    $.ajax({
+    //        contentType: 'application/json; charset=utf-8',
+    //        type: "POST",
+    //        dataType: 'json',
+    //        data: JSON.stringify({ 'UserId': sessionStorage.getItem('UserId') }),
+    //        headers: {
+    //            'Authorization': 'Basic ' + btoa('admin')
+    //        },
+    //        url: "/api/values/getUserProfileByUserId/",
+    //        success: function (data) {
+    //            debugger;
+    //            $("#txtSignerName").val(data.data.userProfileList.FirstName + ' ' + data.data.userProfileList.LastName);
+    //            //$("#txt_lastName").val();
+    //            $("#txtSignerEmail").val(data.data.userProfileList.Email);
+    //            $("#txtSignerPhone").val(data.data.userProfileList.PhoneNumber);
+    //        },
+    //        error: function (_XMLHttpRequest, textStatus, errorThrown) {
+    //            if (_XMLHttpRequest.status == '401') {
+    //                window.location.href = "/Home/UnAuthorized";
+    //            }
+    //        }
+    //    });
+    //}
     /**
 
     /*Confirmation Section begin */
