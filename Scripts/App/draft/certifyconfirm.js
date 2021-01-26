@@ -276,13 +276,14 @@
         window.history.back();
     });
     $('#btn_submit_next').on('click', function (e) {
+        $(this).attr("disabled", "disabled");
         var bool = true;
 
         if (!bool) {
             return false;
         }
         else {
-            debugger;
+            debugger;            
             submitDetailstoDB();  // submit/ generate confirmation number
         }
     });
