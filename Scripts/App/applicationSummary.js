@@ -533,6 +533,8 @@
 
         var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedToName = $("#AssignedByName").text();
+        var authorizedSignerEmail = $("#AuthorizedSignerEmail").text();
+        var vendorCode = $("#VI_VendorCode").text();
 
         var status = 21;
 
@@ -554,7 +556,7 @@
 
 
 
-        UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
+        UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, authorizedSignerEmail, vendorCode);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
     });
 
     $("#btn_SubmitReject").click(function () {
@@ -567,6 +569,8 @@
 
         var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedToName = $("#AssignedByName").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
+        var authorizedSignerEmail = $("#AuthorizedSignerEmail").text();
+
         var status = 22;
 
         //if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
@@ -605,7 +609,7 @@
             assignedToName = userName;
         }
 
-        UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);//   reject  status = 6;
+        UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, authorizedSignerEmail, '');//   reject  status = 6;
     });
 
     $("#btn_Popup_SubmitReturn").click(function () {
@@ -624,7 +628,7 @@
             $("#span_error_return_comment").html('');
         }
 
-        UpdateApplicationStatus(2, '', "Returned to Processor.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);
+        UpdateApplicationStatus(2, '', "Returned to Processor.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, '','');
         //   2	Assigned to Processor;
     });
 
@@ -636,8 +640,7 @@
 
         var processorID = $("#selectProcessorsList option:selected").val();    //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var processorName = $("#selectProcessorsList option:selected").text();
-        // UpdateApplicationStatus(2, '', "Assigned to Processor " + processorID, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
-        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
+        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName,'','');//  Status  2	Assigned to Processor
     });
 
     $("#btn_proce_print").click(function () {  // processor view  
@@ -657,7 +660,7 @@
         //    assignedToName = assignedFromName;
         //}
 
-        UpdateApplicationStatus(status, '', "Send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);
+        UpdateApplicationStatus(status, '', "Send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName,'','');
     });
 
     $("#btn_supervisor_print").click(function () {  // processor view
@@ -752,9 +755,6 @@
                 sessionStorage.setItem('PrintConfirmationLetter', data.data.VendorReportFileName);
 
                 uploadprintVendorconfDoctoRepository(confirmationNum, data.data.VendorReportFileName, DocumentTypeId);  // Vendor Confirmation Letter = 7
-
-               
-
             }
             , complete: function (jqXHR) {
                 $("#btn_supervisor_print").css("display", "block");
@@ -876,7 +876,7 @@
         return month + '/' + day + '/' + yr + ' (' + strTime + ')';
     }
 
-    function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, assignedFromName, assignedToName) {
+    function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, assignedFromName, assignedToName, authorizedSignerEmail, vendorCode) {
         var confirmNum = confirmationNum;
 
         $.ajax({
@@ -885,7 +885,7 @@
             url: "/api/values/UpdateApplicationStatus/",
             dataType: 'json',
             data: JSON.stringify({
-                'Confirmation': confirmationNum, 'status': status, 'Comment': comment, 'ReasonType': reason_type, 'ProcessorID': assignedTo, 'AssignedBy': assignedFrom
+                'Confirmation': confirmationNum, 'status': status, 'Comment': comment, 'ReasonType': reason_type, 'ProcessorID': assignedTo, 'AssignedBy': assignedFrom, 'Signeremail': authorizedSignerEmail, 'VendorNumber': vendorCode
             }),
 
             headers: {

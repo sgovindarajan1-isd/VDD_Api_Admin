@@ -27,7 +27,7 @@ using System.Text;
 
 namespace eCAPDDApi.Controllers
 {
-    public class VendorConfirmationEmail
+    public class EmailClass
     {
         public string MessageBody { get; set; }
         public string Subject { get; set; }
@@ -96,9 +96,9 @@ namespace eCAPDDApi.Controllers
         }
 
 
-        private VendorConfirmationEmail VendorConfirmationEmail(string vendorName, string confirmNumber, string DDNotifiEmail)
+        private EmailClass VendorConfirmationEmail(string vendorName, string confirmNumber, string DDNotifiEmail)
         {
-            VendorConfirmationEmail obj = new VendorConfirmationEmail();
+            EmailClass obj = new EmailClass();
             obj.MessageBody = getMessageBody(vendorName, confirmNumber);
             obj.Subject = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_Subject"] + " " + confirmNumber;
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailFrom"];//"sgovindarajan@isd.lacounty.gov";
@@ -108,9 +108,79 @@ namespace eCAPDDApi.Controllers
             return obj;
         }
 
-        private string SendEmail(string vendorName, string confirmNumber, string DDNotifiEmail)
+
+        private EmailClass Approval_Email(DAL.Models.DAL_M_VendorDD vmvendorDD) //.VendorNumber, vmvendorDD.ConfirmNumber, vmvendorDD.Signeremail,  )
         {
-            VendorConfirmationEmail emailObj = VendorConfirmationEmail(vendorName, confirmNumber, DDNotifiEmail);
+            EmailClass obj = new EmailClass();
+
+            string emailBody = string.Empty;
+
+            emailBody = "Thank you for submitting your Direct Deposit Authorization Form to the County of Los Angeles. </br></br>";
+            
+            emailBody += "Your status: Eligible for EFT </br></br>";
+
+            emailBody += "Confirmation #: "+ vmvendorDD.Confirmation+ "</br></br>";
+            
+            emailBody += "*** CONFIDENTIALITY NOTICE: This email message, including any attachments, is intended for the official and confidential use of the recipient or an agent responsible for delivering this message to the intended recipient.Please be advised that any use, reproduction, or dissemination of this message or its contents is strictly prohibited and is protected by law.If this message is received in error, please immediately reply to this email and delete the message and all of its attachments.*** ";
+
+            obj.MessageBody = emailBody;
+            obj.Subject = System.Configuration.ConfigurationManager.AppSettings["Approval_Subject"] + " " + vmvendorDD.VendorNumber;
+            obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailFrom"];
+            obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailTo"];  //vmvendorDD.Signeremail  //To do   get it from authorized signer email
+            obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailCC"];
+            return obj;
+        }
+
+        private EmailClass Rejection_Email(DAL.Models.DAL_M_VendorDD vmvendorDD) 
+        {
+            EmailClass obj = new EmailClass();
+            string emailBody = string.Empty;
+
+            emailBody = "Dear Sir/ Madam, </br>";
+
+            emailBody += "The County of Los Angeles, Department of Auditor - Controller recently received your Direct Deposit Authorization request to issue your payments via direct deposit.  Unfortunately, the request is rejected due to the following reasons:  </br> ";
+
+            emailBody += "<ul>  <li>";
+            emailBody += vmvendorDD.ReasonType + ". " + vmvendorDD.Comment;
+            emailBody += "</ul>  </li>";
+
+            emailBody += "You may resubmit your request with the corrected information via: https://directdeposit.lacounty.gov. </br> </br>";
+
+            emailBody += "Please feel free to contact us at DISB.DirectDeposit@auditor.lacounty.gov or call (213) 974-4870 with any questions. </br> </br>";
+
+            emailBody += "Regards,</br> </br>";
+
+            emailBody += "Department of Auditor-Controller, </br>";
+            emailBody += "Direct Deposit Unit";
+
+
+
+            obj.MessageBody = emailBody;
+            obj.Subject = System.Configuration.ConfigurationManager.AppSettings["Rejection_Subject"] + " " + vmvendorDD.Confirmation;
+            obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailFrom"];
+            obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailTo"]; //vmvendorDD.Signeremail   //To do   get it from authorized signer email
+            obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailCC"];
+            return obj;
+        }
+
+
+
+        //string vendorName, string confirmNumber, string toEmail,
+        //, confirmNumber, vmvendorDD.DDNotifyEmail
+        private string SendEmail( DAL.Models.DAL_M_VendorDD vmvendorDD)
+        {
+            EmailClass emailObj = new EmailClass();
+
+            if (vmvendorDD.Status == 4) // approval  or rejection only email
+            {
+                emailObj = Approval_Email(vmvendorDD); 
+            }
+            else if (vmvendorDD.Status == 6) {
+                emailObj = Rejection_Email(vmvendorDD);
+            }
+            else {
+                emailObj = VendorConfirmationEmail(vmvendorDD.Payeename, vmvendorDD.Confirmation, vmvendorDD.DDNotifyEmail);
+            }
 
             if ((String.IsNullOrEmpty(emailObj.EmailFrom) | String.IsNullOrWhiteSpace(emailObj.EmailFrom)) |
                  (String.IsNullOrEmpty(emailObj.Subject) | String.IsNullOrWhiteSpace(emailObj.Subject)) |
@@ -179,9 +249,9 @@ namespace eCAPDDApi.Controllers
             return response;
         }
 
-        private VendorConfirmationEmail FormatContactUSEmail(DAL.Models.DAL_M_ContactUs vmcontactus)
+        private EmailClass FormatContactUSEmail(DAL.Models.DAL_M_ContactUs vmcontactus)
         {
-            VendorConfirmationEmail obj = new VendorConfirmationEmail();
+            EmailClass obj = new EmailClass();
 
             string emailBody = string.Empty;
             emailBody += "First Name: " + vmcontactus.FirstName + "</br>";
@@ -198,7 +268,7 @@ namespace eCAPDDApi.Controllers
 
         private string VendorContactUSSendEmail(DAL.Models.DAL_M_ContactUs vmcontactus)
         {
-            VendorConfirmationEmail emailObj = FormatContactUSEmail(vmcontactus);
+            EmailClass emailObj = FormatContactUSEmail(vmcontactus);
 
             if ((String.IsNullOrEmpty(emailObj.EmailFrom) | String.IsNullOrWhiteSpace(emailObj.EmailFrom)) |
                  (String.IsNullOrEmpty(emailObj.Subject) | String.IsNullOrWhiteSpace(emailObj.Subject)) |
@@ -268,7 +338,7 @@ namespace eCAPDDApi.Controllers
                 {
                     vmvendorDD.Confirmation = confirmNumber;
                     vmvendorDD.SubmitDateTime = updateDate;
-                    vmvendorDD.ReturnErrorSuccessMsg = SendEmail(vmvendorDD.Payeename, confirmNumber, vmvendorDD.DDNotifyEmail);
+                    vmvendorDD.ReturnErrorSuccessMsg = SendEmail(vmvendorDD);
                 }
                 else
                 {
@@ -521,14 +591,19 @@ namespace eCAPDDApi.Controllers
         {
             AdminDAL adminDAL = new AdminDAL();
 
-            SendEmail(adminModel.VendorNumber, adminModel.Confirmation, "G@test.com");
-
 
             var dt = adminDAL.UpdateApplicationStatus(adminModel.Confirmation, adminModel.Status, adminModel.Comment, adminModel.ReasonType, adminModel.ProcessorID, adminModel.AssignedBy);
             var data = new
             {
                 returnValue = dt,
             };
+
+            if ((adminModel.Status == 4) || (adminModel.Status == 6)) // approval  or rejection only email
+            {
+                SendEmail(adminModel);
+
+            }
+
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
             return response;
         }
