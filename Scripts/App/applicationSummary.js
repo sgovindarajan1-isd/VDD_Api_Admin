@@ -739,7 +739,6 @@
         vendorDetails.payeeLocationAddress2 = payeeLocationAddress2;
         vendorDetails.PayeeLocationCityStateZip = payeeLocationCityStateZip;
         vendorDetails.requestType = requestType;
-        vendorDetails.requestType = requestType;
 
         var venDetails = JSON.stringify(vendorDetails);
         $.ajax({
@@ -799,7 +798,7 @@
                     "render": function (data, type, row) {
                         return '<a class="btn btn-primary btn-group-xs nonFormSubmit PrintSelectPayeeBtn"> Print </a>';
                     },
-                    'title': "Select Payee"
+                    'title': ""
                 }
             ],
 

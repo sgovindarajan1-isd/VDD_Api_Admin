@@ -136,7 +136,7 @@ namespace eCAPDDApi.Controllers
             EmailClass obj = new EmailClass();
             string emailBody = string.Empty;
 
-            emailBody = "Dear Sir/ Madam, </br>";
+            emailBody = "Dear Sir/ Madam, </br> </br>";
 
             emailBody += "The County of Los Angeles, Department of Auditor - Controller recently received your Direct Deposit Authorization request to issue your payments via direct deposit.  Unfortunately, the request is rejected due to the following reasons:  </br> ";
 
