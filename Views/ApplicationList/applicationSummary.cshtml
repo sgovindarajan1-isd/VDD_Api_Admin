@@ -2,9 +2,9 @@
 <link href="~/Content/button.css" rel="stylesheet" />
 <script src="~/Scripts/App/DataTable/jquery.dataTables.min.js"></script>
 <script src="~/Scripts/App/AdminMain.js"></script>
+<script src="~/Scripts/App/print_PayeeLocation_select.js"></script>
 <script src="~/Scripts/App/applicationSummary.js"></script>
 <script src="~/Scripts/App/checklist.js"></script>
-
 <script>
     $(function () {
         $("#tabs").tabs();
@@ -498,6 +498,39 @@
     </div>
 </div>
 
+<div class="modal" id="Print_PayeelocationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Payee Location</h5>
+            </div>
+            <div class="modal-body" style="text-align:left">
+
+                <div class="panel-body">
+                    <div class="flex">
+                        <div class="flex-column-2">
+                            <table id="ddPrintPayeeSelectGrid" class="w-auto mdl-data-table cell-border" cellspacing="0" style="font-size: 12px; border-collapse:collapse; border: 1px solid black; width:100%">
+                                <thead>
+                                    <tr class="button-header-color">
+                                        <th>LocationID</th>
+                                        <th>FullAddress</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                @*<input id="btn_SubmitDepartmentDetails" class="btn btn-sm btn-primary" type="submit" value="Submit">*@
+                <button type="button" class="btn btn-link text-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container row-wrapper">
 
     <div class="spinner-border text-primary"></div>
@@ -742,7 +775,7 @@
                                                 <div class="btn-group btn-group-xs">
                                                     <a id="btn_proce_approve" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success processorapprove">Approve</a>
                                                     @*data-toggle="modal" data-target="#printApplicationModal"*@
-                                                    <a id="btn_proce_print" style="margin:5px;" class="btn btn-danger">&nbsp;Print&nbsp;</a>
+                                                    <a id="btn_proce_print" data-toggle="modal" data-target="#Print_PayeelocationModal-old" style="margin:5px;" class="btn btn-danger">&nbsp;Print&nbsp;</a>
                                                     <a id="btn_proce_reject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
                                                 </div>
                                             </div>
@@ -789,6 +822,7 @@
                                                     <a id="btn_reviewApprove" style="margin:5px;" data-toggle="modal" data-target="#approveApplicationModal" class="btn btn-success supervisorapprove">Approve</a>
                                                     <a id="btn_reviewReturn" style="margin:5px;" data-toggle="modal" data-target="#returnApplicationModal" class="btn btn-danger">&nbsp;Return&nbsp;</a>
                                                     <a id="btn_reviewReject" data-toggle="modal" data-target="#rejectApplicationModal" class="btn btn-danger" style="margin:5px; background-color:#8B0000;">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
+                                                    <a id="btn_supervisor_print" data-toggle="modal" data-target="#Print_PayeelocationModal-old" style="margin:5px; display:none" class="btn btn-danger">&nbsp;Print&nbsp;</a>
                                                 </div>
                                             </div>
                                         </div>

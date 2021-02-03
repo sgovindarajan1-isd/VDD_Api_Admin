@@ -21,6 +21,7 @@ using eCAPDDApi.infrastrure;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Microsoft.Ajax.Utilities;
+using System.Text;
 
 //using Microsoft.Reporting.Map.WebForms.BingMaps;
 
@@ -44,7 +45,7 @@ namespace eCAPDDApi.Controllers
     public class ValuesController : ApiController
     {
 
-        LogWriter logw = new LogWriter("ValuesController entry");
+        LogWriter logw = new LogWriter("Values Controller entry");
 
         [HttpPost]
         public HttpResponseMessage LoginUser([FromBody] IdTextClass idtext)
@@ -62,6 +63,9 @@ namespace eCAPDDApi.Controllers
 
             string result = clsdal.PostContactus(vmcontactus);
 
+            VendorContactUSSendEmail(vmcontactus);
+
+            // to do remove later
             List<VM_contactus> data = new List<VM_contactus>();
 
             response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
@@ -90,6 +94,7 @@ namespace eCAPDDApi.Controllers
             emailBody = "Thank you for submitting your Direct Deposit Authorization Form to the County of Los Angeles. Your request details are as follows: </br></br> Payee Name: " + vendorName + "</br>Confirmation #: " + confirmNumber + "</br>Allow up to 20 business days for your Direct Deposit Authorization Form to be processed. An email notification will be sent to you if your Direct Deposit request is Approved or Rejected.</br></br>Please reply to this email directly if further assistance is required.</br></br> ***CONFIDENTIALITY NOTICE: This email message, including any attachments, is intended for the official and confidential use of the recipient or an agent responsible for delivering this message to the intended recipient. Please be advised that any use, reproduction, or dissemination of this message or its contents is strictly prohibited and is protected by law. If this message is received in error, please immediately reply to this email and delete the message and all of its attachments.*** ";
             return emailBody;
         }
+
 
         private VendorConfirmationEmail VendorConfirmationEmail(string vendorName, string confirmNumber, string DDNotifiEmail)
         {
@@ -153,12 +158,84 @@ namespace eCAPDDApi.Controllers
             VendorDAL clsdal = new VendorDAL();
 
             vmvendorDD.CaseNo = GenerateControlNumber(4);
-            vmvendorDD.VendorReportFileName = vmvendorDD.Confirmation + "_Conf_"+ vmvendorDD.CaseNo + ".pdf";   //uniqueDatetime + ".pdf";
+            if (vmvendorDD.Status == 23) {
+                vmvendorDD.VendorReportFileName = "CONF_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID + "_" + vmvendorDD.CaseNo + ".pdf";
+            }
+            else if (vmvendorDD.Status == 4)
+            {
+                vmvendorDD.VendorReportFileName = "APPR_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID+"_"+vmvendorDD.CaseNo+".pdf";
+            }
+            else if (vmvendorDD.Status == 6)
+            {
+                vmvendorDD.VendorReportFileName = "RJCT_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID + "_" + vmvendorDD.CaseNo + ".pdf";
+            }
+            else
+                vmvendorDD.VendorReportFileName = "Error in File Name";
+
 
             generatePrintConfirmationLetter(vmvendorDD);
             response = Request.CreateResponse(HttpStatusCode.OK, new { data = vmvendorDD });
            
             return response;
+        }
+
+        private VendorConfirmationEmail FormatContactUSEmail(DAL.Models.DAL_M_ContactUs vmcontactus)
+        {
+            VendorConfirmationEmail obj = new VendorConfirmationEmail();
+
+            string emailBody = string.Empty;
+            emailBody += "First Name: " + vmcontactus.FirstName + "</br>";
+            emailBody += "Last Name: "  + vmcontactus.LastName + "</br>";
+            emailBody += "Phone Name: " + vmcontactus.Phone + "</br></br>";
+
+            obj.MessageBody = emailBody + vmcontactus.Message;
+            obj.Subject = vmcontactus.Subject;
+            obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["VendorContactUS_EmailFrom"];
+            obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["VendorContactUS_EmailTo"]; // contactusEmail   vmcontactus.Email //  to do   get it from correct eamil
+            obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["VendorContactUS_EmailCC"];
+            return obj;
+        }
+
+        private string VendorContactUSSendEmail(DAL.Models.DAL_M_ContactUs vmcontactus)
+        {
+            VendorConfirmationEmail emailObj = FormatContactUSEmail(vmcontactus);
+
+            if ((String.IsNullOrEmpty(emailObj.EmailFrom) | String.IsNullOrWhiteSpace(emailObj.EmailFrom)) |
+                 (String.IsNullOrEmpty(emailObj.Subject) | String.IsNullOrWhiteSpace(emailObj.Subject)) |
+                 (String.IsNullOrEmpty(emailObj.MessageBody) | String.IsNullOrWhiteSpace(emailObj.MessageBody))
+               )
+            {
+                return "Error - Missing required parameter. Message was not sent.";
+            }
+
+            System.Net.Mail.SmtpClient smtClient = new System.Net.Mail.SmtpClient();
+            System.Net.Mail.MailMessage cmailMsg = new System.Net.Mail.MailMessage(emailObj.EmailFrom, emailObj.EmailTo);  //, emailObj.EmailCC.ToString()
+
+            foreach (var address in emailObj.EmailTo.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                cmailMsg.To.Add(address);
+            }
+
+            foreach (var address in emailObj.EmailCC.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                cmailMsg.CC.Add(address);
+            }
+
+            //mailMsg.Bcc.Add(emailObj.EmailBCC);
+            cmailMsg.Subject = emailObj.Subject;
+            cmailMsg.Body = emailObj.MessageBody;
+            cmailMsg.IsBodyHtml = true;
+            cmailMsg.Priority = System.Net.Mail.MailPriority.Normal;
+            try
+            {
+                smtClient.Send(cmailMsg);
+            }
+            catch (System.Exception ex)
+            {
+                return "Error - " + ex.Message;
+            }
+
+            return "Success";
         }
 
         [HttpPost]
@@ -267,8 +344,6 @@ namespace eCAPDDApi.Controllers
         [HttpPost]
         public HttpResponseMessage LoginAdminUser([FromBody] VM_AdminUser vm_AdminUser) //(   [FromBody] VM_r_vend_user vmuser
         {
-            //logw.LogWrite("test");
-
             gov.lacounty.webadminisd.Service loginServs = new gov.lacounty.webadminisd.Service();
             // just to go for demo
             bool bool_isAuthenicated = false;
@@ -445,6 +520,9 @@ namespace eCAPDDApi.Controllers
         public HttpResponseMessage UpdateApplicationStatus([FromBody] DAL.Models.DAL_M_VendorDD adminModel)
         {
             AdminDAL adminDAL = new AdminDAL();
+
+            SendEmail(adminModel.VendorNumber, adminModel.Confirmation, "G@test.com");
+
 
             var dt = adminDAL.UpdateApplicationStatus(adminModel.Confirmation, adminModel.Status, adminModel.Comment, adminModel.ReasonType, adminModel.ProcessorID, adminModel.AssignedBy);
             var data = new
@@ -886,15 +964,17 @@ namespace eCAPDDApi.Controllers
             dt.Columns.Add("AddressStreetLine");
             dt.Columns.Add("CityStateZip");
             dt.Columns.Add("SubmitDate");
+            dt.Columns.Add("RejectReason");  // used only in rejection letter
 
             DataRow dr = dt.NewRow();
             dr["ConfirmationNumber"] = vendordetails.Confirmation;
             dr["ControlNumber"] = vendordetails.CaseNo;
             dr["PayeeName"] = vendordetails.Payeename;
-            dr["AddressStreetLine"] = "Test Address Ave";
-            dr["CityStateZip"] = "Test City, CA, 90703";
+            dr["AddressStreetLine"] = vendordetails.PayeeLocationAddress1 + ", " + vendordetails.PayeeLocationAddress2;//PayeeLocationStreet;
+            dr["CityStateZip"] = vendordetails.PayeeLocationCityStateZip.Trim();
             dr["SubmitDate"] = DateTime.Now.ToString("dd/MM/yyyy");
-            
+            dr["RejectReason"] = vendordetails.Comment;//vendordetails.ReasonType + ". "+ vendordetails.Comment;
+
             dt.Rows.Add(dr);
             return dt;
         }
@@ -989,7 +1069,7 @@ namespace eCAPDDApi.Controllers
 
         private string generateVCM(DAL.Models.DAL_M_VendorDD vendordetails)
         {
-            logw.LogWrite("entering into show report imp");
+            //logw.LogWrite("Entering into show report");
             try
             {
                 string localPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -1016,19 +1096,19 @@ namespace eCAPDDApi.Controllers
                 viewer.LocalReport.DataSources.Add(lds);
 
                 string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
-                logw.LogWrite("inside generate vcm sucess file name- " + retFileName);
+                //logw.LogWrite("inside generate vcm sucess file name- " + retFileName);
                 return retFileName; //Json(retFileName);
             }
             catch (Exception ex)
             {
-                logw.LogWrite("inside generate vcm exception- " + ex.Message);
+                //logw.LogWrite("inside generate vcm exception- " + ex.Message);
                 return "ERROR - " + ex.Message;
             }
         }
 
         private string generateVCMPDFReport(DAL.Models.DAL_M_VendorDD vendordetails)
         {
-            logw.LogWrite("entering into show report imp");
+            //logw.LogWrite("entering into show report imp");
             try
             {
                 string localPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -1057,12 +1137,12 @@ namespace eCAPDDApi.Controllers
                 viewer.LocalReport.DataSources.Add(lds);
 
                 string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
-                logw.LogWrite("inside generate vcm sucess file name- " + retFileName);
+                //logw.LogWrite("inside generate vcm success file name- " + retFileName);
                 return retFileName; //Json(retFileName);
             }
             catch (Exception ex)
             {
-                logw.LogWrite("inside generate vcm exception- " + ex.Message);
+                //logw.LogWrite("inside generate vcm exception- " + ex.Message);
                 return "ERROR - " + ex.Message;
             }
         }
@@ -1084,8 +1164,23 @@ namespace eCAPDDApi.Controllers
                 viewer.SizeToReportContent = true;
                 viewer.SizeToReportContent = true;
                 viewer.AsyncRendering = true;
-                viewer.LocalReport.ReportPath = "PrintConfirmationLetter.rdlc";
-
+                if (vendordetails.Status == 23)  //vendor confirmation letter
+                {
+                    viewer.LocalReport.ReportPath = "PrintConfirmationLetter.rdlc";
+                }
+                else if (vendordetails.Status == 4) //4   Approved
+                {
+                    viewer.LocalReport.ReportPath = "PrintApprovalLetter.rdlc";
+                }
+                else if (  (vendordetails.Status == 6)  &&  (vendordetails.RequestType == "ACSS")) {  //6   Rejected  Deaprtment - "DPSS"
+                    viewer.LocalReport.ReportPath = "PrintRejectionLetter_DPSS.rdlc";
+                }
+                else if ((vendordetails.Status == 6) && (vendordetails.RequestType == "ACCH")) {  //6   Rejected  Deaprtment - "DCFS"
+                    viewer.LocalReport.ReportPath = "PrintRejectionLetter_DCFS.rdlc";
+                }
+                else { 
+                    viewer.LocalReport.ReportPath = "Error";
+                }
                 DataTable vdt = createPrintConfirmationLetterDataTable(vendordetails);
                 ReportDataSource rds = new ReportDataSource("PrintVendorConfirmationDataSet", vdt);
 
@@ -1093,12 +1188,12 @@ namespace eCAPDDApi.Controllers
                 viewer.LocalReport.DataSources.Add(rds);
 
                 string retFileName = PDFExport(viewer.LocalReport, uploadFileName, vendordetails.VendorReportFileName);
-                logw.LogWrite("inside generate vcm sucess file name- " + retFileName);
+                //logw.LogWrite("Inside generate vcm success file name- " + retFileName);
                 return retFileName; //Json(retFileName);
             }
             catch (Exception ex)
             {
-                logw.LogWrite("inside generate vcm exception- " + ex.Message);
+                //logw.LogWrite("Inside generate vcm exception- " + ex.Message);
                 return "ERROR - " + ex.Message;
             }
         }

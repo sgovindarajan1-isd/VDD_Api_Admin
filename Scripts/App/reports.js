@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
-    if (sessionStorage.getItem('userName') == null || sessionStorage.getItem('userName') == '') {
+    $("#liNavigation").css("display", "none");
+    var userName = sessionStorage.getItem('userName');
+
+    if (sessionStorage.getItem('userName') == null || userName == '') {
         window.location.href = "/Home/Index";
         return;
     }
@@ -10,7 +13,7 @@
     $("#panel_VCM").hide();
     $("#panel_Application").hide();
     
-    $("#lbl_userName").text("Logged in as " + sessionStorage.getItem('userName'));  
+    $("#lbl_userName").text("Logged in as " + userName);  
     var userId = sessionStorage.getItem('UserId');
     GetApplicationCustomFilterList();
 

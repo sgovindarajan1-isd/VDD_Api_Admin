@@ -22,7 +22,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>3.00937in</Top>
+        <Top>3.25937in</Top>
         <Left>0.43587in</Left>
         <Height>0.2646in</Height>
         <Width>4.03514in</Width>
@@ -56,7 +56,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>3.22603in</Top>
+        <Top>3.47603in</Top>
         <Left>0.43587in</Left>
         <Height>0.2646in</Height>
         <Width>1.42681in</Width>
@@ -91,7 +91,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>3.47603in</Top>
+        <Top>3.72603in</Top>
         <Left>0.43587in</Left>
         <Height>0.2646in</Height>
         <Width>1.42681in</Width>
@@ -124,9 +124,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>PayeeName</rd:DefaultName>
-        <Top>2.14111in</Top>
+        <Top>2.36333in</Top>
         <Left>0.43587in</Left>
-        <Height>0.28056in</Height>
+        <Height>0.25in</Height>
         <Width>4.03514in</Width>
         <ZIndex>3</ZIndex>
         <Style>
@@ -157,7 +157,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>AddressStreetLine</rd:DefaultName>
-        <Top>2.42167in</Top>
+        <Top>2.67167in</Top>
         <Left>0.45253in</Left>
         <Height>0.25in</Height>
         <Width>4.01847in</Width>
@@ -190,7 +190,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CityStateZip</rd:DefaultName>
-        <Top>2.68833in</Top>
+        <Top>2.93833in</Top>
         <Left>0.45253in</Left>
         <Height>0.25in</Height>
         <Width>4.01847in</Width>
@@ -214,10 +214,41 @@
               <TextRun>
                 <Value>Dear Sir/Madam, 
 
-The  County  of  Los  Angeles,  Department  of  Auditor-Controller  recently received  your Direct Deposit Authorization request to issue your payments via direct deposit.  Per our policy, we are contacting you to confirm the validity of this request.    
-
-
-We are requesting you or your company’s President, CFO, CEO or equivalent to contact us within seven (7) days of receiving this letter to confirm the authenticity of the submitted Direct Deposit Authorization request.  Otherwise, your request will be rejected.  You may email us your confirmation at </Value>
+The County of Los Angeles, Department of Auditor-Controller recently received and approved your Direct Deposit Authorization request.  As a result, your future payments will be issued via direct deposit. </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>If you did not submit this request or believe this is in error, please contact us immediately at </Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>12pt</FontSize>
@@ -228,7 +259,6 @@ We are requesting you or your company’s President, CFO, CEO or equivalent to c
               </TextRun>
               <TextRun>
                 <Value>DISB.DirectDeposit@auditor.lacounty.gov</Value>
-                <MarkupType>HTML</MarkupType>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>12pt</FontSize>
@@ -238,29 +268,7 @@ We are requesting you or your company’s President, CFO, CEO or equivalent to c
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>. Please include the Confirmation and Control Numbers (printed in red above) in the email. 
-
-Please feel free to contact us at </Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>DISB.DirectDeposit@auditor.lacounty.gov </Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                  <Color>Blue</Color>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>or (213) 974-4870 should you have any questions.</Value>
+                <Value> or call (213) 974-0328.</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>12pt</FontSize>
@@ -310,10 +318,10 @@ Please feel free to contact us at </Value>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
-        <Top>3.86875in</Top>
+        <Top>4.15208in</Top>
         <Left>0.43587in</Left>
-        <Height>3.31181in</Height>
-        <Width>7.14946in</Width>
+        <Height>2.10965in</Height>
+        <Width>6.99406in</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
@@ -329,7 +337,7 @@ Please feel free to contact us at </Value>
         <Source>Embedded</Source>
         <Value>printvendorconfSign</Value>
         <Sizing>FitProportional</Sizing>
-        <Top>7.33118in</Top>
+        <Top>6.33118in</Top>
         <Left>0.45253in</Left>
         <Height>0.38263in</Height>
         <Width>1.41014in</Width>
@@ -361,7 +369,7 @@ Please feel free to contact us at </Value>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>ConfirmationNumber</rd:DefaultName>
-        <Top>3.24063in</Top>
+        <Top>3.49063in</Top>
         <Left>1.98in</Left>
         <Height>0.25in</Height>
         <Width>2.49101in</Width>
@@ -396,7 +404,7 @@ Please feel free to contact us at </Value>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>ControlNumber</rd:DefaultName>
-        <Top>3.525in</Top>
+        <Top>3.775in</Top>
         <Left>1.98in</Left>
         <Height>0.21563in</Height>
         <Width>2.49101in</Width>
@@ -420,6 +428,108 @@ Please feel free to contact us at </Value>
               <TextRun>
                 <Value>Connie K. Chung, 
 Chief Disbursements Division</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>12pt</FontSize>
@@ -484,121 +594,11 @@ Chief Disbursements Division</Value>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
-        <Top>7.78325in</Top>
-        <Left>0.43319in</Left>
-        <Height>0.96432in</Height>
+        <Top>6.89409in</Top>
+        <Left>0.45253in</Left>
+        <Height>1.75348in</Height>
         <Width>6.99674in</Width>
         <ZIndex>10</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox31">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>PETER HUGHES</Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>KAREN LOQUET</Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>CONNIE YEE</Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>1.46425in</Top>
-        <Left>5.62789in</Left>
-        <Height>0.52409in</Height>
-        <Width>1.95744in</Width>
-        <ZIndex>11</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox32">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>ASSISTANT AUDITOR-CONTROLLERS</Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontSize>7pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>1.27778in</Top>
-        <Left>5.61123in</Left>
-        <Height>0.18647in</Height>
-        <Width>1.9741in</Width>
-        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -624,11 +624,11 @@ Chief Disbursements Division</Value>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>SubmitDate</rd:DefaultName>
-        <Top>1.91738in</Top>
+        <Top>2.04238in</Top>
         <Left>1.08711in</Left>
-        <Height>0.20984in</Height>
+        <Height>0.25in</Height>
         <Width>2.07041in</Width>
-        <ZIndex>13</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -656,11 +656,11 @@ Chief Disbursements Division</Value>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>1.90278in</Top>
+        <Top>2.02778in</Top>
         <Left>0.45253in</Left>
         <Height>0.2646in</Height>
         <Width>0.56514in</Width>
-        <ZIndex>14</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -679,7 +679,7 @@ Chief Disbursements Division</Value>
         <Left>1.22764in</Left>
         <Height>0.59096in</Height>
         <Width>2.70209in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -713,7 +713,7 @@ Chief Disbursements Division</Value>
         <Left>4.06365in</Left>
         <Height>0.31181in</Height>
         <Width>2.84674in</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -792,11 +792,7 @@ Chief Disbursements Division</Value>
               <TextRun>
                 <Value>KENNETH HAHN HALL OF ADMINISTRATION</Value>
                 <Style>
-                  <FontStyle>Normal</FontStyle>
                   <FontSize>9pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -807,13 +803,9 @@ Chief Disbursements Division</Value>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>500 WEST TEMPLE STREET, ROOM 502</Value>
+                <Value>500 WEST TEMPLE STREET, ROOM 525</Value>
                 <Style>
-                  <FontStyle>Normal</FontStyle>
                   <FontSize>9pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -829,6 +821,14 @@ Chief Disbursements Division</Value>
                   <FontSize>9pt</FontSize>
                 </Style>
               </TextRun>
+              <TextRun>
+                <Value xml:space="preserve">
+</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
             </TextRuns>
             <Style>
               <TextAlign>Center</TextAlign>
@@ -838,9 +838,9 @@ Chief Disbursements Division</Value>
         <rd:DefaultName>Textbox25</rd:DefaultName>
         <Top>0.03902in</Top>
         <Left>0.11358in</Left>
-        <Height>1.23876in</Height>
+        <Height>1.26904in</Height>
         <Width>7.47174in</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -859,7 +859,7 @@ Chief Disbursements Division</Value>
         <Left>0.7359in</Left>
         <Height>1.0243in</Height>
         <Width>1.38542in</Width>
-        <ZIndex>18</ZIndex>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -875,11 +875,8 @@ Chief Disbursements Division</Value>
               <TextRun>
                 <Value>ARLENE BARRERA</Value>
                 <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontSize>8pt</FontSize>
+                  <FontSize>7pt</FontSize>
                   <FontWeight>Bold</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -892,11 +889,7 @@ Chief Disbursements Division</Value>
               <TextRun>
                 <Value>AUDITOR-CONTROLLER</Value>
                 <Style>
-                  <FontStyle>Normal</FontStyle>
                   <FontSize>7pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -909,11 +902,7 @@ Chief Disbursements Division</Value>
               <TextRun>
                 <Value />
                 <Style>
-                  <FontStyle>Normal</FontStyle>
                   <FontSize>7pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -959,9 +948,9 @@ Chief Disbursements Division</Value>
         <rd:DefaultName>Textbox25</rd:DefaultName>
         <Top>1.23284in</Top>
         <Left>0.17771in</Left>
-        <Height>0.68454in</Height>
+        <Height>0.7401in</Height>
         <Width>2.08514in</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>17</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1026,7 +1015,7 @@ Chief Disbursements Division</Value>
         <Left>0.47363in</Left>
         <Height>0.96576in</Height>
         <Width>2.68389in</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>18</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1058,7 +1047,7 @@ Chief Disbursements Division</Value>
         <Left>0.42645in</Left>
         <Height>0.25in</Height>
         <Width>4.03514in</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>19</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1090,7 +1079,7 @@ Chief Disbursements Division</Value>
         <Left>0.44311in</Left>
         <Height>0.18334in</Height>
         <Width>4.01847in</Width>
-        <ZIndex>22</ZIndex>
+        <ZIndex>20</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1122,7 +1111,113 @@ Chief Disbursements Division</Value>
         <Left>0.44311in</Left>
         <Height>0.18055in</Height>
         <Width>4.01847in</Width>
-        <ZIndex>23</ZIndex>
+        <ZIndex>21</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox38">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>ASSISTANT AUDITOR-CONTROLLERS</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>7pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>7pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>PETER HUGHES</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>KAREN LOQUET</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>CONNIE YEE</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox25</rd:DefaultName>
+        <Top>1.23284in</Top>
+        <Left>4.67792in</Left>
+        <Height>0.86787in</Height>
+        <Width>2.77135in</Width>
+        <ZIndex>22</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>

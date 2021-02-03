@@ -311,6 +311,8 @@ namespace eCAPDDApi {
             
             private global::System.Data.DataColumn columnConfirmationNumber;
             
+            private global::System.Data.DataColumn columnControlNumber;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public VendorAPIDataSetDataTable() {
@@ -474,6 +476,14 @@ namespace eCAPDDApi {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ControlNumberColumn {
+                get {
+                    return this.columnControlNumber;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -525,7 +535,8 @@ namespace eCAPDDApi {
                         string AccountType, 
                         string SubmittedDate, 
                         string TotalAttachment, 
-                        string ConfirmationNumber) {
+                        string ConfirmationNumber, 
+                        int ControlNumber) {
                 VendorAPIDataSetRow rowVendorAPIDataSetRow = ((VendorAPIDataSetRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         VendorNumber,
@@ -543,7 +554,8 @@ namespace eCAPDDApi {
                         AccountType,
                         SubmittedDate,
                         TotalAttachment,
-                        ConfirmationNumber};
+                        ConfirmationNumber,
+                        ControlNumber};
                 rowVendorAPIDataSetRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowVendorAPIDataSetRow);
                 return rowVendorAPIDataSetRow;
@@ -582,6 +594,7 @@ namespace eCAPDDApi {
                 this.columnSubmittedDate = base.Columns["SubmittedDate"];
                 this.columnTotalAttachment = base.Columns["TotalAttachment"];
                 this.columnConfirmationNumber = base.Columns["ConfirmationNumber"];
+                this.columnControlNumber = base.Columns["ControlNumber"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -619,6 +632,8 @@ namespace eCAPDDApi {
                 base.Columns.Add(this.columnTotalAttachment);
                 this.columnConfirmationNumber = new global::System.Data.DataColumn("ConfirmationNumber", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnConfirmationNumber);
+                this.columnControlNumber = new global::System.Data.DataColumn("ControlNumber", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnControlNumber);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1018,6 +1033,22 @@ namespace eCAPDDApi {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int ControlNumber {
+                get {
+                    try {
+                        return ((int)(this[this.tableVendorAPIDataSet.ControlNumberColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ControlNumber\' in table \'VendorAPIDataSet\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableVendorAPIDataSet.ControlNumberColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsVendorNumberNull() {
                 return this.IsNull(this.tableVendorAPIDataSet.VendorNumberColumn);
             }
@@ -1206,6 +1237,18 @@ namespace eCAPDDApi {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetConfirmationNumberNull() {
                 this[this.tableVendorAPIDataSet.ConfirmationNumberColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsControlNumberNull() {
+                return this.IsNull(this.tableVendorAPIDataSet.ControlNumberColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetControlNumberNull() {
+                this[this.tableVendorAPIDataSet.ControlNumberColumn] = global::System.Convert.DBNull;
             }
         }
         

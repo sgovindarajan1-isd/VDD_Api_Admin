@@ -15,6 +15,10 @@ namespace DAL.Models
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public string FullAddress { get; set; }
+        public int ApplicationStatus { get; set; }  //  This is to use for print functions
+        public string RejectReason { get; set; }  //  This is to use for print functions
+        public string RequestType { get; set; }
     }
 
     public class DAL_M_Checklist
@@ -107,6 +111,13 @@ namespace DAL.Models
         public string DocumentAttachmentTypeName { get; set; }
         public string ReturnErrorSuccessMsg { get; set; }
         public int Active{ get; set; }
+        //  location address used for print / approve/reject letters and pdf
+
+        public string PayeeLocationID { get; set; }
+        public string PayeeLocationStreet { get; set; }
+        public string PayeeLocationCityStateZip { get; set; }
+        public string PayeeLocationAddress1 { get; set; }
+        public string PayeeLocationAddress2 { get; set; }
     }
 
     public class DAL_M_LinkApplication

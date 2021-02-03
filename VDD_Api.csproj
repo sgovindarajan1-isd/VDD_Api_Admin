@@ -629,6 +629,7 @@
     <Content Include="Scripts\App\draft\vendordetails.js" />
     <Content Include="Scripts\App\login.js" />
     <Content Include="Scripts\App\manageUser.js" />
+    <Content Include="Scripts\App\print_PayeeLocation_select.js" />
     <Content Include="Scripts\App\reports.js" />
     <Content Include="Scripts\App\userProfile.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -835,7 +836,10 @@
     <WCFMetadataStorage Include="Connected Services\abaService\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="PrintApprovalLetter.rdlc" />
     <EmbeddedResource Include="PrintConfirmationLetter.rdlc" />
+    <EmbeddedResource Include="PrintRejectionLetter_DCFS.rdlc" />
+    <EmbeddedResource Include="PrintRejectionLetter_DPSS.rdlc" />
     <EmbeddedResource Include="VendorAPIAuthorizationForm.rdlc" />
     <EmbeddedResource Include="VendorAuthorizationForm.rdlc" />
   </ItemGroup>

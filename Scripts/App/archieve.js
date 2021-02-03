@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    debugger;
     var confirmationNum = sessionStorage.getItem('selectedConfirmationNumber');
     GetArchieveDocuments(confirmationNum);
 
@@ -38,7 +37,6 @@
     // 
 
     $('#ddArchieveGrid').on('click', '.clsdownload', function (e) {
-        debugger;
         var closestRow = $(this).closest('tr');
         var data = $('#ddArchieveGrid').DataTable().row(closestRow).data();
 
@@ -48,7 +46,6 @@
     });
 
     $('#ddArchieveGrid').on('click', '.clsRestoreArchieve', function (e) {
-        debugger;
         var closestRow = $(this).closest('tr');
         var data = $('#ddArchieveGrid').DataTable().row(closestRow).data();
 
@@ -64,7 +61,6 @@
             },
             url: "/api/values/UpdateRetireAttachment/",
             success: function (data) {
-                debugger;
                 // REMOVE THE LINE
                 // closestRow.remove();
                 toastr.options.positionClass = "toast-bottom-right";
@@ -85,7 +81,6 @@
     //
 
     function setAttachment(data) {
-        debugger;
         $('#ddArchieveGrid').DataTable().destroy();
         $('#ddArchieveGrid').empty();
 

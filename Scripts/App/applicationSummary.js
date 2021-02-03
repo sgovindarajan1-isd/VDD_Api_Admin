@@ -226,6 +226,10 @@
                 $("#btn_reviewReturn").hide();
                 $("#btn_reviewReject").hide();
                 $("#div_supervisor_proce_review").hide();
+                // after  approval or dpss reject  make the print button available 
+             
+                $("#btn_supervisor_print").css("display", "block");
+               
 
                 // For Approved status Reason label Invisbile
                 if (status == 6) {
@@ -251,6 +255,11 @@
             }
             else {
                 $("#div_supervisor_proce_review").hide();
+            }
+
+
+            if (status == 6 || status == 4 || status == 23) {
+                $("#btn_supervisor_print").css("display", "block");
             }
 
 
@@ -393,6 +402,8 @@
         $("#DeptContactNumber").text(data.DepartmentContactNo);
         var j = 1;
 
+        sessionStorage.setItem('LocationAddressList', JSON.stringify(data.LocationAddressList));
+
         $.each(data.LocationAddressList, function (index, value) {
 
             var _address = value.Street;  //"16000 south street";
@@ -487,6 +498,7 @@
     };
 
     function getApplicationSummary(confirmationNum) {
+        debugger;
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             type: "POST",
@@ -537,6 +549,7 @@
             status = 4;
             assignedTo = assignedFrom;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
             assignedToName = assignedFromName;
+            $("#btn_supervisor_print").css("display", "block");
         }
 
 
@@ -627,11 +640,8 @@
         UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName);//  Status  2	Assigned to Processor
     });
 
-    $("#btn_proce_print").click(function () {  // processor view
-        printButtonClick();
-    });
-
-    function printButtonClick() {
+    $("#btn_proce_print").click(function () {  // processor view  
+        debugger;
         var comment = '';
         var assignedFrom = $("#AssignedProcessor").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedTo = $("#AssignedBy").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
@@ -641,16 +651,92 @@
 
         var status = 23; //	Pending Vendor Confirmation
 
-        if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
-            assignedTo = assignedFrom;  //If supervisor "print" then  assigned to supervisor himself else if Processor Print then send to to supervisor
-            assignedToName = assignedFromName;
-        }
+
+        //if (GlobalUserHasRoles.SupervisorRole || GlobalUserHasRoles.AdminRole) {
+        //    assignedTo = assignedFrom;  //If supervisor "print" then  assigned to supervisor himself else if Processor Print then send to to supervisor
+        //    assignedToName = assignedFromName;
+        //}
 
         UpdateApplicationStatus(status, '', "Send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName);
+    });
 
+    $("#btn_supervisor_print").click(function () {  // processor view
+        debugger;
+        var statusdesc = $("#header_status").text();
+        var requestType = $("#ApplicationType").text();
+
+        var reason = $("#span_supervisor_panel_reason").text() + ". " + $("#span_supervisor_panel_note").text();
+
+        var status = 0;
+        if (statusdesc == 'Rejected') {
+            status = 6
+        }
+
+        if (statusdesc == 'Rejected') {  //for reject   dpss only not for dcfs
+            if (requestType == "ACSS") {  //6   Rejected  Deaprtment - "DPSS"
+                $('#Print_PayeelocationModal').modal('show');
+            }
+            else if (requestType == "ACCH") {  //6   Rejected  Deaprtment - "DCFS"{
+                printButtonClick(6, 99, '', '', '', reason, requestType, 9);  // type 9	Vendor Rejection Letter
+            }
+        }
+        else {   // for approval and print vendor confirmation
+            $('#Print_PayeelocationModal').modal('show');
+        }
+    });
+
+
+    $('#ddPrintPayeeSelectGrid').on('click', '.PrintSelectPayeeBtn', function () {
+        debugger;
+        //DocumentTypeId:  
+        //7	Vendor Confirmation Letter
+        //8	Vendor Approval Letter
+        //9	Vendor Rejection Letter
+        var statusdesc = $("#header_status").text();
+        var status = 0;
+        if (statusdesc == 'Pending Vendor Confirmation') {
+            status = 23
+        }
+        else if (statusdesc == 'Approved') {
+            status = 4
+        }
+        else if (statusdesc == 'Rejected') {
+            status = 6
+        }
+
+        var DocumentTypeId = 7;
+
+        if (status == 4) {
+            DocumentTypeId = 8;
+        }
+        else if (status == 6) {
+            DocumentTypeId = 9;
+        }
+
+        var RowIndex = $(this).closest('tr');
+        var table = $('#ddPrintPayeeSelectGrid').DataTable();
+        var pData = table.row(RowIndex).data();
+
+        var CityStateZip = pData.City + ', ' + pData.State + ', ' + pData.ZipCode;
+
+        printButtonClick(status, pData.LocationID, pData.Address1, pData.Address2, CityStateZip, pData.RejectReason, pData.RequestType, DocumentTypeId);
+
+        var userId = sessionStorage.getItem('UserId');
+    });
+
+    function printButtonClick(status, payeelocationID, payeeLocationAddress1, payeeLocationAddress2, payeeLocationCityStateZip, rejectReason, requestType, DocumentTypeId) {
         var vendorDetails = {};
-        vendorDetails.Confirmation = confirmationNum;
-        vendorDetails.PayeeName = $("#PayeeName").text();
+        vendorDetails.confirmation = confirmationNum;
+        vendorDetails.payeeName = $("#PayeeName").text();
+        vendorDetails.payeeLocationID = payeelocationID;
+        vendorDetails.status = status;
+        vendorDetails.comment = rejectReason;
+        // vendorDetails.PayeeLocationStreet = payeeLocationstreet;
+        vendorDetails.payeeLocationAddress1 = payeeLocationAddress1;
+        vendorDetails.payeeLocationAddress2 = payeeLocationAddress2;
+        vendorDetails.PayeeLocationCityStateZip = payeeLocationCityStateZip;
+        vendorDetails.requestType = requestType;
+        vendorDetails.requestType = requestType;
 
         var venDetails = JSON.stringify(vendorDetails);
         $.ajax({
@@ -665,18 +751,18 @@
             success: function (data) {
                 sessionStorage.setItem('PrintConfirmationLetter', data.data.VendorReportFileName);
 
-                uploadprintVendorconfDoctoRepository(confirmationNum, data.data.VendorReportFileName, 7);  // Vendor Confirmation Letter = 7
+                uploadprintVendorconfDoctoRepository(confirmationNum, data.data.VendorReportFileName, DocumentTypeId);  // Vendor Confirmation Letter = 7
 
-                var url = "/Uploads/" + data.data.VendorReportFileName;
-                window.open(url, '_blank');
+               
 
             }
             , complete: function (jqXHR) {
+                $("#btn_supervisor_print").css("display", "block");
             }
             , error: function (jqXHR, textStatus, errorThrown) {
                 if (textStatus == 'error') {
                     toastr.options.positionClass = "toast-bottom-right";
-                    toastr.warning("Error in Generating Print confirmation letter, Please check the entry!");
+                    toastr.warning("Error in Generating letter, Please check the entry!");
                 }
                 else if (jqXHR.status == '401') {
                     window.location.href = "/Home/UnAuthorized";
@@ -685,6 +771,55 @@
         });
 
     };
+
+
+    $('#Print_PayeelocationModal').on('shown.bs.modal', function (e) {
+        debugger;
+        GetpopupForLocationAddress();
+    });
+
+    function GetpopupForLocationAddress() {
+        debugger;
+        var data = JSON.parse(sessionStorage.getItem('LocationAddressList'));
+        $('#ddPrintPayeeSelectGrid').DataTable().destroy();
+        $('#ddPrintPayeeSelectGrid').empty();
+
+        $('#ddPrintPayeeSelectGrid').dataTable({
+            responsive: true,
+            searching: false,
+            paging: false,
+            lengthChange: false
+            , "order": []
+            , data: data,
+            columns: [
+                { 'data': 'LocationID', "title": "LocationID" },
+                { 'data': 'FullAddress', "title": "Payee Address" },
+                {
+                    "data": null,
+                    "render": function (data, type, row) {
+                        return '<a class="btn btn-primary btn-group-xs nonFormSubmit PrintSelectPayeeBtn"> Print </a>';
+                    },
+                    'title': "Select Payee"
+                }
+            ],
+
+            columnDefs: [
+                { "visible": false, "targets": [0] },
+                { "width": "80%", "targets": [1] },
+                { "width": "20%", "targets": [2] },
+                {
+                    searching: false,
+                    data: null,
+                    defaultContent: '',
+                    orderable: false,
+                },
+            ],
+            select: {
+                selector: 'td:first-child'
+            }
+        });
+
+    }
 
     function uploadprintVendorconfDoctoRepository(confirmationNum, vendorconfirmationletter, documentAttachmentTypeId) {
         $.ajax({
@@ -700,6 +835,16 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
+                getApplicationSummary(confirmationNum);
+                //$("#div_supervisor_review_panel").show(); 
+
+                //$("#btn_reviewApprove").hide();
+                //$("#btn_reviewReturn").hide();
+                //$("#btn_reviewReject").hide();
+
+                //$("#btn_supervisor_print").css("display", "block");
+                //var url = "/Uploads/" + vendorconfirmationletter;
+                //window.open(url, '_blank');
             }
             , complete: function (jqXHR) {
             }
@@ -714,7 +859,6 @@
             }
         });
     }
-
 
     function getActualFullDate() {
         var date = new Date(),
@@ -748,7 +892,6 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-
                 $("#AssignedProcessor").text(assignedTo);
                 $("#AssignedBy").text(assignedFrom);
 
@@ -767,8 +910,25 @@
                         $("#header_status").text("Recommend Reject");
                     }
                     else if (status == 6) {
+                        // after  approval or reject  make the print button available 
+
                         $("#header_status").text("Rejected");
                         $("#ClosedDate").text(getActualFullDate());
+
+                        // After Rejection show the popup to select Payee
+                        var requestType = $("#ApplicationType").text();
+
+                        if (requestType == "ACSS") {  //6   Rejected  Deaprtment - "DPSS"
+                            $('#Print_PayeelocationModal').modal('show');
+                        }
+
+                        //  For DCFS :  Needed rejection letter, but No Popup needed to select the payee
+                        var reason = reason_type + ". " + comment;
+                        if (requestType == "ACCH") {  //6   Rejected  Deaprtment - "DCFS"{
+                            printButtonClick(6, 99, '', '', '', reason, requestType, 9);  // type 9	Vendor Rejection Letter
+                        }    
+                        //  end- After Rejection show the popup to select Payee
+                       
                     }
                 }
                 else if (status == 2) {  // assign = 2  
@@ -785,6 +945,11 @@
                     else if (status == 4) {
                         $("#header_status").text("Approved");
                         $("#ClosedDate").text(getActualFullDate());
+                        // After Approval show the popup to select Payee
+                        $('#Print_PayeelocationModal').modal('show');
+                        // end- After Approval show the popup to select Payee
+
+
                     }
                 } else if (status == 23) {  // 23	Pending Vendor Confirmation 
                     $("#header_status").text("Pending Vendor Confirmation");
@@ -798,6 +963,14 @@
 
             }
             , complete: function (jqXHR) {
+
+                if (status == 23) {
+                    $('#Print_PayeelocationModal').modal('show');
+                }
+
+                if (status == 6) {
+                    $("#btn_supervisor_print").css("display", "block");
+                }
             }
             , error: function (jqXHR, textStatus, errorThrown) {
                 if (textStatus == 'error') {
@@ -1192,9 +1365,13 @@
         $("#txt_pop_DeptContact").val($("#DeptContactNumber").text());
     })
 
+
+
+
+
+
+
     //  Attachment Document Related functions
-
-
     /* Srini: 8/30/2020 Helper function:  Download file used in application summary page,   */
     function download_file(fileURL, fileName) {
         // for non-IE

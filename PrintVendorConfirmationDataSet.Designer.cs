@@ -291,6 +291,8 @@ namespace eCAPDDApi {
             
             private global::System.Data.DataColumn columnSubmitDate;
             
+            private global::System.Data.DataColumn columnRejectReason;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public PrintDataTableDataTable() {
@@ -374,6 +376,14 @@ namespace eCAPDDApi {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn RejectReasonColumn {
+                get {
+                    return this.columnRejectReason;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -409,7 +419,7 @@ namespace eCAPDDApi {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public PrintDataTableRow AddPrintDataTableRow(string ConfirmationNumber, string ControlNumber, string PayeeName, string AddressStreetLine, string CityStateZip, string SubmitDate) {
+            public PrintDataTableRow AddPrintDataTableRow(string ConfirmationNumber, string ControlNumber, string PayeeName, string AddressStreetLine, string CityStateZip, string SubmitDate, string RejectReason) {
                 PrintDataTableRow rowPrintDataTableRow = ((PrintDataTableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ConfirmationNumber,
@@ -417,7 +427,8 @@ namespace eCAPDDApi {
                         PayeeName,
                         AddressStreetLine,
                         CityStateZip,
-                        SubmitDate};
+                        SubmitDate,
+                        RejectReason};
                 rowPrintDataTableRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPrintDataTableRow);
                 return rowPrintDataTableRow;
@@ -446,6 +457,7 @@ namespace eCAPDDApi {
                 this.columnAddressStreetLine = base.Columns["AddressStreetLine"];
                 this.columnCityStateZip = base.Columns["CityStateZip"];
                 this.columnSubmitDate = base.Columns["SubmitDate"];
+                this.columnRejectReason = base.Columns["RejectReason"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -463,6 +475,8 @@ namespace eCAPDDApi {
                 base.Columns.Add(this.columnCityStateZip);
                 this.columnSubmitDate = new global::System.Data.DataColumn("SubmitDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSubmitDate);
+                this.columnRejectReason = new global::System.Data.DataColumn("RejectReason", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRejectReason);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -701,6 +715,22 @@ namespace eCAPDDApi {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string RejectReason {
+                get {
+                    try {
+                        return ((string)(this[this.tablePrintDataTable.RejectReasonColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'RejectReason\' in table \'PrintDataTable\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePrintDataTable.RejectReasonColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsConfirmationNumberNull() {
                 return this.IsNull(this.tablePrintDataTable.ConfirmationNumberColumn);
             }
@@ -769,6 +799,18 @@ namespace eCAPDDApi {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetSubmitDateNull() {
                 this[this.tablePrintDataTable.SubmitDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsRejectReasonNull() {
+                return this.IsNull(this.tablePrintDataTable.RejectReasonColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetRejectReasonNull() {
+                this[this.tablePrintDataTable.RejectReasonColumn] = global::System.Convert.DBNull;
             }
         }
         
