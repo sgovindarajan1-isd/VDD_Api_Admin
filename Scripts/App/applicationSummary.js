@@ -186,6 +186,7 @@
     });
 
     function getReviewPanelInformation(summaryData) {
+        debugger;
         var status = summaryData.Status;
         var statusDesc = summaryData.StatusDesc;
 
@@ -227,9 +228,9 @@
                 $("#btn_reviewReject").hide();
                 $("#div_supervisor_proce_review").hide();
                 // after  approval or dpss reject  make the print button available 
-             
-                $("#btn_supervisor_print").css("display", "block");
-               
+
+                //$("#btn_supervisor_print").css("display", "block !important");
+
 
                 // For Approved status Reason label Invisbile
                 if (status == 6) {
@@ -298,7 +299,6 @@
         if (data.Status == 4 || data.Status == 6) {
             $("#btn_Reject").hide();
             $("#btn_Assign").hide();
-            //$("#div_supervisor_review_panel").hide();
         }
         //
 
@@ -308,17 +308,12 @@
             $("#div_assignApplication").show();
             $("#div_processor_review").hide();
             $("#div_supervisor_review_panel").hide();  //  per uat mail on 1/7/2021
-
-            //if (GlobalUserHasRoles.SupervisorRole) {  //   hide print btn for supervisor
-            //    //(application is New or Pending  donot show the Approve or Print button)
-            //        //$("#btn_reviewPrint").hide();
-            //        $("#btn_reviewApprove").hide();
-            //}
         }
         else if (data.Status == 21 || data.Status == 22) {  // recommend approve =21 recomment reject 22
             $("#div_assignApplication").show();
             $("#btn_Assign").text("Re-Assign");
             $("#div_processor_review").hide();
+            $("#btn_supervisor_print").hide();
         }
         else {
             $("#div_assignApplication").hide();
@@ -534,6 +529,12 @@
         var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedToName = $("#AssignedByName").text();
         var authorizedSignerEmail = $("#AuthorizedSignerEmail").text();
+        var requestType = $("#ApplicationType").text();
+
+        // for Approval email
+        if (requestType == "ACOT") {
+            authorizedSignerEmail = $("#DeptEmailAddress").text();
+        }
         var vendorCode = $("#VI_VendorCode").text();
 
         var status = 21;
@@ -551,12 +552,12 @@
             status = 4;
             assignedTo = assignedFrom;  //$("#AssignedProcessor").text(); //  final approval  assigned to supervisor him self
             assignedToName = assignedFromName;
-            $("#btn_supervisor_print").css("display", "block");
+            //$("#btn_supervisor_print").css("display", "block");
         }
 
 
 
-        UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, authorizedSignerEmail, vendorCode);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
+        UpdateApplicationStatus(status, '', "Approved.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, authorizedSignerEmail, vendorCode, requestType);//  Approve  : 4	Direct Deposit,  sending reason_type is empty as no reason for approval
     });
 
     $("#btn_SubmitReject").click(function () {
@@ -570,7 +571,12 @@
         var assignedFromName = $("#AssignedProcessorName").text();  //->  if supervisor assigned to processor --> Supervisor is current AssignedProcessor 
         var assignedToName = $("#AssignedByName").text();         //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var authorizedSignerEmail = $("#AuthorizedSignerEmail").text();
-
+        var requestType = $("#ApplicationType").text();
+        // for rejection email
+        if (requestType == "ACOT") {
+            authorizedSignerEmail = $("#DeptEmailAddress").text();
+        }
+    
         var status = 22;
 
         //if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
@@ -609,7 +615,7 @@
             assignedToName = userName;
         }
 
-        UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, authorizedSignerEmail, '');//   reject  status = 6;
+        UpdateApplicationStatus(status, reason_type, "Rejected.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, authorizedSignerEmail, '', requestType);//   reject  status = 6;
     });
 
     $("#btn_Popup_SubmitReturn").click(function () {
@@ -628,7 +634,7 @@
             $("#span_error_return_comment").html('');
         }
 
-        UpdateApplicationStatus(2, '', "Returned to Processor.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, '','');
+        UpdateApplicationStatus(2, '', "Returned to Processor.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, '','','');
         //   2	Assigned to Processor;
     });
 
@@ -640,7 +646,7 @@
 
         var processorID = $("#selectProcessorsList option:selected").val();    //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var processorName = $("#selectProcessorsList option:selected").text();
-        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName,'','');//  Status  2	Assigned to Processor
+        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName,'','','');//  Status  2	Assigned to Processor
     });
 
     $("#btn_proce_print").click(function () {  // processor view  
@@ -660,11 +666,13 @@
         //    assignedToName = assignedFromName;
         //}
 
-        UpdateApplicationStatus(status, '', "Send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName,'','');
+        UpdateApplicationStatus(status, '', "Send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName,'','','');
     });
 
     $("#btn_supervisor_print").click(function () {  // processor view
         debugger;
+        //$("#btn_supervisor_print").css("display", "block !important");
+
         var statusdesc = $("#header_status").text();
         var requestType = $("#ApplicationType").text();
 
@@ -672,7 +680,7 @@
 
         var status = 0;
         if (statusdesc == 'Rejected') {
-            status = 6
+            status = 6;
         }
 
         if (statusdesc == 'Rejected') {  //for reject   dpss only not for dcfs
@@ -690,6 +698,8 @@
 
 
     $('#ddPrintPayeeSelectGrid').on('click', '.PrintSelectPayeeBtn', function () {
+        $(this).attr("disabled", "disabled");
+
         debugger;
         //DocumentTypeId:  
         //7	Vendor Confirmation Letter
@@ -752,11 +762,14 @@
             },
             success: function (data) {
                 sessionStorage.setItem('PrintConfirmationLetter', data.data.VendorReportFileName);
-
                 uploadprintVendorconfDoctoRepository(confirmationNum, data.data.VendorReportFileName, DocumentTypeId);  // Vendor Confirmation Letter = 7
             }
             , complete: function (jqXHR) {
-                $("#btn_supervisor_print").css("display", "block");
+                //$("#btn_supervisor_print").css("display", "block !important");
+
+                toastr.options.positionClass = "toast-bottom-right";
+                toastr.warning("Successfully generated the confirmation letter.");
+
             }
             , error: function (jqXHR, textStatus, errorThrown) {
                 if (textStatus == 'error') {
@@ -817,7 +830,6 @@
                 selector: 'td:first-child'
             }
         });
-
     }
 
     function uploadprintVendorconfDoctoRepository(confirmationNum, vendorconfirmationletter, documentAttachmentTypeId) {
@@ -834,8 +846,9 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                getApplicationSummary(confirmationNum);
-                //$("#div_supervisor_review_panel").show(); 
+                //div_supervisor_review_panel
+             
+               // getApplicationSummary(confirmationNum);
 
                 //$("#btn_reviewApprove").hide();
                 //$("#btn_reviewReturn").hide();
@@ -850,7 +863,7 @@
             , error: function (jqXHR, textStatus, errorThrown) {
                 if (textStatus == 'error') {
                     toastr.options.positionClass = "toast-bottom-right";
-                    toastr.warning("Error uploading vendor confirmation letter , Please check!");
+                    toastr.warning("Error uploading vendor confirmation/approval/rejection letter , Please check!");
                 }
                 else if (jqXHR.status == '401') {
                     window.location.href = "/Home/UnAuthorized";
@@ -875,7 +888,7 @@
         return month + '/' + day + '/' + yr + ' (' + strTime + ')';
     }
 
-    function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, assignedFromName, assignedToName, authorizedSignerEmail, vendorCode) {
+    function UpdateApplicationStatus(status, reason_type, message, comment, assignedFrom, assignedTo, assignedFromName, assignedToName, authorizedSignerEmail, vendorCode, requestType) {
         var confirmNum = confirmationNum;
 
         $.ajax({
@@ -884,7 +897,7 @@
             url: "/api/values/UpdateApplicationStatus/",
             dataType: 'json',
             data: JSON.stringify({
-                'Confirmation': confirmationNum, 'status': status, 'Comment': comment, 'ReasonType': reason_type, 'ProcessorID': assignedTo, 'AssignedBy': assignedFrom, 'Signeremail': authorizedSignerEmail, 'VendorNumber': vendorCode
+                'Confirmation': confirmationNum, 'status': status, 'Comment': comment, 'ReasonType': reason_type, 'ProcessorID': assignedTo, 'AssignedBy': assignedFrom, 'Signeremail': authorizedSignerEmail, 'VendorNumber': vendorCode, 'RequestType': requestType
             }),
 
             headers: {
@@ -912,6 +925,7 @@
                         // after  approval or reject  make the print button available 
 
                         $("#header_status").text("Rejected");
+                        $("#span_suervisorreview_status").text("Rejected");
                         $("#ClosedDate").text(getActualFullDate());
 
                         // After Rejection show the popup to select Payee
@@ -943,6 +957,7 @@
                     }
                     else if (status == 4) {
                         $("#header_status").text("Approved");
+                        $("#span_suervisorreview_status").text("Approved");
                         $("#ClosedDate").text(getActualFullDate());
                         // After Approval show the popup to select Payee
                         $('#Print_PayeelocationModal').modal('show');
@@ -958,7 +973,8 @@
                 $("#btn_Reject").hide();
                 $("#btn_Assign").hide();
                 $("#div_supervisor_review_panel").hide();
-                //
+                // this to rrefresh and get review panel info after  approve and reject 
+                
 
             }
             , complete: function (jqXHR) {
@@ -967,8 +983,18 @@
                     $('#Print_PayeelocationModal').modal('show');
                 }
 
-                if (status == 6) {
+                if  (  ( status == 6 && ((requestType == "ACSS") || (requestType == "ACCH")))
+                    || (status == 4 &&  ((requestType == "DDOL") || (requestType == "ACOT"))) ) {
+                    //$("#btn_supervisor_print").css("display", "block !important");
+
+                    $("#div_supervisor_review_panel").show();
+                    $("#div_supervisor_proce_review").hide();
+                    $("#btn_reviewApprove").hide();
+                    $("#btn_reviewReturn").hide();
+                    $("#btn_reviewReject").hide();
+                    $("#btn_supervisor_print").show();
                     $("#btn_supervisor_print").css("display", "block");
+
                 }
             }
             , error: function (jqXHR, textStatus, errorThrown) {

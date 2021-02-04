@@ -182,6 +182,11 @@ namespace eCAPDDApi.Controllers
                 emailObj = VendorConfirmationEmail(vmvendorDD.Payeename, vmvendorDD.Confirmation, vmvendorDD.DDNotifyEmail);
             }
 
+            if (String.IsNullOrEmpty(emailObj.EmailTo))
+            {
+                return "Error - No Email id to send";
+            }
+
             if ((String.IsNullOrEmpty(emailObj.EmailFrom) | String.IsNullOrWhiteSpace(emailObj.EmailFrom)) |
                  (String.IsNullOrEmpty(emailObj.Subject) | String.IsNullOrWhiteSpace(emailObj.Subject)) |
                  (String.IsNullOrEmpty(emailObj.MessageBody) | String.IsNullOrWhiteSpace(emailObj.MessageBody))
@@ -253,12 +258,34 @@ namespace eCAPDDApi.Controllers
         {
             EmailClass obj = new EmailClass();
 
+            DAL.Models.DAL_M_SourceIPInfo ipInfo = RetrieveSourceIPInfo();
+
             string emailBody = string.Empty;
             emailBody += "First Name: " + vmcontactus.FirstName + "</br>";
             emailBody += "Last Name: "  + vmcontactus.LastName + "</br>";
+            emailBody += "Company Name: " + vmcontactus.Company + "</br>";
             emailBody += "Phone Name: " + vmcontactus.Phone + "</br></br>";
+            emailBody += "Email: " + vmcontactus.Email + "</br></br>";
 
-            obj.MessageBody = emailBody + vmcontactus.Message;
+            emailBody += "IP Tracking Fields: </br>";
+
+            emailBody += "IP Address: "+ ipInfo.Source_IP+ "</br></br>";
+
+            emailBody += "ServerName: " + ipInfo.SourceServerName + "</br></br>";
+
+            emailBody += "IP Device: "+ ipInfo.Source_Device+ "</br> </br>";
+            emailBody += "Source Information: " + ipInfo.Source_Host_Headers + "</br> </br>";
+
+            emailBody += "Track IP location: </br></br>";
+            if (ipInfo.Source_Location != null)
+            {
+                emailBody += "City, State and Country: " + ipInfo.Source_Location + "</br> </br>";
+            }
+
+
+
+
+            obj.MessageBody = emailBody + "Message: " + vmcontactus.Message+ "</br>";
             obj.Subject = vmcontactus.Subject;
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["VendorContactUS_EmailFrom"];
             obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["VendorContactUS_EmailTo"]; // contactusEmail   vmcontactus.Email //  to do   get it from correct eamil
@@ -598,10 +625,11 @@ namespace eCAPDDApi.Controllers
                 returnValue = dt,
             };
 
-            if ((adminModel.Status == 4) || (adminModel.Status == 6)) // approval  or rejection only email
-            {
+            // approval  or rejection only email
+            if ( adminModel.Status == 4 && ( adminModel.RequestType == "DDOL" || adminModel.RequestType == "ACOT" )  ||
+                 adminModel.Status == 6 && ( adminModel.RequestType == "DDOL" || adminModel.RequestType == "ACOT")
+                 ) { 
                 SendEmail(adminModel);
-
             }
 
             var response = Request.CreateResponse(HttpStatusCode.OK, new { data = data });
@@ -878,7 +906,16 @@ namespace eCAPDDApi.Controllers
             DAL.Models.DAL_M_SourceIPInfo ipInfo = new DAL.Models.DAL_M_SourceIPInfo();
             ipInfo.Source_Host_Headers = Headers;
             ipInfo.SourceServerName = ServerName;
+            ipInfo.Source_IP = IPADDR;
             ipInfo.Source_Device = getOSInfo();
+            if ((IPADDR.IndexOf("10.") > 0) || (IPADDR.IndexOf("192.") > 0) || (ipInfo.City.IsNullOrWhiteSpace()) || (ipInfo.StateProvCode.IsNullOrWhiteSpace()))
+            {
+                ipInfo.Source_Location = "LA County Internal";
+            }
+
+            logw.LogWrite("RetrieveSourceIPInfo - IPADDR " + IPADDR);
+            logw.LogWrite("RetrieveSourceIPInfo - ServerName " + ServerName);
+            logw.LogWrite("RetrieveSourceIPInfo - Headers " + Headers);
 
             if (!ServerName.Contains("localhost"))
             {
@@ -886,6 +923,8 @@ namespace eCAPDDApi.Controllers
                 {
                     string info = new WebClient().DownloadString("http://api.db-ip.com/v2/free/" + IPADDR);
                     ipInfo = JsonConvert.DeserializeObject<DAL.Models.DAL_M_SourceIPInfo>(info);
+
+                    logw.LogWrite("RetrieveSourceIPInfo - info " + info);
 
                     // any IP that starts with 10. or 192. will be internal to LA County network but may show the city name differently because of the location of the edge router
                     //ViewBag.Message += "IP: " + IPADDR + Environment.NewLine + "Location: " + ipInfo.City + Environment.NewLine + ipInfo.StateProv;
@@ -900,10 +939,13 @@ namespace eCAPDDApi.Controllers
                     {
                         ipInfo.Source_Location = ipInfo.City + ", " + ipInfo.StateProvCode + " (" + ipInfo.CountryCode + ")";
                     }
+
+                    logw.LogWrite("RetrieveSourceIPInfo - ipInfo.Source_Location " + ipInfo.Source_Location);
                     ipInfo.Source_Device = getOSInfo();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    logw.LogWrite("RetrieveSourceIPInfo - exception " + ex.Message.ToString());
                 }
             }
             else
