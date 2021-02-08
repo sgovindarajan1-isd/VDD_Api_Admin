@@ -228,10 +228,6 @@
                 $("#btn_reviewReject").hide();
                 $("#div_supervisor_proce_review").hide();
                 // after  approval or dpss reject  make the print button available 
-
-                //$("#btn_supervisor_print").css("display", "block !important");
-
-
                 // For Approved status Reason label Invisbile
                 if (status == 6) {
                     $("#div_supervisor_reasoncategory_panel").css("display", "block");
@@ -259,12 +255,14 @@
             }
 
 
-            if (status == 6 || status == 4) {// || status == 23) {
+            if (status == 6) {
                 $("#btn_supervisor_print").css("display", "block");
             }
-
-            if (status == 23 && summaryData.RequestType == "DDOL") {
-                $("#btn_supervisor_print").show();
+            else if ((status == 4) && (summaryData.RequestType == "DDOL" || summaryData.RequestType == "ACOT")) {  // Remove "Print" button for approved for application types ACWC, ACCH, ACSS - these do not need approval letters
+                $("#btn_supervisor_print").css("display", "block");
+            }
+            else if (status == 23 && summaryData.RequestType == "DDOL") {
+                $("#btn_supervisor_print").css("display", "block");
             }
             else {
                 $("#btn_supervisor_print").hide();
@@ -595,7 +593,7 @@
         if (requestType == "ACOT") {
             authorizedSignerEmail = $("#DeptEmailAddress").text();
         }
-    
+
         var status = 22;
 
         //if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
@@ -653,7 +651,7 @@
             $("#span_error_return_comment").html('');
         }
 
-        UpdateApplicationStatus(2, '', "Returned to Processor.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, '','','');
+        UpdateApplicationStatus(2, '', "Returned to Processor.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, '', '', '');
         //   2	Assigned to Processor;
     });
 
@@ -665,7 +663,7 @@
 
         var processorID = $("#selectProcessorsList option:selected").val();    //->   if return to processor means : Earlier  it is coming from processor"AssignedBy"
         var processorName = $("#selectProcessorsList option:selected").text();
-        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName,'','','');//  Status  2	Assigned to Processor
+        UpdateApplicationStatus(2, '', "Assigned to Processor " + processorName, comment, supervisorID, processorID, supervisorName, processorName, '', '', '');//  Status  2	Assigned to Processor
     });
 
     $("#btn_proce_print").click(function () {  // processor view  
@@ -685,7 +683,7 @@
         //    assignedToName = assignedFromName;
         //}
 
-        UpdateApplicationStatus(status, '', "Send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName,'','','');
+        UpdateApplicationStatus(status, '', "Send to vendor confirmation.", comment, assignedFrom, assignedTo, assignedFromName, assignedToName, '', '', '');
     });
 
     $("#btn_supervisor_print").click(function () {  // processor view
@@ -935,7 +933,7 @@
 
                         $("#header_status").text("Rejected");
                         $("#span_suervisorreview_status").text("Rejected");
-                         $("#ClosedDate").text(getActualFullDate());
+                        $("#ClosedDate").text(getActualFullDate());
 
                         // After Rejection show the popup to select Payee
                         var requestType = $("#ApplicationType").text();
@@ -950,9 +948,9 @@
 
                         if (requestType == "ACCH") {  //6   Rejected  Deaprtment - "DCFS"{
                             printButtonClick(6, 99, '', '', '', reason, requestType, 9, caseno);  // type 9	Vendor Rejection Letter
-                        }    
+                        }
                         //  end- After Rejection show the popup to select Payee
-                       
+
                     }
                 }
                 else if (status == 2) {  // assign = 2  
@@ -970,8 +968,10 @@
                         $("#header_status").text("Approved");
                         $("#span_suervisorreview_status").text("Approved");
                         $("#ClosedDate").text(getActualFullDate());
-                        // After Approval show the popup to select Payee
-                        $('#Print_PayeelocationModal').modal('show');
+                        // After Approval show the popup to select Payee -- Prin pdf letter only for DDOL and ACOT
+                        if (requestType == "DDOL" || requestType == "ACOT") {
+                            $('#Print_PayeelocationModal').modal('show');
+                        }
                         // end- After Approval show the popup to select Payee
 
 
@@ -985,7 +985,7 @@
                 $("#btn_Assign").hide();
                 $("#div_supervisor_review_panel").hide();
                 // this to rrefresh and get review panel info after  approve and reject 
-                
+
 
             }
             , complete: function (jqXHR) {
@@ -994,8 +994,8 @@
                     $('#Print_PayeelocationModal').modal('show');
                 }
 
-                if  (  ( status == 6 && ((requestType == "ACSS") || (requestType == "ACCH")))
-                    || (status == 4 &&  ((requestType == "DDOL") || (requestType == "ACOT"))) ) {
+                if ((status == 6 && ((requestType == "ACSS") || (requestType == "ACCH")))
+                    || (status == 4 && ((requestType == "DDOL") || (requestType == "ACOT")))) {
                     //$("#btn_supervisor_print").css("display", "block !important");
 
                     $("#div_supervisor_review_panel").show();
