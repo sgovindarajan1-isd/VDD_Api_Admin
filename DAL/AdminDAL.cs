@@ -443,6 +443,7 @@ namespace DAL
                         loc.ApplicationStatus = reqM.Status;  //  used only for  print
                         loc.RejectReason = reqM.ReasonType + ". " + reqM.Comment;
                         loc.RequestType = reqM.RequestType;
+                        loc.CaseNo = reqM.CaseNo;
                         LocationAddressList.Add(loc);
                     }
 

@@ -41,10 +41,9 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>TO:              DCFS</Value>
+                <Value>TO:             DCFS</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
-                  <FontSize>12pt</FontSize>
                   <FontWeight>Normal</FontWeight>
                   <TextDecoration>None</TextDecoration>
                   <Color>#000000</Color>
@@ -58,10 +57,9 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>         Direct Deposit Unit</Value>
+                <Value>      Direct Deposit Unit</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
-                  <FontSize>12pt</FontSize>
                   <FontWeight>Normal</FontWeight>
                   <TextDecoration>None</TextDecoration>
                   <Color>#000000</Color>
@@ -87,10 +85,9 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>FROM:         Auditor-Controller, Disbursements</Value>
+                <Value>FROM:        Auditor-Controller, Disbursements</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
-                  <FontSize>12pt</FontSize>
                   <FontWeight>Normal</FontWeight>
                   <TextDecoration>None</TextDecoration>
                   <Color>#000000</Color>
@@ -104,10 +101,9 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>                    Direct Deposit Unit</Value>
+                <Value>                   Direct Deposit Unit</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
-                  <FontSize>12pt</FontSize>
                   <FontWeight>Normal</FontWeight>
                   <TextDecoration>None</TextDecoration>
                   <Color>#000000</Color>
@@ -132,10 +128,9 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>SUBJECT:    </Value>
+                <Value>SUBJECT:  </Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
-                  <FontSize>12pt</FontSize>
                   <FontWeight>Normal</FontWeight>
                   <TextDecoration>None</TextDecoration>
                   <Color>#000000</Color>
@@ -145,7 +140,6 @@
                 <Value>REJECTED DIRECT DEPOSIT APPLICATION FORM</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
-                  <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <TextDecoration>None</TextDecoration>
                   <Color>#000000</Color>
@@ -679,6 +673,66 @@
         <Height>0.25in</Height>
         <Width>6.04276in</Width>
         <ZIndex>9</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="SubmitDate">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!SubmitDate.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>SubmitDate</rd:DefaultName>
+        <Top>2.10464in</Top>
+        <Left>1.22891in</Left>
+        <Height>0.25in</Height>
+        <Width>1.93427in</Width>
+        <ZIndex>10</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox33">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Date:</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox25</rd:DefaultName>
+        <Top>2.09004in</Top>
+        <Left>0.45819in</Left>
+        <Height>0.2646in</Height>
+        <Width>0.56173in</Width>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>

@@ -76,7 +76,7 @@
                                     // data = '******' + row.AcccountNo.substr(row.AcccountNo.length - 4);  //'Masked';
                                 if ((data != null) && (data != ''))
                                     data = '******' + data.substr(data.length - 4);  //'Masked';
-                                //}
+                                
                                 return data;
                             }
 
@@ -91,13 +91,28 @@
                                 else if (row.AccountType === '2') {
                                     data = 'Savings';
                                 }
-                                return 'Not Available';
+                                else if (row.Status == null || row.Status.toLowerCase() === 'check' || row.Status == '') {
+                                    data = ''
+                                }
+                                else data = 'Not Available'
+                                return data;
                             }
                         },
-                        { 'data': 'RemittanceEmail' },
-                        {
-                            'data': 'Status', "width": '140px', 'className': 'payment-status-color'
-                        }
+                        { 'data': 'RemittanceEmail' }
+                        ,{
+                            'data': 'Status', "width": '140px', 'className': 'payment-status-color',
+
+                            "render": function (data, type, row, meta) {
+                                if (data.toUpperCase().indexOf('EFT ELIGIBLE') >= 0) {
+                                    data = 'Direct Deposit';
+                                }
+                                else if (data == null || data == '') {
+                                    data = 'Check'
+                                }
+                                return data;
+                            }
+                        },
+                        
                     ],
 
                     columnDefs: [

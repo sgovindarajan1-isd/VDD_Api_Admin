@@ -498,7 +498,7 @@
             headers: {
                 'Authorization': 'Basic ' + btoa('admin')
             },
-            url: "/api/values/RetrieveDenialReasonList/"+ 0,  //  0 means  get all the category and reasons
+            url: "/api/values/RetrieveDenialReasonList/0" ,  //  0 means  get all the category and reasons
             success: function (data) {
                 setDenialReasonList(data.data.denialReasonList);
             },
@@ -598,7 +598,6 @@
         });
     };
 
-
     $('#btn_SubmitDenialReason').click(function (e) {
         var denialReason = $("#txt_DenialReason").val();
         var category = $('#select_rejectReasonCategory').val();
@@ -665,6 +664,31 @@
         });
     });
 
+    function RetrieveDenialReasonList(select_rejectReasonCategory) {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            type: "POST",
+            url: "/api/values/RetrieveDenialReasonList/" + select_rejectReasonCategory,
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin')
+            },
+            success: function (data) {
+                rrList = data.data.denialReasonList;
+
+                var rejectReasonList = $('#select_rejectReason');
+                rejectReasonList.empty();
+
+                rejectReasonList.append($('<option class="dropdown-item1"></option>').val(0).html(''));
+
+                $.each(rrList, function (key, value) {
+                    rejectReasonList.append(
+                        $('<option class="dropdown-item1"></option>').val(value.DenialReasonId).html(value.DenialReasonText)
+                    );
+                });
+            }
+        });
+    };
 
 
 

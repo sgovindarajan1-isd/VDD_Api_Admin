@@ -366,6 +366,7 @@
         $("#CompanyName").text(data.CompanyName);
         $("#TaxpayerID").text(data.Ssn); // //TaxpayerIDNumber
         $("#DirectDepositNotificationEmail").text(data.DDNotifyEmail);
+        $("#Caseno").text(data.CaseNo);
 
         $("#ClosedDate").text(data.ClosedDate);
         $("#VCMCreateDate").text(data.VCMCreateDate);
@@ -671,12 +672,11 @@
 
     $("#btn_supervisor_print").click(function () {  // processor view
         debugger;
-        //$("#btn_supervisor_print").css("display", "block !important");
-
         var statusdesc = $("#header_status").text();
         var requestType = $("#ApplicationType").text();
+        var caseno = $("#Caseno").text();
 
-        var reason = $("#span_supervisor_panel_reason").text() + ". " + $("#span_supervisor_panel_note").text();
+        var reason = $("#span_supervisor_panel_reason").text();// + ". " + $("#span_supervisor_panel_note").text();
 
         var status = 0;
         if (statusdesc == 'Rejected') {
@@ -688,7 +688,7 @@
                 $('#Print_PayeelocationModal').modal('show');
             }
             else if (requestType == "ACCH") {  //6   Rejected  Deaprtment - "DCFS"{
-                printButtonClick(6, 99, '', '', '', reason, requestType, 9);  // type 9	Vendor Rejection Letter
+                printButtonClick(6, 99, '', '', '', reason, requestType, 9, caseno);  // type 9	Vendor Rejection Letter
             }
         }
         else {   // for approval and print vendor confirmation
@@ -732,12 +732,12 @@
 
         var CityStateZip = pData.City + ', ' + pData.State + ', ' + pData.ZipCode;
 
-        printButtonClick(status, pData.LocationID, pData.Address1, pData.Address2, CityStateZip, pData.RejectReason, pData.RequestType, DocumentTypeId);
+        printButtonClick(status, pData.LocationID, pData.Address1, pData.Address2, CityStateZip, pData.RejectReason, pData.RequestType, DocumentTypeId, pData.CaseNo);
 
         var userId = sessionStorage.getItem('UserId');
     });
 
-    function printButtonClick(status, payeelocationID, payeeLocationAddress1, payeeLocationAddress2, payeeLocationCityStateZip, rejectReason, requestType, DocumentTypeId) {
+    function printButtonClick(status, payeelocationID, payeeLocationAddress1, payeeLocationAddress2, payeeLocationCityStateZip, rejectReason, requestType, DocumentTypeId, Caseno) {
         var vendorDetails = {};
         vendorDetails.confirmation = confirmationNum;
         vendorDetails.payeeName = $("#PayeeName").text();
@@ -749,6 +749,7 @@
         vendorDetails.payeeLocationAddress2 = payeeLocationAddress2;
         vendorDetails.PayeeLocationCityStateZip = payeeLocationCityStateZip;
         vendorDetails.requestType = requestType;
+        vendorDetails.caseno = Caseno;
 
         var venDetails = JSON.stringify(vendorDetails);
         $.ajax({
@@ -765,11 +766,10 @@
                 uploadprintVendorconfDoctoRepository(confirmationNum, data.data.VendorReportFileName, DocumentTypeId);  // Vendor Confirmation Letter = 7
             }
             , complete: function (jqXHR) {
-                //$("#btn_supervisor_print").css("display", "block !important");
-
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.warning("Successfully generated the confirmation letter.");
-
+                var url = "/../Uploads/" + jqXHR.responseJSON.data.VendorReportFileName;
+                window.open(url, '_blank');
             }
             , error: function (jqXHR, textStatus, errorThrown) {
                 if (textStatus == 'error') {
@@ -846,19 +846,10 @@
                 'Authorization': 'Basic ' + btoa('admin')
             },
             success: function (data) {
-                //div_supervisor_review_panel
-             
-               // getApplicationSummary(confirmationNum);
-
-                //$("#btn_reviewApprove").hide();
-                //$("#btn_reviewReturn").hide();
-                //$("#btn_reviewReject").hide();
-
-                //$("#btn_supervisor_print").css("display", "block");
-                //var url = "/Uploads/" + vendorconfirmationletter;
-                //window.open(url, '_blank');
             }
             , complete: function (jqXHR) {
+                var url = "/../Uploads/" + vendorconfirmationletter;
+                window.open(url, '_blank');
             }
             , error: function (jqXHR, textStatus, errorThrown) {
                 if (textStatus == 'error') {
@@ -926,19 +917,21 @@
 
                         $("#header_status").text("Rejected");
                         $("#span_suervisorreview_status").text("Rejected");
-                        $("#ClosedDate").text(getActualFullDate());
+                         $("#ClosedDate").text(getActualFullDate());
 
                         // After Rejection show the popup to select Payee
                         var requestType = $("#ApplicationType").text();
+                        var caseno = $("#Caseno").text();
 
                         if (requestType == "ACSS") {  //6   Rejected  Deaprtment - "DPSS"
                             $('#Print_PayeelocationModal').modal('show');
                         }
 
                         //  For DCFS :  Needed rejection letter, but No Popup needed to select the payee
-                        var reason = reason_type + ". " + comment;
+                        var reason = reason_type;
+
                         if (requestType == "ACCH") {  //6   Rejected  Deaprtment - "DCFS"{
-                            printButtonClick(6, 99, '', '', '', reason, requestType, 9);  // type 9	Vendor Rejection Letter
+                            printButtonClick(6, 99, '', '', '', reason, requestType, 9, caseno);  // type 9	Vendor Rejection Letter
                         }    
                         //  end- After Rejection show the popup to select Payee
                        

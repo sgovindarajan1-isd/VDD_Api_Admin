@@ -141,7 +141,7 @@ namespace eCAPDDApi.Controllers
             emailBody += "The County of Los Angeles, Department of Auditor - Controller recently received your Direct Deposit Authorization request to issue your payments via direct deposit.  Unfortunately, the request is rejected due to the following reasons:  </br> ";
 
             emailBody += "<ul>  <li>";
-            emailBody += vmvendorDD.ReasonType + ". " + vmvendorDD.Comment;
+            emailBody += vmvendorDD.Comment;
             emailBody += "</ul>  </li>";
 
             emailBody += "You may resubmit your request with the corrected information via: https://directdeposit.lacounty.gov. </br> </br>";
@@ -232,17 +232,19 @@ namespace eCAPDDApi.Controllers
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
             VendorDAL clsdal = new VendorDAL();
 
-            vmvendorDD.CaseNo = GenerateControlNumber(4);
+            var controlNumber = GenerateControlNumber(4);
             if (vmvendorDD.Status == 23) {
-                vmvendorDD.VendorReportFileName = "CONF_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID + "_" + vmvendorDD.CaseNo + ".pdf";
+                vmvendorDD.VendorReportFileName = "CONF_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID + "_" + controlNumber + ".pdf";  // controlnumber = caseNo 
+                vmvendorDD.CaseNo = controlNumber;
             }
             else if (vmvendorDD.Status == 4)
             {
-                vmvendorDD.VendorReportFileName = "APPR_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID+"_"+vmvendorDD.CaseNo+".pdf";
+                vmvendorDD.CaseNo = controlNumber;
+                vmvendorDD.VendorReportFileName = "APPR_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID+"_"+ controlNumber + ".pdf";  // controlnumber = caseNo
             }
             else if (vmvendorDD.Status == 6)
             {
-                vmvendorDD.VendorReportFileName = "RJCT_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID + "_" + vmvendorDD.CaseNo + ".pdf";
+                vmvendorDD.VendorReportFileName = "RJCT_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID + "_" + controlNumber + ".pdf";
             }
             else
                 vmvendorDD.VendorReportFileName = "Error in File Name";
@@ -365,7 +367,10 @@ namespace eCAPDDApi.Controllers
                 {
                     vmvendorDD.Confirmation = confirmNumber;
                     vmvendorDD.SubmitDateTime = updateDate;
-                    vmvendorDD.ReturnErrorSuccessMsg = SendEmail(vmvendorDD);
+
+                    if ((vmvendorDD.SubmitFromWhere != null) &&  (vmvendorDD.SubmitFromWhere.ToUpper() != "DRAFT") ) {  //  For Internal submission no need of mail per user on 2/2/2021
+                        vmvendorDD.ReturnErrorSuccessMsg = SendEmail(vmvendorDD);
+                    }
                 }
                 else
                 {
@@ -1090,7 +1095,7 @@ namespace eCAPDDApi.Controllers
             dr["AddressStreetLine"] = vendordetails.PayeeLocationAddress1 + ", " + vendordetails.PayeeLocationAddress2;//PayeeLocationStreet;
             dr["CityStateZip"] = vendordetails.PayeeLocationCityStateZip.Trim();
             dr["SubmitDate"] = DateTime.Now.ToString("dd/MM/yyyy");
-            dr["RejectReason"] = vendordetails.Comment;//vendordetails.ReasonType + ". "+ vendordetails.Comment;
+            dr["RejectReason"] = vendordetails.Comment;// vendordetails.ReasonType;//
 
             dt.Rows.Add(dr);
             return dt;

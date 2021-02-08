@@ -19,6 +19,7 @@ namespace DAL.Models
         public int ApplicationStatus { get; set; }  //  This is to use for print functions
         public string RejectReason { get; set; }  //  This is to use for print functions
         public string RequestType { get; set; }
+        public string CaseNo { get; set; }
     }
 
     public class DAL_M_Checklist
