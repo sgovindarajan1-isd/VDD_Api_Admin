@@ -259,8 +259,15 @@
             }
 
 
-            if (status == 6 || status == 4 || status == 23) {
+            if (status == 6 || status == 4) {// || status == 23) {
                 $("#btn_supervisor_print").css("display", "block");
+            }
+
+            if (status == 23 && summaryData.RequestType == "DDOL") {
+                $("#btn_supervisor_print").show();
+            }
+            else {
+                $("#btn_supervisor_print").hide();
             }
 
 
@@ -301,6 +308,17 @@
             $("#btn_Assign").hide();
         }
         //
+
+
+        //processor view only ddol type and status = 2 then print button to visible
+        if (data.Status == 2 && data.RequestType == "DDOL") {
+            $("#btn_proce_print").show();
+        }
+        else {
+            $("#btn_proce_print").hide();
+        }
+
+        //supervisor view only ddol and "Pending Vendor Confirmation"  print visible else invisible
 
         if (data.Status == 5) {  // Pending =5
             // for new  display the reject button at top too

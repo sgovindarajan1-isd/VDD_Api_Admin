@@ -33,6 +33,7 @@
         }
     };
     $("#div_spinner").addClass('loader');
+    $(".select-checkbox").prop('checked', false);
 
     $('#txtZipCode').keypress(validateNumber);
 
@@ -332,6 +333,17 @@
         select: {
             style: 'multi',
             selector: 'td:first-child'
+        }
+    });
+
+    $("#chk_selectall").change(function () {
+        debugger;
+        if ($("th.select-checkbox").hasClass("selected")) {
+            $('#ddGrid').DataTable().rows().deselect();
+            $("th.select-checkbox").removeClass("selected");
+        } else {
+            $('#ddGrid').DataTable().rows().select();
+            $("th.select-checkbox").addClass("selected");
         }
     });
 });
