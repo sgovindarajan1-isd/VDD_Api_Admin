@@ -143,6 +143,9 @@
 
     $('#select_rejectReasonCategory').change(function (e) {
         var select_rejectReasonCategory = $('#select_rejectReasonCategory').val();
+        if (select_rejectReasonCategory <= 0) {
+            select_rejectReasonCategory = 999; // if no category selected no needed to put any reason
+        }
         // if (parseInt(select_rejectReasonCategory) != 1) {
 
         if ($("#select_rejectReasonCategory option:selected").text().indexOf('Other') >= 0) {
