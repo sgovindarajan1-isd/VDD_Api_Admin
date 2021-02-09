@@ -133,8 +133,8 @@
                     $("#txtrejectReason").hide();
                     $("#select_rejectReason").show();
                     //  set the default
-                    var select_rejectReasonCategory = $('#select_rejectReasonCategory').val();
-                    RetrieveDenialReasonList(select_rejectReasonCategory);
+                    //var select_rejectReasonCategory = $('#select_rejectReasonCategory').val();
+                    RetrieveDenialReasonList(999); // until category selected do not bring any
                 }
             }
         });
@@ -162,6 +162,11 @@
         $("#txt_Notes_comment").val('');
 
         if (e.relatedTarget.id == "btn_Reject" || e.relatedTarget.id == "btn_reviewReject" || e.relatedTarget.id == "btn_proce_reject") {  // reject
+            //if (e.relatedTarget.id == "btn_proce_reject") {  //for Processor reject no needed of catogory and reason type
+            //    $("#rejctreason").hide();
+            //    $('#rejctreasonCategory').hide();
+            //}
+            //else {}
             GetDenialReasonCategoryList();
 
             $("#rejectModalTitle").html("Application Reject");
@@ -210,7 +215,13 @@
                     msg = "Rejected" + " by " + summaryData.AssignedByName + " on " + summaryData.AssignmentDate;
 
                 $("#span_review_processor_Approval_msg").text(msg);
-                $("#span_review_processor_notes").text(summaryData.Comment);
+                
+                if (status == 22) {
+                    $("#span_review_processor_notes").html("<span> Category :" + summaryData.ReasonCategory + "</span> </br> <span> Reason : " + summaryData.ReasonType + "</span> </br > <span> Note : " + summaryData.Comment + "</span>");
+                }
+                else {
+                    $("#span_review_processor_notes").html("<span> Note : " + summaryData.Comment + "</span>");
+                }
             }
             else if (status == 23) {
                 statusDesc = "(Pending Vendor Confirmation)";
@@ -596,7 +607,19 @@
 
         var status = 22;
 
-        //if ((reason_type.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0 )) {
+        //if (GlobalUserHasRoles.ProcessorRole && $("#header_status").text() == "Processor Review") {  //  for processor reject no need of catogy and type
+        //    var reason_category = '';
+        //    var reason_type = '';
+
+        //    if (comment.length <= 0) {
+        //        $("#spanReasonType").html('Reason is required.');
+        //        return;
+        //    } else {
+        //        $("#spanReasonType").html('');
+        //    }
+        //}
+        //else { }
+
         if ((reason_category.indexOf('Other') >= 0) && ($("#txt_reject_comment").val().length <= 0)) {
             $("#spanReasonType").html('Reason is required.');
             return;
