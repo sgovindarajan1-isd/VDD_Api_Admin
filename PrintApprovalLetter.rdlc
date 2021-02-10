@@ -131,11 +131,33 @@
               <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!SubmitDate.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
         </Paragraphs>
         <rd:DefaultName>PayeeName</rd:DefaultName>
-        <Top>2.36333in</Top>
+        <Top>2.11333in</Top>
         <Left>0.43587in</Left>
-        <Height>0.58333in</Height>
+        <Height>0.99882in</Height>
         <Width>4.03514in</Width>
         <ZIndex>1</ZIndex>
         <Style>
@@ -481,36 +503,6 @@ Chief Disbursements Division</Value>
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="SubmitDate">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!SubmitDate.Value, "PrintVendorConfirmationDataSet")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>SubmitDate</rd:DefaultName>
-        <Top>2.04238in</Top>
-        <Left>0.44311in</Left>
-        <Height>0.25in</Height>
-        <Width>2.07041in</Width>
-        <ZIndex>5</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Image Name="Image4">
         <Source>Embedded</Source>
         <Value>printvendorconfFooterImage</Value>
@@ -519,7 +511,7 @@ Chief Disbursements Division</Value>
         <Left>1.22764in</Left>
         <Height>0.59096in</Height>
         <Width>2.70209in</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -553,7 +545,7 @@ Chief Disbursements Division</Value>
         <Left>4.06365in</Left>
         <Height>0.31181in</Height>
         <Width>2.84674in</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -680,7 +672,7 @@ Chief Disbursements Division</Value>
         <Left>0.11358in</Left>
         <Height>1.26904in</Height>
         <Width>7.47174in</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -699,7 +691,7 @@ Chief Disbursements Division</Value>
         <Left>0.7359in</Left>
         <Height>1.0243in</Height>
         <Width>1.38542in</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -790,7 +782,7 @@ Chief Disbursements Division</Value>
         <Left>0.17771in</Left>
         <Height>0.7401in</Height>
         <Width>2.08514in</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -855,7 +847,7 @@ Chief Disbursements Division</Value>
         <Left>0.47363in</Left>
         <Height>0.96576in</Height>
         <Width>2.68389in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -887,7 +879,7 @@ Chief Disbursements Division</Value>
         <Left>0.42645in</Left>
         <Height>0.25in</Height>
         <Width>4.03514in</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -919,7 +911,7 @@ Chief Disbursements Division</Value>
         <Left>0.44311in</Left>
         <Height>0.18334in</Height>
         <Width>4.01847in</Width>
-        <ZIndex>13</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -951,7 +943,7 @@ Chief Disbursements Division</Value>
         <Left>0.44311in</Left>
         <Height>0.18055in</Height>
         <Width>4.01847in</Width>
-        <ZIndex>14</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1057,7 +1049,7 @@ Chief Disbursements Division</Value>
         <Left>4.67792in</Left>
         <Height>0.86787in</Height>
         <Width>2.77135in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
