@@ -81,11 +81,15 @@ namespace eCAPDDApi.Controllers
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        public string GenerateControlNumber(int length)
+        private int GenerateControlNumber()  //int length
         {
-            const string chars = "0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+            //const string chars = "0123456789";
+            //return new string(Enumerable.Repeat(chars, length)
+            //  .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            AdminDAL adminDAL = new AdminDAL();
+            return adminDAL.GenerateControlNumber();
+
         }
         private string getMessageBody(string vendorName, string confirmNumber)
         {
@@ -96,13 +100,16 @@ namespace eCAPDDApi.Controllers
         }
 
 
-        private EmailClass VendorConfirmationEmail(string vendorName, string confirmNumber, string DDNotifiEmail)
+        private EmailClass VendorConfirmationEmail(string vendorName, string confirmNumber, string DDNotifiEmail, string userId)
         {
             EmailClass obj = new EmailClass();
             obj.MessageBody = getMessageBody(vendorName, confirmNumber);
             obj.Subject = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_Subject"] + " " + confirmNumber;
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailFrom"];//"sgovindarajan@isd.lacounty.gov";
-            obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailTo"]; // DDNotifiEmail  //  to do   get it from notify eamil
+            obj.EmailTo = DDNotifiEmail;
+            //else {
+            //    obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailTo"]; // DDNotifiEmail  //  to do   get it from notify eamil
+            //}
             obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailCC"];
             // obj.EmailBCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailBCC"];
             return obj;
@@ -126,7 +133,14 @@ namespace eCAPDDApi.Controllers
             obj.MessageBody = emailBody;
             obj.Subject = System.Configuration.ConfigurationManager.AppSettings["Approval_Subject"] + " " + vmvendorDD.VendorNumber;
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailFrom"];
-            obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailTo"];  //vmvendorDD.Signeremail  //To do   get it from authorized signer email
+            if (vmvendorDD.ProcessorID == "e622505" || vmvendorDD.LastUpdatedUser.ToLower().Trim() == "e622505")
+            {
+                obj.EmailTo = vmvendorDD.Signeremail;
+            }
+            else
+            {
+                obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailTo"];  // //To do   get it from authorized signer email
+            }
             obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailCC"];
             return obj;
         }
@@ -158,7 +172,12 @@ namespace eCAPDDApi.Controllers
             obj.MessageBody = emailBody;
             obj.Subject = System.Configuration.ConfigurationManager.AppSettings["Rejection_Subject"] + " " + vmvendorDD.Confirmation;
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailFrom"];
-            obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailTo"]; //vmvendorDD.Signeremail   //To do   get it from authorized signer email
+            if (vmvendorDD.ProcessorID == "e622505" || vmvendorDD.LastUpdatedUser == "E622505") {
+                obj.EmailTo = vmvendorDD.Signeremail;
+            }
+            else {
+                obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailTo"]; //vmvendorDD.Signeremail   //To do   get it from authorized signer email
+            }
             obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailCC"];
             return obj;
         }
@@ -179,7 +198,7 @@ namespace eCAPDDApi.Controllers
                 emailObj = Rejection_Email(vmvendorDD);
             }
             else {
-                emailObj = VendorConfirmationEmail(vmvendorDD.Payeename, vmvendorDD.Confirmation, vmvendorDD.DDNotifyEmail);
+                emailObj = VendorConfirmationEmail(vmvendorDD.Payeename, vmvendorDD.Confirmation, vmvendorDD.DDNotifyEmail, vmvendorDD.LastUpdatedUser);
             }
 
             if (String.IsNullOrEmpty(emailObj.EmailTo))
@@ -232,14 +251,14 @@ namespace eCAPDDApi.Controllers
             var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
             VendorDAL clsdal = new VendorDAL();
 
-            var controlNumber = GenerateControlNumber(4);
+            int controlNumber = GenerateControlNumber();
             if (vmvendorDD.Status == 23) {
                 vmvendorDD.VendorReportFileName = "CONF_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID + "_" + controlNumber + ".pdf";  // controlnumber = caseNo 
-                vmvendorDD.CaseNo = controlNumber;
+                vmvendorDD.CaseNo = controlNumber.ToString();
             }
             else if (vmvendorDD.Status == 4)
             {
-                vmvendorDD.CaseNo = controlNumber;
+                vmvendorDD.CaseNo = controlNumber.ToString();
                 vmvendorDD.VendorReportFileName = "APPR_" + vmvendorDD.Confirmation + "_" + vmvendorDD.PayeeLocationID+"_"+ controlNumber + ".pdf";  // controlnumber = caseNo
             }
             else if (vmvendorDD.Status == 6)
@@ -284,13 +303,11 @@ namespace eCAPDDApi.Controllers
                 emailBody += "City, State and Country: " + ipInfo.Source_Location + "</br> </br>";
             }
 
-
-
-
             obj.MessageBody = emailBody + "Message: " + vmcontactus.Message+ "</br>";
             obj.Subject = vmcontactus.Subject;
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["VendorContactUS_EmailFrom"];
             obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["VendorContactUS_EmailTo"]; // contactusEmail   vmcontactus.Email //  to do   get it from correct eamil
+
             obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["VendorContactUS_EmailCC"];
             return obj;
         }
@@ -368,7 +385,8 @@ namespace eCAPDDApi.Controllers
                     vmvendorDD.Confirmation = confirmNumber;
                     vmvendorDD.SubmitDateTime = updateDate;
 
-                    if ((vmvendorDD.SubmitFromWhere != null) &&  (vmvendorDD.SubmitFromWhere.ToUpper() != "DRAFT") ) {  //  For Internal submission no need of mail per user on 2/2/2021
+                    //if ((vmvendorDD.SubmitFromWhere != null) &&  (vmvendorDD.SubmitFromWhere.ToUpper() != "DRAFT") ) {  //  For Internal submission no need of mail per user on 2/2/2021
+                    if (vmvendorDD.SubmitFromWhere == null) { //  external submission :  To do send something like external
                         vmvendorDD.ReturnErrorSuccessMsg = SendEmail(vmvendorDD);
                     }
                 }
@@ -1094,7 +1112,7 @@ namespace eCAPDDApi.Controllers
             dr["PayeeName"] = vendordetails.Payeename;
             dr["AddressStreetLine"] = vendordetails.PayeeLocationAddress1 + ", " + vendordetails.PayeeLocationAddress2;//PayeeLocationStreet;
             dr["CityStateZip"] = vendordetails.PayeeLocationCityStateZip.Trim();
-            dr["SubmitDate"] = DateTime.Now.ToString("dd/MM/yyyy");
+            dr["SubmitDate"] = DateTime.Now.ToString("MMMM dd, yyyy");//   "dd/MM/yyyy");
             dr["RejectReason"] = vendordetails.Comment;// vendordetails.ReasonType;//
 
             dt.Rows.Add(dr);

@@ -101,7 +101,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>                   Direct Deposit Unit</Value>
+                <Value>                  Direct Deposit Unit</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontWeight>Normal</FontWeight>
@@ -146,7 +146,7 @@
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>:   </Value>
+                <Value xml:space="preserve"> </Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -500,10 +500,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>RejectReason</rd:DefaultName>
-        <Top>4.97167in</Top>
-        <Left>0.47363in</Left>
-        <Height>1.84167in</Height>
-        <Width>6.79804in</Width>
+        <Top>4.755in</Top>
+        <Left>0.44311in</Left>
+        <Height>2.05834in</Height>
+        <Width>6.82856in</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
@@ -691,7 +691,9 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!SubmitDate.Value, "PrintVendorConfirmationDataSet")</Value>
-                <Style />
+                <Style>
+                  <Format>MMMM d, yyyy</Format>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style />
@@ -699,40 +701,10 @@
         </Paragraphs>
         <rd:DefaultName>SubmitDate</rd:DefaultName>
         <Top>2.10464in</Top>
-        <Left>1.22891in</Left>
+        <Left>0.44311in</Left>
         <Height>0.25in</Height>
-        <Width>1.93427in</Width>
+        <Width>2.72007in</Width>
         <ZIndex>10</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox33">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Date:</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>2.09004in</Top>
-        <Left>0.45819in</Left>
-        <Height>0.2646in</Height>
-        <Width>0.56173in</Width>
-        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>

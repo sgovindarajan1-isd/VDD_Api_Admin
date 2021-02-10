@@ -9,7 +9,19 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Case No: </Value>
+                <Value>Case No : </Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=First(Fields!ControlNumber.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve">     </Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                 </Style>
@@ -24,7 +36,7 @@
         <Top>2.29238in</Top>
         <Left>5.01979in</Left>
         <Height>0.2646in</Height>
-        <Width>0.76014in</Width>
+        <Width>2.18514in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -51,28 +63,17 @@
               <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>PayeeName</rd:DefaultName>
-        <Top>2.61333in</Top>
-        <Left>0.43587in</Left>
-        <Height>0.25in</Height>
-        <Width>4.03514in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="AddressStreetLine">
-        <CanGrow>true</CanGrow>
-        <CanShrink>true</CanShrink>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!AddressStreetLine.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
           <Paragraph>
             <TextRuns>
               <TextRun>
@@ -85,45 +86,12 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>AddressStreetLine</rd:DefaultName>
-        <Top>2.92167in</Top>
-        <Left>0.45253in</Left>
-        <Height>0.25in</Height>
-        <Width>4.01847in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="CityStateZip">
-        <CanGrow>true</CanGrow>
-        <CanShrink>true</CanShrink>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!CityStateZip.Value, "PrintVendorConfirmationDataSet")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>CityStateZip</rd:DefaultName>
-        <Top>3.18833in</Top>
-        <Left>0.45253in</Left>
-        <Height>0.25in</Height>
-        <Width>4.01847in</Width>
-        <ZIndex>3</ZIndex>
+        <rd:DefaultName>PayeeName</rd:DefaultName>
+        <Top>2.71333in</Top>
+        <Left>0.44311in</Left>
+        <Height>0.8in</Height>
+        <Width>4.0279in</Width>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -141,6 +109,38 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
+                <Value>Dear </Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=First(Fields!PayeeName.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
                 <Value>The County of Los Angeles, Department of Auditor-Controller recently received your Direct Deposit Authorization request to issue your payments via direct deposit. Unfortunately, the request is rejected due to the following reasons:</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
@@ -150,8 +150,51 @@
                   <Color>#000000</Color>
                 </Style>
               </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
               <TextRun>
-                <Value xml:space="preserve">  
+                <Value />
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!RejectReason.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <ListStyle>Bulleted</ListStyle>
+            <ListLevel>1</ListLevel>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <ListLevel>1</ListLevel>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve">
 
 
 </Value>
@@ -164,57 +207,18 @@
                 </Style>
               </TextRun>
             </TextRuns>
+            <ListLevel>1</ListLevel>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Center</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
-        <Top>4.06042in</Top>
+        <Top>3.65209in</Top>
         <Left>0.43587in</Left>
-        <Height>0.68681in</Height>
+        <Height>2.04514in</Height>
         <Width>7.14946in</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="ControlNumber">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!ControlNumber.Value, "PrintVendorConfirmationDataSet")</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value xml:space="preserve">    </Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>ControlNumber</rd:DefaultName>
-        <Top>2.29238in</Top>
-        <Left>5.80559in</Left>
-        <Height>0.2646in</Height>
-        <Width>1.46608in</Width>
-        <ZIndex>5</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -249,7 +253,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>  Please return all documents to us in the enclosed envelope when the corrections have been made.</Value>
+                <Value>Please return all documents to us in the enclosed envelope when the corrections have been made.</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>13pt</FontSize>
@@ -298,11 +302,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
-        <Top>8.07743in</Top>
+        <Top>5.8191in</Top>
         <Left>0.43319in</Left>
-        <Height>0.67014in</Height>
+        <Height>0.76181in</Height>
         <Width>6.99674in</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -341,50 +345,22 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!SubmitDate.Value, "PrintVendorConfirmationDataSet")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>SubmitDate</rd:DefaultName>
-        <Top>2.29238in</Top>
-        <Left>1.08711in</Left>
-        <Height>0.25in</Height>
-        <Width>2.07041in</Width>
-        <ZIndex>7</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox33">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Date:</Value>
                 <Style>
-                  <FontSize>12pt</FontSize>
+                  <Format>MMMM d, yyyy</Format>
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>2.27778in</Top>
-        <Left>0.45253in</Left>
-        <Height>0.2646in</Height>
-        <Width>0.56514in</Width>
-        <ZIndex>8</ZIndex>
+        <rd:DefaultName>SubmitDate</rd:DefaultName>
+        <Top>2.30698in</Top>
+        <Left>0.44311in</Left>
+        <Height>0.25in</Height>
+        <Width>2.71441in</Width>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -418,11 +394,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
-        <Top>8.91286in</Top>
+        <Top>6.78786in</Top>
         <Left>0.45253in</Left>
         <Height>0.31181in</Height>
         <Width>6.45786in</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -553,7 +529,7 @@
         <Left>0.11358in</Left>
         <Height>1.50529in</Height>
         <Width>7.47174in</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -572,7 +548,7 @@
         <Left>0.7359in</Left>
         <Height>1.0243in</Height>
         <Width>1.38542in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -615,7 +591,7 @@
         <Left>0.17771in</Left>
         <Height>0.31147in</Height>
         <Width>2.08514in</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -680,7 +656,7 @@
         <Left>0.47363in</Left>
         <Height>0.96576in</Height>
         <Width>2.68389in</Width>
-        <ZIndex>13</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -712,7 +688,7 @@
         <Left>0.42645in</Left>
         <Height>0.25in</Height>
         <Width>4.03514in</Width>
-        <ZIndex>14</ZIndex>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -744,7 +720,7 @@
         <Left>0.44311in</Left>
         <Height>0.18334in</Height>
         <Width>4.01847in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -776,106 +752,7 @@
         <Left>0.44311in</Left>
         <Height>0.18055in</Height>
         <Width>4.01847in</Width>
-        <ZIndex>16</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="PayeeName3">
-        <CanGrow>true</CanGrow>
-        <CanShrink>true</CanShrink>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!PayeeName.Value, "PrintVendorConfirmationDataSet")</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>PayeeName</rd:DefaultName>
-        <Top>3.74097in</Top>
-        <Left>1.04311in</Left>
-        <Height>0.25in</Height>
-        <Width>4.03514in</Width>
-        <ZIndex>17</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox36">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Dear:</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>3.74097in</Top>
-        <Left>0.42645in</Left>
-        <Height>0.2646in</Height>
-        <Width>0.56514in</Width>
-        <ZIndex>18</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="RejectReason">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!RejectReason.Value, "PrintVendorConfirmationDataSet")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <ListStyle>Bulleted</ListStyle>
-            <ListLevel>1</ListLevel>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>RejectReason</rd:DefaultName>
-        <Top>4.97167in</Top>
-        <Left>0.7359in</Left>
-        <Height>1.84167in</Height>
-        <Width>6.53577in</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>

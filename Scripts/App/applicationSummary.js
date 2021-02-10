@@ -772,7 +772,7 @@
         var table = $('#ddPrintPayeeSelectGrid').DataTable();
         var pData = table.row(RowIndex).data();
 
-        var CityStateZip = pData.City + ', ' + pData.State + ', ' + pData.ZipCode;
+        var CityStateZip = pData.City + ', ' + pData.State + ' ' + pData.ZipCode;
 
         printButtonClick(status, pData.LocationID, pData.Address1, pData.Address2, CityStateZip, pData.RejectReason, pData.RequestType, DocumentTypeId, pData.CaseNo);
 

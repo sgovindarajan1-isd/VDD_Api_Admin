@@ -441,7 +441,7 @@ namespace DAL
                         loc.State = ds.Tables[1].Rows[k]["State"].ToString();
                         loc.ZipCode = ds.Tables[1].Rows[k]["Zip"].ToString();
                         loc.ApplicationStatus = reqM.Status;  //  used only for  print
-                        loc.RejectReason = reqM.ReasonType + ". " + reqM.Comment;
+                        loc.RejectReason = reqM.ReasonType;// + ". " + reqM.Comment;
                         loc.RequestType = reqM.RequestType;
                         loc.CaseNo = reqM.CaseNo;
                         LocationAddressList.Add(loc);
@@ -566,6 +566,40 @@ namespace DAL
             }
             return ret;
         }
+
+
+        public int GenerateControlNumber()
+        {
+            int ret = 0;
+            try
+            {
+                DataSet ds = new DataSet("LK_CONTROLNUMBER");
+                using (SqlConnection con = DBconnection.Open())
+                {
+                    SqlCommand sqlComm = new SqlCommand("GetControlNumberIncreamented", con);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = sqlComm;
+                    da.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        if (ds.Tables[0].Rows[0]["ControlNumber"].ToString() != string.Empty)
+                        {
+                            ret = Int32.Parse(ds.Tables[0].Rows[0]["ControlNumber"].ToString());
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.log.Error("GenerateControlNumber " + ex.Message);
+            }
+            return ret;
+        }
+
+        
 
         public string UpdateVendorDetails(DAL.Models.DAL_M_VendorDD adminModel)
         {
