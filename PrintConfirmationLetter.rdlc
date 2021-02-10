@@ -9,7 +9,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>RE: Notice of Change in Payment Method</Value>
+                <Value>RE:   Notice of Change in Payment Method</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -20,82 +20,86 @@
               <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Confirmation No : </Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=First(Fields!ConfirmationNumber.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>Red</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <ListLevel>1</ListLevel>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Control Number : </Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=First(Fields!ControlNumber.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>Red</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <ListLevel>1</ListLevel>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>Red</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>3.00937in</Top>
+        <Top>3.13437in</Top>
         <Left>0.43587in</Left>
-        <Height>0.2646in</Height>
+        <Height>0.8316in</Height>
         <Width>4.03514in</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox26">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Confirmation No:</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>3.22603in</Top>
-        <Left>0.43587in</Left>
-        <Height>0.2646in</Height>
-        <Width>1.42681in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox27">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Control Number:</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>3.47603in</Top>
-        <Left>0.43587in</Left>
-        <Height>0.2646in</Height>
-        <Width>1.42681in</Width>
-        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -122,28 +126,6 @@
               <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>PayeeName</rd:DefaultName>
-        <Top>2.14111in</Top>
-        <Left>0.43587in</Left>
-        <Height>0.28056in</Height>
-        <Width>4.03514in</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="AddressStreetLine">
-        <CanGrow>true</CanGrow>
-        <CanShrink>true</CanShrink>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
@@ -155,28 +137,6 @@
               <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>AddressStreetLine</rd:DefaultName>
-        <Top>2.42167in</Top>
-        <Left>0.45253in</Left>
-        <Height>0.25in</Height>
-        <Width>4.01847in</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="CityStateZip">
-        <CanGrow>true</CanGrow>
-        <CanShrink>true</CanShrink>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
@@ -189,12 +149,12 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>CityStateZip</rd:DefaultName>
-        <Top>2.68833in</Top>
-        <Left>0.45253in</Left>
-        <Height>0.25in</Height>
-        <Width>4.01847in</Width>
-        <ZIndex>5</ZIndex>
+        <rd:DefaultName>PayeeName</rd:DefaultName>
+        <Top>2.01611in</Top>
+        <Left>0.43587in</Left>
+        <Height>0.59723in</Height>
+        <Width>4.03514in</Width>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -215,7 +175,6 @@
                 <Value>Dear Sir/Madam, 
 
 The  County  of  Los  Angeles,  Department  of  Auditor-Controller  recently received  your Direct Deposit Authorization request to issue your payments via direct deposit.  Per our policy, we are contacting you to confirm the validity of this request.    
-
 
 We are requesting you or your company’s President, CFO, CEO or equivalent to contact us within seven (7) days of receiving this letter to confirm the authenticity of the submitted Direct Deposit Authorization request.  Otherwise, your request will be rejected.  You may email us your confirmation at </Value>
                 <Style>
@@ -310,11 +269,11 @@ Please feel free to contact us at </Value>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
-        <Top>3.86875in</Top>
+        <Top>4.11875in</Top>
         <Left>0.43587in</Left>
-        <Height>3.31181in</Height>
+        <Height>3.10348in</Height>
         <Width>7.14946in</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -333,84 +292,13 @@ Please feel free to contact us at </Value>
         <Left>0.45253in</Left>
         <Height>0.38263in</Height>
         <Width>1.41014in</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Image>
-      <Textbox Name="ConfirmationNumber">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!ConfirmationNumber.Value, "PrintVendorConfirmationDataSet")</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>Red</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>ConfirmationNumber</rd:DefaultName>
-        <Top>3.24063in</Top>
-        <Left>1.98in</Left>
-        <Height>0.25in</Height>
-        <Width>2.49101in</Width>
-        <ZIndex>8</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="ControlNumber">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!ControlNumber.Value, "PrintVendorConfirmationDataSet")</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>Red</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>ControlNumber</rd:DefaultName>
-        <Top>3.525in</Top>
-        <Left>1.98in</Left>
-        <Height>0.21563in</Height>
-        <Width>2.49101in</Width>
-        <ZIndex>9</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Textbox Name="Textbox22">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -488,7 +376,7 @@ Chief Disbursements Division</Value>
         <Left>0.43319in</Left>
         <Height>0.96432in</Height>
         <Width>6.99674in</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -560,7 +448,7 @@ Chief Disbursements Division</Value>
         <Left>5.62789in</Left>
         <Height>0.52409in</Height>
         <Width>1.95744in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -598,7 +486,7 @@ Chief Disbursements Division</Value>
         <Left>5.61123in</Left>
         <Height>0.18647in</Height>
         <Width>1.9741in</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -624,43 +512,11 @@ Chief Disbursements Division</Value>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>SubmitDate</rd:DefaultName>
-        <Top>1.91738in</Top>
-        <Left>1.08711in</Left>
+        <Top>2.79238in</Top>
+        <Left>0.44311in</Left>
         <Height>0.20984in</Height>
-        <Width>2.07041in</Width>
-        <ZIndex>13</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox33">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Date:</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>1.90278in</Top>
-        <Left>0.45253in</Left>
-        <Height>0.2646in</Height>
-        <Width>0.56514in</Width>
-        <ZIndex>14</ZIndex>
+        <Width>2.71441in</Width>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -679,7 +535,7 @@ Chief Disbursements Division</Value>
         <Left>1.22764in</Left>
         <Height>0.59096in</Height>
         <Width>2.70209in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -713,7 +569,7 @@ Chief Disbursements Division</Value>
         <Left>4.06365in</Left>
         <Height>0.31181in</Height>
         <Width>2.84674in</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -840,7 +696,7 @@ Chief Disbursements Division</Value>
         <Left>0.11358in</Left>
         <Height>1.23876in</Height>
         <Width>7.47174in</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -859,7 +715,7 @@ Chief Disbursements Division</Value>
         <Left>0.7359in</Left>
         <Height>1.0243in</Height>
         <Width>1.38542in</Width>
-        <ZIndex>18</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -961,7 +817,7 @@ Chief Disbursements Division</Value>
         <Left>0.17771in</Left>
         <Height>0.68454in</Height>
         <Width>2.08514in</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1026,7 +882,7 @@ Chief Disbursements Division</Value>
         <Left>0.47363in</Left>
         <Height>0.96576in</Height>
         <Width>2.68389in</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1058,7 +914,7 @@ Chief Disbursements Division</Value>
         <Left>0.42645in</Left>
         <Height>0.25in</Height>
         <Width>4.03514in</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1090,7 +946,7 @@ Chief Disbursements Division</Value>
         <Left>0.44311in</Left>
         <Height>0.18334in</Height>
         <Width>4.01847in</Width>
-        <ZIndex>22</ZIndex>
+        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1122,7 +978,7 @@ Chief Disbursements Division</Value>
         <Left>0.44311in</Left>
         <Height>0.18055in</Height>
         <Width>4.01847in</Width>
-        <ZIndex>23</ZIndex>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
