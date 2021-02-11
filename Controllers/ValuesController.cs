@@ -155,7 +155,7 @@ namespace eCAPDDApi.Controllers
             emailBody += "The County of Los Angeles, Department of Auditor - Controller recently received your Direct Deposit Authorization request to issue your payments via direct deposit.  Unfortunately, the request is rejected due to the following reasons:  </br> ";
 
             emailBody += "<ul>  <li>";
-            emailBody += vmvendorDD.Comment;
+            emailBody += vmvendorDD.ReasonType;
             emailBody += "</ul>  </li>";
 
             emailBody += "You may resubmit your request with the corrected information via: https://directdeposit.lacounty.gov. </br> </br>";

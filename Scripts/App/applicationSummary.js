@@ -269,7 +269,7 @@
             }
 
 
-            if (status == 6) {
+            if ( status == 6 && (summaryData.RequestType == "ACCH" || summaryData.RequestType == "ACSS")) {  //  Invisible only for DCFS Rejection Letter - ACCH  ||  DPSS Rejection Letter  = ACSS
                 $("#btn_supervisor_print").css("display", "block");
             }
             else if ((status == 4) && (summaryData.RequestType == "DDOL" || summaryData.RequestType == "ACOT")) {  // Remove "Print" button for approved for application types ACWC, ACCH, ACSS - these do not need approval letters
@@ -632,6 +632,8 @@
         }
 
         if (reason_category.indexOf('Other') >= 0) {
+            reason_type = $("#txtrejectReason").val();
+
             if ($("#txtrejectReason").length <= 0) {
                 $("#spanReasonType").html('Reason is required.');
                 return;

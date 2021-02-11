@@ -389,10 +389,10 @@
             vendorDetails.Signerphone = certifyobj[0].Signerphone;
             vendorDetails.Signeremail = certifyobj[0].Signeremail;
 
-            vendorDetails.DeptName = certifyobj[0].DeptName;
-            vendorDetails.DeptPerson = certifyobj[0].DeptPerson;
-            vendorDetails.DeptEmail = certifyobj[0].DeptEmail;
-            vendorDetails.DeptPhone = certifyobj[0].DeptPhone;
+            vendorDetails.DepartmentName = certifyobj[0].DeptName;
+            vendorDetails.DepartmentContactName = certifyobj[0].DeptPerson;
+            vendorDetails.DepartmentEmail = certifyobj[0].DeptEmail;
+            vendorDetails.DepartmentContactNo = certifyobj[0].DeptPhone;
         }
         vendorDetails.VendorAttachmentFileName = sessionStorage.getItem('uploadedfile')
         vendorDetails.AttachmentFileName_ddwetform = sessionStorage.getItem('uploadedfile_ddwetform')
