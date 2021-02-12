@@ -1110,7 +1110,13 @@ namespace eCAPDDApi.Controllers
             dr["ConfirmationNumber"] = vendordetails.Confirmation;
             dr["ControlNumber"] = vendordetails.CaseNo;
             dr["PayeeName"] = vendordetails.Payeename;
-            dr["AddressStreetLine"] = vendordetails.PayeeLocationAddress1 + ", " + vendordetails.PayeeLocationAddress2;//PayeeLocationStreet;
+            if (vendordetails.PayeeLocationAddress2 != null && vendordetails.PayeeLocationAddress2 != "")
+            {
+                dr["AddressStreetLine"] = vendordetails.PayeeLocationAddress1 + Environment.NewLine + vendordetails.PayeeLocationAddress2;//PayeeLocationStreet;
+            }
+            else {
+                dr["AddressStreetLine"] = vendordetails.PayeeLocationAddress1;
+            }
             dr["CityStateZip"] = vendordetails.PayeeLocationCityStateZip.Trim();
             dr["SubmitDate"] = DateTime.Now.ToString("MMMM dd, yyyy");//   "dd/MM/yyyy");
             dr["RejectReason"] = vendordetails.Comment;// vendordetails.ReasonType;//

@@ -77,7 +77,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!AddressStreetLine.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Value>=First(Fields!CityStateZip.Value, "PrintVendorConfirmationDataSet")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -116,6 +116,12 @@
               </TextRun>
               <TextRun>
                 <Value>=First(Fields!PayeeName.Value, "PrintVendorConfirmationDataSet")</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value> :</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                 </Style>
@@ -682,27 +688,6 @@
               <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>PayeeName</rd:DefaultName>
-        <Top>11.29318in</Top>
-        <Left>0.42645in</Left>
-        <Height>0.25in</Height>
-        <Width>4.03514in</Width>
-        <ZIndex>10</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="AddressStreetLine2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
@@ -714,27 +699,6 @@
               <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>AddressStreetLine</rd:DefaultName>
-        <Top>11.54318in</Top>
-        <Left>0.44311in</Left>
-        <Height>0.18334in</Height>
-        <Width>4.01847in</Width>
-        <ZIndex>11</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="CityStateZip2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
@@ -747,12 +711,12 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>CityStateZip</rd:DefaultName>
-        <Top>11.7543in</Top>
-        <Left>0.44311in</Left>
-        <Height>0.18055in</Height>
-        <Width>4.01847in</Width>
-        <ZIndex>12</ZIndex>
+        <rd:DefaultName>PayeeName</rd:DefaultName>
+        <Top>11.29318in</Top>
+        <Left>0.47363in</Left>
+        <Height>0.58333in</Height>
+        <Width>4.03514in</Width>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
