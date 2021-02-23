@@ -107,12 +107,13 @@ namespace eCAPDDApi.Controllers
             obj.Subject = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_Subject"] + " " + confirmNumber;
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailFrom"];//"sgovindarajan@isd.lacounty.gov";
             obj.EmailTo = DDNotifiEmail;
+            obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailCC"];
+            return obj;
+
             //else {
             //    obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailTo"]; // DDNotifiEmail  //  to do   get it from notify eamil
             //}
-            obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailCC"];
             // obj.EmailBCC = System.Configuration.ConfigurationManager.AppSettings["VendorConfirm_EmailBCC"];
-            return obj;
         }
 
 
@@ -133,16 +134,16 @@ namespace eCAPDDApi.Controllers
             obj.MessageBody = emailBody;
             obj.Subject = System.Configuration.ConfigurationManager.AppSettings["Approval_Subject"] + " " + vmvendorDD.VendorNumber;
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailFrom"];
-            if (vmvendorDD.ProcessorID == "e622505" || vmvendorDD.LastUpdatedUser.ToLower().Trim() == "e622505")
-            {
-                obj.EmailTo = vmvendorDD.Signeremail;
-            }
-            else
-            {
-                obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailTo"];  // //To do   get it from authorized signer email
-            }
+            obj.EmailTo = vmvendorDD.Signeremail;
             obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailCC"];
             return obj;
+            //if (vmvendorDD.ProcessorID == "e622505" || vmvendorDD.LastUpdatedUser.ToLower().Trim() == "e622505")
+            //{ }
+            //else
+            //{
+            //    obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["Approval_EmailTo"];  // //To do   get it from authorized signer email
+            //}
+
         }
 
         private EmailClass Rejection_Email(DAL.Models.DAL_M_VendorDD vmvendorDD) 
@@ -158,7 +159,7 @@ namespace eCAPDDApi.Controllers
             emailBody += vmvendorDD.ReasonType;
             emailBody += "</ul>  </li>";
 
-            emailBody += "You may resubmit your request with the corrected information via: https://directdeposit.lacounty.gov. </br> </br>";
+            //emailBody += "You may resubmit your request with the corrected information via: https://directdeposit.lacounty.gov. </br> </br>";
 
             emailBody += "Please feel free to contact us at DISB.DirectDeposit@auditor.lacounty.gov or call (213) 974-4870 with any questions. </br> </br>";
 
@@ -172,14 +173,18 @@ namespace eCAPDDApi.Controllers
             obj.MessageBody = emailBody;
             obj.Subject = System.Configuration.ConfigurationManager.AppSettings["Rejection_Subject"] + " " + vmvendorDD.Confirmation;
             obj.EmailFrom = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailFrom"];
-            if (vmvendorDD.ProcessorID == "e622505" || vmvendorDD.LastUpdatedUser == "E622505") {
-                obj.EmailTo = vmvendorDD.Signeremail;
-            }
-            else {
-                obj.EmailTo = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailTo"]; //vmvendorDD.Signeremail   //To do   get it from authorized signer email
-            }
+            obj.EmailTo = vmvendorDD.Signeremail;
             obj.EmailCC = System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailCC"];
             return obj;
+
+
+
+            //if (vmvendorDD.ProcessorID == "e622505" || vmvendorDD.LastUpdatedUser == "E622505") {
+            //    obj.EmailTo = vmvendorDD.Signeremail;
+            //}
+            //else {
+            //System.Configuration.ConfigurationManager.AppSettings["Rejection_EmailTo"]; //vmvendorDD.Signeremail   //To do   get it from authorized signer email
+            //}
         }
 
 
