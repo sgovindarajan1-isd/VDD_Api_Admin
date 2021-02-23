@@ -259,7 +259,24 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Please return all documents to us in the enclosed envelope when the corrections have been made.</Value>
+                <Value>Please return all documents to us in the enclosed envelope when the</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>13pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>corrections have been made.</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>13pt</FontSize>

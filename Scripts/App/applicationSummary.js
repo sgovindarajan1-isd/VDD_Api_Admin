@@ -944,8 +944,8 @@
 
                 $("#AssignedProcessorName").text(assignedToName);
                 $("#AssignedByName").text(assignedFromName);
-
-                $("#AssignDate").text(getActualFullDate());
+                if ( status == 2)
+                  $("#AssignDate").text(getActualFullDate());
                 // $("#ClosedDate").text(getActualFullDate());
 
                 toastr.options.positionClass = "toast-bottom-right";

@@ -648,8 +648,10 @@ namespace eCAPDDApi.Controllers
                 returnValue = dt,
             };
 
-            // approval  or rejection only email
-            if ( adminModel.Status == 4 && ( adminModel.RequestType == "DDOL" || adminModel.RequestType == "ACOT" )  ||
+            // approval   adminModel.Status == 4 && ( adminModel.RequestType == "DDOL" || adminModel.RequestType == "ACOT" )  ||
+
+            //rejection only email
+            if (
                  adminModel.Status == 6 && ( adminModel.RequestType == "DDOL" || adminModel.RequestType == "ACOT")
                  ) { 
                 SendEmail(adminModel);
