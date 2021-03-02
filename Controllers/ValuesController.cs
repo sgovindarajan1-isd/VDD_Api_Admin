@@ -1191,9 +1191,9 @@ namespace eCAPDDApi.Controllers
 
             dr["ssn"] = getMaskedSSN(vendordetails.Ssn);
             dr["DDNotifiEmail"] = vendordetails.DDNotifyEmail;
-            if (vendordetails.AccountType == 1)
-                dr["AccountType"] = "Checking";
-            else if (vendordetails.AccountType == 2)
+            if (vendordetails.AccountType == 2) // changing 2 to 1
+             dr["AccountType"] = "Checking";
+            else if (vendordetails.AccountType == 1)
                 dr["AccountType"] = "Saving";
             else
                 dr["AccountType"] = "Error";
