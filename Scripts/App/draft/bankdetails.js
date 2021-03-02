@@ -197,7 +197,7 @@
         $("#btn_otherAttachment").addClass('disabled_color');
     });
     $("#btn_Statement").on('click', function () {
-        fileSelectytedtype = 'ST';
+        fileSelectytedtype = 'BS';
         //displayBankStatements = 'First page of Bank Statement';
         sessionStorage.setItem('displayBankStatements', 'First page of Bank Statement');
 
@@ -209,7 +209,7 @@
         $("#btn_otherAttachment").addClass('disabled_color');
     });
     $("#btn_verifyLetter").on('click', function () {
-        fileSelectytedtype = 'VL';
+        fileSelectytedtype = 'BL';
         //displayBankStatements = 'Bank Verification Letter';
         sessionStorage.setItem('displayBankStatements', 'Bank Verification Letter');
 

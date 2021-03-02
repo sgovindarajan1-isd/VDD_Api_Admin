@@ -74,12 +74,12 @@ namespace eCAPDDApi.Controllers
         }
 
         private static Random random = new Random();
-        public string GenerateConfirmationNumber(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
+            public string GenerateConfirmationNumber(int length)
+            {
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                return new string(Enumerable.Repeat(chars, length)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
+            }
 
         private int GenerateControlNumber()  //int length
         {
@@ -158,9 +158,10 @@ namespace eCAPDDApi.Controllers
             emailBody += "<ul>  <li>";
             emailBody += vmvendorDD.ReasonType;
             emailBody += "</ul>  </li>";
-
-            //emailBody += "You may resubmit your request with the corrected information via: https://directdeposit.lacounty.gov. </br> </br>";
-
+            if (vmvendorDD.RequestType == "DDOL")
+            {
+                emailBody += "You may resubmit your request with the corrected information via: https://directdeposit.lacounty.gov. </br> </br>";
+            }
             emailBody += "Please feel free to contact us at DISB.DirectDeposit@auditor.lacounty.gov or call (213) 974-4870 with any questions. </br> </br>";
 
             emailBody += "Regards,</br> </br>";
@@ -437,6 +438,38 @@ namespace eCAPDDApi.Controllers
 
             return response;
         }
+
+
+        //[HttpGet]
+        //public HttpResponseMessage CheckStatus_Gettest()
+        //{
+        //    var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
+        //    VendorDAL clsdal = new VendorDAL();
+
+        //    //string result = "testreturn";//clsdal.GetApplicationStatus("testreturn");// confirmationNumObj.Text);
+        //    string result = clsdal.GetApplicationStatus("056G7F");// confirmationNumObj.Text);
+        //    if (result != null)
+        //    {
+        //        response = Request.CreateResponse(HttpStatusCode.OK, new { data = result });
+        //    }
+
+        //    return response;
+        //}
+
+        //[HttpGet]
+        //public HttpResponseMessage CheckStatus_test([FromBody] IdTextClass confirmationNumObj)
+        //{
+        //    var response = Request.CreateResponse(HttpStatusCode.NotFound, "");
+        //    VendorDAL clsdal = new VendorDAL();
+
+        //    string result = clsdal.GetApplicationStatus("testreturn");// confirmationNumObj.Text);
+        //    if (result != null)
+        //    {
+        //        response = Request.CreateResponse(HttpStatusCode.OK, new { data = result });
+        //    }
+
+        //    return response;
+        //}
 
         /// --------------------------
 

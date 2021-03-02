@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="./Content/Images/FavIcons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./Content/Images/FavIcons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./Content/Images/FavIcons/favicon-16x16.png">
+    <link rel="manifest" href="./Content/Images/FavIcons/manifest.json">
+    <link rel="mask-icon" href="./Content/Images/FavIcons/safari-pinned-tab.svg" color="#5bbad5">
+
+    <meta name="theme-color" content="#ff0000">
+    <meta name="theme-color" content="#ffffff">
+    <title>Direct Deposit Management System </title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900%7COpen+Sans:100,200,300,400,500,600,700,800,900%7CArimo:100,200,300,400,500,600,700,800,900" type="text/css">
+    <link href="/Content/main2.css" rel="stylesheet" />
+    @*-----------header end ---------------*@
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="wp_header_removedtheBackheader" class="menu-align-left">
+        <header>
+            <nav id="top-menu1">
+                <div class="primary-menu-bar-wrapper1 row-wrapper1" id="menu_TopPanel">
+                    <div>
+                        <div class="menu-button1"></div>
+                        <div id="menu_div_TopPanel" class="navHeader">
+                          
+                                <a id="lnkHome" class="navLink homeIcon" alt="Home" aria-label="Home">
+                                    <span class="fa fa-home homeImage" aria-hidden="true"></span>
+                                </a>
+
+                                <a id="menu_applicatoinList" text="Application List" class="navLink">APPLICATION LIST</a>
+                                <a id="menu_enterApplication" text="Enter Application" class="navLink">ENTER APPLICATION</a>
+                                <a id="menu_admin" class="navLink">ADMIN</a>
+                                <a id="menu_reports" text="Case List" class="navLink">REPORTS</a>
+
+                                <div id="div_menuUsername" class="search">
+                                    @*fa fa-expeditedssl fa-right*@
+                                    <span id="menu_userName" class="navLink" style="cursor: default; float: right;"></span> @*id_userName*@
+                                </div>
+                                <div id="div_advanceSearch" class="search">
+                                    <a id="lnkAdvSearch" text="Adv. Search" class="navLink">ADV SEARCH</a>
+                                    <div class="input-group" style="margin-top:4px;">
+                                        @*width:145px !important;*@
+                                        <input id="txt_appSearchNumber" name="caseNumber" style="font-size:.9em; height: 24px !important" type="search" placeholder="Application Number" class="form-control" aria-label="Claim Number">
+                                        <span class="input-group-btn" style="display: inline;">
+                                            <button type="submit" id="btnAdvanceSearch" class="btn btn-xs btn-default btn-nolabel" aria-label="Search">
+                                                <span class="fa fa-search"></span><span class="text-hide">Search</span>
+
+                                            </button>
+                                        </span>
+
+                                    </div>
+                                    <span class="errmessage" style="font-weight:bold" id="span_invalidAppNum"></span>
+                                </div>
+
+                                @*<div id="div_menuUsername1" class="search">
+                                    <span id="menu_loggedinasUserName" class="" style="color: #333; display: none; cursor: default; float: right;">Logged in as </span> id_userName
+                                </div>*@
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
+
+    <div id="wp_content">
+
+
+
+        <div id="grey-info-bar" class="content-font row-wrapper">
+            <div class="logo-bar-wrapper1">
+                <div class="col-xs-12">
+
+                    @*Navigation round button start *@
+
+                    <div id="liNavigation" class="row-wrapper row  row-home-gray">
+                        <div class="row-inner ">
+                            <div class="col-xs-12">
+                                <div class="wizard">
+                                    <div class="wizard-inner">
+                                        <div class="connecting-line"></div>
+                                        <ul class="nav nav-tabs" role="tablist" id="ul">
+
+                                            <li role="presentation" id="li_vendorstep" class="liselect" style="text-align:center" value="1">
+                                                <span title="Vendor Information" class="wizard-step" style="text-align:center">
+                                                    <span class="round-tab">
+                                                        <img id="img_vendor_step" src="/Content/Images/user_step_on.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+
+                                            <li role="presentation" id="li_infostep" class="liselect" style="text-align:center" value="2">
+                                                <span title="Payment Information" class="wizard-step" style="text-align:center">
+                                                    <span class="round-tab">
+                                                        <img id="img_info_step" src="/Content/Images/info_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_bankstep" class="liselect" value="3">
+                                                <span title="Enter Banking Information" class="wizard-step">
+                                                    <span id="span_bankstep" class="round-tab disabled ">
+                                                        <img id="img_bank_step" src="/Content/Images/bank_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+
+                                            </li>
+
+                                            <li role="presentation" id="li_attachmentstep" class="liselect" value="4">
+                                                <span title="Add Attachment" class="wizard-step">
+                                                    <span id="span_attachmentstep" class="round-tab disabled ">
+                                                        <img id="img_bank_attachment_step" src="/Content/Images/attachment_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_verify_step" class="liselect" value="5">
+                                                <span title="Verify Banking Information" class="wizard-step">
+                                                    <span id="span_verify_step" class="round-tab disabled ">
+                                                        <img id="img_bank_verify_step" src="/Content/Images/verify_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_certify_step" class="liselect" value="6">
+                                                <span title="Certify" class="wizard-step">
+                                                    <span id="span_certify_step" class="round-tab disabled ">
+                                                        <img id="img_certify_step" src="/Content/Images/certify_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_submit_step" class="liselect" value="7">
+                                                <span title="Submit" class="wizard-step">
+                                                    <span class="round-tab disabled ">
+                                                        <img id="img_submit_step" src="/Content/Images/submit_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+
+                                            <li role="presentation" id="li_confirmation_step" class="liselect" value="8">
+                                                <span title="Confirmation" class="wizard-step">
+                                                    <span class="round-tab disabled ">
+                                                        <img id="img_confirmation_step" src="/Content/Images/confirmation_step.png" style="position:relative; top:-5px; width: 25px; height: 25px;">
+                                                    </span>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @*Navigation round button end *@
+                    <h3>
+                        <span id="lbl_header"> Direct Deposit Management System  </span>
+                        @*<span id="btn_loginLock" class="fa fa-expeditedssl fa-right" style="font-size: 22px;"></span>*@
+                        <span id="lbl_userName" class="" style="float: right; font-size: 14px; font-weight:normal"></span> @*id_userName*@
+                    </h3>
+
+                    <div class="header-line header-line-purple"><span></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="layoutBody" class="row-wrapper layoutBody">
+            @RenderBody()
+        </div>
+
+
+        <!--new footer -->
+        <hr class="row-wrapper">
+        <footer>
+            <div id="pnlfooter" style="text-align:center; display:inline-block; width:100%">
+                <div id="pnl_login_footer">
+                    <a style="cursor: pointer !important" id="btn_layout_profile">Profile</a>&nbsp;|&nbsp;
+                    <a style="cursor: pointer !important" id="btn_logout">Logout</a>&nbsp;|&nbsp;
+                    <a href="/Home/Help">Help</a>
+                </div>
+                <div>County of Los Angeles Department of Auditor Controller</div>
+            </div>
+        </footer>
+        <!--new footer  -->
+    </div>  @*wp_content*@
+
+
+</body>
+</html>
