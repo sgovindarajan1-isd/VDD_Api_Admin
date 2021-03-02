@@ -330,9 +330,9 @@
         }
 
         if (!(bankobj == null) || (bankobj == 'undefined')) {
-            if (bankobj[0].AccountType == "1")
+            if (bankobj[0].AccountType == "2")  // changed from 2 to 1
                 $("#typeofAccount").val("Checking");
-            else if (bankobj[0].AccountType == "2")
+            else if (bankobj[0].AccountType == "1")
                 $("#typeofAccount").val("Saving");
             $("#nameonbankAc").val(bankobj[0].NameonbankAc); 
             $("#accountNumber").val(bankobj[0].BankAccountNumber);

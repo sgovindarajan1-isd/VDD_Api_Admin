@@ -1174,7 +1174,7 @@
                 $('#bankDetailsModal').modal('hide');
 
                 var acType = "Saving";
-                if ($("#txt_pop_AccountType").val == 1)
+                if ($("#txt_pop_AccountType").val == 2)  // changing 2 to 1
                     acType = "Checking";
 
                 $("#TypeofAccount").text(acType);
@@ -1386,11 +1386,11 @@
         $("#txt_pop_RoutingNo").val($("#BankRoutingNumber").text());
         $("#txt_pop_FinancialIns").val($("#FinancialInstitutionName").text());
 
-        if ($("#TypeofAccount").text().toLowerCase().indexOf("checking") >= 0) {
-            $("#txt_pop_AccountType").prop('selectedIndex', 1);
+        if ($("#TypeofAccount").text().toLowerCase().indexOf("checking") >= 0) {  // changing 2 to 1
+            $("#txt_pop_AccountType").prop('selectedIndex', 2);
         }
         else {
-            $("#txt_pop_AccountType").prop('selectedIndex', 2);
+            $("#txt_pop_AccountType").prop('selectedIndex', 1);
         }
     });
 

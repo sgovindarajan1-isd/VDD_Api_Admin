@@ -40,7 +40,7 @@
             //$("#txtReDDNotifyEmail").val(bankobj[0].ReDDNotifyEmail);
 
             var accountType = $('#txtAccountType').val();
-            if (parseInt(accountType) != 1) {
+            if (parseInt(accountType) == 1) {
                 $('#img_checkImage').hide();
             }
             else {
@@ -120,9 +120,9 @@
         var vendorobj = JSON.parse(sessionStorage.getItem("vendordetailsJson"));
 
         var acType = "Error";
-        if (bankdetailsJson[0].AccountType == "1")
+        if (bankdetailsJson[0].AccountType == "2")  // changing from 2 to 1
             acType = "Checking";
-        else if (bankdetailsJson[0].AccountType == "2")
+        else if (bankdetailsJson[0].AccountType == "1")
             acType = "Saving";
 
         $("#accountType").text(acType);
@@ -160,7 +160,7 @@
 
     $('#txtAccountType').change(function (e) {
         var accountType = $('#txtAccountType').val();
-        if (parseInt(accountType) != 1) {
+        if (parseInt(accountType) == 1) {
             $('#img_checkImage').hide();
         }
         else {

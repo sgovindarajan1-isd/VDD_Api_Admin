@@ -86,10 +86,10 @@
                         {
                             'data': 'AccountType',
                             "render": function (data, type, row, meta) {
-                                if (row.AccountType === '1') {
+                                if (row.AccountType === '2') {  // changed from 2 to 1
                                     data = 'Checking';
                                 }
-                                else if (row.AccountType === '2') {
+                                else if (row.AccountType === '1') {
                                     data = 'Savings';
                                 }
                                 else if (row.Status == null || row.Status.toLowerCase() === 'check' || row.Status == '') {
