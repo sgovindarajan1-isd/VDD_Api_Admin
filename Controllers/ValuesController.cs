@@ -360,6 +360,78 @@ namespace eCAPDDApi.Controllers
             return "Success";
         }
 
+        private bool DDMSMoveFileOutsideWebsite(string VendorAttachmentFileName, string AttachmentFileName_ddwetform, string VCMFileName )
+        {
+            string VendorSourceFile = string.Empty;
+            string VendorDestFile = string.Empty;
+
+            string WetSourceFile = string.Empty;
+            string WetDestFile = string.Empty;
+
+            string VCMsf = string.Empty;
+            string VCMdf = string.Empty;
+            string localPath = AppDomain.CurrentDomain.BaseDirectory;
+            
+            string Uploadpath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
+            string DDMSFilePath = System.Configuration.ConfigurationManager.AppSettings["DDMSFilePath"];
+
+            VendorSourceFile = localPath + Uploadpath + "\\"+ VendorAttachmentFileName;
+            VendorDestFile = DDMSFilePath + "\\" + VendorAttachmentFileName;
+
+            WetSourceFile = localPath + Uploadpath + "\\" + AttachmentFileName_ddwetform;
+            WetDestFile = DDMSFilePath + "\\" + AttachmentFileName_ddwetform;
+
+            VCMsf = localPath+ Uploadpath + "\\" + VCMFileName;
+            VCMdf = DDMSFilePath + "\\" + VCMFileName;
+
+            try
+            {
+                if (System.IO.File.Exists(VendorSourceFile))
+                {
+                    System.IO.File.Move(VendorSourceFile, VendorDestFile);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                logw.LogWrite("Exception: Error coping  Attachment file from internal upload location to outside DDMS  location: " + VendorDestFile + " " + ex.Message);
+                return false;
+            }
+
+            try
+            {
+                if (System.IO.File.Exists(WetSourceFile))
+                {
+                    System.IO.File.Move(WetSourceFile, WetDestFile);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                logw.LogWrite("Exception: Error coping  Attachment Wet file from internal upload location to outside DDMS  location: " + WetDestFile + " " + ex.Message);
+                return false;
+            }
+
+            try
+            {
+                if (System.IO.File.Exists(VCMsf))
+                {
+                    System.IO.File.Copy(VCMsf, VCMdf, true);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                logw.LogWrite("Exception: Error MOVING VCM file from internal upload location to outside DDMS pickup location: " + VCMdf + " " + ex.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+
+
+
         [HttpPost]
         public HttpResponseMessage SubmitVendorDD([FromBody]DAL.Models.DAL_M_VendorDD vmvendorDD)
         {
@@ -382,9 +454,21 @@ namespace eCAPDDApi.Controllers
             {
                 string str = generateVCMPDFReport(vmvendorDD);
                 DAL.Models.DAL_M_SourceIPInfo ipInfo = RetrieveSourceIPInfo();
+                string resultRequestLog = string.Empty;
 
                 Tuple<string, string> resultAttach = clsdal.SubmitAttachmentFile(vmvendorDD);
-                string resultRequestLog = clsdal.InsertRequestLog(vmvendorDD, ipInfo);
+
+
+                if (resultAttach != null)
+                {
+                    // Move the file to "send_to_ddms" location to windows service to pick up
+                    DDMSMoveFileOutsideWebsite(vmvendorDD.VendorAttachmentFileName, vmvendorDD.AttachmentFileName_ddwetform, vmvendorDD.VendorReportFileName);
+                    resultRequestLog = clsdal.InsertRequestLog(vmvendorDD, ipInfo);
+
+                }
+
+
+                
 
                 if ((resultAttach != null) && (resultRequestLog != string.Empty))
                 {
@@ -509,7 +593,6 @@ namespace eCAPDDApi.Controllers
             {
                 //bool_accountExists = loginServs.AccountExists(vm_AdminUser.UserId);
                 bool_isAuthenicated = loginServs.IsAuthenticated(vm_AdminUser.UserId, vm_AdminUser.Password);
-
             }
 
             if (!bool_isAuthenicated){
@@ -1287,7 +1370,7 @@ namespace eCAPDDApi.Controllers
             }
             catch (Exception ex)
             {
-                //logw.LogWrite("inside generate vcm exception- " + ex.Message);
+                logw.LogWrite("inside generate vcm exception- " + ex.Message);
                 return "ERROR - " + ex.Message;
             }
         }
@@ -1805,10 +1888,6 @@ namespace eCAPDDApi.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, new { data = "No banks found" });
             }
-          
         }
-
-
-
     }
 }

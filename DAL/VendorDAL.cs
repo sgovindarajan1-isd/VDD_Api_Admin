@@ -285,9 +285,9 @@ namespace DAL
             int typeid = 0;
             if (filename.IndexOf("_VC") > 0)
                 typeid = 1;
-            else if (filename.IndexOf("_ST") > 0)
+            else if (filename.IndexOf("_BS") > 0)     //“_BS” and not “_ST”
                 typeid = 2;
-            else if (filename.IndexOf("_VL") > 0)
+            else if (filename.IndexOf("_BL") > 0)       //“_BL” and not “_VL”
                 typeid = 3;
             else if (filename.IndexOf("_OA") > 0)
                 typeid = 4;

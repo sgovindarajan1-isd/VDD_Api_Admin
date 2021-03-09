@@ -1472,11 +1472,67 @@
     $('#attachmentGrid').on('click', '.clsdownload', function (e) {
         var closestRow = $(this).closest('tr');
         var data = $('#attachmentGrid').DataTable().row(closestRow).data();
+        downloadVendorAttachmentFile(data.AttachmentFileName);
 
-        //download_file("/Uploads/58202010105_SP8313_VC.png", "58202010105_SP8313_VC.png"); //call function
-        download_file("/Uploads/" + data.AttachmentFileName, data.AttachmentFileName); //call function
-
+        //old working code
+        // download_file("/Uploads/" + data.AttachmentFileName, data.AttachmentFileName); 
     });
+
+
+
+    function downloadVendorAttachmentFile(attachmentFileName) {
+        window.open("/helper/GetPdf/?attachmentFileName=" + attachmentFileName, "_blank"); 
+    }
+
+    $('#attachmentGrid').on('click', '.clsViewLine', function (e) {
+        var closestRow = $(this).closest('tr');
+        var data = $('#attachmentGrid').DataTable().row(closestRow).data();
+        var fileName = data.AttachmentFileName;
+        debugger;
+        downloadVendorAttachmentFile(fileName);
+
+        //$.ajax(
+        //    {
+        //        url: '@Url.Action("downloadFile_Ajax", "helper")',
+        //        contentType: 'application/json; charset=utf-8',
+        //        datatype: 'json',
+        //        data: {
+        //            'IdText': fileName, 'Text': sessionStorage.getItem('userName')
+        //        },
+        //        type: "GET",
+        //        success: function () {
+        //            window.location = '@Url.Action("downloadFile_Ajax", "helper", new { 'IdText': fileName, 'Text': sessionStorage.getItem('userName') })';
+        //        }
+        //    });
+
+        //$.ajax({
+        //    contentType: 'application/json; charset=utf-8',
+        //    type: "POST",
+        //    dataType: 'json',
+        //    data: JSON.stringify({ 'IdText': fileName, 'Text': sessionStorage.getItem('userName')  }),
+        //    headers: {
+        //        'Authorization': 'Basic ' + btoa('admin')
+        //    },
+        //    url: "/helper/downloadFile_Ajax/",
+        //    success: function (data) {
+        //        debugger;
+        //        alert('test success');
+        //       // window.open("data:application/pdf;base64,"+data.data,'_blanks');
+
+        //    },
+        //    error: function (_XMLHttpRequest, textStatus, errorThrown) {
+
+        //        debugger;
+        //        alert('error success');
+
+
+        //        if (_XMLHttpRequest.status == '401') {
+        //            window.location.href = "/Home/UnAuthorized";
+        //        }
+        //    }
+        //});
+    });
+
     //
     $('#attachmentGrid').on('click', '.clsretire', function (e) {
         var closestRow = $(this).closest('tr');
@@ -1531,7 +1587,8 @@
                     "data": "AttachmentFileName",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a target="blank" href="/Uploads/' + row.AttachmentFileName + '">' + data + ' </a>';    //'58202010105_SP8313_VC.png'
+                            // working data = '<a class= "clsViewLine" target="blank" href="/helper/GetPdf/?attachmentFileName=' + row.AttachmentFileName + '">' + data + ' </a>';  
+                            data = '<a class= "clsViewLine" target="blank">' + data + ' </a>';  
                         }
 
                         return data;

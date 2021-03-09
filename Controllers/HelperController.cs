@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Net;
 using System.Xml;
+using eCAPDDApi.Models;
 
 namespace eCAPDDApi.Controllers
 {
@@ -51,7 +52,10 @@ namespace eCAPDDApi.Controllers
                         }
 
                         Uploadpath = System.Configuration.ConfigurationManager.AppSettings["Uploadpath"];
-                        fname = Path.Combine(Server.MapPath("~/" + Uploadpath + "/"), fname);
+                        //fname = Path.Combine(Server.MapPath("~/" + Uploadpath + "/"), fname);
+                        string DDMSFilePath = System.Configuration.ConfigurationManager.AppSettings["DDMSFilePath"];
+                        fname = DDMSFilePath + "\\" + fname;
+
                         file.SaveAs(fname);
                     }
                     // Returns message that successfully uploaded  
@@ -90,21 +94,6 @@ namespace eCAPDDApi.Controllers
                     bankName = node.InnerText;
                 }
 
-                ////XmlNodeList nodeList = xmlDoc.SelectNodes("//InstitutionName[@type='M']");
-                //XmlNodeList nodeList = xmlDoc.SelectNodes("//InstitutionName[@type='B']");
-
-                //if (nodeList.Count > 0)
-                //{
-                //    XmlNode node = nodeList[0];
-                //    if (node.InnerText.Length > 40)
-                //    {
-                //        bankName = node.InnerText.Substring(0, 40);
-                //    }
-                //    else
-                //    {
-                //        bankName = node.InnerText;
-                //    }
-                //}
             }
             catch (Exception ex)
             {
@@ -115,6 +104,38 @@ namespace eCAPDDApi.Controllers
             return bankName;
         }
 
-       
+        //[HttpPost]
+        //[BasicAuthenticationAttribute]
+        public FileResult GetPdf(string attachmentFileName){
+            string domName = HttpContext.Request.Url.Host;
+           // if (User.Identity.IsAuthenticated)
+           // {
+                string filePath = System.Configuration.ConfigurationManager.AppSettings["DDMSFilePath"] + attachmentFileName;
+                Response.AddHeader("Content-Disposition", "inline; filename=" + attachmentFileName);
+                return File(filePath, "multipart/form-data");// "application/pdf");
+           //if (System.IO.File.Exists(filePath)) {
+           //    string FinalPDFFile = attachmentFileName;
+           //}
+           // }
+           // else
+           //     return null;
+        }
+
+
+        [HttpPost]
+        public ActionResult downloadFile_Ajax(IdTextClass fileInfo) { // FileResult
+            string filePath = System.Configuration.ConfigurationManager.AppSettings["DDMSFilePath"] + fileInfo.IdText;// attachmentFileName;
+            Response.AddHeader("Content-Disposition", "inline; filename=" + fileInfo.IdText); //attachmentFileName);
+            //return Json(File(filePath, "multipart/form-data"));// "application/pdf");
+            return File(filePath, "multipart/form-data");// "application/pdf");
+
+            //var file = db.EmailAttachmentReceived.FirstOrDefault(x => x.LisaId == studentId);
+            //byte[] fileBytes = System.IO.File.ReadAllBytes(file.Filepath);
+            //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file.Filename);
+
+            //if (System.IO.File.Exists(filePath)) {
+            //    string FinalPDFFile = attachmentFileName;
+            //}
+        }
     }
 }

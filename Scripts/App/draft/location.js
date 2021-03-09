@@ -204,17 +204,19 @@
             // if (table.rows().data().length > 0) {
             if (table.rows('.selected').any()) {
                 $.each(table.rows('.selected').data(), function () {
-                    paymentRows.push({
-                        VendorNumber: this["VendorNumber"],
-                        VendorName: this["VendorName"],
-                        LocationID: this["LocationID"],
-                        VendorAddress: this["VendorAddress"],
-                        RoutingNumber: this["RoutingNumber"],
-                        AcccountNo: this["AcccountNo"],
-                        AccountType: this["AccountType"],
-                        RemittanceEmail: this["RemittanceEmail"],
-                        Status: this["Status"],
-                    });
+                    if (this["Status"].toLowerCase() != "pending") {
+                        paymentRows.push({
+                            VendorNumber: this["VendorNumber"],
+                            VendorName: this["VendorName"],
+                            LocationID: this["LocationID"],
+                            VendorAddress: this["VendorAddress"],
+                            RoutingNumber: this["RoutingNumber"],
+                            AcccountNo: this["AcccountNo"],
+                            AccountType: this["AccountType"],
+                            RemittanceEmail: this["RemittanceEmail"],
+                            Status: this["Status"],
+                        });
+                    }
                 })
             }
             else {

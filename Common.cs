@@ -28,7 +28,6 @@ namespace eCAPDDApi.infrastrure
         public void LogWrite(string logMessage)
         {
             m_exePath = AppDomain.CurrentDomain.BaseDirectory;
-           // Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             try
             {
                 using (StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt"))

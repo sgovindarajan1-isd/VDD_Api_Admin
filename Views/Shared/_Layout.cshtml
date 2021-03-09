@@ -240,8 +240,11 @@
     @* <script src="~/Scripts/jquery.mask.min.js"></script>*@
     @Scripts.Render("~/bundles/vddAdmin");
 
-    <script>
+<script>
         var hostdomainUrl = '@System.Configuration.ConfigurationManager.AppSettings["HostDomainUrl"]';
+
+    var DDMSFilePath = '@System.Configuration.ConfigurationManager.AppSettings["DDMSFilePath"]';
+
             var sessoinTimeout = '@System.Configuration.ConfigurationManager.AppSettings["sessionTimeoutInterval"]'   //1 * 60 * 1000;
             setTimeout('sessionEnd()', sessoinTimeout )
             function sessionEnd() {
@@ -249,7 +252,7 @@
                 window.location.href = '/home/index';
             }
 
-    </script>
+</script>
 
     @RenderSection("scripts", required: false)
 

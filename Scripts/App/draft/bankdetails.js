@@ -61,7 +61,7 @@
         var bankobj = JSON.parse(sessionStorage.getItem("bankdetailsJson"));
 
         if (!(bankobj == null) || (bankobj == 'undefined')) {
-            if (bankobj[0].AccountType == 2)  // SAVING ACCOUNT
+            if (bankobj[0].AccountType == 1)  // SAVING ACCOUNT
             {
                 $("#btn_voidCheck").addClass('disabled_color');
                 $("#btn_voidCheck").prop('disabled', true);

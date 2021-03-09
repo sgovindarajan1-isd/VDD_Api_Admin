@@ -39,10 +39,9 @@
     $('#ddArchieveGrid').on('click', '.clsdownload', function (e) {
         var closestRow = $(this).closest('tr');
         var data = $('#ddArchieveGrid').DataTable().row(closestRow).data();
+        downloadVendorAttachmentFile(data.AttachmentFileName);
 
-        //download_file("/Uploads/58202010105_SP8313_VC.png", "58202010105_SP8313_VC.png"); //call function
-        download_file("/Uploads/" + data.AttachmentFileName, data.AttachmentFileName); //call function
-
+        //download_file("/Uploads/" + data.AttachmentFileName, data.AttachmentFileName); //call function
     });
 
     $('#ddArchieveGrid').on('click', '.clsRestoreArchieve', function (e) {
@@ -80,6 +79,19 @@
     });
     //
 
+    function downloadVendorAttachmentFile(attachmentFileName) {
+        window.open("/helper/GetPdf/?attachmentFileName=" + attachmentFileName, "_blank");
+    }
+
+
+    $('#ddArchieveGrid').on('click', '.clsViewLine', function (e) {
+        var closestRow = $(this).closest('tr');
+        var data = $('#ddArchieveGrid').DataTable().row(closestRow).data();
+        var fileName = data.AttachmentFileName;
+        debugger;
+        downloadVendorAttachmentFile(fileName);
+    });
+
     function setAttachment(data) {
         $('#ddArchieveGrid').DataTable().destroy();
         $('#ddArchieveGrid').empty();
@@ -96,7 +108,8 @@
                     "data": "AttachmentFileName",
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            data = '<a target="blank" href="/Uploads/' + row.AttachmentFileName + '">' + data + ' </a>';    //'58202010105_SP8313_VC.png'
+                           // data = '<a target="blank" href="/Uploads/' + row.AttachmentFileName + '">' + data + ' </a>';   
+                            data = '<a class= "clsViewLine" target="blank">' + data + ' </a>';  
                         }
 
                         return data;

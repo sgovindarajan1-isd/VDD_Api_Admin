@@ -557,9 +557,7 @@
     }
 
     $('#btn_viewReport').on('click', function (e) {
-        //var url = '../Home/GetPDF?fileName=' + FileName;
         var url = "/Uploads/" + sessionStorage.getItem('VendorReportFileName');
-        // $("#filelink").attr("href", "/Uploads/" + sessionStorage.getItem('VendorReportFileName'));
         window.open(url, '_blank');
     });
     /*Confirmation Section end */
